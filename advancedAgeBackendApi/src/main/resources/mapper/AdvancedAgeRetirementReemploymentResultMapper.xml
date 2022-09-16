@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.dao.AdvancedAgeRetirementReemploymentResultMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.AdvancedAgeRetirementReemploymentResult" >
+    <id column="seq" property="seq" jdbcType="VARCHAR" />
+    <id column="advanced_age_retirement_reemployment_apply_id" property="advancedAgeRetirementReemploymentApplyId" jdbcType="INTEGER" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="principal" property="principal" jdbcType="VARCHAR" />
+    <result column="contact_name" property="contactName" jdbcType="VARCHAR" />
+    <result column="contact_jobtitle" property="contactJobtitle" jdbcType="VARCHAR" />
+    <result column="contact_phone" property="contactPhone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="approve_amounts" property="approveAmounts" jdbcType="INTEGER" />
+    <result column="real_amounts" property="realAmounts" jdbcType="INTEGER" />
+    <result column="plan_execution_situation" property="planExecutionSituation" jdbcType="VARCHAR" />
+    <result column="result" property="result" jdbcType="VARCHAR" />
+    <result column="suggestion" property="suggestion" jdbcType="VARCHAR" />
+    <result column="attachment" property="attachment" jdbcType="VARCHAR" />
+    <result column="attach_documents_plan_approve" property="attachDocumentsPlanApprove" jdbcType="CHAR" />
+    <result column="attach_documents_result" property="attachDocumentsResult" jdbcType="CHAR" />
+    <result column="attach_documents_receipt" property="attachDocumentsReceipt" jdbcType="CHAR" />
+    <result column="attach_documents_expenditure_description" property="attachDocumentsExpenditureDescription" jdbcType="CHAR" />
+    <result column="attach_documents_other_proof" property="attachDocumentsOtherProof" jdbcType="CHAR" />
+    <result column="filler" property="filler" jdbcType="VARCHAR" />
+    <result column="manager" property="manager" jdbcType="VARCHAR" />
+    <result column="applicant" property="applicant" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    seq, advanced_age_retirement_reemployment_apply_id, id, company_name, principal, 
+    contact_name, contact_jobtitle, contact_phone, email, approve_amounts, real_amounts, 
+    plan_execution_situation, result, suggestion, attachment, attach_documents_plan_approve, 
+    attach_documents_result, attach_documents_receipt, attach_documents_expenditure_description, 
+    attach_documents_other_proof, filler, manager, applicant, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentResultExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from advancedAgeRetirementReemploymentResult
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentResultKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from advancedAgeRetirementReemploymentResult
+    where seq = #{seq,jdbcType=VARCHAR}
+      and advanced_age_retirement_reemployment_apply_id = #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentResultKey" >
+    delete from advancedAgeRetirementReemploymentResult
+    where seq = #{seq,jdbcType=VARCHAR}
+      and advanced_age_retirement_reemployment_apply_id = #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentResultExample" >
+    delete from advancedAgeRetirementReemploymentResult
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentResult" >
+    insert into advancedAgeRetirementReemploymentResult (seq, advanced_age_retirement_reemployment_apply_id, 
+      id, company_name, principal, 
+      contact_name, contact_jobtitle, contact_phone, 
+      email, approve_amounts, real_amounts, 
+      plan_execution_situation, result, suggestion, 
+      attachment, attach_documents_plan_approve, attach_documents_result, 
+      attach_documents_receipt, attach_documents_expenditure_description, 
+      attach_documents_other_proof, filler, manager, 
+      applicant, create_time)
+    values (#{seq,jdbcType=VARCHAR}, #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER}, 
+      #{id,jdbcType=INTEGER}, #{companyName,jdbcType=VARCHAR}, #{principal,jdbcType=VARCHAR}, 
+      #{contactName,jdbcType=VARCHAR}, #{contactJobtitle,jdbcType=VARCHAR}, #{contactPhone,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{approveAmounts,jdbcType=INTEGER}, #{realAmounts,jdbcType=INTEGER}, 
+      #{planExecutionSituation,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR}, #{suggestion,jdbcType=VARCHAR}, 
+      #{attachment,jdbcType=VARCHAR}, #{attachDocumentsPlanApprove,jdbcType=CHAR}, #{attachDocumentsResult,jdbcType=CHAR}, 
+      #{attachDocumentsReceipt,jdbcType=CHAR}, #{attachDocumentsExpenditureDescription,jdbcType=CHAR}, 
+      #{attachDocumentsOtherProof,jdbcType=CHAR}, #{filler,jdbcType=VARCHAR}, #{manager,jdbcType=VARCHAR}, 
+      #{applicant,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentResult" >
+    insert into advancedAgeRetirementReemploymentResult
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="seq != null" >
+        seq,
+      </if>
+      <if test="advancedAgeRetirementReemploymentApplyId != null" >
+        advanced_age_retirement_reemployment_apply_id,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="principal != null" >
+        principal,
+      </if>
+      <if test="contactName != null" >
+        contact_name,
+      </if>
+      <if test="contactJobtitle != null" >
+        contact_jobtitle,
+      </if>
+      <if test="contactPhone != null" >
+        contact_phone,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="approveAmounts != null" >
+        approve_amounts,
+      </if>
+      <if test="realAmounts != null" >
+        real_amounts,
+      </if>
+      <if test="planExecutionSituation != null" >
+        plan_execution_situation,
+      </if>
+      <if test="result != null" >
+        result,
+      </if>
+      <if test="suggestion != null" >
+        suggestion,
+      </if>
+      <if test="attachment != null" >
+        attachment,
+      </if>
+      <if test="attachDocumentsPlanApprove != null" >
+        attach_documents_plan_approve,
+      </if>
+      <if test="attachDocumentsResult != null" >
+        attach_documents_result,
+      </if>
+      <if test="attachDocumentsReceipt != null" >
+        attach_documents_receipt,
+      </if>
+      <if test="attachDocumentsExpenditureDescription != null" >
+        attach_documents_expenditure_description,
+      </if>
+      <if test="attachDocumentsOtherProof != null" >
+        attach_documents_other_proof,
+      </if>
+      <if test="filler != null" >
+        filler,
+      </if>
+      <if test="manager != null" >
+        manager,
+      </if>
+      <if test="applicant != null" >
+        applicant,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="seq != null" >
+        #{seq,jdbcType=VARCHAR},
+      </if>
+      <if test="advancedAgeRetirementReemploymentApplyId != null" >
+        #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="principal != null" >
+        #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="contactName != null" >
+        #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactJobtitle != null" >
+        #{contactJobtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null" >
+        #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="approveAmounts != null" >
+        #{approveAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="realAmounts != null" >
+        #{realAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="planExecutionSituation != null" >
+        #{planExecutionSituation,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="suggestion != null" >
+        #{suggestion,jdbcType=VARCHAR},
+      </if>
+      <if test="attachment != null" >
+        #{attachment,jdbcType=VARCHAR},
+      </if>
+      <if test="attachDocumentsPlanApprove != null" >
+        #{attachDocumentsPlanApprove,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsResult != null" >
+        #{attachDocumentsResult,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsReceipt != null" >
+        #{attachDocumentsReceipt,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsExpenditureDescription != null" >
+        #{attachDocumentsExpenditureDescription,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsOtherProof != null" >
+        #{attachDocumentsOtherProof,jdbcType=CHAR},
+      </if>
+      <if test="filler != null" >
+        #{filler,jdbcType=VARCHAR},
+      </if>
+      <if test="manager != null" >
+        #{manager,jdbcType=VARCHAR},
+      </if>
+      <if test="applicant != null" >
+        #{applicant,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentResultExample" resultType="java.lang.Integer" >
+    select count(*) from advancedAgeRetirementReemploymentResult
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update advancedAgeRetirementReemploymentResult
+    <set >
+      <if test="record.seq != null" >
+        seq = #{record.seq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.advancedAgeRetirementReemploymentApplyId != null" >
+        advanced_age_retirement_reemployment_apply_id = #{record.advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyName != null" >
+        company_name = #{record.companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.principal != null" >
+        principal = #{record.principal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactName != null" >
+        contact_name = #{record.contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactJobtitle != null" >
+        contact_jobtitle = #{record.contactJobtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactPhone != null" >
+        contact_phone = #{record.contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.approveAmounts != null" >
+        approve_amounts = #{record.approveAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="record.realAmounts != null" >
+        real_amounts = #{record.realAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="record.planExecutionSituation != null" >
+        plan_execution_situation = #{record.planExecutionSituation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.result != null" >
+        result = #{record.result,jdbcType=VARCHAR},
+      </if>
+      <if test="record.suggestion != null" >
+        suggestion = #{record.suggestion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attachment != null" >
+        attachment = #{record.attachment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attachDocumentsPlanApprove != null" >
+        attach_documents_plan_approve = #{record.attachDocumentsPlanApprove,jdbcType=CHAR},
+      </if>
+      <if test="record.attachDocumentsResult != null" >
+        attach_documents_result = #{record.attachDocumentsResult,jdbcType=CHAR},
+      </if>
+      <if test="record.attachDocumentsReceipt != null" >
+        attach_documents_receipt = #{record.attachDocumentsReceipt,jdbcType=CHAR},
+      </if>
+      <if test="record.attachDocumentsExpenditureDescription != null" >
+        attach_documents_expenditure_description = #{record.attachDocumentsExpenditureDescription,jdbcType=CHAR},
+      </if>
+      <if test="record.attachDocumentsOtherProof != null" >
+        attach_documents_other_proof = #{record.attachDocumentsOtherProof,jdbcType=CHAR},
+      </if>
+      <if test="record.filler != null" >
+        filler = #{record.filler,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manager != null" >
+        manager = #{record.manager,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicant != null" >
+        applicant = #{record.applicant,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update advancedAgeRetirementReemploymentResult
+    set seq = #{record.seq,jdbcType=VARCHAR},
+      advanced_age_retirement_reemployment_apply_id = #{record.advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER},
+      id = #{record.id,jdbcType=INTEGER},
+      company_name = #{record.companyName,jdbcType=VARCHAR},
+      principal = #{record.principal,jdbcType=VARCHAR},
+      contact_name = #{record.contactName,jdbcType=VARCHAR},
+      contact_jobtitle = #{record.contactJobtitle,jdbcType=VARCHAR},
+      contact_phone = #{record.contactPhone,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      approve_amounts = #{record.approveAmounts,jdbcType=INTEGER},
+      real_amounts = #{record.realAmounts,jdbcType=INTEGER},
+      plan_execution_situation = #{record.planExecutionSituation,jdbcType=VARCHAR},
+      result = #{record.result,jdbcType=VARCHAR},
+      suggestion = #{record.suggestion,jdbcType=VARCHAR},
+      attachment = #{record.attachment,jdbcType=VARCHAR},
+      attach_documents_plan_approve = #{record.attachDocumentsPlanApprove,jdbcType=CHAR},
+      attach_documents_result = #{record.attachDocumentsResult,jdbcType=CHAR},
+      attach_documents_receipt = #{record.attachDocumentsReceipt,jdbcType=CHAR},
+      attach_documents_expenditure_description = #{record.attachDocumentsExpenditureDescription,jdbcType=CHAR},
+      attach_documents_other_proof = #{record.attachDocumentsOtherProof,jdbcType=CHAR},
+      filler = #{record.filler,jdbcType=VARCHAR},
+      manager = #{record.manager,jdbcType=VARCHAR},
+      applicant = #{record.applicant,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentResult" >
+    update advancedAgeRetirementReemploymentResult
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="principal != null" >
+        principal = #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="contactName != null" >
+        contact_name = #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactJobtitle != null" >
+        contact_jobtitle = #{contactJobtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null" >
+        contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="approveAmounts != null" >
+        approve_amounts = #{approveAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="realAmounts != null" >
+        real_amounts = #{realAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="planExecutionSituation != null" >
+        plan_execution_situation = #{planExecutionSituation,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        result = #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="suggestion != null" >
+        suggestion = #{suggestion,jdbcType=VARCHAR},
+      </if>
+      <if test="attachment != null" >
+        attachment = #{attachment,jdbcType=VARCHAR},
+      </if>
+      <if test="attachDocumentsPlanApprove != null" >
+        attach_documents_plan_approve = #{attachDocumentsPlanApprove,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsResult != null" >
+        attach_documents_result = #{attachDocumentsResult,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsReceipt != null" >
+        attach_documents_receipt = #{attachDocumentsReceipt,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsExpenditureDescription != null" >
+        attach_documents_expenditure_description = #{attachDocumentsExpenditureDescription,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsOtherProof != null" >
+        attach_documents_other_proof = #{attachDocumentsOtherProof,jdbcType=CHAR},
+      </if>
+      <if test="filler != null" >
+        filler = #{filler,jdbcType=VARCHAR},
+      </if>
+      <if test="manager != null" >
+        manager = #{manager,jdbcType=VARCHAR},
+      </if>
+      <if test="applicant != null" >
+        applicant = #{applicant,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where seq = #{seq,jdbcType=VARCHAR}
+      and advanced_age_retirement_reemployment_apply_id = #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentResult" >
+    update advancedAgeRetirementReemploymentResult
+    set id = #{id,jdbcType=INTEGER},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      principal = #{principal,jdbcType=VARCHAR},
+      contact_name = #{contactName,jdbcType=VARCHAR},
+      contact_jobtitle = #{contactJobtitle,jdbcType=VARCHAR},
+      contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      approve_amounts = #{approveAmounts,jdbcType=INTEGER},
+      real_amounts = #{realAmounts,jdbcType=INTEGER},
+      plan_execution_situation = #{planExecutionSituation,jdbcType=VARCHAR},
+      result = #{result,jdbcType=VARCHAR},
+      suggestion = #{suggestion,jdbcType=VARCHAR},
+      attachment = #{attachment,jdbcType=VARCHAR},
+      attach_documents_plan_approve = #{attachDocumentsPlanApprove,jdbcType=CHAR},
+      attach_documents_result = #{attachDocumentsResult,jdbcType=CHAR},
+      attach_documents_receipt = #{attachDocumentsReceipt,jdbcType=CHAR},
+      attach_documents_expenditure_description = #{attachDocumentsExpenditureDescription,jdbcType=CHAR},
+      attach_documents_other_proof = #{attachDocumentsOtherProof,jdbcType=CHAR},
+      filler = #{filler,jdbcType=VARCHAR},
+      manager = #{manager,jdbcType=VARCHAR},
+      applicant = #{applicant,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where seq = #{seq,jdbcType=VARCHAR}
+      and advanced_age_retirement_reemployment_apply_id = #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER}
+  </update>
+</mapper>

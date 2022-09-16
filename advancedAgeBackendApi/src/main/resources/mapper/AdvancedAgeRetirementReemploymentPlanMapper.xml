@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.dao.AdvancedAgeRetirementReemploymentPlanMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.AdvancedAgeRetirementReemploymentPlan" >
+    <id column="advanced_age_retirement_reemployment_apply_id" property="advancedAgeRetirementReemploymentApplyId" jdbcType="INTEGER" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="work_content" property="workContent" jdbcType="VARCHAR" />
+    <result column="friendly_measures" property="friendlyMeasures" jdbcType="VARCHAR" />
+    <result column="plan_goal" property="planGoal" jdbcType="VARCHAR" />
+    <result column="plan_content" property="planContent" jdbcType="VARCHAR" />
+    <result column="plan_start_time" property="planStartTime" jdbcType="VARCHAR" />
+    <result column="plan_end_time" property="planEndTime" jdbcType="VARCHAR" />
+    <result column="quality_benefit" property="qualityBenefit" jdbcType="VARCHAR" />
+    <result column="quantify_benefit" property="quantifyBenefit" jdbcType="VARCHAR" />
+    <result column="plan_execution_situation" property="planExecutionSituation" jdbcType="VARCHAR" />
+    <result column="other_attachment" property="otherAttachment" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    advanced_age_retirement_reemployment_apply_id, id, work_content, friendly_measures, 
+    plan_goal, plan_content, plan_start_time, plan_end_time, quality_benefit, quantify_benefit, 
+    plan_execution_situation, other_attachment
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentPlanExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from advancedAgeRetirementReemploymentPlan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from advancedAgeRetirementReemploymentPlan
+    where advanced_age_retirement_reemployment_apply_id = #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from advancedAgeRetirementReemploymentPlan
+    where advanced_age_retirement_reemployment_apply_id = #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentPlanExample" >
+    delete from advancedAgeRetirementReemploymentPlan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentPlan" >
+    insert into advancedAgeRetirementReemploymentPlan (advanced_age_retirement_reemployment_apply_id, id, 
+      work_content, friendly_measures, plan_goal, 
+      plan_content, plan_start_time, plan_end_time, 
+      quality_benefit, quantify_benefit, plan_execution_situation, 
+      other_attachment)
+    values (#{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, 
+      #{workContent,jdbcType=VARCHAR}, #{friendlyMeasures,jdbcType=VARCHAR}, #{planGoal,jdbcType=VARCHAR}, 
+      #{planContent,jdbcType=VARCHAR}, #{planStartTime,jdbcType=VARCHAR}, #{planEndTime,jdbcType=VARCHAR}, 
+      #{qualityBenefit,jdbcType=VARCHAR}, #{quantifyBenefit,jdbcType=VARCHAR}, #{planExecutionSituation,jdbcType=VARCHAR}, 
+      #{otherAttachment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentPlan" >
+    insert into advancedAgeRetirementReemploymentPlan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="advancedAgeRetirementReemploymentApplyId != null" >
+        advanced_age_retirement_reemployment_apply_id,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="workContent != null" >
+        work_content,
+      </if>
+      <if test="friendlyMeasures != null" >
+        friendly_measures,
+      </if>
+      <if test="planGoal != null" >
+        plan_goal,
+      </if>
+      <if test="planContent != null" >
+        plan_content,
+      </if>
+      <if test="planStartTime != null" >
+        plan_start_time,
+      </if>
+      <if test="planEndTime != null" >
+        plan_end_time,
+      </if>
+      <if test="qualityBenefit != null" >
+        quality_benefit,
+      </if>
+      <if test="quantifyBenefit != null" >
+        quantify_benefit,
+      </if>
+      <if test="planExecutionSituation != null" >
+        plan_execution_situation,
+      </if>
+      <if test="otherAttachment != null" >
+        other_attachment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="advancedAgeRetirementReemploymentApplyId != null" >
+        #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="workContent != null" >
+        #{workContent,jdbcType=VARCHAR},
+      </if>
+      <if test="friendlyMeasures != null" >
+        #{friendlyMeasures,jdbcType=VARCHAR},
+      </if>
+      <if test="planGoal != null" >
+        #{planGoal,jdbcType=VARCHAR},
+      </if>
+      <if test="planContent != null" >
+        #{planContent,jdbcType=VARCHAR},
+      </if>
+      <if test="planStartTime != null" >
+        #{planStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="planEndTime != null" >
+        #{planEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityBenefit != null" >
+        #{qualityBenefit,jdbcType=VARCHAR},
+      </if>
+      <if test="quantifyBenefit != null" >
+        #{quantifyBenefit,jdbcType=VARCHAR},
+      </if>
+      <if test="planExecutionSituation != null" >
+        #{planExecutionSituation,jdbcType=VARCHAR},
+      </if>
+      <if test="otherAttachment != null" >
+        #{otherAttachment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentPlanExample" resultType="java.lang.Integer" >
+    select count(*) from advancedAgeRetirementReemploymentPlan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update advancedAgeRetirementReemploymentPlan
+    <set >
+      <if test="record.advancedAgeRetirementReemploymentApplyId != null" >
+        advanced_age_retirement_reemployment_apply_id = #{record.advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.workContent != null" >
+        work_content = #{record.workContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.friendlyMeasures != null" >
+        friendly_measures = #{record.friendlyMeasures,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planGoal != null" >
+        plan_goal = #{record.planGoal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planContent != null" >
+        plan_content = #{record.planContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planStartTime != null" >
+        plan_start_time = #{record.planStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planEndTime != null" >
+        plan_end_time = #{record.planEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qualityBenefit != null" >
+        quality_benefit = #{record.qualityBenefit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quantifyBenefit != null" >
+        quantify_benefit = #{record.quantifyBenefit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planExecutionSituation != null" >
+        plan_execution_situation = #{record.planExecutionSituation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherAttachment != null" >
+        other_attachment = #{record.otherAttachment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update advancedAgeRetirementReemploymentPlan
+    set advanced_age_retirement_reemployment_apply_id = #{record.advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER},
+      id = #{record.id,jdbcType=INTEGER},
+      work_content = #{record.workContent,jdbcType=VARCHAR},
+      friendly_measures = #{record.friendlyMeasures,jdbcType=VARCHAR},
+      plan_goal = #{record.planGoal,jdbcType=VARCHAR},
+      plan_content = #{record.planContent,jdbcType=VARCHAR},
+      plan_start_time = #{record.planStartTime,jdbcType=VARCHAR},
+      plan_end_time = #{record.planEndTime,jdbcType=VARCHAR},
+      quality_benefit = #{record.qualityBenefit,jdbcType=VARCHAR},
+      quantify_benefit = #{record.quantifyBenefit,jdbcType=VARCHAR},
+      plan_execution_situation = #{record.planExecutionSituation,jdbcType=VARCHAR},
+      other_attachment = #{record.otherAttachment,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentPlan" >
+    update advancedAgeRetirementReemploymentPlan
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="workContent != null" >
+        work_content = #{workContent,jdbcType=VARCHAR},
+      </if>
+      <if test="friendlyMeasures != null" >
+        friendly_measures = #{friendlyMeasures,jdbcType=VARCHAR},
+      </if>
+      <if test="planGoal != null" >
+        plan_goal = #{planGoal,jdbcType=VARCHAR},
+      </if>
+      <if test="planContent != null" >
+        plan_content = #{planContent,jdbcType=VARCHAR},
+      </if>
+      <if test="planStartTime != null" >
+        plan_start_time = #{planStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="planEndTime != null" >
+        plan_end_time = #{planEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityBenefit != null" >
+        quality_benefit = #{qualityBenefit,jdbcType=VARCHAR},
+      </if>
+      <if test="quantifyBenefit != null" >
+        quantify_benefit = #{quantifyBenefit,jdbcType=VARCHAR},
+      </if>
+      <if test="planExecutionSituation != null" >
+        plan_execution_situation = #{planExecutionSituation,jdbcType=VARCHAR},
+      </if>
+      <if test="otherAttachment != null" >
+        other_attachment = #{otherAttachment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where advanced_age_retirement_reemployment_apply_id = #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentPlan" >
+    update advancedAgeRetirementReemploymentPlan
+    set id = #{id,jdbcType=INTEGER},
+      work_content = #{workContent,jdbcType=VARCHAR},
+      friendly_measures = #{friendlyMeasures,jdbcType=VARCHAR},
+      plan_goal = #{planGoal,jdbcType=VARCHAR},
+      plan_content = #{planContent,jdbcType=VARCHAR},
+      plan_start_time = #{planStartTime,jdbcType=VARCHAR},
+      plan_end_time = #{planEndTime,jdbcType=VARCHAR},
+      quality_benefit = #{qualityBenefit,jdbcType=VARCHAR},
+      quantify_benefit = #{quantifyBenefit,jdbcType=VARCHAR},
+      plan_execution_situation = #{planExecutionSituation,jdbcType=VARCHAR},
+      other_attachment = #{otherAttachment,jdbcType=VARCHAR}
+    where advanced_age_retirement_reemployment_apply_id = #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER}
+  </update>
+</mapper>

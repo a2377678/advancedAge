@@ -1,0 +1,502 @@
+body {
+	margin: 0px;
+	font-family: "微軟正黑體";
+	font-size: 62.5%; /* 公式16px*62.5%=10px */
+}
+body.print {
+	background-image: none!important;
+}
+button {
+	font-size: 2.2em !important;
+	line-height: 1.2em !important;
+}
+input[type=checkbox]:checked:after {
+	font-size: 2.2em !important;
+	line-height: 0.5em;
+}
+.main_box {
+	margin: auto;
+	width: 800px;
+}
+.case_search {
+	display: block;
+	font-size: 1.6em;
+	text-align: left;
+	padding-top: 0px;
+	padding-bottom: 20px;
+}
+.case_search input[type=text] {
+	font-family: "微軟正黑體";
+	font-size: 1.125em !important;
+	font-weight: bold;
+	border-radius: 5px;
+	border: 2px solid #005E8A !important;
+	padding: 4px 15px;
+	letter-spacing: 2px;
+	top: 5px;
+	position: relative;
+}
+.case_search-left {
+	float: left;
+	width: 70%;
+	margin-right: 10px;
+	padding-top: 30px !important;
+}
+.stats {
+	float: right;
+	background-color: #F5FCFE;
+	border-radius: 10px;
+	width: 280px;
+	border: 1px solid #9EDBF8;
+	padding-top: 20px;
+	padding-right: 20px;
+	padding-bottom: 18px;
+	padding-left: 20px;
+}
+.stats .title {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #9EDBF8;
+	line-height: 24px;
+	height: 40px;
+	margin-bottom: 15px;
+	margin-right: 20px;
+	margin-left: 20px;
+	padding-left: 0px;
+	text-align: center;
+	letter-spacing: 1px;
+}
+
+.stats div {
+	font-size: 24px;
+	font-weight: bold;
+	padding-left: 20px;
+	clear: both;
+	position: relative;
+	height: 50px;
+	line-height: 40px;
+}
+.stats div span {
+	font-size: 42px;
+	padding-left: 10px;
+	font-weight: bold;
+	font-family: Arial;
+	width: 80px;
+	text-align: right;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	display: inline;
+	margin-right: 25px;
+}
+
+.stats div span.t1{
+	color: #F99500;
+}
+.stats div span.t2 {
+	color: #E61573;
+}
+.stats div span.t3 {
+	color: #090;
+}
+
+.audit_list {
+	background-color: #FFF;
+	padding: 25px;
+	z-index: 888;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	clear: both;
+}
+.audit_list .title {
+	font-weight: bold;
+	font-family: "微軟正黑體" !important;
+	font-size: 1.3em !important;
+	padding-bottom: 7px;
+	margin-bottom: 18px;
+	color: #FFF;
+	background-color: #86A5C4;
+	padding-top: 7px;
+	border-radius: 3px;
+	display: block;
+	letter-spacing: 1px;
+}
+.audit_list ol{
+	margin: 0px;
+	font-size: 1.2em;
+	padding: 0px;
+	list-style-type: none;
+}
+.audit_list li {
+	margin-bottom: 15px;
+	padding-bottom: 15px;
+	border-bottom-width: 1px;
+	border-bottom-style: dotted;
+	border-bottom-color: #999;
+}
+.audit_list li a {
+	text-decoration: none;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-radius: 5px;
+}
+.audit_list li a:hover {
+	text-decoration: none;
+	background-color: #E8F5F9;
+	color: #06C;
+}
+
+
+.audit_list .no {
+	width: 50px;
+	display: inline-block;
+	text-align: center;
+	color: #999;
+}
+.audit_list .notify_time {
+	width: 120px;
+	display: inline-block;
+	text-align: center;
+}
+.audit_list .update_time {
+	width: 120px;
+	display: inline-block;
+	text-align: center;
+}
+
+.audit_list .tax_id_number {
+	width: 120px;
+	display: inline-block;
+	text-align: center;
+	letter-spacing: 1px;
+}
+.audit_list .company_name {
+	width: 250px;
+	display: inline-block;
+	text-align: left;
+	letter-spacing: 1px;
+	padding-left: 20px;
+}
+.audit_list .case_status {
+	width: 100px;
+	display: inline-block;
+	text-align: center;
+}
+
+
+.audit_list .update_type {
+	width: 100px;
+	display: inline-block;
+	text-align: center;
+}
+
+.audit_list .update_status {
+	width: 100px;
+	display: inline-block;
+	text-align: center;
+}
+
+.audit_list .district {
+	width: 150px;
+	display: inline-block;
+	text-align: center;
+}
+.audit_list .auditor_first {
+	width: 85px;
+	display: inline-block;
+	text-align: center;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+
+
+
+
+.search_btn {
+	background-color: #005E8A;
+	font-size: 1.2em !important;
+	padding-top: 6px !important;
+	padding-right: 12px !important;
+	padding-bottom: 8px !important;
+	padding-left: 14px !important;
+}
+.search_btn:hover {
+	background-color: #00CCCC;
+}
+.search_clean {
+	background-color: #999999;
+	font-size: 0.9em !important;
+	margin-left: 5px;
+}
+.search_clean:hover {
+	background-color: #666666;
+}
+
+.file_title {
+	font-weight: bold;
+	border-bottom-width: 3px;
+	border-bottom-style: solid;
+	border-bottom-color: #ddd;
+	display: block;
+}
+
+.file_title .txt {
+	font-size: 1.6em;
+	color: #000;
+	padding-right: 5px;
+	letter-spacing: 1px;
+}
+.file_title .txt-2 {
+	font-size: 1.6em;
+	color: #c76112;
+	padding-right: 15px;
+	letter-spacing: 1px;
+}
+
+.file_title .number {
+	font-size: 1.6em;
+	color: #c76112;
+	letter-spacing: 2px;
+}
+.file_title-1 {
+	font-weight: bold;
+	display: block;
+	font-size: 1.5em;
+	letter-spacing: 1px;
+	border-left-width: 5px;
+	border-left-style: solid;
+	border-left-color: #D35305;
+	padding-left: 5px;
+	height: 20px;
+	line-height: 0.9em;
+	margin-bottom: 0px;
+	float: left;
+	width: 180px;
+	margin-top: 10px;
+}
+.file_title-2 {
+	font-weight: bold;
+	display: block;
+	font-size: 1.5em;
+	letter-spacing: 1px;
+	border-left-width: 5px;
+	border-left-style: solid;
+	border-left-color: #D35305;
+	margin-top: 25px;
+	padding-left: 5px;
+	height: 20px;
+	line-height: 0.9em;
+	margin-bottom: 10px;
+}
+
+.file_info {
+	background-color: #f5f5f5;
+	margin-bottom: 20px;
+	font-size: 1.3em;
+	padding: 20px;
+}
+.file_info a {
+	display: block;
+	margin-bottom: 10px;
+}
+
+.file_info table {
+	width: 100%;
+	font-size: 1em;
+	line-height: 1.6em;
+}
+.file_info table th {
+	font-weight: bold;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	vertical-align: top;
+	text-align: right;
+}
+.file_info table td {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	vertical-align: top;
+}
+.file_info .point {
+	color: #C00;
+}
+.file_group {
+	display: inline-block;
+	margin-bottom: 10px;
+	width: 900px;
+	margin-right: auto;
+	margin-left: auto;
+}
+.file_group .upload-date {
+	clear: both;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #999;
+	font-size: 1.8em;
+	height: 30px;
+	width: 850px;
+}
+.file_group .upload-date span {
+	width: 300px;
+	display: block;
+	float: right;
+	font-weight: bold;
+}
+.file_group .upload-date span.date {
+	width: 115px;
+	text-align: left;
+	font-size: 1em;
+}
+.file_group .upload-date span.time {
+	width: 80px;
+	text-align: center;
+	background-color: #ddd;
+	letter-spacing: 1px;
+	font-weight: normal;
+	font-size: 0.9em;
+}
+.file_list {
+	list-style-type: none;
+	font-size: 1.8em;
+	display: inline-block;
+	padding: 0px;
+	margin-bottom: 0px;
+}
+.file_list li {
+	display: inline-block;
+	float: left;
+	width: 200px;
+	margin-right: 20px;
+	margin-bottom: 10px;
+}
+.file_list li div {
+	display: block;
+}
+.file_list li .file-name {
+	background-color: #1D222C;
+	text-align: center;
+	display: block;
+	padding: 5px;
+	min-height: 25px;
+	font-weight: bold;
+}
+.file_list li .file-preview {
+	background-color: #ddd;
+	width: 180px;
+	display: inline-block;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	height: 92px;
+	padding: 10px;
+}
+.file_list li .file-preview a:link  {
+	color: #000;
+	display: inline-block;
+	font-weight: normal;
+	height: 25px;
+	float: left;
+	font-size: 0.9em;
+	width: 165px;
+	line-height: 1.2em;
+	overflow: hidden;
+	white-space: nowrap;
+}
+.file_list li .file-preview a:visited {
+	color: #009900;
+}
+
+.file_list li .file-preview a:hover {
+	color: #D15001;
+	text-decoration: underline;
+}
+.file_list li .file-preview a:active {
+	color: #C76112;
+}
+
+.file_list li .file-check {
+	margin-top: 5px;
+}
+.file_list li .file-check label {
+	display: inline-block;
+	margin-bottom: 5px;
+}
+
+
+.file_box {
+	width: 100% !important;
+	float: none;
+	clear: both;
+}
+.file_box input {
+	width: 240px;
+	display: inline !important;
+	margin-bottom: 3px;
+	margin-top: 3px;
+	font-size: 14px;
+	padding: 1px !important;
+	cursor: pointer;
+}
+
+.file_box span {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.file_box span.file_name {
+	width: 320px;
+	display: inline-table;
+	font-weight: bold;
+	color: #039;
+}
+.file_box span.file_progress {
+	font-weight: bold;
+	color: #F90;
+}
+.file_box span.file_date {
+	font-weight: bold;
+	color: #000;
+}
+.file_box span.file_size {
+	font-weight: bold;
+	color: #999;
+}
+button.add {
+	font-size: 11px;
+	font-weight: bold;
+	font-family: "微軟正黑體";
+	padding-bottom: 3px !important;
+	padding-right: 2px !important;
+	padding-left: 3px !important;
+	padding-top: 0px !important;
+	cursor: pointer;
+	color: #FFF;
+	background-color: #333 !important;
+	border: none !important;
+	border-radius: 3px !important;
+	margin-left: 3px !important;
+	margin-right: 0px !important;
+}
+button.add:hover {
+	background-color: #F60 !important;
+}
+
+
+
+.message .title{
+	font-size: 2.4em;
+	font-weight: bold;
+	padding-bottom: 10px;
+}
+.message .title span {
+	font-size: 0.8em;
+	font-weight: normal;
+}
+.message textarea {
+	font-size: 2.1em !important;
+	line-height: 1.4em !important;
+	letter-spacing: 1px !important;
+	width: 830px !important;
+	padding: 5px !important;
+	margin-left: 3px;
+}
+

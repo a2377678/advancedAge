@@ -1,0 +1,105 @@
+.chart_index {
+	width: 1550px;
+	display: block;
+	padding-top: 10px;
+	text-align: center;
+	margin: auto;
+	padding-left: 270px;
+}
+
+
+
+.chart_box-1 {
+	float: left;
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	margin-left: 20px;
+	height: 750px;
+	width: 400px;
+}
+.chart_box-2 {
+	float: left;
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	margin-left: 20px;
+	height: 750px;
+	width: 400px;
+}
+.chart_box-3 {
+	float: left;
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	margin-left: 20px;
+	height: 750px;
+	width: 400px;
+}
+
+.chart_title-1 {
+	font-size: 24px;
+	font-weight: bold;
+	color: #004A83;
+	text-align: center;
+	margin-bottom: 20px;
+	margin-top: 25px;
+}
+
+.chart_title-2 {
+	font-size: 24px;
+	font-weight: bold;
+	color: #db6600;
+	text-align: center;
+	margin-bottom: 20px;
+	margin-top: 25px;
+}
+.chart_title-3 {
+	font-size: 24px;
+	font-weight: bold;
+	color: #3399CC;
+	text-align: center;
+	margin-bottom: 20px;
+	margin-top: 25px;
+}
+.chart_title-s1 {
+	font-size: 20px;
+	font-weight: bold;
+	color: #666666;
+	text-align: center;
+}
+.chart_title-s2 {
+	font-size: 20px;
+	font-weight: bold;
+	color: #666666;
+	text-align: center;
+	padding-top: 25px;
+}
+.chart_title-s3 {
+	font-size: 20px;
+	font-weight: bold;
+	color: #666666;
+	text-align: center;
+	padding-top: 20px;
+}
+
+.chart_title-s4 {
+	font-size: 20px;
+	font-weight: bold;
+	color: #666666;
+	text-align: center;
+	padding-top: 0px;
+}
+
+.chart_title-s5 {
+	font-size: 20px;
+	font-weight: bold;
+	color: #666666;
+	text-align: center;
+	padding-top: 15px;
+}
+.chart_title-s6 {
+	font-size: 20px;
+	font-weight: bold;
+	color: #666666;
+	text-align: center;
+	top: -55px;
+	position: relative;
+}

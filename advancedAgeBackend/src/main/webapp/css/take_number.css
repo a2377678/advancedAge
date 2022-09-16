@@ -1,0 +1,366 @@
+@charset "utf-8";
+
+body {
+	font-size: 62.5%;
+	background-color: #f5f5f5;
+} /* 公式16px*62.5%=10px */
+
+
+select {
+	border-radius: 3px;
+	border: 1px solid #DC9A76!important;
+	font-size: 1em;
+	cursor: pointer;
+	height: 32px;
+	padding: 3px 5px!important;
+	font-weight: bold;
+	font-family: "微軟正黑體";
+}
+.select-2 {
+	border-radius: 5px;
+	border: 2px solid #aaa !important;
+	font-size: 0.95em;
+	cursor: pointer;
+	height: 42px;
+	font-weight: bold;
+	font-family: "微軟正黑體";
+	padding-right: 5px;
+	padding-left: 5px;
+	position: relative;
+	top: 1px;
+}
+.select-3 {
+	border-radius: 5px;
+	border: 2px solid #aaa !important;
+	cursor: pointer;
+	height: 42px;
+	font-weight: normal;
+	font-family: "微軟正黑體";
+	padding-right: 8px!important;
+	padding-left: 10px!important;
+	position: relative;
+	top: 0px;
+	font-size: 1em;
+}
+
+
+
+input {
+	font-family: "微軟正黑體";
+	border-radius: 5px;
+	border: 2px solid #DC9A76 !important;
+	padding-top: 3px;
+	padding-right: 10px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+	letter-spacing: 1px;
+}
+.input-2 {
+	border: 2px solid #aaa !important;
+	text-align: center;
+}
+.input-3 {
+	border: 2px solid #aaa !important;
+}
+
+
+input[type=text] {
+	font-size: 1em;
+	font-family: "微軟正黑體";
+}
+
+input[type=text]:focus {
+	box-shadow: 0 0 3px #9C9;
+	background-color: #F1F8F1;
+	border: 2px solid #090!important;
+}
+input[type=checkbox] {
+	height: 23px;
+	width: 23px;
+	float: left;
+	position: relative;
+	top: 0px;
+	margin-right: 10px;
+	cursor: pointer;
+	border-radius: 3px;
+	border: 1px solid #aaa;
+	margin-top: 11px;
+	margin-left: 10px;
+}
+input[type=checkbox]:after {
+	border-radius: 3px;
+	content: " ";
+	display: inline-block;
+	height: 25px;
+	width: 25px;
+	color: #FFF;
+	text-align: center;
+	border: 2px solid #aaa;
+	top: -3px;
+	position: absolute;
+	left: -3px;
+	background-color: #FFFFFF;
+}
+input[type=checkbox]:checked:after {
+	content: "✓";
+	font-size: 2.4em !important;
+	color: #FFF;
+	background-color: #090;
+	border: 1px solid #030;
+	text-shadow: black 0.1em 0.1em 0.3em;
+	font-weight: bold;
+	font-family: "Arial Black", Gadget, sans-serif;
+	line-height: 0.6em;
+}
+input[type=radio] {
+	border-radius: 50%;
+	cursor: pointer;
+	position: relative;
+	border: 1px solid #F63;
+	height: 28px;
+	width: 28px;
+	left: 1px;
+	float: left;
+	margin-right: 10px;
+	margin-top: 5px;
+}
+input[type=radio]:after {
+	border-radius: 50%;
+	content: " ";
+	display: inline-block;
+	height: 28px;
+	width: 28px;
+	color: #FFF;
+	background-color: #F5EBE7;
+	text-align: center;
+	border: 2px solid #DC9A76;
+	top: -3px;
+	left: -3px;
+	position: absolute;
+}
+input[type=radio]:checked:after {
+	content: "✓";
+	font-size: 2.4em !important;
+	color: #FFF;
+	background-color: #090;
+	border: 2px solid #030;
+	text-shadow: black 0.1em 0.1em 0.3em;
+	font-weight: bold;
+	line-height: 0.65em;
+}
+table {
+	border-spacing: 0px;
+}
+.take_number_title {
+	font-weight: bold;
+	padding-bottom: 5px;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	border-bottom-color: #060;
+	display: block;
+	letter-spacing: 2px;
+	padding-top: 40px;
+	margin-bottom: 20px;
+	width: 750px;
+	margin-right: auto;
+	margin-left: auto;
+}
+.take_number_title .txt {
+	font-size: 2.6em;
+	color: #333;
+	padding-right: 5px;
+}
+.take_number_title .number {
+	font-size: 2.6em;
+	color: #c76112;
+}
+.take_number {
+	padding-top: 45px;
+	border-radius: 8px;
+	width: 780px;
+	margin: auto;
+}
+.take_number table {
+	width: 100%;
+	font-size: 2.2em;
+	line-height: 1.6em;
+}
+.take_number table th {
+	font-weight: bold;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	vertical-align: top;
+	text-align: right;
+	line-height: 1.8em;
+}
+.take_number table td {
+	padding-top: 8px;
+	padding-bottom: 8px;
+	vertical-align: top;
+}
+.take_number .choose {
+	font-size: 1.1em;
+	padding-top: 2px;
+
+}
+.take_number .choose label {
+	display: inline-block;
+	padding-right: 20px;
+	font-weight: bold;
+	color: #000000;
+}
+#appnl {
+	font-size: 2.4em;
+	font-weight: bold;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	color: #ef420c;
+	width: 525px;
+	font-family: Arial;
+	letter-spacing: 6px !important;
+	border: 3px solid #CCC !important;
+	border-radius: 10px;
+	text-align: center;
+	margin-left: 80px;
+	margin-top: 25px;
+}
+.lack_list {
+	border-top-width: 1px;
+	border-top-style: dotted;
+	border-top-color: #CCC;
+	margin-bottom: 60px;
+	padding-top: 40px;
+	display: block;
+}
+.lack_list ul {
+	font-size: 0.9em;
+	float: left;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 25px;
+}
+.lack_list ul li {
+	list-style-type: none;
+	text-align: left;
+	clear: both;
+	line-height: 2.3em;
+}
+.file_type1 {
+	background-color: #f2ebe6;
+	float: left;
+	width: 375px;
+	border-top-width: 2px;
+	border-top-style: solid;
+	border-top-color: #c76112;
+	position: relative;
+}
+
+.file_type1_title {
+	font-weight: bold;
+	position: absolute;
+	top: -3px;
+	left: 135px;
+	background-color: #F2EBE6;
+	height: 5px;
+	line-height: 5px;
+	width: 110px;
+	font-size: 1.2em;
+	color: #C76112;
+}
+
+.file_type2 {
+	background-color: #e7edf2;
+	float: right;
+	width: 375px;
+	border-top-width: 2px;
+	border-top-style: solid;
+	border-top-color: #004a83;
+	position: relative;
+	margin-left: 20px;
+}
+.file_type2_title {
+	font-weight: bold;
+	position: absolute;
+	top: -3px;
+	left: 135px;
+	background-color: #E7EDF2;
+	height: 5px;
+	line-height: 5px;
+	width: 110px;
+	font-size: 1.1em;
+	color: #004A83;
+}
+
+
+
+
+.clear {
+	clear: both;
+}
+.button {
+	font-family: "微軟正黑體";
+	font-size: 1em;
+	line-height: 1em;
+	cursor: pointer;
+	border: none;
+	border-radius: 5px;
+	color: #FFF;
+	background-color: #060;
+	padding-top: 15px;
+	padding-right: 30px;
+	padding-bottom: 17px;
+	padding-left: 30px;
+	letter-spacing: 1px;
+}
+.btn_take {
+	background-color: #c76112;
+	margin-right: 6px;
+}
+.btn_take:hover {
+	background-color: #F1690E;
+}
+.btn_clean {
+	background-color: #888;
+	margin-right: 6px;
+	padding-right: 35px;
+	padding-left: 35px;
+}
+
+.btn_clean:hover {
+	background-color: #aaaaaa;
+}
+.btn_offline {
+	background-color: #0B437B;
+	margin-right: 6px;
+	padding-right: 40px;
+	padding-left: 40px;
+}
+.btn_offline:hover {
+	background-color: #0F5BA8;
+}
+.btn_print_receipt {
+	background-color: #008400;
+	margin-right: 6px;
+	padding-right: 40px;
+	padding-left: 40px;
+}
+.btn_print_receipt:hover {
+	background-color: #009900;
+}
+
+.btn_03 {
+	background-color: #999;
+}
+.btn_03:hover {
+	background-color: #777;
+}
+.btn_close {
+	background-color: #999;
+	float: right;
+	position: fixed;
+	right: 50px;
+	bottom: 50px;
+}
+.btn_close:hover {
+	background-color: #777;
+}

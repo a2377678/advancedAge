@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.dao.AdvancedAgeEmploymentListReceiptMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.AdvancedAgeEmploymentListReceipt" >
+    <id column="seq" property="seq" jdbcType="VARCHAR" />
+    <id column="identification" property="identification" jdbcType="VARCHAR" />
+    <id column="frequency" property="frequency" jdbcType="INTEGER" />
+    <id column="advanced_age_base_id" property="advancedAgeBaseId" jdbcType="INTEGER" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="principal" property="principal" jdbcType="VARCHAR" />
+    <result column="employee_id" property="employeeId" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="labor_protection_expired_time" property="laborProtectionExpiredTime" jdbcType="VARCHAR" />
+    <result column="occupational_accident_protection_expired_time" property="occupationalAccidentProtectionExpiredTime" jdbcType="VARCHAR" />
+    <result column="salary" property="salary" jdbcType="INTEGER" />
+    <result column="salary_method" property="salaryMethod" jdbcType="VARCHAR" />
+    <result column="salary_method_remark" property="salaryMethodRemark" jdbcType="VARCHAR" />
+    <result column="employment_month_start_time" property="employmentMonthStartTime" jdbcType="VARCHAR" />
+    <result column="employment_month_end_time" property="employmentMonthEndTime" jdbcType="VARCHAR" />
+    <result column="employment_hour_start_time" property="employmentHourStartTime" jdbcType="VARCHAR" />
+    <result column="employment_hour_end_time" property="employmentHourEndTime" jdbcType="VARCHAR" />
+    <result column="low_month_number" property="lowMonthNumber" jdbcType="INTEGER" />
+    <result column="high_month_number" property="highMonthNumber" jdbcType="INTEGER" />
+    <result column="low_hours_number" property="lowHoursNumber" jdbcType="INTEGER" />
+    <result column="high_hours_number" property="highHoursNumber" jdbcType="INTEGER" />
+    <result column="amounts" property="amounts" jdbcType="INTEGER" />
+    <result column="approve_status" property="approveStatus" jdbcType="CHAR" />
+    <result column="adjust_amounts" property="adjustAmounts" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="base_allowance_frequency" property="baseAllowanceFrequency" jdbcType="INTEGER" />
+    <result column="verify_person" property="verifyPerson" jdbcType="VARCHAR" />
+    <result column="business_manager" property="businessManager" jdbcType="VARCHAR" />
+    <result column="head_manager" property="headManager" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    seq, identification, frequency, advanced_age_base_id, id, company_name, principal, 
+    employee_id, birthday, name, labor_protection_expired_time, occupational_accident_protection_expired_time, 
+    salary, salary_method, salary_method_remark, employment_month_start_time, employment_month_end_time, 
+    employment_hour_start_time, employment_hour_end_time, low_month_number, high_month_number, 
+    low_hours_number, high_hours_number, amounts, approve_status, adjust_amounts, remark, 
+    base_allowance_frequency, verify_person, business_manager, head_manager, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.AdvancedAgeEmploymentListReceiptExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from advancedAgeEmploymentListReceipt
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.AdvancedAgeEmploymentListReceiptKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from advancedAgeEmploymentListReceipt
+    where seq = #{seq,jdbcType=VARCHAR}
+      and identification = #{identification,jdbcType=VARCHAR}
+      and frequency = #{frequency,jdbcType=INTEGER}
+      and advanced_age_base_id = #{advancedAgeBaseId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.example.springboot.entity.AdvancedAgeEmploymentListReceiptKey" >
+    delete from advancedAgeEmploymentListReceipt
+    where seq = #{seq,jdbcType=VARCHAR}
+      and identification = #{identification,jdbcType=VARCHAR}
+      and frequency = #{frequency,jdbcType=INTEGER}
+      and advanced_age_base_id = #{advancedAgeBaseId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.AdvancedAgeEmploymentListReceiptExample" >
+    delete from advancedAgeEmploymentListReceipt
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.AdvancedAgeEmploymentListReceipt" >
+    insert into advancedAgeEmploymentListReceipt (seq, identification, frequency, 
+      advanced_age_base_id, id, company_name, 
+      principal, employee_id, birthday, 
+      name, labor_protection_expired_time, occupational_accident_protection_expired_time, 
+      salary, salary_method, salary_method_remark, 
+      employment_month_start_time, employment_month_end_time, 
+      employment_hour_start_time, employment_hour_end_time, 
+      low_month_number, high_month_number, low_hours_number, 
+      high_hours_number, amounts, approve_status, 
+      adjust_amounts, remark, base_allowance_frequency, 
+      verify_person, business_manager, head_manager, 
+      create_time)
+    values (#{seq,jdbcType=VARCHAR}, #{identification,jdbcType=VARCHAR}, #{frequency,jdbcType=INTEGER}, 
+      #{advancedAgeBaseId,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, #{companyName,jdbcType=VARCHAR}, 
+      #{principal,jdbcType=VARCHAR}, #{employeeId,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{laborProtectionExpiredTime,jdbcType=VARCHAR}, #{occupationalAccidentProtectionExpiredTime,jdbcType=VARCHAR}, 
+      #{salary,jdbcType=INTEGER}, #{salaryMethod,jdbcType=VARCHAR}, #{salaryMethodRemark,jdbcType=VARCHAR}, 
+      #{employmentMonthStartTime,jdbcType=VARCHAR}, #{employmentMonthEndTime,jdbcType=VARCHAR}, 
+      #{employmentHourStartTime,jdbcType=VARCHAR}, #{employmentHourEndTime,jdbcType=VARCHAR}, 
+      #{lowMonthNumber,jdbcType=INTEGER}, #{highMonthNumber,jdbcType=INTEGER}, #{lowHoursNumber,jdbcType=INTEGER}, 
+      #{highHoursNumber,jdbcType=INTEGER}, #{amounts,jdbcType=INTEGER}, #{approveStatus,jdbcType=CHAR}, 
+      #{adjustAmounts,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{baseAllowanceFrequency,jdbcType=INTEGER}, 
+      #{verifyPerson,jdbcType=VARCHAR}, #{businessManager,jdbcType=VARCHAR}, #{headManager,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.AdvancedAgeEmploymentListReceipt" >
+    insert into advancedAgeEmploymentListReceipt
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="seq != null" >
+        seq,
+      </if>
+      <if test="identification != null" >
+        identification,
+      </if>
+      <if test="frequency != null" >
+        frequency,
+      </if>
+      <if test="advancedAgeBaseId != null" >
+        advanced_age_base_id,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="principal != null" >
+        principal,
+      </if>
+      <if test="employeeId != null" >
+        employee_id,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="laborProtectionExpiredTime != null" >
+        labor_protection_expired_time,
+      </if>
+      <if test="occupationalAccidentProtectionExpiredTime != null" >
+        occupational_accident_protection_expired_time,
+      </if>
+      <if test="salary != null" >
+        salary,
+      </if>
+      <if test="salaryMethod != null" >
+        salary_method,
+      </if>
+      <if test="salaryMethodRemark != null" >
+        salary_method_remark,
+      </if>
+      <if test="employmentMonthStartTime != null" >
+        employment_month_start_time,
+      </if>
+      <if test="employmentMonthEndTime != null" >
+        employment_month_end_time,
+      </if>
+      <if test="employmentHourStartTime != null" >
+        employment_hour_start_time,
+      </if>
+      <if test="employmentHourEndTime != null" >
+        employment_hour_end_time,
+      </if>
+      <if test="lowMonthNumber != null" >
+        low_month_number,
+      </if>
+      <if test="highMonthNumber != null" >
+        high_month_number,
+      </if>
+      <if test="lowHoursNumber != null" >
+        low_hours_number,
+      </if>
+      <if test="highHoursNumber != null" >
+        high_hours_number,
+      </if>
+      <if test="amounts != null" >
+        amounts,
+      </if>
+      <if test="approveStatus != null" >
+        approve_status,
+      </if>
+      <if test="adjustAmounts != null" >
+        adjust_amounts,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="baseAllowanceFrequency != null" >
+        base_allowance_frequency,
+      </if>
+      <if test="verifyPerson != null" >
+        verify_person,
+      </if>
+      <if test="businessManager != null" >
+        business_manager,
+      </if>
+      <if test="headManager != null" >
+        head_manager,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="seq != null" >
+        #{seq,jdbcType=VARCHAR},
+      </if>
+      <if test="identification != null" >
+        #{identification,jdbcType=VARCHAR},
+      </if>
+      <if test="frequency != null" >
+        #{frequency,jdbcType=INTEGER},
+      </if>
+      <if test="advancedAgeBaseId != null" >
+        #{advancedAgeBaseId,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="principal != null" >
+        #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null" >
+        #{employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="laborProtectionExpiredTime != null" >
+        #{laborProtectionExpiredTime,jdbcType=VARCHAR},
+      </if>
+      <if test="occupationalAccidentProtectionExpiredTime != null" >
+        #{occupationalAccidentProtectionExpiredTime,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null" >
+        #{salary,jdbcType=INTEGER},
+      </if>
+      <if test="salaryMethod != null" >
+        #{salaryMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="salaryMethodRemark != null" >
+        #{salaryMethodRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="employmentMonthStartTime != null" >
+        #{employmentMonthStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="employmentMonthEndTime != null" >
+        #{employmentMonthEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="employmentHourStartTime != null" >
+        #{employmentHourStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="employmentHourEndTime != null" >
+        #{employmentHourEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="lowMonthNumber != null" >
+        #{lowMonthNumber,jdbcType=INTEGER},
+      </if>
+      <if test="highMonthNumber != null" >
+        #{highMonthNumber,jdbcType=INTEGER},
+      </if>
+      <if test="lowHoursNumber != null" >
+        #{lowHoursNumber,jdbcType=INTEGER},
+      </if>
+      <if test="highHoursNumber != null" >
+        #{highHoursNumber,jdbcType=INTEGER},
+      </if>
+      <if test="amounts != null" >
+        #{amounts,jdbcType=INTEGER},
+      </if>
+      <if test="approveStatus != null" >
+        #{approveStatus,jdbcType=CHAR},
+      </if>
+      <if test="adjustAmounts != null" >
+        #{adjustAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="baseAllowanceFrequency != null" >
+        #{baseAllowanceFrequency,jdbcType=INTEGER},
+      </if>
+      <if test="verifyPerson != null" >
+        #{verifyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="businessManager != null" >
+        #{businessManager,jdbcType=VARCHAR},
+      </if>
+      <if test="headManager != null" >
+        #{headManager,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.AdvancedAgeEmploymentListReceiptExample" resultType="java.lang.Integer" >
+    select count(*) from advancedAgeEmploymentListReceipt
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update advancedAgeEmploymentListReceipt
+    <set >
+      <if test="record.seq != null" >
+        seq = #{record.seq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.identification != null" >
+        identification = #{record.identification,jdbcType=VARCHAR},
+      </if>
+      <if test="record.frequency != null" >
+        frequency = #{record.frequency,jdbcType=INTEGER},
+      </if>
+      <if test="record.advancedAgeBaseId != null" >
+        advanced_age_base_id = #{record.advancedAgeBaseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyName != null" >
+        company_name = #{record.companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.principal != null" >
+        principal = #{record.principal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeId != null" >
+        employee_id = #{record.employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null" >
+        birthday = #{record.birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.laborProtectionExpiredTime != null" >
+        labor_protection_expired_time = #{record.laborProtectionExpiredTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.occupationalAccidentProtectionExpiredTime != null" >
+        occupational_accident_protection_expired_time = #{record.occupationalAccidentProtectionExpiredTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salary != null" >
+        salary = #{record.salary,jdbcType=INTEGER},
+      </if>
+      <if test="record.salaryMethod != null" >
+        salary_method = #{record.salaryMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salaryMethodRemark != null" >
+        salary_method_remark = #{record.salaryMethodRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employmentMonthStartTime != null" >
+        employment_month_start_time = #{record.employmentMonthStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employmentMonthEndTime != null" >
+        employment_month_end_time = #{record.employmentMonthEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employmentHourStartTime != null" >
+        employment_hour_start_time = #{record.employmentHourStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employmentHourEndTime != null" >
+        employment_hour_end_time = #{record.employmentHourEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lowMonthNumber != null" >
+        low_month_number = #{record.lowMonthNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.highMonthNumber != null" >
+        high_month_number = #{record.highMonthNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.lowHoursNumber != null" >
+        low_hours_number = #{record.lowHoursNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.highHoursNumber != null" >
+        high_hours_number = #{record.highHoursNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.amounts != null" >
+        amounts = #{record.amounts,jdbcType=INTEGER},
+      </if>
+      <if test="record.approveStatus != null" >
+        approve_status = #{record.approveStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.adjustAmounts != null" >
+        adjust_amounts = #{record.adjustAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseAllowanceFrequency != null" >
+        base_allowance_frequency = #{record.baseAllowanceFrequency,jdbcType=INTEGER},
+      </if>
+      <if test="record.verifyPerson != null" >
+        verify_person = #{record.verifyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessManager != null" >
+        business_manager = #{record.businessManager,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headManager != null" >
+        head_manager = #{record.headManager,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update advancedAgeEmploymentListReceipt
+    set seq = #{record.seq,jdbcType=VARCHAR},
+      identification = #{record.identification,jdbcType=VARCHAR},
+      frequency = #{record.frequency,jdbcType=INTEGER},
+      advanced_age_base_id = #{record.advancedAgeBaseId,jdbcType=INTEGER},
+      id = #{record.id,jdbcType=INTEGER},
+      company_name = #{record.companyName,jdbcType=VARCHAR},
+      principal = #{record.principal,jdbcType=VARCHAR},
+      employee_id = #{record.employeeId,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      labor_protection_expired_time = #{record.laborProtectionExpiredTime,jdbcType=VARCHAR},
+      occupational_accident_protection_expired_time = #{record.occupationalAccidentProtectionExpiredTime,jdbcType=VARCHAR},
+      salary = #{record.salary,jdbcType=INTEGER},
+      salary_method = #{record.salaryMethod,jdbcType=VARCHAR},
+      salary_method_remark = #{record.salaryMethodRemark,jdbcType=VARCHAR},
+      employment_month_start_time = #{record.employmentMonthStartTime,jdbcType=VARCHAR},
+      employment_month_end_time = #{record.employmentMonthEndTime,jdbcType=VARCHAR},
+      employment_hour_start_time = #{record.employmentHourStartTime,jdbcType=VARCHAR},
+      employment_hour_end_time = #{record.employmentHourEndTime,jdbcType=VARCHAR},
+      low_month_number = #{record.lowMonthNumber,jdbcType=INTEGER},
+      high_month_number = #{record.highMonthNumber,jdbcType=INTEGER},
+      low_hours_number = #{record.lowHoursNumber,jdbcType=INTEGER},
+      high_hours_number = #{record.highHoursNumber,jdbcType=INTEGER},
+      amounts = #{record.amounts,jdbcType=INTEGER},
+      approve_status = #{record.approveStatus,jdbcType=CHAR},
+      adjust_amounts = #{record.adjustAmounts,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      base_allowance_frequency = #{record.baseAllowanceFrequency,jdbcType=INTEGER},
+      verify_person = #{record.verifyPerson,jdbcType=VARCHAR},
+      business_manager = #{record.businessManager,jdbcType=VARCHAR},
+      head_manager = #{record.headManager,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.AdvancedAgeEmploymentListReceipt" >
+    update advancedAgeEmploymentListReceipt
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="principal != null" >
+        principal = #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null" >
+        employee_id = #{employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="laborProtectionExpiredTime != null" >
+        labor_protection_expired_time = #{laborProtectionExpiredTime,jdbcType=VARCHAR},
+      </if>
+      <if test="occupationalAccidentProtectionExpiredTime != null" >
+        occupational_accident_protection_expired_time = #{occupationalAccidentProtectionExpiredTime,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null" >
+        salary = #{salary,jdbcType=INTEGER},
+      </if>
+      <if test="salaryMethod != null" >
+        salary_method = #{salaryMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="salaryMethodRemark != null" >
+        salary_method_remark = #{salaryMethodRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="employmentMonthStartTime != null" >
+        employment_month_start_time = #{employmentMonthStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="employmentMonthEndTime != null" >
+        employment_month_end_time = #{employmentMonthEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="employmentHourStartTime != null" >
+        employment_hour_start_time = #{employmentHourStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="employmentHourEndTime != null" >
+        employment_hour_end_time = #{employmentHourEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="lowMonthNumber != null" >
+        low_month_number = #{lowMonthNumber,jdbcType=INTEGER},
+      </if>
+      <if test="highMonthNumber != null" >
+        high_month_number = #{highMonthNumber,jdbcType=INTEGER},
+      </if>
+      <if test="lowHoursNumber != null" >
+        low_hours_number = #{lowHoursNumber,jdbcType=INTEGER},
+      </if>
+      <if test="highHoursNumber != null" >
+        high_hours_number = #{highHoursNumber,jdbcType=INTEGER},
+      </if>
+      <if test="amounts != null" >
+        amounts = #{amounts,jdbcType=INTEGER},
+      </if>
+      <if test="approveStatus != null" >
+        approve_status = #{approveStatus,jdbcType=CHAR},
+      </if>
+      <if test="adjustAmounts != null" >
+        adjust_amounts = #{adjustAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="baseAllowanceFrequency != null" >
+        base_allowance_frequency = #{baseAllowanceFrequency,jdbcType=INTEGER},
+      </if>
+      <if test="verifyPerson != null" >
+        verify_person = #{verifyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="businessManager != null" >
+        business_manager = #{businessManager,jdbcType=VARCHAR},
+      </if>
+      <if test="headManager != null" >
+        head_manager = #{headManager,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where seq = #{seq,jdbcType=VARCHAR}
+      and identification = #{identification,jdbcType=VARCHAR}
+      and frequency = #{frequency,jdbcType=INTEGER}
+      and advanced_age_base_id = #{advancedAgeBaseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.AdvancedAgeEmploymentListReceipt" >
+    update advancedAgeEmploymentListReceipt
+    set id = #{id,jdbcType=INTEGER},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      principal = #{principal,jdbcType=VARCHAR},
+      employee_id = #{employeeId,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      labor_protection_expired_time = #{laborProtectionExpiredTime,jdbcType=VARCHAR},
+      occupational_accident_protection_expired_time = #{occupationalAccidentProtectionExpiredTime,jdbcType=VARCHAR},
+      salary = #{salary,jdbcType=INTEGER},
+      salary_method = #{salaryMethod,jdbcType=VARCHAR},
+      salary_method_remark = #{salaryMethodRemark,jdbcType=VARCHAR},
+      employment_month_start_time = #{employmentMonthStartTime,jdbcType=VARCHAR},
+      employment_month_end_time = #{employmentMonthEndTime,jdbcType=VARCHAR},
+      employment_hour_start_time = #{employmentHourStartTime,jdbcType=VARCHAR},
+      employment_hour_end_time = #{employmentHourEndTime,jdbcType=VARCHAR},
+      low_month_number = #{lowMonthNumber,jdbcType=INTEGER},
+      high_month_number = #{highMonthNumber,jdbcType=INTEGER},
+      low_hours_number = #{lowHoursNumber,jdbcType=INTEGER},
+      high_hours_number = #{highHoursNumber,jdbcType=INTEGER},
+      amounts = #{amounts,jdbcType=INTEGER},
+      approve_status = #{approveStatus,jdbcType=CHAR},
+      adjust_amounts = #{adjustAmounts,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      base_allowance_frequency = #{baseAllowanceFrequency,jdbcType=INTEGER},
+      verify_person = #{verifyPerson,jdbcType=VARCHAR},
+      business_manager = #{businessManager,jdbcType=VARCHAR},
+      head_manager = #{headManager,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where seq = #{seq,jdbcType=VARCHAR}
+      and identification = #{identification,jdbcType=VARCHAR}
+      and frequency = #{frequency,jdbcType=INTEGER}
+      and advanced_age_base_id = #{advancedAgeBaseId,jdbcType=INTEGER}
+  </update>
+</mapper>

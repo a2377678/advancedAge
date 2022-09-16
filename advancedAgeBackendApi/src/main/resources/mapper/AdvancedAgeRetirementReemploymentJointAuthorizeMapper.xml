@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.dao.AdvancedAgeRetirementReemploymentJointAuthorizeMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.AdvancedAgeRetirementReemploymentJointAuthorize" >
+    <id column="seq" property="seq" jdbcType="VARCHAR" />
+    <id column="advanced_age_retirement_reemployment_apply_id" property="advancedAgeRetirementReemploymentApplyId" jdbcType="INTEGER" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="guarantee_number" property="guaranteeNumber" jdbcType="VARCHAR" />
+    <result column="applicant" property="applicant" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    seq, advanced_age_retirement_reemployment_apply_id, id, company_name, guarantee_number, 
+    applicant, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentJointAuthorizeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from advancedAgeRetirementReemploymentJointAuthorize
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentJointAuthorizeKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from advancedAgeRetirementReemploymentJointAuthorize
+    where seq = #{seq,jdbcType=VARCHAR}
+      and advanced_age_retirement_reemployment_apply_id = #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentJointAuthorizeKey" >
+    delete from advancedAgeRetirementReemploymentJointAuthorize
+    where seq = #{seq,jdbcType=VARCHAR}
+      and advanced_age_retirement_reemployment_apply_id = #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentJointAuthorizeExample" >
+    delete from advancedAgeRetirementReemploymentJointAuthorize
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentJointAuthorize" >
+    insert into advancedAgeRetirementReemploymentJointAuthorize (seq, advanced_age_retirement_reemployment_apply_id, 
+      id, company_name, guarantee_number, 
+      applicant, create_time)
+    values (#{seq,jdbcType=VARCHAR}, #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER}, 
+      #{id,jdbcType=INTEGER}, #{companyName,jdbcType=VARCHAR}, #{guaranteeNumber,jdbcType=VARCHAR}, 
+      #{applicant,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentJointAuthorize" >
+    insert into advancedAgeRetirementReemploymentJointAuthorize
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="seq != null" >
+        seq,
+      </if>
+      <if test="advancedAgeRetirementReemploymentApplyId != null" >
+        advanced_age_retirement_reemployment_apply_id,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="guaranteeNumber != null" >
+        guarantee_number,
+      </if>
+      <if test="applicant != null" >
+        applicant,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="seq != null" >
+        #{seq,jdbcType=VARCHAR},
+      </if>
+      <if test="advancedAgeRetirementReemploymentApplyId != null" >
+        #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteeNumber != null" >
+        #{guaranteeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="applicant != null" >
+        #{applicant,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentJointAuthorizeExample" resultType="java.lang.Integer" >
+    select count(*) from advancedAgeRetirementReemploymentJointAuthorize
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update advancedAgeRetirementReemploymentJointAuthorize
+    <set >
+      <if test="record.seq != null" >
+        seq = #{record.seq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.advancedAgeRetirementReemploymentApplyId != null" >
+        advanced_age_retirement_reemployment_apply_id = #{record.advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyName != null" >
+        company_name = #{record.companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guaranteeNumber != null" >
+        guarantee_number = #{record.guaranteeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicant != null" >
+        applicant = #{record.applicant,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update advancedAgeRetirementReemploymentJointAuthorize
+    set seq = #{record.seq,jdbcType=VARCHAR},
+      advanced_age_retirement_reemployment_apply_id = #{record.advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER},
+      id = #{record.id,jdbcType=INTEGER},
+      company_name = #{record.companyName,jdbcType=VARCHAR},
+      guarantee_number = #{record.guaranteeNumber,jdbcType=VARCHAR},
+      applicant = #{record.applicant,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentJointAuthorize" >
+    update advancedAgeRetirementReemploymentJointAuthorize
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteeNumber != null" >
+        guarantee_number = #{guaranteeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="applicant != null" >
+        applicant = #{applicant,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where seq = #{seq,jdbcType=VARCHAR}
+      and advanced_age_retirement_reemployment_apply_id = #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentJointAuthorize" >
+    update advancedAgeRetirementReemploymentJointAuthorize
+    set id = #{id,jdbcType=INTEGER},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      guarantee_number = #{guaranteeNumber,jdbcType=VARCHAR},
+      applicant = #{applicant,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where seq = #{seq,jdbcType=VARCHAR}
+      and advanced_age_retirement_reemployment_apply_id = #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER}
+  </update>
+</mapper>

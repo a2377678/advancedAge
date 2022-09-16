@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.dao.AttachmentMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.Attachment" >
+    <id column="file_name" property="fileName" jdbcType="VARCHAR" />
+    <id column="file_belong" property="fileBelong" jdbcType="CHAR" />
+    <id column="file_belong_id" property="fileBelongId" jdbcType="INTEGER" />
+    <id column="file_type" property="fileType" jdbcType="VARCHAR" />
+    <id column="file_frequency" property="fileFrequency" jdbcType="INTEGER" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="file_path" property="filePath" jdbcType="VARCHAR" />
+    <result column="file_size" property="fileSize" jdbcType="INTEGER" />
+    <result column="file_status" property="fileStatus" jdbcType="INTEGER" />
+    <result column="file_remark" property="fileRemark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    file_name, file_belong, file_belong_id, file_type, file_frequency, id, file_path, 
+    file_size, file_status, file_remark, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.AttachmentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from attachment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.AttachmentKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from attachment
+    where file_name = #{fileName,jdbcType=VARCHAR}
+      and file_belong = #{fileBelong,jdbcType=CHAR}
+      and file_belong_id = #{fileBelongId,jdbcType=INTEGER}
+      and file_type = #{fileType,jdbcType=VARCHAR}
+      and file_frequency = #{fileFrequency,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.example.springboot.entity.AttachmentKey" >
+    delete from attachment
+    where file_name = #{fileName,jdbcType=VARCHAR}
+      and file_belong = #{fileBelong,jdbcType=CHAR}
+      and file_belong_id = #{fileBelongId,jdbcType=INTEGER}
+      and file_type = #{fileType,jdbcType=VARCHAR}
+      and file_frequency = #{fileFrequency,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.AttachmentExample" >
+    delete from attachment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.Attachment" >
+    insert into attachment (file_name, file_belong, file_belong_id, 
+      file_type, file_frequency, id, 
+      file_path, file_size, file_status, 
+      file_remark, create_time)
+    values (#{fileName,jdbcType=VARCHAR}, #{fileBelong,jdbcType=CHAR}, #{fileBelongId,jdbcType=INTEGER}, 
+      #{fileType,jdbcType=VARCHAR}, #{fileFrequency,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, 
+      #{filePath,jdbcType=VARCHAR}, #{fileSize,jdbcType=INTEGER}, #{fileStatus,jdbcType=INTEGER}, 
+      #{fileRemark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.Attachment" >
+    insert into attachment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fileName != null" >
+        file_name,
+      </if>
+      <if test="fileBelong != null" >
+        file_belong,
+      </if>
+      <if test="fileBelongId != null" >
+        file_belong_id,
+      </if>
+      <if test="fileType != null" >
+        file_type,
+      </if>
+      <if test="fileFrequency != null" >
+        file_frequency,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="filePath != null" >
+        file_path,
+      </if>
+      <if test="fileSize != null" >
+        file_size,
+      </if>
+      <if test="fileStatus != null" >
+        file_status,
+      </if>
+      <if test="fileRemark != null" >
+        file_remark,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fileName != null" >
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileBelong != null" >
+        #{fileBelong,jdbcType=CHAR},
+      </if>
+      <if test="fileBelongId != null" >
+        #{fileBelongId,jdbcType=INTEGER},
+      </if>
+      <if test="fileType != null" >
+        #{fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="fileFrequency != null" >
+        #{fileFrequency,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="filePath != null" >
+        #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null" >
+        #{fileSize,jdbcType=INTEGER},
+      </if>
+      <if test="fileStatus != null" >
+        #{fileStatus,jdbcType=INTEGER},
+      </if>
+      <if test="fileRemark != null" >
+        #{fileRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.AttachmentExample" resultType="java.lang.Integer" >
+    select count(*) from attachment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update attachment
+    <set >
+      <if test="record.fileName != null" >
+        file_name = #{record.fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileBelong != null" >
+        file_belong = #{record.fileBelong,jdbcType=CHAR},
+      </if>
+      <if test="record.fileBelongId != null" >
+        file_belong_id = #{record.fileBelongId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fileType != null" >
+        file_type = #{record.fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileFrequency != null" >
+        file_frequency = #{record.fileFrequency,jdbcType=INTEGER},
+      </if>
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.filePath != null" >
+        file_path = #{record.filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileSize != null" >
+        file_size = #{record.fileSize,jdbcType=INTEGER},
+      </if>
+      <if test="record.fileStatus != null" >
+        file_status = #{record.fileStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.fileRemark != null" >
+        file_remark = #{record.fileRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update attachment
+    set file_name = #{record.fileName,jdbcType=VARCHAR},
+      file_belong = #{record.fileBelong,jdbcType=CHAR},
+      file_belong_id = #{record.fileBelongId,jdbcType=INTEGER},
+      file_type = #{record.fileType,jdbcType=VARCHAR},
+      file_frequency = #{record.fileFrequency,jdbcType=INTEGER},
+      id = #{record.id,jdbcType=INTEGER},
+      file_path = #{record.filePath,jdbcType=VARCHAR},
+      file_size = #{record.fileSize,jdbcType=INTEGER},
+      file_status = #{record.fileStatus,jdbcType=INTEGER},
+      file_remark = #{record.fileRemark,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.Attachment" >
+    update attachment
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="filePath != null" >
+        file_path = #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null" >
+        file_size = #{fileSize,jdbcType=INTEGER},
+      </if>
+      <if test="fileStatus != null" >
+        file_status = #{fileStatus,jdbcType=INTEGER},
+      </if>
+      <if test="fileRemark != null" >
+        file_remark = #{fileRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where file_name = #{fileName,jdbcType=VARCHAR}
+      and file_belong = #{fileBelong,jdbcType=CHAR}
+      and file_belong_id = #{fileBelongId,jdbcType=INTEGER}
+      and file_type = #{fileType,jdbcType=VARCHAR}
+      and file_frequency = #{fileFrequency,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.Attachment" >
+    update attachment
+    set id = #{id,jdbcType=INTEGER},
+      file_path = #{filePath,jdbcType=VARCHAR},
+      file_size = #{fileSize,jdbcType=INTEGER},
+      file_status = #{fileStatus,jdbcType=INTEGER},
+      file_remark = #{fileRemark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where file_name = #{fileName,jdbcType=VARCHAR}
+      and file_belong = #{fileBelong,jdbcType=CHAR}
+      and file_belong_id = #{fileBelongId,jdbcType=INTEGER}
+      and file_type = #{fileType,jdbcType=VARCHAR}
+      and file_frequency = #{fileFrequency,jdbcType=INTEGER}
+  </update>
+</mapper>

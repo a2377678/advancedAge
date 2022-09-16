@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.dao.AdvancedAgeRetirementReemploymentExpenditureMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.AdvancedAgeRetirementReemploymentExpenditure" >
+    <id column="advanced_age_retirement_reemployment_apply_id" property="advancedAgeRetirementReemploymentApplyId" jdbcType="INTEGER" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="plan_id" property="planId" jdbcType="VARCHAR" />
+    <result column="plan_name" property="planName" jdbcType="VARCHAR" />
+    <result column="unit_price" property="unitPrice" jdbcType="INTEGER" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+    <result column="amounts" property="amounts" jdbcType="INTEGER" />
+    <result column="other_amounts" property="otherAmounts" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="filler" property="filler" jdbcType="VARCHAR" />
+    <result column="accountant" property="accountant" jdbcType="VARCHAR" />
+    <result column="applicant" property="applicant" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    advanced_age_retirement_reemployment_apply_id, id, plan_id, plan_name, unit_price, 
+    amount, amounts, other_amounts, description, filler, accountant, applicant
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentExpenditureExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from advancedAgeRetirementReemploymentExpenditure
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from advancedAgeRetirementReemploymentExpenditure
+    where advanced_age_retirement_reemployment_apply_id = #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from advancedAgeRetirementReemploymentExpenditure
+    where advanced_age_retirement_reemployment_apply_id = #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentExpenditureExample" >
+    delete from advancedAgeRetirementReemploymentExpenditure
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentExpenditure" >
+    insert into advancedAgeRetirementReemploymentExpenditure (advanced_age_retirement_reemployment_apply_id, id, 
+      plan_id, plan_name, unit_price, 
+      amount, amounts, other_amounts, 
+      description, filler, accountant, 
+      applicant)
+    values (#{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, 
+      #{planId,jdbcType=VARCHAR}, #{planName,jdbcType=VARCHAR}, #{unitPrice,jdbcType=INTEGER}, 
+      #{amount,jdbcType=INTEGER}, #{amounts,jdbcType=INTEGER}, #{otherAmounts,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{filler,jdbcType=VARCHAR}, #{accountant,jdbcType=VARCHAR}, 
+      #{applicant,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentExpenditure" >
+    insert into advancedAgeRetirementReemploymentExpenditure
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="advancedAgeRetirementReemploymentApplyId != null" >
+        advanced_age_retirement_reemployment_apply_id,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="planId != null" >
+        plan_id,
+      </if>
+      <if test="planName != null" >
+        plan_name,
+      </if>
+      <if test="unitPrice != null" >
+        unit_price,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="amounts != null" >
+        amounts,
+      </if>
+      <if test="otherAmounts != null" >
+        other_amounts,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="filler != null" >
+        filler,
+      </if>
+      <if test="accountant != null" >
+        accountant,
+      </if>
+      <if test="applicant != null" >
+        applicant,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="advancedAgeRetirementReemploymentApplyId != null" >
+        #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="planId != null" >
+        #{planId,jdbcType=VARCHAR},
+      </if>
+      <if test="planName != null" >
+        #{planName,jdbcType=VARCHAR},
+      </if>
+      <if test="unitPrice != null" >
+        #{unitPrice,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="amounts != null" >
+        #{amounts,jdbcType=INTEGER},
+      </if>
+      <if test="otherAmounts != null" >
+        #{otherAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="filler != null" >
+        #{filler,jdbcType=VARCHAR},
+      </if>
+      <if test="accountant != null" >
+        #{accountant,jdbcType=VARCHAR},
+      </if>
+      <if test="applicant != null" >
+        #{applicant,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentExpenditureExample" resultType="java.lang.Integer" >
+    select count(*) from advancedAgeRetirementReemploymentExpenditure
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update advancedAgeRetirementReemploymentExpenditure
+    <set >
+      <if test="record.advancedAgeRetirementReemploymentApplyId != null" >
+        advanced_age_retirement_reemployment_apply_id = #{record.advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.planId != null" >
+        plan_id = #{record.planId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planName != null" >
+        plan_name = #{record.planName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitPrice != null" >
+        unit_price = #{record.unitPrice,jdbcType=INTEGER},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=INTEGER},
+      </if>
+      <if test="record.amounts != null" >
+        amounts = #{record.amounts,jdbcType=INTEGER},
+      </if>
+      <if test="record.otherAmounts != null" >
+        other_amounts = #{record.otherAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filler != null" >
+        filler = #{record.filler,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountant != null" >
+        accountant = #{record.accountant,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicant != null" >
+        applicant = #{record.applicant,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update advancedAgeRetirementReemploymentExpenditure
+    set advanced_age_retirement_reemployment_apply_id = #{record.advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER},
+      id = #{record.id,jdbcType=INTEGER},
+      plan_id = #{record.planId,jdbcType=VARCHAR},
+      plan_name = #{record.planName,jdbcType=VARCHAR},
+      unit_price = #{record.unitPrice,jdbcType=INTEGER},
+      amount = #{record.amount,jdbcType=INTEGER},
+      amounts = #{record.amounts,jdbcType=INTEGER},
+      other_amounts = #{record.otherAmounts,jdbcType=INTEGER},
+      description = #{record.description,jdbcType=VARCHAR},
+      filler = #{record.filler,jdbcType=VARCHAR},
+      accountant = #{record.accountant,jdbcType=VARCHAR},
+      applicant = #{record.applicant,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentExpenditure" >
+    update advancedAgeRetirementReemploymentExpenditure
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="planId != null" >
+        plan_id = #{planId,jdbcType=VARCHAR},
+      </if>
+      <if test="planName != null" >
+        plan_name = #{planName,jdbcType=VARCHAR},
+      </if>
+      <if test="unitPrice != null" >
+        unit_price = #{unitPrice,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="amounts != null" >
+        amounts = #{amounts,jdbcType=INTEGER},
+      </if>
+      <if test="otherAmounts != null" >
+        other_amounts = #{otherAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="filler != null" >
+        filler = #{filler,jdbcType=VARCHAR},
+      </if>
+      <if test="accountant != null" >
+        accountant = #{accountant,jdbcType=VARCHAR},
+      </if>
+      <if test="applicant != null" >
+        applicant = #{applicant,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where advanced_age_retirement_reemployment_apply_id = #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentExpenditure" >
+    update advancedAgeRetirementReemploymentExpenditure
+    set id = #{id,jdbcType=INTEGER},
+      plan_id = #{planId,jdbcType=VARCHAR},
+      plan_name = #{planName,jdbcType=VARCHAR},
+      unit_price = #{unitPrice,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=INTEGER},
+      amounts = #{amounts,jdbcType=INTEGER},
+      other_amounts = #{otherAmounts,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      filler = #{filler,jdbcType=VARCHAR},
+      accountant = #{accountant,jdbcType=VARCHAR},
+      applicant = #{applicant,jdbcType=VARCHAR}
+    where advanced_age_retirement_reemployment_apply_id = #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER}
+  </update>
+</mapper>

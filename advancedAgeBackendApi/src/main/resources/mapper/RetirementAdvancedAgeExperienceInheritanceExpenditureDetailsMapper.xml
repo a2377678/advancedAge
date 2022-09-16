@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.dao.RetirementAdvancedAgeExperienceInheritanceExpenditureDetailsMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceExpenditureDetails" >
+    <id column="retirement_advanced_age_experience_inheritance_result_id" property="retirementAdvancedAgeExperienceInheritanceResultId" jdbcType="INTEGER" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="plan_id" property="planId" jdbcType="INTEGER" />
+    <result column="plan_name" property="planName" jdbcType="VARCHAR" />
+    <result column="approve_amounts" property="approveAmounts" jdbcType="INTEGER" />
+    <result column="real_amounts" property="realAmounts" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="filler" property="filler" jdbcType="VARCHAR" />
+    <result column="accountant" property="accountant" jdbcType="VARCHAR" />
+    <result column="applicant" property="applicant" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    retirement_advanced_age_experience_inheritance_result_id, id, plan_id, plan_name, 
+    approve_amounts, real_amounts, remark, filler, accountant, applicant
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceExpenditureDetailsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from retirementAdvancedAgeExperienceInheritanceExpenditureDetails
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from retirementAdvancedAgeExperienceInheritanceExpenditureDetails
+    where retirement_advanced_age_experience_inheritance_result_id = #{retirementAdvancedAgeExperienceInheritanceResultId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from retirementAdvancedAgeExperienceInheritanceExpenditureDetails
+    where retirement_advanced_age_experience_inheritance_result_id = #{retirementAdvancedAgeExperienceInheritanceResultId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceExpenditureDetailsExample" >
+    delete from retirementAdvancedAgeExperienceInheritanceExpenditureDetails
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceExpenditureDetails" >
+    insert into retirementAdvancedAgeExperienceInheritanceExpenditureDetails (retirement_advanced_age_experience_inheritance_result_id, id, 
+      plan_id, plan_name, approve_amounts, 
+      real_amounts, remark, filler, 
+      accountant, applicant)
+    values (#{retirementAdvancedAgeExperienceInheritanceResultId,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, 
+      #{planId,jdbcType=INTEGER}, #{planName,jdbcType=VARCHAR}, #{approveAmounts,jdbcType=INTEGER}, 
+      #{realAmounts,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{filler,jdbcType=VARCHAR}, 
+      #{accountant,jdbcType=VARCHAR}, #{applicant,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceExpenditureDetails" >
+    insert into retirementAdvancedAgeExperienceInheritanceExpenditureDetails
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="retirementAdvancedAgeExperienceInheritanceResultId != null" >
+        retirement_advanced_age_experience_inheritance_result_id,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="planId != null" >
+        plan_id,
+      </if>
+      <if test="planName != null" >
+        plan_name,
+      </if>
+      <if test="approveAmounts != null" >
+        approve_amounts,
+      </if>
+      <if test="realAmounts != null" >
+        real_amounts,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="filler != null" >
+        filler,
+      </if>
+      <if test="accountant != null" >
+        accountant,
+      </if>
+      <if test="applicant != null" >
+        applicant,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="retirementAdvancedAgeExperienceInheritanceResultId != null" >
+        #{retirementAdvancedAgeExperienceInheritanceResultId,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="planId != null" >
+        #{planId,jdbcType=INTEGER},
+      </if>
+      <if test="planName != null" >
+        #{planName,jdbcType=VARCHAR},
+      </if>
+      <if test="approveAmounts != null" >
+        #{approveAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="realAmounts != null" >
+        #{realAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="filler != null" >
+        #{filler,jdbcType=VARCHAR},
+      </if>
+      <if test="accountant != null" >
+        #{accountant,jdbcType=VARCHAR},
+      </if>
+      <if test="applicant != null" >
+        #{applicant,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceExpenditureDetailsExample" resultType="java.lang.Integer" >
+    select count(*) from retirementAdvancedAgeExperienceInheritanceExpenditureDetails
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update retirementAdvancedAgeExperienceInheritanceExpenditureDetails
+    <set >
+      <if test="record.retirementAdvancedAgeExperienceInheritanceResultId != null" >
+        retirement_advanced_age_experience_inheritance_result_id = #{record.retirementAdvancedAgeExperienceInheritanceResultId,jdbcType=INTEGER},
+      </if>
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.planId != null" >
+        plan_id = #{record.planId,jdbcType=INTEGER},
+      </if>
+      <if test="record.planName != null" >
+        plan_name = #{record.planName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.approveAmounts != null" >
+        approve_amounts = #{record.approveAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="record.realAmounts != null" >
+        real_amounts = #{record.realAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filler != null" >
+        filler = #{record.filler,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountant != null" >
+        accountant = #{record.accountant,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicant != null" >
+        applicant = #{record.applicant,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update retirementAdvancedAgeExperienceInheritanceExpenditureDetails
+    set retirement_advanced_age_experience_inheritance_result_id = #{record.retirementAdvancedAgeExperienceInheritanceResultId,jdbcType=INTEGER},
+      id = #{record.id,jdbcType=INTEGER},
+      plan_id = #{record.planId,jdbcType=INTEGER},
+      plan_name = #{record.planName,jdbcType=VARCHAR},
+      approve_amounts = #{record.approveAmounts,jdbcType=INTEGER},
+      real_amounts = #{record.realAmounts,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      filler = #{record.filler,jdbcType=VARCHAR},
+      accountant = #{record.accountant,jdbcType=VARCHAR},
+      applicant = #{record.applicant,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceExpenditureDetails" >
+    update retirementAdvancedAgeExperienceInheritanceExpenditureDetails
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="planId != null" >
+        plan_id = #{planId,jdbcType=INTEGER},
+      </if>
+      <if test="planName != null" >
+        plan_name = #{planName,jdbcType=VARCHAR},
+      </if>
+      <if test="approveAmounts != null" >
+        approve_amounts = #{approveAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="realAmounts != null" >
+        real_amounts = #{realAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="filler != null" >
+        filler = #{filler,jdbcType=VARCHAR},
+      </if>
+      <if test="accountant != null" >
+        accountant = #{accountant,jdbcType=VARCHAR},
+      </if>
+      <if test="applicant != null" >
+        applicant = #{applicant,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where retirement_advanced_age_experience_inheritance_result_id = #{retirementAdvancedAgeExperienceInheritanceResultId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceExpenditureDetails" >
+    update retirementAdvancedAgeExperienceInheritanceExpenditureDetails
+    set id = #{id,jdbcType=INTEGER},
+      plan_id = #{planId,jdbcType=INTEGER},
+      plan_name = #{planName,jdbcType=VARCHAR},
+      approve_amounts = #{approveAmounts,jdbcType=INTEGER},
+      real_amounts = #{realAmounts,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      filler = #{filler,jdbcType=VARCHAR},
+      accountant = #{accountant,jdbcType=VARCHAR},
+      applicant = #{applicant,jdbcType=VARCHAR}
+    where retirement_advanced_age_experience_inheritance_result_id = #{retirementAdvancedAgeExperienceInheritanceResultId,jdbcType=INTEGER}
+  </update>
+</mapper>

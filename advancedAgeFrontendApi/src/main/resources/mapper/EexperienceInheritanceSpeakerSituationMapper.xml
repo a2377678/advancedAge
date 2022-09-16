@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.dao.EexperienceInheritanceSpeakerSituationMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.EexperienceInheritanceSpeakerSituation" >
+    <id column="identification" property="identification" jdbcType="VARCHAR" />
+    <id column="retirement_advanced_age_experience_inheritance_plan_id" property="retirementAdvancedAgeExperienceInheritancePlanId" jdbcType="INTEGER" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="employee_id" property="employeeId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="situation" property="situation" jdbcType="CHAR" />
+    <result column="execution_month" property="executionMonth" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    identification, retirement_advanced_age_experience_inheritance_plan_id, id, employee_id, 
+    name, situation, execution_month
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.EexperienceInheritanceSpeakerSituationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from experienceInheritanceSpeakerSituation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.EexperienceInheritanceSpeakerSituationKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from experienceInheritanceSpeakerSituation
+    where identification = #{identification,jdbcType=VARCHAR}
+      and retirement_advanced_age_experience_inheritance_plan_id = #{retirementAdvancedAgeExperienceInheritancePlanId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.example.springboot.entity.EexperienceInheritanceSpeakerSituationKey" >
+    delete from experienceInheritanceSpeakerSituation
+    where identification = #{identification,jdbcType=VARCHAR}
+      and retirement_advanced_age_experience_inheritance_plan_id = #{retirementAdvancedAgeExperienceInheritancePlanId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.EexperienceInheritanceSpeakerSituationExample" >
+    delete from experienceInheritanceSpeakerSituation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.EexperienceInheritanceSpeakerSituation" >
+    insert into experienceInheritanceSpeakerSituation (identification, retirement_advanced_age_experience_inheritance_plan_id, 
+      id, employee_id, name, 
+      situation, execution_month)
+    values (#{identification,jdbcType=VARCHAR}, #{retirementAdvancedAgeExperienceInheritancePlanId,jdbcType=INTEGER}, 
+      #{id,jdbcType=INTEGER}, #{employeeId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{situation,jdbcType=CHAR}, #{executionMonth,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.EexperienceInheritanceSpeakerSituation" >
+    insert into experienceInheritanceSpeakerSituation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="identification != null" >
+        identification,
+      </if>
+      <if test="retirementAdvancedAgeExperienceInheritancePlanId != null" >
+        retirement_advanced_age_experience_inheritance_plan_id,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="employeeId != null" >
+        employee_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="situation != null" >
+        situation,
+      </if>
+      <if test="executionMonth != null" >
+        execution_month,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="identification != null" >
+        #{identification,jdbcType=VARCHAR},
+      </if>
+      <if test="retirementAdvancedAgeExperienceInheritancePlanId != null" >
+        #{retirementAdvancedAgeExperienceInheritancePlanId,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="employeeId != null" >
+        #{employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="situation != null" >
+        #{situation,jdbcType=CHAR},
+      </if>
+      <if test="executionMonth != null" >
+        #{executionMonth,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.EexperienceInheritanceSpeakerSituationExample" resultType="java.lang.Integer" >
+    select count(*) from experienceInheritanceSpeakerSituation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update experienceInheritanceSpeakerSituation
+    <set >
+      <if test="record.identification != null" >
+        identification = #{record.identification,jdbcType=VARCHAR},
+      </if>
+      <if test="record.retirementAdvancedAgeExperienceInheritancePlanId != null" >
+        retirement_advanced_age_experience_inheritance_plan_id = #{record.retirementAdvancedAgeExperienceInheritancePlanId,jdbcType=INTEGER},
+      </if>
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.employeeId != null" >
+        employee_id = #{record.employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.situation != null" >
+        situation = #{record.situation,jdbcType=CHAR},
+      </if>
+      <if test="record.executionMonth != null" >
+        execution_month = #{record.executionMonth,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update experienceInheritanceSpeakerSituation
+    set identification = #{record.identification,jdbcType=VARCHAR},
+      retirement_advanced_age_experience_inheritance_plan_id = #{record.retirementAdvancedAgeExperienceInheritancePlanId,jdbcType=INTEGER},
+      id = #{record.id,jdbcType=INTEGER},
+      employee_id = #{record.employeeId,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      situation = #{record.situation,jdbcType=CHAR},
+      execution_month = #{record.executionMonth,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.EexperienceInheritanceSpeakerSituation" >
+    update experienceInheritanceSpeakerSituation
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="employeeId != null" >
+        employee_id = #{employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="situation != null" >
+        situation = #{situation,jdbcType=CHAR},
+      </if>
+      <if test="executionMonth != null" >
+        execution_month = #{executionMonth,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where identification = #{identification,jdbcType=VARCHAR}
+      and retirement_advanced_age_experience_inheritance_plan_id = #{retirementAdvancedAgeExperienceInheritancePlanId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.EexperienceInheritanceSpeakerSituation" >
+    update experienceInheritanceSpeakerSituation
+    set id = #{id,jdbcType=INTEGER},
+      employee_id = #{employeeId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      situation = #{situation,jdbcType=CHAR},
+      execution_month = #{executionMonth,jdbcType=DOUBLE}
+    where identification = #{identification,jdbcType=VARCHAR}
+      and retirement_advanced_age_experience_inheritance_plan_id = #{retirementAdvancedAgeExperienceInheritancePlanId,jdbcType=INTEGER}
+  </update>
+</mapper>

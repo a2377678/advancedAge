@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.dao.AdvancedAgePlanMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.AdvancedAgePlan" >
+    <id column="advanced_age_apply_id" property="advancedAgeApplyId" jdbcType="INTEGER" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="company_create_time" property="companyCreateTime" jdbcType="VARCHAR" />
+    <result column="items" property="items" jdbcType="VARCHAR" />
+    <result column="employment_number" property="employmentNumber" jdbcType="INTEGER" />
+    <result column="high_employment_number" property="highEmploymentNumber" jdbcType="INTEGER" />
+    <result column="middle_employment_number" property="middleEmploymentNumber" jdbcType="INTEGER" />
+    <result column="low_employment_number" property="lowEmploymentNumber" jdbcType="INTEGER" />
+    <result column="friendly_measures" property="friendlyMeasures" jdbcType="VARCHAR" />
+    <result column="attach_friendly_measures" property="attachFriendlyMeasures" jdbcType="CHAR" />
+    <result column="near_high_employment_number" property="nearHighEmploymentNumber" jdbcType="INTEGER" />
+    <result column="continue_employment_number" property="continueEmploymentNumber" jdbcType="INTEGER" />
+    <result column="continue_employment_percentage" property="continueEmploymentPercentage" jdbcType="DOUBLE" />
+    <result column="assistance_measures" property="assistanceMeasures" jdbcType="VARCHAR" />
+    <result column="attach_assistance_measures" property="attachAssistanceMeasures" jdbcType="CHAR" />
+    <result column="expected_measures_effectiveness" property="expectedMeasuresEffectiveness" jdbcType="VARCHAR" />
+    <result column="attach_expected_measures_effectiveness" property="attachExpectedMeasuresEffectiveness" jdbcType="CHAR" />
+    <result column="attach_employment_list" property="attachEmploymentList" jdbcType="CHAR" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="business_manager" property="businessManager" jdbcType="VARCHAR" />
+    <result column="company_principal" property="companyPrincipal" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    advanced_age_apply_id, id, company_name, company_create_time, items, employment_number, 
+    high_employment_number, middle_employment_number, low_employment_number, friendly_measures, 
+    attach_friendly_measures, near_high_employment_number, continue_employment_number, 
+    continue_employment_percentage, assistance_measures, attach_assistance_measures, 
+    expected_measures_effectiveness, attach_expected_measures_effectiveness, attach_employment_list, 
+    creater, business_manager, company_principal, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.AdvancedAgePlanExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from advancedAgePlan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from advancedAgePlan
+    where advanced_age_apply_id = #{advancedAgeApplyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from advancedAgePlan
+    where advanced_age_apply_id = #{advancedAgeApplyId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.AdvancedAgePlanExample" >
+    delete from advancedAgePlan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.AdvancedAgePlan" >
+    insert into advancedAgePlan (advanced_age_apply_id, id, company_name, 
+      company_create_time, items, employment_number, 
+      high_employment_number, middle_employment_number, 
+      low_employment_number, friendly_measures, 
+      attach_friendly_measures, near_high_employment_number, 
+      continue_employment_number, continue_employment_percentage, 
+      assistance_measures, attach_assistance_measures, 
+      expected_measures_effectiveness, attach_expected_measures_effectiveness, 
+      attach_employment_list, creater, business_manager, 
+      company_principal, create_time)
+    values (#{advancedAgeApplyId,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, #{companyName,jdbcType=VARCHAR}, 
+      #{companyCreateTime,jdbcType=VARCHAR}, #{items,jdbcType=VARCHAR}, #{employmentNumber,jdbcType=INTEGER}, 
+      #{highEmploymentNumber,jdbcType=INTEGER}, #{middleEmploymentNumber,jdbcType=INTEGER}, 
+      #{lowEmploymentNumber,jdbcType=INTEGER}, #{friendlyMeasures,jdbcType=VARCHAR}, 
+      #{attachFriendlyMeasures,jdbcType=CHAR}, #{nearHighEmploymentNumber,jdbcType=INTEGER}, 
+      #{continueEmploymentNumber,jdbcType=INTEGER}, #{continueEmploymentPercentage,jdbcType=DOUBLE}, 
+      #{assistanceMeasures,jdbcType=VARCHAR}, #{attachAssistanceMeasures,jdbcType=CHAR}, 
+      #{expectedMeasuresEffectiveness,jdbcType=VARCHAR}, #{attachExpectedMeasuresEffectiveness,jdbcType=CHAR}, 
+      #{attachEmploymentList,jdbcType=CHAR}, #{creater,jdbcType=VARCHAR}, #{businessManager,jdbcType=VARCHAR}, 
+      #{companyPrincipal,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.AdvancedAgePlan" >
+    insert into advancedAgePlan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="advancedAgeApplyId != null" >
+        advanced_age_apply_id,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="companyCreateTime != null" >
+        company_create_time,
+      </if>
+      <if test="items != null" >
+        items,
+      </if>
+      <if test="employmentNumber != null" >
+        employment_number,
+      </if>
+      <if test="highEmploymentNumber != null" >
+        high_employment_number,
+      </if>
+      <if test="middleEmploymentNumber != null" >
+        middle_employment_number,
+      </if>
+      <if test="lowEmploymentNumber != null" >
+        low_employment_number,
+      </if>
+      <if test="friendlyMeasures != null" >
+        friendly_measures,
+      </if>
+      <if test="attachFriendlyMeasures != null" >
+        attach_friendly_measures,
+      </if>
+      <if test="nearHighEmploymentNumber != null" >
+        near_high_employment_number,
+      </if>
+      <if test="continueEmploymentNumber != null" >
+        continue_employment_number,
+      </if>
+      <if test="continueEmploymentPercentage != null" >
+        continue_employment_percentage,
+      </if>
+      <if test="assistanceMeasures != null" >
+        assistance_measures,
+      </if>
+      <if test="attachAssistanceMeasures != null" >
+        attach_assistance_measures,
+      </if>
+      <if test="expectedMeasuresEffectiveness != null" >
+        expected_measures_effectiveness,
+      </if>
+      <if test="attachExpectedMeasuresEffectiveness != null" >
+        attach_expected_measures_effectiveness,
+      </if>
+      <if test="attachEmploymentList != null" >
+        attach_employment_list,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="businessManager != null" >
+        business_manager,
+      </if>
+      <if test="companyPrincipal != null" >
+        company_principal,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="advancedAgeApplyId != null" >
+        #{advancedAgeApplyId,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCreateTime != null" >
+        #{companyCreateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="items != null" >
+        #{items,jdbcType=VARCHAR},
+      </if>
+      <if test="employmentNumber != null" >
+        #{employmentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="highEmploymentNumber != null" >
+        #{highEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="middleEmploymentNumber != null" >
+        #{middleEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="lowEmploymentNumber != null" >
+        #{lowEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="friendlyMeasures != null" >
+        #{friendlyMeasures,jdbcType=VARCHAR},
+      </if>
+      <if test="attachFriendlyMeasures != null" >
+        #{attachFriendlyMeasures,jdbcType=CHAR},
+      </if>
+      <if test="nearHighEmploymentNumber != null" >
+        #{nearHighEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="continueEmploymentNumber != null" >
+        #{continueEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="continueEmploymentPercentage != null" >
+        #{continueEmploymentPercentage,jdbcType=DOUBLE},
+      </if>
+      <if test="assistanceMeasures != null" >
+        #{assistanceMeasures,jdbcType=VARCHAR},
+      </if>
+      <if test="attachAssistanceMeasures != null" >
+        #{attachAssistanceMeasures,jdbcType=CHAR},
+      </if>
+      <if test="expectedMeasuresEffectiveness != null" >
+        #{expectedMeasuresEffectiveness,jdbcType=VARCHAR},
+      </if>
+      <if test="attachExpectedMeasuresEffectiveness != null" >
+        #{attachExpectedMeasuresEffectiveness,jdbcType=CHAR},
+      </if>
+      <if test="attachEmploymentList != null" >
+        #{attachEmploymentList,jdbcType=CHAR},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="businessManager != null" >
+        #{businessManager,jdbcType=VARCHAR},
+      </if>
+      <if test="companyPrincipal != null" >
+        #{companyPrincipal,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.AdvancedAgePlanExample" resultType="java.lang.Integer" >
+    select count(*) from advancedAgePlan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update advancedAgePlan
+    <set >
+      <if test="record.advancedAgeApplyId != null" >
+        advanced_age_apply_id = #{record.advancedAgeApplyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyName != null" >
+        company_name = #{record.companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyCreateTime != null" >
+        company_create_time = #{record.companyCreateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.items != null" >
+        items = #{record.items,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employmentNumber != null" >
+        employment_number = #{record.employmentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.highEmploymentNumber != null" >
+        high_employment_number = #{record.highEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.middleEmploymentNumber != null" >
+        middle_employment_number = #{record.middleEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.lowEmploymentNumber != null" >
+        low_employment_number = #{record.lowEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.friendlyMeasures != null" >
+        friendly_measures = #{record.friendlyMeasures,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attachFriendlyMeasures != null" >
+        attach_friendly_measures = #{record.attachFriendlyMeasures,jdbcType=CHAR},
+      </if>
+      <if test="record.nearHighEmploymentNumber != null" >
+        near_high_employment_number = #{record.nearHighEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.continueEmploymentNumber != null" >
+        continue_employment_number = #{record.continueEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.continueEmploymentPercentage != null" >
+        continue_employment_percentage = #{record.continueEmploymentPercentage,jdbcType=DOUBLE},
+      </if>
+      <if test="record.assistanceMeasures != null" >
+        assistance_measures = #{record.assistanceMeasures,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attachAssistanceMeasures != null" >
+        attach_assistance_measures = #{record.attachAssistanceMeasures,jdbcType=CHAR},
+      </if>
+      <if test="record.expectedMeasuresEffectiveness != null" >
+        expected_measures_effectiveness = #{record.expectedMeasuresEffectiveness,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attachExpectedMeasuresEffectiveness != null" >
+        attach_expected_measures_effectiveness = #{record.attachExpectedMeasuresEffectiveness,jdbcType=CHAR},
+      </if>
+      <if test="record.attachEmploymentList != null" >
+        attach_employment_list = #{record.attachEmploymentList,jdbcType=CHAR},
+      </if>
+      <if test="record.creater != null" >
+        creater = #{record.creater,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessManager != null" >
+        business_manager = #{record.businessManager,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyPrincipal != null" >
+        company_principal = #{record.companyPrincipal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update advancedAgePlan
+    set advanced_age_apply_id = #{record.advancedAgeApplyId,jdbcType=INTEGER},
+      id = #{record.id,jdbcType=INTEGER},
+      company_name = #{record.companyName,jdbcType=VARCHAR},
+      company_create_time = #{record.companyCreateTime,jdbcType=VARCHAR},
+      items = #{record.items,jdbcType=VARCHAR},
+      employment_number = #{record.employmentNumber,jdbcType=INTEGER},
+      high_employment_number = #{record.highEmploymentNumber,jdbcType=INTEGER},
+      middle_employment_number = #{record.middleEmploymentNumber,jdbcType=INTEGER},
+      low_employment_number = #{record.lowEmploymentNumber,jdbcType=INTEGER},
+      friendly_measures = #{record.friendlyMeasures,jdbcType=VARCHAR},
+      attach_friendly_measures = #{record.attachFriendlyMeasures,jdbcType=CHAR},
+      near_high_employment_number = #{record.nearHighEmploymentNumber,jdbcType=INTEGER},
+      continue_employment_number = #{record.continueEmploymentNumber,jdbcType=INTEGER},
+      continue_employment_percentage = #{record.continueEmploymentPercentage,jdbcType=DOUBLE},
+      assistance_measures = #{record.assistanceMeasures,jdbcType=VARCHAR},
+      attach_assistance_measures = #{record.attachAssistanceMeasures,jdbcType=CHAR},
+      expected_measures_effectiveness = #{record.expectedMeasuresEffectiveness,jdbcType=VARCHAR},
+      attach_expected_measures_effectiveness = #{record.attachExpectedMeasuresEffectiveness,jdbcType=CHAR},
+      attach_employment_list = #{record.attachEmploymentList,jdbcType=CHAR},
+      creater = #{record.creater,jdbcType=VARCHAR},
+      business_manager = #{record.businessManager,jdbcType=VARCHAR},
+      company_principal = #{record.companyPrincipal,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.AdvancedAgePlan" >
+    update advancedAgePlan
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCreateTime != null" >
+        company_create_time = #{companyCreateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="items != null" >
+        items = #{items,jdbcType=VARCHAR},
+      </if>
+      <if test="employmentNumber != null" >
+        employment_number = #{employmentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="highEmploymentNumber != null" >
+        high_employment_number = #{highEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="middleEmploymentNumber != null" >
+        middle_employment_number = #{middleEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="lowEmploymentNumber != null" >
+        low_employment_number = #{lowEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="friendlyMeasures != null" >
+        friendly_measures = #{friendlyMeasures,jdbcType=VARCHAR},
+      </if>
+      <if test="attachFriendlyMeasures != null" >
+        attach_friendly_measures = #{attachFriendlyMeasures,jdbcType=CHAR},
+      </if>
+      <if test="nearHighEmploymentNumber != null" >
+        near_high_employment_number = #{nearHighEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="continueEmploymentNumber != null" >
+        continue_employment_number = #{continueEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="continueEmploymentPercentage != null" >
+        continue_employment_percentage = #{continueEmploymentPercentage,jdbcType=DOUBLE},
+      </if>
+      <if test="assistanceMeasures != null" >
+        assistance_measures = #{assistanceMeasures,jdbcType=VARCHAR},
+      </if>
+      <if test="attachAssistanceMeasures != null" >
+        attach_assistance_measures = #{attachAssistanceMeasures,jdbcType=CHAR},
+      </if>
+      <if test="expectedMeasuresEffectiveness != null" >
+        expected_measures_effectiveness = #{expectedMeasuresEffectiveness,jdbcType=VARCHAR},
+      </if>
+      <if test="attachExpectedMeasuresEffectiveness != null" >
+        attach_expected_measures_effectiveness = #{attachExpectedMeasuresEffectiveness,jdbcType=CHAR},
+      </if>
+      <if test="attachEmploymentList != null" >
+        attach_employment_list = #{attachEmploymentList,jdbcType=CHAR},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="businessManager != null" >
+        business_manager = #{businessManager,jdbcType=VARCHAR},
+      </if>
+      <if test="companyPrincipal != null" >
+        company_principal = #{companyPrincipal,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where advanced_age_apply_id = #{advancedAgeApplyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.AdvancedAgePlan" >
+    update advancedAgePlan
+    set id = #{id,jdbcType=INTEGER},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      company_create_time = #{companyCreateTime,jdbcType=VARCHAR},
+      items = #{items,jdbcType=VARCHAR},
+      employment_number = #{employmentNumber,jdbcType=INTEGER},
+      high_employment_number = #{highEmploymentNumber,jdbcType=INTEGER},
+      middle_employment_number = #{middleEmploymentNumber,jdbcType=INTEGER},
+      low_employment_number = #{lowEmploymentNumber,jdbcType=INTEGER},
+      friendly_measures = #{friendlyMeasures,jdbcType=VARCHAR},
+      attach_friendly_measures = #{attachFriendlyMeasures,jdbcType=CHAR},
+      near_high_employment_number = #{nearHighEmploymentNumber,jdbcType=INTEGER},
+      continue_employment_number = #{continueEmploymentNumber,jdbcType=INTEGER},
+      continue_employment_percentage = #{continueEmploymentPercentage,jdbcType=DOUBLE},
+      assistance_measures = #{assistanceMeasures,jdbcType=VARCHAR},
+      attach_assistance_measures = #{attachAssistanceMeasures,jdbcType=CHAR},
+      expected_measures_effectiveness = #{expectedMeasuresEffectiveness,jdbcType=VARCHAR},
+      attach_expected_measures_effectiveness = #{attachExpectedMeasuresEffectiveness,jdbcType=CHAR},
+      attach_employment_list = #{attachEmploymentList,jdbcType=CHAR},
+      creater = #{creater,jdbcType=VARCHAR},
+      business_manager = #{businessManager,jdbcType=VARCHAR},
+      company_principal = #{companyPrincipal,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where advanced_age_apply_id = #{advancedAgeApplyId,jdbcType=INTEGER}
+  </update>
+</mapper>

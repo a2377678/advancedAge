@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<properties resource="application.properties"/>
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+
+        <!--自動實現Serializable介面-->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
+
+        <!-- 去除自動生成的註釋 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+		
+        <!--資料庫基本資訊-->
+        <jdbcConnection driverClass="${spring.datasource.driverClassName}"
+                        connectionURL="${spring.datasource.url}"
+                        userId="${spring.datasource.username}"
+                        password="${spring.datasource.password}">
+        </jdbcConnection>
+<!-- 		<jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver" -->
+<!--                         connectionURL="jdbc:sqlserver://localhost:1433;DatabaseName=workforce" -->
+<!--                         userId="mssqlWorkforce" -->
+<!--                         password="mssqlWorkforce"> -->
+<!--         </jdbcConnection> -->
+        <!--生成實體類的位置以及包的名字-->
+        <javaModelGenerator targetPackage="com.example.springboot.entity"
+                            targetProject="src\main\java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!--生成對映檔案存放位置-->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src\main\resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!--生成Dao類存放位置,mapper介面生成的位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.example.springboot.dao" targetProject="src\main\java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <!--生成對應表及類名-->
+<!--         <table tableName="companyInfo" domainObjectName="CompanyInfo"></table> -->
+<!--         <table tableName="userLoginRecord" domainObjectName="UserLoginRecord"></table> -->
+<!--         <table tableName="userInfo" domainObjectName="UserInfo"></table> -->
+<!--         <table tableName="functionList" domainObjectName="FunctionList"></table> -->
+<!--         <table tableName="functionPermission" domainObjectName="FunctionPermission"></table> -->
+<!--         <table tableName="advancedAgeBase" domainObjectName="AdvancedAgeBase"></table> -->
+<!--         <table tableName="advancedAgeApply" domainObjectName="AdvancedAgeApply"></table> -->
+<!--         <table tableName="advancedAgePlan" domainObjectName="AdvancedAgePlan"></table> -->
+<!--         <table tableName="advancedAgeEmploymentList" domainObjectName="AdvancedAgeEmploymentList"></table> -->
+<!--         <table tableName="advancedAgeApplyEmployedSituation" domainObjectName="AdvancedAgeApplyEmployedSituation"></table> -->
+<!--         <table tableName="advancedAgeApplyEmployedReceipt" domainObjectName="AdvancedAgeApplyEmployedReceipt"></table> -->
+<!--         <table tableName="advancedAgeEmploymentListReceipt" domainObjectName="AdvancedAgeEmploymentListReceipt"></table> -->
+        <table tableName="mailRecord" domainObjectName="MailRecord"></table>
+<!-- 		<table tableName="parameter" domainObjectName="Parameter"></table> -->
+<!-- 		<table tableName="attachment" domainObjectName="Attachment"></table> -->
+<!-- 		<table tableName="unit" domainObjectName="Unit"></table> -->
+<!-- 		<table tableName="blackList" domainObjectName="BlackList"></table> -->
+<!-- 		<table tableName="siteInspection" domainObjectName="SiteInspection"></table> -->
+
+<!-- 		<table tableName="retirementAdvancedAgeExperienceInheritanceApply" domainObjectName="RetirementAdvancedAgeExperienceInheritanceApply"></table> -->
+<!-- 		<table tableName="retirementAdvancedAgeExperienceInheritancePlan" domainObjectName="RretirementAdvancedAgeExperienceInheritancePlan"></table> -->
+<!-- 		<table tableName="experienceInheritanceSpeakerList" domainObjectName="EexperienceInheritanceSpeakerList"></table> -->
+<!-- 		<table tableName="experienceInheritanceSpeakerSituation" domainObjectName="EexperienceInheritanceSpeakerSituation"></table> -->
+<!-- 		<table tableName="retirementAdvancedAgeExperienceInheritanceSchedule" domainObjectName="RretirementAdvancedAgeExperienceInheritanceSchedule"></table> -->
+<!-- 		<table tableName="retirementAdvancedAgeExperienceInheritanceExpenditure" domainObjectName="RretirementAdvancedAgeExperienceInheritanceExpenditure"></table> -->
+<!-- 		<table tableName="retirementAdvancedAgeExperienceInheritanceResult" domainObjectName="RretirementAdvancedAgeExperienceInheritanceResult"></table> -->
+<!-- 		<table tableName="retirementAdvancedAgeExperienceInheritanceReceipt" domainObjectName="RretirementAdvancedAgeExperienceInheritanceReceipt"></table> -->
+<!-- 		<table tableName="retirementAdvancedAgeExperienceInheritanceSpeakerFeeList" domainObjectName="RetirementAdvancedAgeExperienceInheritanceSpeakerFeeList"></table> -->
+<!-- 		<table tableName="retirementAdvancedAgeExperienceInheritanceExpenditureDetails" domainObjectName="RetirementAdvancedAgeExperienceInheritanceExpenditureDetails"></table> -->
+		
+<!-- 		<table tableName="advancedAgeRetirementReemploymentApply" domainObjectName="AdvancedAgeRetirementReemploymentApply"></table> -->
+<!-- 		<table tableName="advancedAgeRetirementReemploymentPlan" domainObjectName="AdvancedAgeRetirementReemploymentPlan"></table> -->
+<!-- 		<table tableName="advancedAgeRetirementReemploymentBenefitList" domainObjectName="AdvancedAgeRetirementReemploymentBenefitList"></table> -->
+<!-- 		<table tableName="advancedAgeRetirementReemploymentExpenditure" domainObjectName="AdvancedAgeRetirementReemploymentExpenditure"></table> -->
+<!-- 		<table tableName="advancedAgeRetirementReemploymentJointAuthorize" domainObjectName="AdvancedAgeRetirementReemploymentJointAuthorize"></table> -->
+<!-- 		<table tableName="advancedAgeRetirementReemploymentBasicData" domainObjectName="AdvancedAgeRetirementReemploymentBasicData"></table> -->
+<!-- 		<table tableName="advancedAgeRetirementReemploymentResult" domainObjectName="AdvancedAgeRetirementReemploymentResult"></table> -->
+<!-- 		<table tableName="advancedAgeRetirementReemploymentReceipt" domainObjectName="AdvancedAgeRetirementReemploymentReceipt"></table> -->
+<!-- 		<table tableName="advancedAgeRetirementReemploymentExpenditureDetails" domainObjectName="AdvancedAgeRetirementReemploymentExpenditureDetails"></table> -->
+		
+        <!--對應的表名，以及實體名-->
+        <!-- <table tableName="t_emp" domainObjectName="EMP" ></table> -->
+
+    </context>
+
+</generatorConfiguration>

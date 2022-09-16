@@ -1,0 +1,807 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.dao.RetirementAdvancedAgeExperienceInheritanceApplyMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceApply" >
+    <id column="seq" property="seq" jdbcType="VARCHAR" />
+    <id column="apply_year" property="applyYear" jdbcType="VARCHAR" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="guarantee_number" property="guaranteeNumber" jdbcType="VARCHAR" />
+    <result column="principal" property="principal" jdbcType="VARCHAR" />
+    <result column="jobtitle" property="jobtitle" jdbcType="VARCHAR" />
+    <result column="contact_city" property="contactCity" jdbcType="VARCHAR" />
+    <result column="contact_area" property="contactArea" jdbcType="VARCHAR" />
+    <result column="contact_address" property="contactAddress" jdbcType="VARCHAR" />
+    <result column="employee_number" property="employeeNumber" jdbcType="INTEGER" />
+    <result column="retirement_experience_inheritance_number" property="retirementExperienceInheritanceNumber" jdbcType="INTEGER" />
+    <result column="employee_number_structure_1" property="employeeNumberStructure1" jdbcType="INTEGER" />
+    <result column="employee_number_structure_2" property="employeeNumberStructure2" jdbcType="INTEGER" />
+    <result column="employee_number_structure_3" property="employeeNumberStructure3" jdbcType="INTEGER" />
+    <result column="employee_number_structure_4" property="employeeNumberStructure4" jdbcType="INTEGER" />
+    <result column="company_attributes" property="companyAttributes" jdbcType="CHAR" />
+    <result column="industry" property="industry" jdbcType="CHAR" />
+    <result column="contact_name" property="contactName" jdbcType="VARCHAR" />
+    <result column="contact_jobtitle" property="contactJobtitle" jdbcType="VARCHAR" />
+    <result column="contact_work_phone_area_code" property="contactWorkPhoneAreaCode" jdbcType="VARCHAR" />
+    <result column="contact_work_phone" property="contactWorkPhone" jdbcType="VARCHAR" />
+    <result column="contact_work_phone_extension" property="contactWorkPhoneExtension" jdbcType="VARCHAR" />
+    <result column="contact_phone" property="contactPhone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="attach_documents_apply" property="attachDocumentsApply" jdbcType="CHAR" />
+    <result column="attach_documents_plan" property="attachDocumentsPlan" jdbcType="CHAR" />
+    <result column="attach_documents_schedule" property="attachDocumentsSchedule" jdbcType="CHAR" />
+    <result column="attach_documents_expenditure" property="attachDocumentsExpenditure" jdbcType="CHAR" />
+    <result column="attach_documents_register_proof" property="attachDocumentsRegisterProof" jdbcType="CHAR" />
+    <result column="attach_documents_speaker_retirement_proof" property="attachDocumentsSpeakerRetirementProof" jdbcType="CHAR" />
+    <result column="attach_documents_speaker_experience_proof" property="attachDocumentsSpeakerExperienceProof" jdbcType="CHAR" />
+    <result column="attach_documents_employment_proof" property="attachDocumentsEmploymentProof" jdbcType="CHAR" />
+    <result column="attach_documents_other_proof" property="attachDocumentsOtherProof" jdbcType="CHAR" />
+    <result column="attach_documents_other_proof_document" property="attachDocumentsOtherProofDocument" jdbcType="VARCHAR" />
+    <result column="agree" property="agree" jdbcType="CHAR" />
+    <result column="filler" property="filler" jdbcType="VARCHAR" />
+    <result column="applicant" property="applicant" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    seq, apply_year, id, company_name, guarantee_number, principal, jobtitle, contact_city, 
+    contact_area, contact_address, employee_number, retirement_experience_inheritance_number, 
+    employee_number_structure_1, employee_number_structure_2, employee_number_structure_3, 
+    employee_number_structure_4, company_attributes, industry, contact_name, contact_jobtitle, 
+    contact_work_phone_area_code, contact_work_phone, contact_work_phone_extension, contact_phone, 
+    email, attach_documents_apply, attach_documents_plan, attach_documents_schedule, 
+    attach_documents_expenditure, attach_documents_register_proof, attach_documents_speaker_retirement_proof, 
+    attach_documents_speaker_experience_proof, attach_documents_employment_proof, attach_documents_other_proof, 
+    attach_documents_other_proof_document, agree, filler, applicant, create_time, updator, 
+    update_time, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceApplyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from retirementAdvancedAgeExperienceInheritanceApply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceApplyKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from retirementAdvancedAgeExperienceInheritanceApply
+    where seq = #{seq,jdbcType=VARCHAR}
+      and apply_year = #{applyYear,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceApplyKey" >
+    delete from retirementAdvancedAgeExperienceInheritanceApply
+    where seq = #{seq,jdbcType=VARCHAR}
+      and apply_year = #{applyYear,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceApplyExample" >
+    delete from retirementAdvancedAgeExperienceInheritanceApply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceApply" >
+    insert into retirementAdvancedAgeExperienceInheritanceApply (seq, apply_year, id, 
+      company_name, guarantee_number, principal, 
+      jobtitle, contact_city, contact_area, 
+      contact_address, employee_number, retirement_experience_inheritance_number, 
+      employee_number_structure_1, employee_number_structure_2, 
+      employee_number_structure_3, employee_number_structure_4, 
+      company_attributes, industry, contact_name, 
+      contact_jobtitle, contact_work_phone_area_code, 
+      contact_work_phone, contact_work_phone_extension, 
+      contact_phone, email, attach_documents_apply, 
+      attach_documents_plan, attach_documents_schedule, 
+      attach_documents_expenditure, attach_documents_register_proof, 
+      attach_documents_speaker_retirement_proof, attach_documents_speaker_experience_proof, 
+      attach_documents_employment_proof, attach_documents_other_proof, 
+      attach_documents_other_proof_document, agree, 
+      filler, applicant, create_time, 
+      updator, update_time, remark
+      )
+    values (#{seq,jdbcType=VARCHAR}, #{applyYear,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}, 
+      #{companyName,jdbcType=VARCHAR}, #{guaranteeNumber,jdbcType=VARCHAR}, #{principal,jdbcType=VARCHAR}, 
+      #{jobtitle,jdbcType=VARCHAR}, #{contactCity,jdbcType=VARCHAR}, #{contactArea,jdbcType=VARCHAR}, 
+      #{contactAddress,jdbcType=VARCHAR}, #{employeeNumber,jdbcType=INTEGER}, #{retirementExperienceInheritanceNumber,jdbcType=INTEGER}, 
+      #{employeeNumberStructure1,jdbcType=INTEGER}, #{employeeNumberStructure2,jdbcType=INTEGER}, 
+      #{employeeNumberStructure3,jdbcType=INTEGER}, #{employeeNumberStructure4,jdbcType=INTEGER}, 
+      #{companyAttributes,jdbcType=CHAR}, #{industry,jdbcType=CHAR}, #{contactName,jdbcType=VARCHAR}, 
+      #{contactJobtitle,jdbcType=VARCHAR}, #{contactWorkPhoneAreaCode,jdbcType=VARCHAR}, 
+      #{contactWorkPhone,jdbcType=VARCHAR}, #{contactWorkPhoneExtension,jdbcType=VARCHAR}, 
+      #{contactPhone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{attachDocumentsApply,jdbcType=CHAR}, 
+      #{attachDocumentsPlan,jdbcType=CHAR}, #{attachDocumentsSchedule,jdbcType=CHAR}, 
+      #{attachDocumentsExpenditure,jdbcType=CHAR}, #{attachDocumentsRegisterProof,jdbcType=CHAR}, 
+      #{attachDocumentsSpeakerRetirementProof,jdbcType=CHAR}, #{attachDocumentsSpeakerExperienceProof,jdbcType=CHAR}, 
+      #{attachDocumentsEmploymentProof,jdbcType=CHAR}, #{attachDocumentsOtherProof,jdbcType=CHAR}, 
+      #{attachDocumentsOtherProofDocument,jdbcType=VARCHAR}, #{agree,jdbcType=CHAR}, 
+      #{filler,jdbcType=VARCHAR}, #{applicant,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updator,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceApply" >
+    insert into retirementAdvancedAgeExperienceInheritanceApply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="seq != null" >
+        seq,
+      </if>
+      <if test="applyYear != null" >
+        apply_year,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="guaranteeNumber != null" >
+        guarantee_number,
+      </if>
+      <if test="principal != null" >
+        principal,
+      </if>
+      <if test="jobtitle != null" >
+        jobtitle,
+      </if>
+      <if test="contactCity != null" >
+        contact_city,
+      </if>
+      <if test="contactArea != null" >
+        contact_area,
+      </if>
+      <if test="contactAddress != null" >
+        contact_address,
+      </if>
+      <if test="employeeNumber != null" >
+        employee_number,
+      </if>
+      <if test="retirementExperienceInheritanceNumber != null" >
+        retirement_experience_inheritance_number,
+      </if>
+      <if test="employeeNumberStructure1 != null" >
+        employee_number_structure_1,
+      </if>
+      <if test="employeeNumberStructure2 != null" >
+        employee_number_structure_2,
+      </if>
+      <if test="employeeNumberStructure3 != null" >
+        employee_number_structure_3,
+      </if>
+      <if test="employeeNumberStructure4 != null" >
+        employee_number_structure_4,
+      </if>
+      <if test="companyAttributes != null" >
+        company_attributes,
+      </if>
+      <if test="industry != null" >
+        industry,
+      </if>
+      <if test="contactName != null" >
+        contact_name,
+      </if>
+      <if test="contactJobtitle != null" >
+        contact_jobtitle,
+      </if>
+      <if test="contactWorkPhoneAreaCode != null" >
+        contact_work_phone_area_code,
+      </if>
+      <if test="contactWorkPhone != null" >
+        contact_work_phone,
+      </if>
+      <if test="contactWorkPhoneExtension != null" >
+        contact_work_phone_extension,
+      </if>
+      <if test="contactPhone != null" >
+        contact_phone,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="attachDocumentsApply != null" >
+        attach_documents_apply,
+      </if>
+      <if test="attachDocumentsPlan != null" >
+        attach_documents_plan,
+      </if>
+      <if test="attachDocumentsSchedule != null" >
+        attach_documents_schedule,
+      </if>
+      <if test="attachDocumentsExpenditure != null" >
+        attach_documents_expenditure,
+      </if>
+      <if test="attachDocumentsRegisterProof != null" >
+        attach_documents_register_proof,
+      </if>
+      <if test="attachDocumentsSpeakerRetirementProof != null" >
+        attach_documents_speaker_retirement_proof,
+      </if>
+      <if test="attachDocumentsSpeakerExperienceProof != null" >
+        attach_documents_speaker_experience_proof,
+      </if>
+      <if test="attachDocumentsEmploymentProof != null" >
+        attach_documents_employment_proof,
+      </if>
+      <if test="attachDocumentsOtherProof != null" >
+        attach_documents_other_proof,
+      </if>
+      <if test="attachDocumentsOtherProofDocument != null" >
+        attach_documents_other_proof_document,
+      </if>
+      <if test="agree != null" >
+        agree,
+      </if>
+      <if test="filler != null" >
+        filler,
+      </if>
+      <if test="applicant != null" >
+        applicant,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updator != null" >
+        updator,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="seq != null" >
+        #{seq,jdbcType=VARCHAR},
+      </if>
+      <if test="applyYear != null" >
+        #{applyYear,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteeNumber != null" >
+        #{guaranteeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="principal != null" >
+        #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="jobtitle != null" >
+        #{jobtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="contactCity != null" >
+        #{contactCity,jdbcType=VARCHAR},
+      </if>
+      <if test="contactArea != null" >
+        #{contactArea,jdbcType=VARCHAR},
+      </if>
+      <if test="contactAddress != null" >
+        #{contactAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeNumber != null" >
+        #{employeeNumber,jdbcType=INTEGER},
+      </if>
+      <if test="retirementExperienceInheritanceNumber != null" >
+        #{retirementExperienceInheritanceNumber,jdbcType=INTEGER},
+      </if>
+      <if test="employeeNumberStructure1 != null" >
+        #{employeeNumberStructure1,jdbcType=INTEGER},
+      </if>
+      <if test="employeeNumberStructure2 != null" >
+        #{employeeNumberStructure2,jdbcType=INTEGER},
+      </if>
+      <if test="employeeNumberStructure3 != null" >
+        #{employeeNumberStructure3,jdbcType=INTEGER},
+      </if>
+      <if test="employeeNumberStructure4 != null" >
+        #{employeeNumberStructure4,jdbcType=INTEGER},
+      </if>
+      <if test="companyAttributes != null" >
+        #{companyAttributes,jdbcType=CHAR},
+      </if>
+      <if test="industry != null" >
+        #{industry,jdbcType=CHAR},
+      </if>
+      <if test="contactName != null" >
+        #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactJobtitle != null" >
+        #{contactJobtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="contactWorkPhoneAreaCode != null" >
+        #{contactWorkPhoneAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="contactWorkPhone != null" >
+        #{contactWorkPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="contactWorkPhoneExtension != null" >
+        #{contactWorkPhoneExtension,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null" >
+        #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="attachDocumentsApply != null" >
+        #{attachDocumentsApply,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsPlan != null" >
+        #{attachDocumentsPlan,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsSchedule != null" >
+        #{attachDocumentsSchedule,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsExpenditure != null" >
+        #{attachDocumentsExpenditure,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsRegisterProof != null" >
+        #{attachDocumentsRegisterProof,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsSpeakerRetirementProof != null" >
+        #{attachDocumentsSpeakerRetirementProof,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsSpeakerExperienceProof != null" >
+        #{attachDocumentsSpeakerExperienceProof,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsEmploymentProof != null" >
+        #{attachDocumentsEmploymentProof,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsOtherProof != null" >
+        #{attachDocumentsOtherProof,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsOtherProofDocument != null" >
+        #{attachDocumentsOtherProofDocument,jdbcType=VARCHAR},
+      </if>
+      <if test="agree != null" >
+        #{agree,jdbcType=CHAR},
+      </if>
+      <if test="filler != null" >
+        #{filler,jdbcType=VARCHAR},
+      </if>
+      <if test="applicant != null" >
+        #{applicant,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updator != null" >
+        #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceApplyExample" resultType="java.lang.Integer" >
+    select count(*) from retirementAdvancedAgeExperienceInheritanceApply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update retirementAdvancedAgeExperienceInheritanceApply
+    <set >
+      <if test="record.seq != null" >
+        seq = #{record.seq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyYear != null" >
+        apply_year = #{record.applyYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyName != null" >
+        company_name = #{record.companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guaranteeNumber != null" >
+        guarantee_number = #{record.guaranteeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.principal != null" >
+        principal = #{record.principal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobtitle != null" >
+        jobtitle = #{record.jobtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactCity != null" >
+        contact_city = #{record.contactCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactArea != null" >
+        contact_area = #{record.contactArea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactAddress != null" >
+        contact_address = #{record.contactAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeNumber != null" >
+        employee_number = #{record.employeeNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.retirementExperienceInheritanceNumber != null" >
+        retirement_experience_inheritance_number = #{record.retirementExperienceInheritanceNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.employeeNumberStructure1 != null" >
+        employee_number_structure_1 = #{record.employeeNumberStructure1,jdbcType=INTEGER},
+      </if>
+      <if test="record.employeeNumberStructure2 != null" >
+        employee_number_structure_2 = #{record.employeeNumberStructure2,jdbcType=INTEGER},
+      </if>
+      <if test="record.employeeNumberStructure3 != null" >
+        employee_number_structure_3 = #{record.employeeNumberStructure3,jdbcType=INTEGER},
+      </if>
+      <if test="record.employeeNumberStructure4 != null" >
+        employee_number_structure_4 = #{record.employeeNumberStructure4,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyAttributes != null" >
+        company_attributes = #{record.companyAttributes,jdbcType=CHAR},
+      </if>
+      <if test="record.industry != null" >
+        industry = #{record.industry,jdbcType=CHAR},
+      </if>
+      <if test="record.contactName != null" >
+        contact_name = #{record.contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactJobtitle != null" >
+        contact_jobtitle = #{record.contactJobtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactWorkPhoneAreaCode != null" >
+        contact_work_phone_area_code = #{record.contactWorkPhoneAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactWorkPhone != null" >
+        contact_work_phone = #{record.contactWorkPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactWorkPhoneExtension != null" >
+        contact_work_phone_extension = #{record.contactWorkPhoneExtension,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactPhone != null" >
+        contact_phone = #{record.contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attachDocumentsApply != null" >
+        attach_documents_apply = #{record.attachDocumentsApply,jdbcType=CHAR},
+      </if>
+      <if test="record.attachDocumentsPlan != null" >
+        attach_documents_plan = #{record.attachDocumentsPlan,jdbcType=CHAR},
+      </if>
+      <if test="record.attachDocumentsSchedule != null" >
+        attach_documents_schedule = #{record.attachDocumentsSchedule,jdbcType=CHAR},
+      </if>
+      <if test="record.attachDocumentsExpenditure != null" >
+        attach_documents_expenditure = #{record.attachDocumentsExpenditure,jdbcType=CHAR},
+      </if>
+      <if test="record.attachDocumentsRegisterProof != null" >
+        attach_documents_register_proof = #{record.attachDocumentsRegisterProof,jdbcType=CHAR},
+      </if>
+      <if test="record.attachDocumentsSpeakerRetirementProof != null" >
+        attach_documents_speaker_retirement_proof = #{record.attachDocumentsSpeakerRetirementProof,jdbcType=CHAR},
+      </if>
+      <if test="record.attachDocumentsSpeakerExperienceProof != null" >
+        attach_documents_speaker_experience_proof = #{record.attachDocumentsSpeakerExperienceProof,jdbcType=CHAR},
+      </if>
+      <if test="record.attachDocumentsEmploymentProof != null" >
+        attach_documents_employment_proof = #{record.attachDocumentsEmploymentProof,jdbcType=CHAR},
+      </if>
+      <if test="record.attachDocumentsOtherProof != null" >
+        attach_documents_other_proof = #{record.attachDocumentsOtherProof,jdbcType=CHAR},
+      </if>
+      <if test="record.attachDocumentsOtherProofDocument != null" >
+        attach_documents_other_proof_document = #{record.attachDocumentsOtherProofDocument,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agree != null" >
+        agree = #{record.agree,jdbcType=CHAR},
+      </if>
+      <if test="record.filler != null" >
+        filler = #{record.filler,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicant != null" >
+        applicant = #{record.applicant,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updator != null" >
+        updator = #{record.updator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update retirementAdvancedAgeExperienceInheritanceApply
+    set seq = #{record.seq,jdbcType=VARCHAR},
+      apply_year = #{record.applyYear,jdbcType=VARCHAR},
+      id = #{record.id,jdbcType=INTEGER},
+      company_name = #{record.companyName,jdbcType=VARCHAR},
+      guarantee_number = #{record.guaranteeNumber,jdbcType=VARCHAR},
+      principal = #{record.principal,jdbcType=VARCHAR},
+      jobtitle = #{record.jobtitle,jdbcType=VARCHAR},
+      contact_city = #{record.contactCity,jdbcType=VARCHAR},
+      contact_area = #{record.contactArea,jdbcType=VARCHAR},
+      contact_address = #{record.contactAddress,jdbcType=VARCHAR},
+      employee_number = #{record.employeeNumber,jdbcType=INTEGER},
+      retirement_experience_inheritance_number = #{record.retirementExperienceInheritanceNumber,jdbcType=INTEGER},
+      employee_number_structure_1 = #{record.employeeNumberStructure1,jdbcType=INTEGER},
+      employee_number_structure_2 = #{record.employeeNumberStructure2,jdbcType=INTEGER},
+      employee_number_structure_3 = #{record.employeeNumberStructure3,jdbcType=INTEGER},
+      employee_number_structure_4 = #{record.employeeNumberStructure4,jdbcType=INTEGER},
+      company_attributes = #{record.companyAttributes,jdbcType=CHAR},
+      industry = #{record.industry,jdbcType=CHAR},
+      contact_name = #{record.contactName,jdbcType=VARCHAR},
+      contact_jobtitle = #{record.contactJobtitle,jdbcType=VARCHAR},
+      contact_work_phone_area_code = #{record.contactWorkPhoneAreaCode,jdbcType=VARCHAR},
+      contact_work_phone = #{record.contactWorkPhone,jdbcType=VARCHAR},
+      contact_work_phone_extension = #{record.contactWorkPhoneExtension,jdbcType=VARCHAR},
+      contact_phone = #{record.contactPhone,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      attach_documents_apply = #{record.attachDocumentsApply,jdbcType=CHAR},
+      attach_documents_plan = #{record.attachDocumentsPlan,jdbcType=CHAR},
+      attach_documents_schedule = #{record.attachDocumentsSchedule,jdbcType=CHAR},
+      attach_documents_expenditure = #{record.attachDocumentsExpenditure,jdbcType=CHAR},
+      attach_documents_register_proof = #{record.attachDocumentsRegisterProof,jdbcType=CHAR},
+      attach_documents_speaker_retirement_proof = #{record.attachDocumentsSpeakerRetirementProof,jdbcType=CHAR},
+      attach_documents_speaker_experience_proof = #{record.attachDocumentsSpeakerExperienceProof,jdbcType=CHAR},
+      attach_documents_employment_proof = #{record.attachDocumentsEmploymentProof,jdbcType=CHAR},
+      attach_documents_other_proof = #{record.attachDocumentsOtherProof,jdbcType=CHAR},
+      attach_documents_other_proof_document = #{record.attachDocumentsOtherProofDocument,jdbcType=VARCHAR},
+      agree = #{record.agree,jdbcType=CHAR},
+      filler = #{record.filler,jdbcType=VARCHAR},
+      applicant = #{record.applicant,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      updator = #{record.updator,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceApply" >
+    update retirementAdvancedAgeExperienceInheritanceApply
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteeNumber != null" >
+        guarantee_number = #{guaranteeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="principal != null" >
+        principal = #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="jobtitle != null" >
+        jobtitle = #{jobtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="contactCity != null" >
+        contact_city = #{contactCity,jdbcType=VARCHAR},
+      </if>
+      <if test="contactArea != null" >
+        contact_area = #{contactArea,jdbcType=VARCHAR},
+      </if>
+      <if test="contactAddress != null" >
+        contact_address = #{contactAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeNumber != null" >
+        employee_number = #{employeeNumber,jdbcType=INTEGER},
+      </if>
+      <if test="retirementExperienceInheritanceNumber != null" >
+        retirement_experience_inheritance_number = #{retirementExperienceInheritanceNumber,jdbcType=INTEGER},
+      </if>
+      <if test="employeeNumberStructure1 != null" >
+        employee_number_structure_1 = #{employeeNumberStructure1,jdbcType=INTEGER},
+      </if>
+      <if test="employeeNumberStructure2 != null" >
+        employee_number_structure_2 = #{employeeNumberStructure2,jdbcType=INTEGER},
+      </if>
+      <if test="employeeNumberStructure3 != null" >
+        employee_number_structure_3 = #{employeeNumberStructure3,jdbcType=INTEGER},
+      </if>
+      <if test="employeeNumberStructure4 != null" >
+        employee_number_structure_4 = #{employeeNumberStructure4,jdbcType=INTEGER},
+      </if>
+      <if test="companyAttributes != null" >
+        company_attributes = #{companyAttributes,jdbcType=CHAR},
+      </if>
+      <if test="industry != null" >
+        industry = #{industry,jdbcType=CHAR},
+      </if>
+      <if test="contactName != null" >
+        contact_name = #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactJobtitle != null" >
+        contact_jobtitle = #{contactJobtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="contactWorkPhoneAreaCode != null" >
+        contact_work_phone_area_code = #{contactWorkPhoneAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="contactWorkPhone != null" >
+        contact_work_phone = #{contactWorkPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="contactWorkPhoneExtension != null" >
+        contact_work_phone_extension = #{contactWorkPhoneExtension,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null" >
+        contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="attachDocumentsApply != null" >
+        attach_documents_apply = #{attachDocumentsApply,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsPlan != null" >
+        attach_documents_plan = #{attachDocumentsPlan,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsSchedule != null" >
+        attach_documents_schedule = #{attachDocumentsSchedule,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsExpenditure != null" >
+        attach_documents_expenditure = #{attachDocumentsExpenditure,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsRegisterProof != null" >
+        attach_documents_register_proof = #{attachDocumentsRegisterProof,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsSpeakerRetirementProof != null" >
+        attach_documents_speaker_retirement_proof = #{attachDocumentsSpeakerRetirementProof,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsSpeakerExperienceProof != null" >
+        attach_documents_speaker_experience_proof = #{attachDocumentsSpeakerExperienceProof,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsEmploymentProof != null" >
+        attach_documents_employment_proof = #{attachDocumentsEmploymentProof,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsOtherProof != null" >
+        attach_documents_other_proof = #{attachDocumentsOtherProof,jdbcType=CHAR},
+      </if>
+      <if test="attachDocumentsOtherProofDocument != null" >
+        attach_documents_other_proof_document = #{attachDocumentsOtherProofDocument,jdbcType=VARCHAR},
+      </if>
+      <if test="agree != null" >
+        agree = #{agree,jdbcType=CHAR},
+      </if>
+      <if test="filler != null" >
+        filler = #{filler,jdbcType=VARCHAR},
+      </if>
+      <if test="applicant != null" >
+        applicant = #{applicant,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updator != null" >
+        updator = #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where seq = #{seq,jdbcType=VARCHAR}
+      and apply_year = #{applyYear,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceApply" >
+    update retirementAdvancedAgeExperienceInheritanceApply
+    set id = #{id,jdbcType=INTEGER},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      guarantee_number = #{guaranteeNumber,jdbcType=VARCHAR},
+      principal = #{principal,jdbcType=VARCHAR},
+      jobtitle = #{jobtitle,jdbcType=VARCHAR},
+      contact_city = #{contactCity,jdbcType=VARCHAR},
+      contact_area = #{contactArea,jdbcType=VARCHAR},
+      contact_address = #{contactAddress,jdbcType=VARCHAR},
+      employee_number = #{employeeNumber,jdbcType=INTEGER},
+      retirement_experience_inheritance_number = #{retirementExperienceInheritanceNumber,jdbcType=INTEGER},
+      employee_number_structure_1 = #{employeeNumberStructure1,jdbcType=INTEGER},
+      employee_number_structure_2 = #{employeeNumberStructure2,jdbcType=INTEGER},
+      employee_number_structure_3 = #{employeeNumberStructure3,jdbcType=INTEGER},
+      employee_number_structure_4 = #{employeeNumberStructure4,jdbcType=INTEGER},
+      company_attributes = #{companyAttributes,jdbcType=CHAR},
+      industry = #{industry,jdbcType=CHAR},
+      contact_name = #{contactName,jdbcType=VARCHAR},
+      contact_jobtitle = #{contactJobtitle,jdbcType=VARCHAR},
+      contact_work_phone_area_code = #{contactWorkPhoneAreaCode,jdbcType=VARCHAR},
+      contact_work_phone = #{contactWorkPhone,jdbcType=VARCHAR},
+      contact_work_phone_extension = #{contactWorkPhoneExtension,jdbcType=VARCHAR},
+      contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      attach_documents_apply = #{attachDocumentsApply,jdbcType=CHAR},
+      attach_documents_plan = #{attachDocumentsPlan,jdbcType=CHAR},
+      attach_documents_schedule = #{attachDocumentsSchedule,jdbcType=CHAR},
+      attach_documents_expenditure = #{attachDocumentsExpenditure,jdbcType=CHAR},
+      attach_documents_register_proof = #{attachDocumentsRegisterProof,jdbcType=CHAR},
+      attach_documents_speaker_retirement_proof = #{attachDocumentsSpeakerRetirementProof,jdbcType=CHAR},
+      attach_documents_speaker_experience_proof = #{attachDocumentsSpeakerExperienceProof,jdbcType=CHAR},
+      attach_documents_employment_proof = #{attachDocumentsEmploymentProof,jdbcType=CHAR},
+      attach_documents_other_proof = #{attachDocumentsOtherProof,jdbcType=CHAR},
+      attach_documents_other_proof_document = #{attachDocumentsOtherProofDocument,jdbcType=VARCHAR},
+      agree = #{agree,jdbcType=CHAR},
+      filler = #{filler,jdbcType=VARCHAR},
+      applicant = #{applicant,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      updator = #{updator,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where seq = #{seq,jdbcType=VARCHAR}
+      and apply_year = #{applyYear,jdbcType=VARCHAR}
+  </update>
+</mapper>

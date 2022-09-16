@@ -1,0 +1,1029 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.dao.AdvancedAgeBaseMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.AdvancedAgeBase" >
+    <id column="aaid" property="aaid" jdbcType="VARCHAR" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="seq" property="seq" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="year" property="year" jdbcType="VARCHAR" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="case_type" property="caseType" jdbcType="CHAR" />
+    <result column="case_status" property="caseStatus" jdbcType="CHAR" />
+    <result column="file_status_record" property="fileStatusRecord" jdbcType="VARCHAR" />
+    <result column="file_remark" property="fileRemark" jdbcType="VARCHAR" />
+    <result column="email_content" property="emailContent" jdbcType="VARCHAR" />
+    <result column="email_time" property="emailTime" jdbcType="TIMESTAMP" />
+    <result column="file_status" property="fileStatus" jdbcType="CHAR" />
+    <result column="check_multiple_company" property="checkMultipleCompany" jdbcType="CHAR" />
+    <result column="check_workers_employment" property="checkWorkersEmployment" jdbcType="CHAR" />
+    <result column="check_relatives" property="checkRelatives" jdbcType="CHAR" />
+    <result column="check_related_amounts" property="checkRelatedAmounts" jdbcType="CHAR" />
+    <result column="check_not_mandatory" property="checkNotMandatory" jdbcType="NCHAR" />
+    <result column="check_employment_person" property="checkEmploymentPerson" jdbcType="INTEGER" />
+    <result column="check_employment_remark" property="checkEmploymentRemark" jdbcType="VARCHAR" />
+    <result column="check_attachment_remark" property="checkAttachmentRemark" jdbcType="VARCHAR" />
+    <result column="check_blacklist_status" property="checkBlacklistStatus" jdbcType="CHAR" />
+    <result column="check_blacklist_remark" property="checkBlacklistRemark" jdbcType="VARCHAR" />
+    <result column="check_siteInspection_status" property="checkSiteinspectionStatus" jdbcType="CHAR" />
+    <result column="check_siteInspection_remark" property="checkSiteinspectionRemark" jdbcType="VARCHAR" />
+    <result column="check_insurance_status" property="checkInsuranceStatus" jdbcType="CHAR" />
+    <result column="check_insurance_remark" property="checkInsuranceRemark" jdbcType="VARCHAR" />
+    <result column="check_allowance_status" property="checkAllowanceStatus" jdbcType="CHAR" />
+    <result column="check_allowance_remark" property="checkAllowanceRemark" jdbcType="VARCHAR" />
+    <result column="check_cgss_status" property="checkCgssStatus" jdbcType="CHAR" />
+    <result column="check_cgss_remark" property="checkCgssRemark" jdbcType="VARCHAR" />
+    <result column="check_violationlaborlaws_status" property="checkViolationlaborlawsStatus" jdbcType="CHAR" />
+    <result column="check_violationlaborlaws_remark" property="checkViolationlaborlawsRemark" jdbcType="VARCHAR" />
+    <result column="official_document_number" property="officialDocumentNumber" jdbcType="VARCHAR" />
+    <result column="case_description" property="caseDescription" jdbcType="VARCHAR" />
+    <result column="allowance_id" property="allowanceId" jdbcType="VARCHAR" />
+    <result column="allowance_amounts" property="allowanceAmounts" jdbcType="INTEGER" />
+    <result column="countersign_id" property="countersignId" jdbcType="VARCHAR" />
+    <result column="allowance_company_name" property="allowanceCompanyName" jdbcType="VARCHAR" />
+    <result column="allowance_seq" property="allowanceSeq" jdbcType="VARCHAR" />
+    <result column="allowance_plan_name" property="allowancePlanName" jdbcType="VARCHAR" />
+    <result column="allowance_apply_time" property="allowanceApplyTime" jdbcType="VARCHAR" />
+    <result column="allowance_apply_start_time" property="allowanceApplyStartTime" jdbcType="VARCHAR" />
+    <result column="allowance_apply_end_time" property="allowanceApplyEndTime" jdbcType="VARCHAR" />
+    <result column="allowance_total_amounts" property="allowanceTotalAmounts" jdbcType="INTEGER" />
+    <result column="allowance_approve_amounts" property="allowanceApproveAmounts" jdbcType="INTEGER" />
+    <result column="allowance_approve_id" property="allowanceApproveId" jdbcType="VARCHAR" />
+    <result column="allowance_approve_time" property="allowanceApproveTime" jdbcType="VARCHAR" />
+    <result column="allowance_remark" property="allowanceRemark" jdbcType="VARCHAR" />
+    <result column="allowance_frequency_record" property="allowanceFrequencyRecord" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="verify_unit" property="verifyUnit" jdbcType="VARCHAR" />
+    <result column="verify_person" property="verifyPerson" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    aaid, id, seq, company_name, year, unit, city, case_type, case_status, file_status_record, 
+    file_remark, email_content, email_time, file_status, check_multiple_company, check_workers_employment, 
+    check_relatives, check_related_amounts, check_not_mandatory, check_employment_person, 
+    check_employment_remark, check_attachment_remark, check_blacklist_status, check_blacklist_remark, 
+    check_siteInspection_status, check_siteInspection_remark, check_insurance_status, 
+    check_insurance_remark, check_allowance_status, check_allowance_remark, check_cgss_status, 
+    check_cgss_remark, check_violationlaborlaws_status, check_violationlaborlaws_remark, 
+    official_document_number, case_description, allowance_id, allowance_amounts, countersign_id, 
+    allowance_company_name, allowance_seq, allowance_plan_name, allowance_apply_time, 
+    allowance_apply_start_time, allowance_apply_end_time, allowance_total_amounts, allowance_approve_amounts, 
+    allowance_approve_id, allowance_approve_time, allowance_remark, allowance_frequency_record, 
+    create_time, update_time, updator, verify_unit, verify_person
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.AdvancedAgeBaseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from advancedAgeBase
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from advancedAgeBase
+    where aaid = #{aaid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from advancedAgeBase
+    where aaid = #{aaid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.AdvancedAgeBaseExample" >
+    delete from advancedAgeBase
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.AdvancedAgeBase" >
+    insert into advancedAgeBase (aaid, id, seq, 
+      company_name, year, unit, 
+      city, case_type, case_status, 
+      file_status_record, file_remark, email_content, 
+      email_time, file_status, check_multiple_company, 
+      check_workers_employment, check_relatives, check_related_amounts, 
+      check_not_mandatory, check_employment_person, 
+      check_employment_remark, check_attachment_remark, 
+      check_blacklist_status, check_blacklist_remark, 
+      check_siteInspection_status, check_siteInspection_remark, 
+      check_insurance_status, check_insurance_remark, 
+      check_allowance_status, check_allowance_remark, 
+      check_cgss_status, check_cgss_remark, check_violationlaborlaws_status, 
+      check_violationlaborlaws_remark, official_document_number, 
+      case_description, allowance_id, allowance_amounts, 
+      countersign_id, allowance_company_name, allowance_seq, 
+      allowance_plan_name, allowance_apply_time, 
+      allowance_apply_start_time, allowance_apply_end_time, 
+      allowance_total_amounts, allowance_approve_amounts, 
+      allowance_approve_id, allowance_approve_time, 
+      allowance_remark, allowance_frequency_record, 
+      create_time, update_time, updator, 
+      verify_unit, verify_person)
+    values (#{aaid,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}, #{seq,jdbcType=VARCHAR}, 
+      #{companyName,jdbcType=VARCHAR}, #{year,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{caseType,jdbcType=CHAR}, #{caseStatus,jdbcType=CHAR}, 
+      #{fileStatusRecord,jdbcType=VARCHAR}, #{fileRemark,jdbcType=VARCHAR}, #{emailContent,jdbcType=VARCHAR}, 
+      #{emailTime,jdbcType=TIMESTAMP}, #{fileStatus,jdbcType=CHAR}, #{checkMultipleCompany,jdbcType=CHAR}, 
+      #{checkWorkersEmployment,jdbcType=CHAR}, #{checkRelatives,jdbcType=CHAR}, #{checkRelatedAmounts,jdbcType=CHAR}, 
+      #{checkNotMandatory,jdbcType=NCHAR}, #{checkEmploymentPerson,jdbcType=INTEGER}, 
+      #{checkEmploymentRemark,jdbcType=VARCHAR}, #{checkAttachmentRemark,jdbcType=VARCHAR}, 
+      #{checkBlacklistStatus,jdbcType=CHAR}, #{checkBlacklistRemark,jdbcType=VARCHAR}, 
+      #{checkSiteinspectionStatus,jdbcType=CHAR}, #{checkSiteinspectionRemark,jdbcType=VARCHAR}, 
+      #{checkInsuranceStatus,jdbcType=CHAR}, #{checkInsuranceRemark,jdbcType=VARCHAR}, 
+      #{checkAllowanceStatus,jdbcType=CHAR}, #{checkAllowanceRemark,jdbcType=VARCHAR}, 
+      #{checkCgssStatus,jdbcType=CHAR}, #{checkCgssRemark,jdbcType=VARCHAR}, #{checkViolationlaborlawsStatus,jdbcType=CHAR}, 
+      #{checkViolationlaborlawsRemark,jdbcType=VARCHAR}, #{officialDocumentNumber,jdbcType=VARCHAR}, 
+      #{caseDescription,jdbcType=VARCHAR}, #{allowanceId,jdbcType=VARCHAR}, #{allowanceAmounts,jdbcType=INTEGER}, 
+      #{countersignId,jdbcType=VARCHAR}, #{allowanceCompanyName,jdbcType=VARCHAR}, #{allowanceSeq,jdbcType=VARCHAR}, 
+      #{allowancePlanName,jdbcType=VARCHAR}, #{allowanceApplyTime,jdbcType=VARCHAR}, 
+      #{allowanceApplyStartTime,jdbcType=VARCHAR}, #{allowanceApplyEndTime,jdbcType=VARCHAR}, 
+      #{allowanceTotalAmounts,jdbcType=INTEGER}, #{allowanceApproveAmounts,jdbcType=INTEGER}, 
+      #{allowanceApproveId,jdbcType=VARCHAR}, #{allowanceApproveTime,jdbcType=VARCHAR}, 
+      #{allowanceRemark,jdbcType=VARCHAR}, #{allowanceFrequencyRecord,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{updator,jdbcType=VARCHAR}, 
+      #{verifyUnit,jdbcType=VARCHAR}, #{verifyPerson,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.AdvancedAgeBase" >
+    insert into advancedAgeBase
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="aaid != null" >
+        aaid,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="seq != null" >
+        seq,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="caseType != null" >
+        case_type,
+      </if>
+      <if test="caseStatus != null" >
+        case_status,
+      </if>
+      <if test="fileStatusRecord != null" >
+        file_status_record,
+      </if>
+      <if test="fileRemark != null" >
+        file_remark,
+      </if>
+      <if test="emailContent != null" >
+        email_content,
+      </if>
+      <if test="emailTime != null" >
+        email_time,
+      </if>
+      <if test="fileStatus != null" >
+        file_status,
+      </if>
+      <if test="checkMultipleCompany != null" >
+        check_multiple_company,
+      </if>
+      <if test="checkWorkersEmployment != null" >
+        check_workers_employment,
+      </if>
+      <if test="checkRelatives != null" >
+        check_relatives,
+      </if>
+      <if test="checkRelatedAmounts != null" >
+        check_related_amounts,
+      </if>
+      <if test="checkNotMandatory != null" >
+        check_not_mandatory,
+      </if>
+      <if test="checkEmploymentPerson != null" >
+        check_employment_person,
+      </if>
+      <if test="checkEmploymentRemark != null" >
+        check_employment_remark,
+      </if>
+      <if test="checkAttachmentRemark != null" >
+        check_attachment_remark,
+      </if>
+      <if test="checkBlacklistStatus != null" >
+        check_blacklist_status,
+      </if>
+      <if test="checkBlacklistRemark != null" >
+        check_blacklist_remark,
+      </if>
+      <if test="checkSiteinspectionStatus != null" >
+        check_siteInspection_status,
+      </if>
+      <if test="checkSiteinspectionRemark != null" >
+        check_siteInspection_remark,
+      </if>
+      <if test="checkInsuranceStatus != null" >
+        check_insurance_status,
+      </if>
+      <if test="checkInsuranceRemark != null" >
+        check_insurance_remark,
+      </if>
+      <if test="checkAllowanceStatus != null" >
+        check_allowance_status,
+      </if>
+      <if test="checkAllowanceRemark != null" >
+        check_allowance_remark,
+      </if>
+      <if test="checkCgssStatus != null" >
+        check_cgss_status,
+      </if>
+      <if test="checkCgssRemark != null" >
+        check_cgss_remark,
+      </if>
+      <if test="checkViolationlaborlawsStatus != null" >
+        check_violationlaborlaws_status,
+      </if>
+      <if test="checkViolationlaborlawsRemark != null" >
+        check_violationlaborlaws_remark,
+      </if>
+      <if test="officialDocumentNumber != null" >
+        official_document_number,
+      </if>
+      <if test="caseDescription != null" >
+        case_description,
+      </if>
+      <if test="allowanceId != null" >
+        allowance_id,
+      </if>
+      <if test="allowanceAmounts != null" >
+        allowance_amounts,
+      </if>
+      <if test="countersignId != null" >
+        countersign_id,
+      </if>
+      <if test="allowanceCompanyName != null" >
+        allowance_company_name,
+      </if>
+      <if test="allowanceSeq != null" >
+        allowance_seq,
+      </if>
+      <if test="allowancePlanName != null" >
+        allowance_plan_name,
+      </if>
+      <if test="allowanceApplyTime != null" >
+        allowance_apply_time,
+      </if>
+      <if test="allowanceApplyStartTime != null" >
+        allowance_apply_start_time,
+      </if>
+      <if test="allowanceApplyEndTime != null" >
+        allowance_apply_end_time,
+      </if>
+      <if test="allowanceTotalAmounts != null" >
+        allowance_total_amounts,
+      </if>
+      <if test="allowanceApproveAmounts != null" >
+        allowance_approve_amounts,
+      </if>
+      <if test="allowanceApproveId != null" >
+        allowance_approve_id,
+      </if>
+      <if test="allowanceApproveTime != null" >
+        allowance_approve_time,
+      </if>
+      <if test="allowanceRemark != null" >
+        allowance_remark,
+      </if>
+      <if test="allowanceFrequencyRecord != null" >
+        allowance_frequency_record,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="updator != null" >
+        updator,
+      </if>
+      <if test="verifyUnit != null" >
+        verify_unit,
+      </if>
+      <if test="verifyPerson != null" >
+        verify_person,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="aaid != null" >
+        #{aaid,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="seq != null" >
+        #{seq,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="caseType != null" >
+        #{caseType,jdbcType=CHAR},
+      </if>
+      <if test="caseStatus != null" >
+        #{caseStatus,jdbcType=CHAR},
+      </if>
+      <if test="fileStatusRecord != null" >
+        #{fileStatusRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="fileRemark != null" >
+        #{fileRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="emailContent != null" >
+        #{emailContent,jdbcType=VARCHAR},
+      </if>
+      <if test="emailTime != null" >
+        #{emailTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fileStatus != null" >
+        #{fileStatus,jdbcType=CHAR},
+      </if>
+      <if test="checkMultipleCompany != null" >
+        #{checkMultipleCompany,jdbcType=CHAR},
+      </if>
+      <if test="checkWorkersEmployment != null" >
+        #{checkWorkersEmployment,jdbcType=CHAR},
+      </if>
+      <if test="checkRelatives != null" >
+        #{checkRelatives,jdbcType=CHAR},
+      </if>
+      <if test="checkRelatedAmounts != null" >
+        #{checkRelatedAmounts,jdbcType=CHAR},
+      </if>
+      <if test="checkNotMandatory != null" >
+        #{checkNotMandatory,jdbcType=NCHAR},
+      </if>
+      <if test="checkEmploymentPerson != null" >
+        #{checkEmploymentPerson,jdbcType=INTEGER},
+      </if>
+      <if test="checkEmploymentRemark != null" >
+        #{checkEmploymentRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkAttachmentRemark != null" >
+        #{checkAttachmentRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkBlacklistStatus != null" >
+        #{checkBlacklistStatus,jdbcType=CHAR},
+      </if>
+      <if test="checkBlacklistRemark != null" >
+        #{checkBlacklistRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkSiteinspectionStatus != null" >
+        #{checkSiteinspectionStatus,jdbcType=CHAR},
+      </if>
+      <if test="checkSiteinspectionRemark != null" >
+        #{checkSiteinspectionRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkInsuranceStatus != null" >
+        #{checkInsuranceStatus,jdbcType=CHAR},
+      </if>
+      <if test="checkInsuranceRemark != null" >
+        #{checkInsuranceRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkAllowanceStatus != null" >
+        #{checkAllowanceStatus,jdbcType=CHAR},
+      </if>
+      <if test="checkAllowanceRemark != null" >
+        #{checkAllowanceRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkCgssStatus != null" >
+        #{checkCgssStatus,jdbcType=CHAR},
+      </if>
+      <if test="checkCgssRemark != null" >
+        #{checkCgssRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkViolationlaborlawsStatus != null" >
+        #{checkViolationlaborlawsStatus,jdbcType=CHAR},
+      </if>
+      <if test="checkViolationlaborlawsRemark != null" >
+        #{checkViolationlaborlawsRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="officialDocumentNumber != null" >
+        #{officialDocumentNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="caseDescription != null" >
+        #{caseDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceId != null" >
+        #{allowanceId,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceAmounts != null" >
+        #{allowanceAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="countersignId != null" >
+        #{countersignId,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceCompanyName != null" >
+        #{allowanceCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceSeq != null" >
+        #{allowanceSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="allowancePlanName != null" >
+        #{allowancePlanName,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceApplyTime != null" >
+        #{allowanceApplyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceApplyStartTime != null" >
+        #{allowanceApplyStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceApplyEndTime != null" >
+        #{allowanceApplyEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceTotalAmounts != null" >
+        #{allowanceTotalAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="allowanceApproveAmounts != null" >
+        #{allowanceApproveAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="allowanceApproveId != null" >
+        #{allowanceApproveId,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceApproveTime != null" >
+        #{allowanceApproveTime,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceRemark != null" >
+        #{allowanceRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceFrequencyRecord != null" >
+        #{allowanceFrequencyRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updator != null" >
+        #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyUnit != null" >
+        #{verifyUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyPerson != null" >
+        #{verifyPerson,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.AdvancedAgeBaseExample" resultType="java.lang.Integer" >
+    select count(*) from advancedAgeBase
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update advancedAgeBase
+    <set >
+      <if test="record.aaid != null" >
+        aaid = #{record.aaid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.seq != null" >
+        seq = #{record.seq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyName != null" >
+        company_name = #{record.companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.year != null" >
+        year = #{record.year,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null" >
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.caseType != null" >
+        case_type = #{record.caseType,jdbcType=CHAR},
+      </if>
+      <if test="record.caseStatus != null" >
+        case_status = #{record.caseStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.fileStatusRecord != null" >
+        file_status_record = #{record.fileStatusRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileRemark != null" >
+        file_remark = #{record.fileRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emailContent != null" >
+        email_content = #{record.emailContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emailTime != null" >
+        email_time = #{record.emailTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.fileStatus != null" >
+        file_status = #{record.fileStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.checkMultipleCompany != null" >
+        check_multiple_company = #{record.checkMultipleCompany,jdbcType=CHAR},
+      </if>
+      <if test="record.checkWorkersEmployment != null" >
+        check_workers_employment = #{record.checkWorkersEmployment,jdbcType=CHAR},
+      </if>
+      <if test="record.checkRelatives != null" >
+        check_relatives = #{record.checkRelatives,jdbcType=CHAR},
+      </if>
+      <if test="record.checkRelatedAmounts != null" >
+        check_related_amounts = #{record.checkRelatedAmounts,jdbcType=CHAR},
+      </if>
+      <if test="record.checkNotMandatory != null" >
+        check_not_mandatory = #{record.checkNotMandatory,jdbcType=NCHAR},
+      </if>
+      <if test="record.checkEmploymentPerson != null" >
+        check_employment_person = #{record.checkEmploymentPerson,jdbcType=INTEGER},
+      </if>
+      <if test="record.checkEmploymentRemark != null" >
+        check_employment_remark = #{record.checkEmploymentRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkAttachmentRemark != null" >
+        check_attachment_remark = #{record.checkAttachmentRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkBlacklistStatus != null" >
+        check_blacklist_status = #{record.checkBlacklistStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.checkBlacklistRemark != null" >
+        check_blacklist_remark = #{record.checkBlacklistRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkSiteinspectionStatus != null" >
+        check_siteInspection_status = #{record.checkSiteinspectionStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.checkSiteinspectionRemark != null" >
+        check_siteInspection_remark = #{record.checkSiteinspectionRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkInsuranceStatus != null" >
+        check_insurance_status = #{record.checkInsuranceStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.checkInsuranceRemark != null" >
+        check_insurance_remark = #{record.checkInsuranceRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkAllowanceStatus != null" >
+        check_allowance_status = #{record.checkAllowanceStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.checkAllowanceRemark != null" >
+        check_allowance_remark = #{record.checkAllowanceRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkCgssStatus != null" >
+        check_cgss_status = #{record.checkCgssStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.checkCgssRemark != null" >
+        check_cgss_remark = #{record.checkCgssRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkViolationlaborlawsStatus != null" >
+        check_violationlaborlaws_status = #{record.checkViolationlaborlawsStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.checkViolationlaborlawsRemark != null" >
+        check_violationlaborlaws_remark = #{record.checkViolationlaborlawsRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.officialDocumentNumber != null" >
+        official_document_number = #{record.officialDocumentNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.caseDescription != null" >
+        case_description = #{record.caseDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allowanceId != null" >
+        allowance_id = #{record.allowanceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allowanceAmounts != null" >
+        allowance_amounts = #{record.allowanceAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="record.countersignId != null" >
+        countersign_id = #{record.countersignId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allowanceCompanyName != null" >
+        allowance_company_name = #{record.allowanceCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allowanceSeq != null" >
+        allowance_seq = #{record.allowanceSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allowancePlanName != null" >
+        allowance_plan_name = #{record.allowancePlanName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allowanceApplyTime != null" >
+        allowance_apply_time = #{record.allowanceApplyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allowanceApplyStartTime != null" >
+        allowance_apply_start_time = #{record.allowanceApplyStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allowanceApplyEndTime != null" >
+        allowance_apply_end_time = #{record.allowanceApplyEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allowanceTotalAmounts != null" >
+        allowance_total_amounts = #{record.allowanceTotalAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="record.allowanceApproveAmounts != null" >
+        allowance_approve_amounts = #{record.allowanceApproveAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="record.allowanceApproveId != null" >
+        allowance_approve_id = #{record.allowanceApproveId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allowanceApproveTime != null" >
+        allowance_approve_time = #{record.allowanceApproveTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allowanceRemark != null" >
+        allowance_remark = #{record.allowanceRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allowanceFrequencyRecord != null" >
+        allowance_frequency_record = #{record.allowanceFrequencyRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updator != null" >
+        updator = #{record.updator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verifyUnit != null" >
+        verify_unit = #{record.verifyUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verifyPerson != null" >
+        verify_person = #{record.verifyPerson,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update advancedAgeBase
+    set aaid = #{record.aaid,jdbcType=VARCHAR},
+      id = #{record.id,jdbcType=INTEGER},
+      seq = #{record.seq,jdbcType=VARCHAR},
+      company_name = #{record.companyName,jdbcType=VARCHAR},
+      year = #{record.year,jdbcType=VARCHAR},
+      unit = #{record.unit,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      case_type = #{record.caseType,jdbcType=CHAR},
+      case_status = #{record.caseStatus,jdbcType=CHAR},
+      file_status_record = #{record.fileStatusRecord,jdbcType=VARCHAR},
+      file_remark = #{record.fileRemark,jdbcType=VARCHAR},
+      email_content = #{record.emailContent,jdbcType=VARCHAR},
+      email_time = #{record.emailTime,jdbcType=TIMESTAMP},
+      file_status = #{record.fileStatus,jdbcType=CHAR},
+      check_multiple_company = #{record.checkMultipleCompany,jdbcType=CHAR},
+      check_workers_employment = #{record.checkWorkersEmployment,jdbcType=CHAR},
+      check_relatives = #{record.checkRelatives,jdbcType=CHAR},
+      check_related_amounts = #{record.checkRelatedAmounts,jdbcType=CHAR},
+      check_not_mandatory = #{record.checkNotMandatory,jdbcType=NCHAR},
+      check_employment_person = #{record.checkEmploymentPerson,jdbcType=INTEGER},
+      check_employment_remark = #{record.checkEmploymentRemark,jdbcType=VARCHAR},
+      check_attachment_remark = #{record.checkAttachmentRemark,jdbcType=VARCHAR},
+      check_blacklist_status = #{record.checkBlacklistStatus,jdbcType=CHAR},
+      check_blacklist_remark = #{record.checkBlacklistRemark,jdbcType=VARCHAR},
+      check_siteInspection_status = #{record.checkSiteinspectionStatus,jdbcType=CHAR},
+      check_siteInspection_remark = #{record.checkSiteinspectionRemark,jdbcType=VARCHAR},
+      check_insurance_status = #{record.checkInsuranceStatus,jdbcType=CHAR},
+      check_insurance_remark = #{record.checkInsuranceRemark,jdbcType=VARCHAR},
+      check_allowance_status = #{record.checkAllowanceStatus,jdbcType=CHAR},
+      check_allowance_remark = #{record.checkAllowanceRemark,jdbcType=VARCHAR},
+      check_cgss_status = #{record.checkCgssStatus,jdbcType=CHAR},
+      check_cgss_remark = #{record.checkCgssRemark,jdbcType=VARCHAR},
+      check_violationlaborlaws_status = #{record.checkViolationlaborlawsStatus,jdbcType=CHAR},
+      check_violationlaborlaws_remark = #{record.checkViolationlaborlawsRemark,jdbcType=VARCHAR},
+      official_document_number = #{record.officialDocumentNumber,jdbcType=VARCHAR},
+      case_description = #{record.caseDescription,jdbcType=VARCHAR},
+      allowance_id = #{record.allowanceId,jdbcType=VARCHAR},
+      allowance_amounts = #{record.allowanceAmounts,jdbcType=INTEGER},
+      countersign_id = #{record.countersignId,jdbcType=VARCHAR},
+      allowance_company_name = #{record.allowanceCompanyName,jdbcType=VARCHAR},
+      allowance_seq = #{record.allowanceSeq,jdbcType=VARCHAR},
+      allowance_plan_name = #{record.allowancePlanName,jdbcType=VARCHAR},
+      allowance_apply_time = #{record.allowanceApplyTime,jdbcType=VARCHAR},
+      allowance_apply_start_time = #{record.allowanceApplyStartTime,jdbcType=VARCHAR},
+      allowance_apply_end_time = #{record.allowanceApplyEndTime,jdbcType=VARCHAR},
+      allowance_total_amounts = #{record.allowanceTotalAmounts,jdbcType=INTEGER},
+      allowance_approve_amounts = #{record.allowanceApproveAmounts,jdbcType=INTEGER},
+      allowance_approve_id = #{record.allowanceApproveId,jdbcType=VARCHAR},
+      allowance_approve_time = #{record.allowanceApproveTime,jdbcType=VARCHAR},
+      allowance_remark = #{record.allowanceRemark,jdbcType=VARCHAR},
+      allowance_frequency_record = #{record.allowanceFrequencyRecord,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      updator = #{record.updator,jdbcType=VARCHAR},
+      verify_unit = #{record.verifyUnit,jdbcType=VARCHAR},
+      verify_person = #{record.verifyPerson,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.AdvancedAgeBase" >
+    update advancedAgeBase
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="seq != null" >
+        seq = #{seq,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="caseType != null" >
+        case_type = #{caseType,jdbcType=CHAR},
+      </if>
+      <if test="caseStatus != null" >
+        case_status = #{caseStatus,jdbcType=CHAR},
+      </if>
+      <if test="fileStatusRecord != null" >
+        file_status_record = #{fileStatusRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="fileRemark != null" >
+        file_remark = #{fileRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="emailContent != null" >
+        email_content = #{emailContent,jdbcType=VARCHAR},
+      </if>
+      <if test="emailTime != null" >
+        email_time = #{emailTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fileStatus != null" >
+        file_status = #{fileStatus,jdbcType=CHAR},
+      </if>
+      <if test="checkMultipleCompany != null" >
+        check_multiple_company = #{checkMultipleCompany,jdbcType=CHAR},
+      </if>
+      <if test="checkWorkersEmployment != null" >
+        check_workers_employment = #{checkWorkersEmployment,jdbcType=CHAR},
+      </if>
+      <if test="checkRelatives != null" >
+        check_relatives = #{checkRelatives,jdbcType=CHAR},
+      </if>
+      <if test="checkRelatedAmounts != null" >
+        check_related_amounts = #{checkRelatedAmounts,jdbcType=CHAR},
+      </if>
+      <if test="checkNotMandatory != null" >
+        check_not_mandatory = #{checkNotMandatory,jdbcType=NCHAR},
+      </if>
+      <if test="checkEmploymentPerson != null" >
+        check_employment_person = #{checkEmploymentPerson,jdbcType=INTEGER},
+      </if>
+      <if test="checkEmploymentRemark != null" >
+        check_employment_remark = #{checkEmploymentRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkAttachmentRemark != null" >
+        check_attachment_remark = #{checkAttachmentRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkBlacklistStatus != null" >
+        check_blacklist_status = #{checkBlacklistStatus,jdbcType=CHAR},
+      </if>
+      <if test="checkBlacklistRemark != null" >
+        check_blacklist_remark = #{checkBlacklistRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkSiteinspectionStatus != null" >
+        check_siteInspection_status = #{checkSiteinspectionStatus,jdbcType=CHAR},
+      </if>
+      <if test="checkSiteinspectionRemark != null" >
+        check_siteInspection_remark = #{checkSiteinspectionRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkInsuranceStatus != null" >
+        check_insurance_status = #{checkInsuranceStatus,jdbcType=CHAR},
+      </if>
+      <if test="checkInsuranceRemark != null" >
+        check_insurance_remark = #{checkInsuranceRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkAllowanceStatus != null" >
+        check_allowance_status = #{checkAllowanceStatus,jdbcType=CHAR},
+      </if>
+      <if test="checkAllowanceRemark != null" >
+        check_allowance_remark = #{checkAllowanceRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkCgssStatus != null" >
+        check_cgss_status = #{checkCgssStatus,jdbcType=CHAR},
+      </if>
+      <if test="checkCgssRemark != null" >
+        check_cgss_remark = #{checkCgssRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkViolationlaborlawsStatus != null" >
+        check_violationlaborlaws_status = #{checkViolationlaborlawsStatus,jdbcType=CHAR},
+      </if>
+      <if test="checkViolationlaborlawsRemark != null" >
+        check_violationlaborlaws_remark = #{checkViolationlaborlawsRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="officialDocumentNumber != null" >
+        official_document_number = #{officialDocumentNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="caseDescription != null" >
+        case_description = #{caseDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceId != null" >
+        allowance_id = #{allowanceId,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceAmounts != null" >
+        allowance_amounts = #{allowanceAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="countersignId != null" >
+        countersign_id = #{countersignId,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceCompanyName != null" >
+        allowance_company_name = #{allowanceCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceSeq != null" >
+        allowance_seq = #{allowanceSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="allowancePlanName != null" >
+        allowance_plan_name = #{allowancePlanName,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceApplyTime != null" >
+        allowance_apply_time = #{allowanceApplyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceApplyStartTime != null" >
+        allowance_apply_start_time = #{allowanceApplyStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceApplyEndTime != null" >
+        allowance_apply_end_time = #{allowanceApplyEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceTotalAmounts != null" >
+        allowance_total_amounts = #{allowanceTotalAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="allowanceApproveAmounts != null" >
+        allowance_approve_amounts = #{allowanceApproveAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="allowanceApproveId != null" >
+        allowance_approve_id = #{allowanceApproveId,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceApproveTime != null" >
+        allowance_approve_time = #{allowanceApproveTime,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceRemark != null" >
+        allowance_remark = #{allowanceRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceFrequencyRecord != null" >
+        allowance_frequency_record = #{allowanceFrequencyRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updator != null" >
+        updator = #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyUnit != null" >
+        verify_unit = #{verifyUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyPerson != null" >
+        verify_person = #{verifyPerson,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where aaid = #{aaid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.AdvancedAgeBase" >
+    update advancedAgeBase
+    set id = #{id,jdbcType=INTEGER},
+      seq = #{seq,jdbcType=VARCHAR},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      year = #{year,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      case_type = #{caseType,jdbcType=CHAR},
+      case_status = #{caseStatus,jdbcType=CHAR},
+      file_status_record = #{fileStatusRecord,jdbcType=VARCHAR},
+      file_remark = #{fileRemark,jdbcType=VARCHAR},
+      email_content = #{emailContent,jdbcType=VARCHAR},
+      email_time = #{emailTime,jdbcType=TIMESTAMP},
+      file_status = #{fileStatus,jdbcType=CHAR},
+      check_multiple_company = #{checkMultipleCompany,jdbcType=CHAR},
+      check_workers_employment = #{checkWorkersEmployment,jdbcType=CHAR},
+      check_relatives = #{checkRelatives,jdbcType=CHAR},
+      check_related_amounts = #{checkRelatedAmounts,jdbcType=CHAR},
+      check_not_mandatory = #{checkNotMandatory,jdbcType=NCHAR},
+      check_employment_person = #{checkEmploymentPerson,jdbcType=INTEGER},
+      check_employment_remark = #{checkEmploymentRemark,jdbcType=VARCHAR},
+      check_attachment_remark = #{checkAttachmentRemark,jdbcType=VARCHAR},
+      check_blacklist_status = #{checkBlacklistStatus,jdbcType=CHAR},
+      check_blacklist_remark = #{checkBlacklistRemark,jdbcType=VARCHAR},
+      check_siteInspection_status = #{checkSiteinspectionStatus,jdbcType=CHAR},
+      check_siteInspection_remark = #{checkSiteinspectionRemark,jdbcType=VARCHAR},
+      check_insurance_status = #{checkInsuranceStatus,jdbcType=CHAR},
+      check_insurance_remark = #{checkInsuranceRemark,jdbcType=VARCHAR},
+      check_allowance_status = #{checkAllowanceStatus,jdbcType=CHAR},
+      check_allowance_remark = #{checkAllowanceRemark,jdbcType=VARCHAR},
+      check_cgss_status = #{checkCgssStatus,jdbcType=CHAR},
+      check_cgss_remark = #{checkCgssRemark,jdbcType=VARCHAR},
+      check_violationlaborlaws_status = #{checkViolationlaborlawsStatus,jdbcType=CHAR},
+      check_violationlaborlaws_remark = #{checkViolationlaborlawsRemark,jdbcType=VARCHAR},
+      official_document_number = #{officialDocumentNumber,jdbcType=VARCHAR},
+      case_description = #{caseDescription,jdbcType=VARCHAR},
+      allowance_id = #{allowanceId,jdbcType=VARCHAR},
+      allowance_amounts = #{allowanceAmounts,jdbcType=INTEGER},
+      countersign_id = #{countersignId,jdbcType=VARCHAR},
+      allowance_company_name = #{allowanceCompanyName,jdbcType=VARCHAR},
+      allowance_seq = #{allowanceSeq,jdbcType=VARCHAR},
+      allowance_plan_name = #{allowancePlanName,jdbcType=VARCHAR},
+      allowance_apply_time = #{allowanceApplyTime,jdbcType=VARCHAR},
+      allowance_apply_start_time = #{allowanceApplyStartTime,jdbcType=VARCHAR},
+      allowance_apply_end_time = #{allowanceApplyEndTime,jdbcType=VARCHAR},
+      allowance_total_amounts = #{allowanceTotalAmounts,jdbcType=INTEGER},
+      allowance_approve_amounts = #{allowanceApproveAmounts,jdbcType=INTEGER},
+      allowance_approve_id = #{allowanceApproveId,jdbcType=VARCHAR},
+      allowance_approve_time = #{allowanceApproveTime,jdbcType=VARCHAR},
+      allowance_remark = #{allowanceRemark,jdbcType=VARCHAR},
+      allowance_frequency_record = #{allowanceFrequencyRecord,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      updator = #{updator,jdbcType=VARCHAR},
+      verify_unit = #{verifyUnit,jdbcType=VARCHAR},
+      verify_person = #{verifyPerson,jdbcType=VARCHAR}
+    where aaid = #{aaid,jdbcType=VARCHAR}
+  </update>
+</mapper>
