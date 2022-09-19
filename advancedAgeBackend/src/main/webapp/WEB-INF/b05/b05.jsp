@@ -193,7 +193,7 @@
         <a href="logout?account=${account }">登出</a>
       </div>
       
-
+		<c:if test="${functionPermission.indexOf('B05')!=-1 }">
       <!------------------- search ------------------->
       <form action="b05" method="post">
       <input type="hidden" name="account" value="${account }"/>
@@ -381,7 +381,8 @@
       
     </div>
       
-      
+      </c:if>
+      <c:if test="${functionPermission.indexOf('B05')==-1 }"><p>無此權限</p></c:if>
       
 
     </div>

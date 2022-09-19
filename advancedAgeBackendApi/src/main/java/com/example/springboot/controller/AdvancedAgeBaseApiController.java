@@ -35,11 +35,11 @@ public class AdvancedAgeBaseApiController {
 	public List<AdvancedAgeBase> selectATypeAdvancedAgeBase(AdvancedAgeBase base) {
 		advancedAgeBaseExample = new AdvancedAgeBaseExample();
 		AdvancedAgeBaseExample.Criteria c= advancedAgeBaseExample.createCriteria();
-		if(!base.getSeq().equals("")) 
+		if(base.getSeq() != null && !base.getSeq().equals("")) 
 			c.andSeqEqualTo(base.getSeq());
 		if(base.getUnit() != null && !base.getUnit().equals(""))
 			c.andUnitEqualTo(base.getUnit());
-		if(!base.getYear().equals(""))
+		if(base.getYear() != null && !base.getYear().equals(""))
 			c.andYearEqualTo(base.getYear());
 		c.andCaseTypeEqualTo("A");
 		if(base.getCompanyName() != null && !base.getCompanyName().equals(""))

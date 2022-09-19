@@ -97,9 +97,9 @@ public class AdvancedAgeBaseApiController {
 		advancedAgeBaseExample.createCriteria().andIdEqualTo(base.getId());
 		AdvancedAgeBase searchBase = selectAdvancedAgeBaseById(base);
 		if(searchBase.getAllowanceFrequencyRecord()==null || searchBase.getAllowanceFrequencyRecord().equals("")) {
-			base.setAllowanceFrequencyRecord("1、"+sdf.format(new Date()).toString()+"、;");
+			base.setAllowanceFrequencyRecord("1、"+sdf.format(new Date()).toString()+"、0;");
 		}else{
-			base.setAllowanceFrequencyRecord(searchBase.getAllowanceFrequencyRecord()+"1、"+sdf.format(new Date()).toString()+"、;");
+			base.setAllowanceFrequencyRecord(searchBase.getAllowanceFrequencyRecord()+"1、"+sdf.format(new Date()).toString()+"、0;");
 		}
 		base.setId(null);
 		base.setUpdateTime(new Date());

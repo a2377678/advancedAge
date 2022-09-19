@@ -294,6 +294,8 @@ table {
 	margin-left: 10px;
 	white-space: normal !important;
 }
+
+
 .file_list {
 	list-style-type: none;
 	font-size: 1.8em;
@@ -342,8 +344,6 @@ table {
 .file-preview::-webkit-scrollbar-button{
   background: #fff; /*捲軸上的按鈕*/
 }
-
-	
 .file_list li .file-preview a:link  {
 	background-color: #C76112;
 	color: #FFF;
@@ -388,6 +388,108 @@ table {
 	display: block;
 	margin-bottom: 5px;
 }
+
+
+.file_list-2 {
+	list-style-type: none;
+	font-size: 1.8em;
+	display: inline-block;
+	padding: 0px;
+}
+.file_list-2 li {
+	display: inline-block;
+	float: left;
+	width: 180px;
+	margin-right: 15px;
+	margin-bottom: 10px;
+}
+.file_list-2 li div {
+	display: block;
+}
+.file_list-2 li .file-name {
+	background-color: #9CADBA;
+	text-align: center;
+	font-weight: bold;
+	color: #FFF;
+	display: block;
+	padding: 3px;
+	min-height: 25px;
+	border-radius: 3px;
+}
+.file_list-2 li .file-preview {
+	background-color: #FFF;
+	height: 100px;
+	width: 180px;
+	display: inline-block;
+	padding-bottom: 10px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	}
+	
+.file-preview::-webkit-scrollbar {
+  width: 8px; /*捲軸本身，可以設定寬度*/
+}
+.file-preview::-webkit-scrollbar-track-piece{
+  background: #fff; /*捲軸背景的顏色*/
+}
+.file-preview::-webkit-scrollbar-thumb{
+  background-color: #999;/*捲軸可以拉的部分*/
+}
+.file-preview::-webkit-scrollbar-button{
+  background: #fff; /*捲軸上的按鈕*/
+}
+.file_list-2 li .file-preview a:link  {
+	background-color: #C76112;
+	color: #FFF;
+	text-decoration: none;
+	padding-top: 0px;
+	padding-right: 5px;
+	padding-bottom: 2px;
+	padding-left: 5px;
+	margin-top: 8px;
+	margin-left: 8px;
+	display: block;
+	font-family: Arial;
+	font-weight: normal;
+	border-radius: 3px;
+	height: 22px;
+	float: left;
+	font-size: 0.85em;
+	letter-spacing: 1px;
+}
+.file_list-2 li .file-preview a:visited {
+	background-color: #C76112;
+	color: #FFF;
+}
+
+.file_list-2 li .file-preview a:hover {
+	background-color: #FE7523;
+	color: #FFF;
+}
+.file_list-2 li .file-preview a:active {
+	background-color: #C76112;
+	color: #FFF;
+}
+.file_list-2 li .file-preview .visited {
+	background-color: #003399 !important;
+	color: #FFF;
+}
+
+.file_list-2 li .file-check {
+	margin-top: 5px;
+	font-size: 0.9em;
+	font-weight: bold;
+}
+.file_list-2 li .file-check label {
+	display: block;
+	margin-bottom: 5px;
+}
+
+
+
+
+
+
 .mail_box {
 	margin-bottom: 10px;
 	margin-right: 20px;

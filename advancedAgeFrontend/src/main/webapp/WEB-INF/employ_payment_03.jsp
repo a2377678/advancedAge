@@ -180,11 +180,6 @@
     	<input type="hidden" id="baseId" value="${baseId }">
       <div class="title_main">
         <span>原核定函影本</span>
-        <em>
-          <!-- Button trigger modal-1 -->
-          <button type="button" class="btn btn-success px-2 py-0" data-bs-toggle="modal" 
-          data-bs-target="#exampleModa2-1">範例 1</button>
-        </em>
       </div>
       <div class="file_box" id="approved">
       	<c:choose><c:when test="${not empty approvedAttachment}">
@@ -232,11 +227,7 @@
     
       <div class="title_main">
         <span>領據</span>
-        <em>須加蓋公司大小章及張貼匯款帳戶封面影本
-          <!-- Button trigger modal-2 -->
-          <button type="button" class="btn btn-success px-2 py-0" data-bs-toggle="modal" 
-          data-bs-target="#exampleModa2-1">範例 1</button>
-        </em>
+        <em>須加蓋公司大小章及張貼匯款帳戶封面影本 【<a href="/file/SAMPLE/領據.doc">領據.doc</a>】 </em>
       </div>
       
       <div class="file_box" id="receipt">

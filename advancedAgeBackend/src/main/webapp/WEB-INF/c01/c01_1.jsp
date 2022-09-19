@@ -290,9 +290,9 @@ $(function(){
       <table class="table_03" id="unitDataTable">
         <tr>
           <th width="18%">案件編號</th>
-          <td width="35%">${base[0].get('aaid') }</td>
+          <td width="35%">${base[0].aaid }</td>
           <th width="18%">申請日期</th>
-          <td>${base[0].get("createTime").substring(0,4)-1911 }${base[0].get("createTime").substring(4,10) }</td>
+          <td>${base[0].createTime.substring(0,4)-1911 }${base[0].createTime.substring(4,10) }</td>
         </tr>
         <tr>
           <th>單位名稱</th>
@@ -364,10 +364,9 @@ $(function(){
       <table class="table_04">
         <tr>
           <th colspan="2">核定</th>
-          <th colspan="3" class="point">請領審核</th>
+          <th colspan="4" class="point">請領審核</th>
           <th colspan="5" class="point">請領審核結果</th>
-          <th class="point">請領核發</th>
-          <th rowspan="2" class="point">其他備註</th>
+          <th colspan="2" class="point">請領核發</th>
         </tr>
         <tr>
           <th width="6%">屆齡</th>
@@ -375,14 +374,16 @@ $(function(){
           <th width="11%" class="point">請領日期</th>
           <th width="6%" class="point">人數</th>
           <th width="7%" class="point">清冊</th>
+          <th width="7%" class="point">附件</th>
           <th width="6%" class="point">符合</th>
           <th width="6%" class="point">不符</th>
           <th width="7%" class="point">比率</th>
           <th width="7%" class="point">報表</th>
           <th width="8%" class="point">結果</th>
           <th width="12%" class="point">本次金額</th>
+          <th class="point">核定</th>
         </tr>
-       	<c:forEach items="${base[0].get('allowanceFrequencyRecord').split(';') }" var="item" varStatus="status">
+        <c:forEach items="${base[0].get('allowanceFrequencyRecord').split(';') }" var="item" varStatus="status">
        		<c:set var="employmenyListReceiptSize" value="0"/>
        		<c:forEach items="${employmenyListReceipt}" var="i">
        			<c:if test="${status.count==i.baseAllowanceFrequency}">
@@ -396,58 +397,98 @@ $(function(){
 		        <td>${item.split('、')[1].substring(0,4)-1911}${item.split('、')[1].substring(4)}</td>
 		        <td>${employmenyListReceiptSize }</td>
 		        <td><a href="#" onclick="openData('${base[0].get('seq')}',${base[0].get('id')},${base[0].get('year')},${status.count})"><u>審核</u></a></td>
+		        <td><a href="#" target="_blank"><u>檢視</u></a></td>
 		        <td>${base[0].get("checkEmploymentPerson") }</td>
 		        <td>${employmenyListReceipt.size()-base[0].get("checkEmploymentPerson") }</td>
 		        <td>40%</td>
-		        <td><a href="c01_result"><u>查看</u></a></td>
+		        <td><a href="c01_result"><u>檢視</u></a></td>
 		        <td><span class="text_pass">符合</span></td>
 		        <td>120000</td>
-		        <td><input type="text" size="16"></td>
+		        <td>
+		        	<c:if test="${item.split('、')[2]==0}"><button type="button" class="btn_05">核定</button></c:if>
+		        	<c:if test="${item.split('、')[2]==1}">已核定</c:if>
+		        </td>
 	        </tr>
        	</c:forEach>
-        
+<!--         <tr> -->
+<!--           <td>5</td> -->
+<!--           <td>3</td> -->
+<!--           <td>111-12-01</td> -->
+<!--           <td>3</td> -->
+<!--           <td>&nbsp;</td> -->
+<!--           <td><a href="c01_file.html" target="_blank"><u>檢視</u></a></td> -->
+<!--           <td>2</td> -->
+<!--           <td>1</td> -->
+<!--           <td>40%</td> -->
+<!--           <td><a href="c01_result.html"><u>檢視</u></a></td> -->
+<!--           <td><span class="text_pass">符合</span></td> -->
+<!--           <td>120000</td> -->
+<!--           <td>已核定</td> -->
+<!--         </tr> -->
 <!--         <tr> -->
 <!--           <td>5</td> -->
 <!--           <td>3</td> -->
 <!--           <td>112-03-01</td> -->
 <!--           <td>2</td> -->
-<!--           <td><a href="c01_list" target="_blank"><u>審核</u></a></td> -->
+<!--           <td><a href="c01_list.html" target="_blank"><u>審核</u></a></td> -->
+<!--           <td><a href="c01_file.html" target="_blank"><u>檢視</u></a></td> -->
 <!--           <td>1</td> -->
 <!--           <td>1</td> -->
 <!--           <td>20%</td> -->
-<!--           <td><a href="c01_result"><u>查看</u></a></td> -->
+<!--           <td><a href="c01_result.html"><u>檢視</u></a></td> -->
 <!--           <td><span class="text_warn">不符合</span></td> -->
 <!--           <td>-</td> -->
-<!--           <td><input type="text" size="16"></td> -->
+<!--           <td> -->
+<!--             <button type="button" class="btn_05">核定</button> -->
+<!--           </td> -->
 <!--         </tr> -->
 <!--         <tr> -->
 <!--           <td>5</td> -->
 <!--           <td>3</td> -->
 <!--           <td>112-06-01</td> -->
 <!--           <td>3</td> -->
-<!--           <td><a href="c01_list" target="_blank"><u>審核</u></a></td> -->
+<!--           <td><a href="c01_list.html" target="_blank"><u>審核</u></a></td> -->
+<!--           <td><a href="c01_file.html" target="_blank"><u>檢視</u></a></td> -->
 <!--           <td>&nbsp;</td> -->
 <!--           <td>&nbsp;</td> -->
 <!--           <td>&nbsp;</td> -->
 <!--           <td>&nbsp;</td> -->
 <!--           <td>&nbsp;</td> -->
 <!--           <td>&nbsp;</td> -->
-<!--           <td><input type="text" size="16"></td> -->
-<!--         </tr> -->
-<!--         <tr> -->
-<!--           <th colspan="2">承辦單位</th> -->
-<!--           <td colspan="4" style="text-align:left">勞動力發展署</td> -->
-<!--           <th colspan="2">承辦人員</th> -->
-<!--           <td colspan="4" style="text-align:left">張OO</td> -->
-<!--         </tr> -->
-<!--         <tr> -->
-<!--           <th colspan="2">最後異動時間</th> -->
-<!--           <td colspan="4" style="text-align:left">111-12-06　15:06</td> -->
-<!--           <th colspan="2">最後異動人員</th> -->
-<!--           <td colspan="4" style="text-align:left">張OO</td> -->
+<!--           <td>&nbsp;</td> -->
 <!--         </tr> -->
       </table>
-
+      
+      <br>
+      
+      <table class="table_04">
+        <tr>
+          <th width="12%">承辦單位</th>
+          <td width="37%" style="text-align:left">
+          	<c:forEach  items="${unitList}"  var="unitItem"  varStatus="userStatus">
+		      		<c:if test="${base[0].verifyUnit==unitItem.code}">${unitItem.name}</c:if> 
+	      	</c:forEach>
+          </td>
+          <th width="13%">承辦人員</th>
+          <td width="27" style="text-align:left">
+          	<c:forEach  items="${userList}"  var="userItem"  varStatus="userStatus">
+	      		<c:if test="${base[0].verifyPerson==userItem.id}">${userItem.name}</c:if> 
+	      	</c:forEach>
+          </td>
+        </tr>
+        <tr>
+          <th>最後異動時間</th>
+          <td style="text-align:left">
+          	${base[0].updateTime.substring(0,4)-1911}${base[0].updateTime.substring(4,16)}
+          </td>
+          <th>最後異動人員</th>
+          <td style="text-align:left">
+          	<c:forEach  items="${userList}"  var="userItem"  varStatus="userStatus">
+	      		<c:if test="${base[0].updator==userItem.id}">${userItem.name}</c:if> 
+	      	</c:forEach>
+          </td>
+        </tr>
+      </table>
 
       <!------------------- table 3 ------------------->
 
@@ -455,7 +496,6 @@ $(function(){
       
       <div class="btn_box-3">
       <button type="button" class="btn_02">返回列表</button>
-      <button type="button" class="btn_01">儲存修改</button>
       </div>
       
 

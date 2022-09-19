@@ -572,8 +572,14 @@ public class BackendMainController {
 		// ------單位列表 start------
 		model.addAttribute("unitList", getUnit().toList());
 		// ------單位列表 end------
+		//所有資料
+		AdvancedAgeBase totalBase = new AdvancedAgeBase();
+		totalBase.setFileStatus("4");
+		totalBase.setYear(String.valueOf(applyYear));
+		model.addAttribute("totalBaseList", selectATypeAdvancedAgeBase(totalBase).toList());
+		model.addAttribute("year", applyYear);
 		if(base.getYear() != null) {
-			//所有資料
+			//查詢資料
 			base.setFileStatus("4");//附件通過
 			jsonArray = selectATypeAdvancedAgeBase(base);
 			JSONArray pageArray = new JSONArray();

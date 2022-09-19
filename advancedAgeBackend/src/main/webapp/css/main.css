@@ -969,7 +969,10 @@ a.btn_04, a.btn_04:hover {
 	border-radius: 3px;
 	border: none;
 	margin-right: 5px;
-	padding: 4px 10px 4px 10px !important;
+	padding-top: 3px!important;
+	padding-right: 10px!important;
+	padding-bottom: 4px!important;
+	padding-left: 10px!important;
 }
 
 .btn_05:hover {

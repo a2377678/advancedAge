@@ -203,9 +203,12 @@
               <td>
               <select name="caseStatus" id="caseStatus">
                 <option value>不限</option>
-                <option value="1" <c:if test="${base.caseStatus=='1' }">selected</c:if>>待審</option>
-                <option value="2" <c:if test="${base.caseStatus=='2' }">selected</c:if>>不合格</option>
-                <option value="3" <c:if test="${base.caseStatus=='3' }">selected</c:if>>合格</option>
+                <option value="1" <c:if test="${base.caseStatus=='1' }">selected</c:if>>案件待審</option>
+                <option value="2" <c:if test="${base.caseStatus=='2' }">selected</c:if>>案件不合格</option>
+                <option value="3" <c:if test="${base.caseStatus=='3' }">selected</c:if>>案件合格</option>
+                <option value="4" <c:if test="${base.caseStatus=='4' }">selected</c:if>>待核定</option>
+                <option value="5" <c:if test="${base.caseStatus=='5' }">selected</c:if>>已核定(待核銷)</option>
+                <option value="6" <c:if test="${base.caseStatus=='6' }">selected</c:if>>已核銷</option>
               </select>
               </td>
               <th>&nbsp;</th>
@@ -225,13 +228,20 @@
       
       </div>
       </form>
-      
       <!------------------- stats ------------------->
+      <c:set var="apply" value="${totalBaseList.size()}"/>
+      <c:set var="add" value="0"/>
+      <c:set var="success" value="0"/>
+      <c:forEach items="${totalBaseList}" var="item" varStatus="status">
+      	<c:if test="${item.fileStatus != '4' }"><c:set var="add" value="${add+1 }"/></c:if>
+      	<c:if test="${item.fileStatus == '4' }"><c:set var="success" value="${success+1 }"/></c:if>
+      </c:forEach>
       <div class="stats">
-        <div class="title">111年度申辦概況</div>
-        <div>申請件數<span class="t1">120</span></div>
-        <div>補件件數<span class="t2">48</span></div>
-        <div>通過件數<span class="t3">35</span></div>
+        <div class="title">
+        ${year}年度申辦概況</div>
+        <div>申請件數<span class="t1">${apply }</span></div>
+        <div>補件件數<span class="t2">${add }</span></div>
+        <div>通過件數<span class="t3">${success }</span></div>
       </div>
       
       <!------------------- list ------------------->
@@ -258,7 +268,11 @@
 				          <span class="update_time">${item.updateTime.substring(0,4)-1911}${item.updateTime.substring(4,10)}</span>
 				          <span class="tax_id_number">${item.seq }</span>
 				          <span class="company_name">${item.companyName }</span>
-				          <span class="case_status"><c:choose><c:when test="${item.fileStatus!='4'}">缺件</c:when><c:when test="${item.fileStatus=='4' && item.caseStatus=='1'}">待審</c:when><c:when test="${item.fileStatus=='4' && item.caseStatus=='2'}">不合格</c:when><c:when test="${item.fileStatus=='4' && item.caseStatus=='3'}">合格</c:when></c:choose></span>
+				          <span class="case_status"><c:choose><c:when test="${item.fileStatus!='4'}">缺件</c:when><c:when test="${item.fileStatus=='4' && item.caseStatus=='1'}">待審</c:when><c:when test="${item.fileStatus=='4' && item.caseStatus=='2'}">不合格</c:when><c:when test="${item.fileStatus=='4' && item.caseStatus=='3'}">合格</c:when>
+				          <c:when test="${item.fileStatus=='4' && item.caseStatus=='4'}">待核定</c:when>
+				          <c:when test="${item.fileStatus=='4' && item.caseStatus=='5'}">已核定(待核銷)</c:when>
+				          <c:when test="${item.fileStatus=='4' && item.caseStatus=='6'}">已核銷</c:when>
+				          </c:choose></span>
 				          <span class="district"><c:forEach  items="${unitList}"  var="unitItem"  varStatus="userStatus">
 						      		<c:if test="${item.verifyUnit==unitItem.code}">${unitItem.name}</c:if> 
 					      	</c:forEach>

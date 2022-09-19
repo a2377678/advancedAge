@@ -53,23 +53,23 @@
     <h2><span class="title-1">補助計畫相關資料下載</span></h2>
 
     <div class="list-group py-5 h5">
-      <a href="download/繼續僱用高齡者補助計畫.docx" 
+      <a href="/file/SAMPLE/繼續僱用高齡者補助計畫.docx" 
       class="list-group-item list-group-item-action list-group-item-info py-3" 
       title="繼續僱用高齡者補助計畫doc檔">繼續僱用高齡者補助計畫.docx</a>
-      <a href="download/繼續僱用高齡者補助計畫.pdf" 
+      <a href="/file/SAMPLE/繼續僱用高齡者補助計畫.pdf" 
       class="list-group-item list-group-item-action list-group-item-light py-3" 
       title="繼續僱用高齡者補助計畫pdf檔">繼續僱用高齡者補助計畫.pdf</a>
 
-        <a href="download/申請書-繼續僱用高齡者補助計畫.doc" 
+        <a href="/file/SAMPLE/申請書-繼續僱用高齡者補助計畫.doc" 
         class="list-group-item list-group-item-action list-group-item-info py-3" 
         title="申請書-繼續僱用高齡者補助計畫doc檔">申請書-繼續僱用高齡者補助計畫.doc</a>
-        <a href="download/申請書-繼續僱用高齡者補助計畫.pdf" 
+        <a href="/file/SAMPLE/申請書-繼續僱用高齡者補助計畫.pdf" 
         class="list-group-item list-group-item-action list-group-item-light py-3" 
         title="申請書-繼續僱用高齡者補助計畫pdf檔">申請書-繼續僱用高齡者補助計畫.pdf</a>
         
-        <a href="download/申請補助專用表_統編扣繳_單位名稱.xlsx" 
+        <a href="/file/SAMPLE/申請補助專用表格.xlsx" 
         class="list-group-item list-group-item-action list-group-item-info py-3" 
-        title="申請補助專用表">申請補助專用表.xlsx</a>
+        title="申請補助專用表">申請補助專用表格.xlsx</a>
     </div>
 
     <div class="page"></div>
