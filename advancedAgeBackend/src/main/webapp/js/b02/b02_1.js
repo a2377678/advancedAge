@@ -162,3 +162,7 @@ function save(){
 	    }
     });
 }
+
+function cancel(){
+	location.href='b02?account='+$('input[name="account"]').val();
+}

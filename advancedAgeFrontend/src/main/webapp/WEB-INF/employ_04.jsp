@@ -118,7 +118,7 @@
  
     <!-------------設立登記證明文件------------>
     <div class="form">
-    	<input type="hidden" id="seq" value="${seq}"/>
+    	<input type="hidden" id="sid" value="${sid}"/>
       <div class="title_main">
       <span>設立登記證明文件</span>
       <em>須加蓋公司單位及負責人用印 (公司大小章)
@@ -380,7 +380,7 @@
     </div>
      
     <div class="page">
-      <button onclick="javascript:location.href='employ_03?seq=${seq}'">回上頁</button>
+      <button onclick="javascript:location.href='employ_03?sid=${sid}'">回上頁</button>
       <!--- Button trigger modal --->
       <button type="button" class="" data-bs-toggle="modal" data-bs-target="#sure">下一步</button>
       <!---------- Modal ---------->
@@ -397,7 +397,7 @@
             </div>
             <div class="pt-3 pb-5">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">返回檢查</button>
-              <button type="button" class="btn btn-primary" onclick="javascript:location.href='employ_05?seq=${seq}'">確認完成，下一步</button>
+              <button type="button" class="btn btn-primary" onclick="javascript:location.href='employ_05?sid=${sid}'">確認完成，下一步</button>
             </div>
           </div>
         </div>

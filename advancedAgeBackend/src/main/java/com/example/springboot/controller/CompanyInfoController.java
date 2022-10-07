@@ -81,7 +81,6 @@ public class CompanyInfoController {
 		}
 		String password=new String(chars);
         
-		System.out.println("new String(chars) = "+new String(chars));
 		return password;
 	}
 

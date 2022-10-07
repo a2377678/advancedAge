@@ -137,10 +137,6 @@ public class SendEmail{
 	
 	public void sendMail(String toMail,String content) throws AddressException, MessagingException
 	   {    
-			System.out.println("username = "+SystemConfig.getProperty("spring.mail.username"));
-			System.out.println("password = "+SystemConfig.getProperty("spring.mail.password"));
-			System.out.println("host = "+SystemConfig.getProperty("spring.mail.host"));
-			System.out.println("port = "+SystemConfig.getProperty("spring.mail.port"));
 //			EDM ip: 172.21.210.30
 //			帳號：wmsedm@msa.wda.gov.tw
 //			密碼：Wms@123456789
@@ -193,7 +189,6 @@ public class SendEmail{
 	        t.connect(user, pwd);
 	        t.sendMessage(msg, msg.getAllRecipients());
 	        t.close();
-	        System.out.println("email finish");
 	// *** END CHANGE
 	   }
 }

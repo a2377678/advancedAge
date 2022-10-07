@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.http.HttpClient;
@@ -36,6 +37,18 @@ public class CallApi {
 	String requestBody;
 	HttpURLConnection con;
 	public String httpGet(String ip){
+		URL url;
+		try {
+			url = new URL(ip);
+			//只有開頭是http/https才可通過
+			if (!url.getProtocol().equals("http") && !url.getProtocol().equals("https")) {
+				return "";
+			    }
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
+			return "";
+		}
+		
 		client = HttpClient.newHttpClient();
         request = HttpRequest.newBuilder()
                 .uri(URI.create(ip))
@@ -46,17 +59,26 @@ public class CallApi {
 			response = client.send(request,
 			        HttpResponse.BodyHandlers.ofString());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		System.out.println("response.body() = "+response.body());
 		return response.body();
 	}
 	
 	public String httpPost(String ip,String json){
+		URL url;
+		try {
+			url = new URL(ip);
+			//只有開頭是http/https才可通過
+			if (!url.getProtocol().equals("http") && !url.getProtocol().equals("https")) {
+				return "";
+			    }
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
+			return "";
+		}
+		
 		String urlParameters = convertToString(json);//"seq=12313321&companyName=test";
         byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
         StringBuilder content=null;
@@ -88,10 +110,8 @@ public class CallApi {
                 }
             }
 
-            System.out.println("return : "+content.toString());
 
         }catch(Exception e) {
-        	System.out.println("error : "+e.getMessage());
         }
         finally {
             con.disconnect();

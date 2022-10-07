@@ -67,7 +67,7 @@
     <div id="pdf">
     <!--startprint-->
     <div class="form">
-    
+    	<input type="hidden" id="sid" value="${sid}">
       <div class="title_main"><span>申請書</span></div>
     
       <div>單位名稱：${apply.companyName}</div>
@@ -326,7 +326,7 @@ C=(B)/(A) x 100%">
     <!--endprint-->
     
     <div class="page">
-      <button type="button" onclick="javascript:location.href='employ_02?seq=${apply.seq}'">返回修改</button>
+      <button type="button" onclick="javascript:location.href='employ_02?sid=${sid}'">返回修改</button>
       <button type="button" onclick="doPrint()">列印資料</button>
       <!--- Button trigger modal --->
       <button type="button" class="" data-bs-toggle="modal" data-bs-target="#sure">送出案件</button>

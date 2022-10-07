@@ -46,7 +46,6 @@ public class CallApi {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		System.out.println("response.body() = "+response.body());
 		return response.body();
 	}
 	
@@ -84,7 +83,6 @@ public class CallApi {
 
 
         }catch(Exception e) {
-        	System.out.println("error : "+e.getMessage());
         }
         finally {
             con.disconnect();
@@ -110,7 +108,6 @@ public class CallApi {
 				}
 			}
 		}
-		System.out.println("result = "+result);
 		return result;
 	}
 }

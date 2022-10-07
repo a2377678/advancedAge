@@ -220,3 +220,7 @@ function save(){
 	    }
     });
 }
+
+function cancel(){
+	location.href='b05?account='+$('input[name="account"]').val();
+}

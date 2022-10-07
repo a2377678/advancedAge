@@ -32,8 +32,8 @@ public class Zip {
                         Predicate<File> filePredicate,
                         String... sourceDirs) throws IOException {
 
-        File destinationDirFile = new File(destinationDir);
-        File zipFile = new File(destinationDir + File.separatorChar + zipName);
+        File destinationDirFile = new File(destinationDir).getCanonicalFile();
+        File zipFile = new File(destinationDir + File.separatorChar + zipName).getCanonicalFile();
 
         if (!destinationDirFile.exists()) {
             if (!destinationDirFile.mkdirs()) {
@@ -45,8 +45,6 @@ public class Zip {
                 throw new RuntimeException("cannot delete existing zip file: " +
                                     zipFile.getAbsolutePath());
             } else if (exists && !deleteExisting) {
-                System.out.println("Zip file already exists: " +
-                                    zipFile.getAbsolutePath());
                 return;
             }
         }
@@ -67,10 +65,11 @@ public class Zip {
                                                 FileOutputStream(destination)))) {
 
             for (String sourceDir : sourceDirs) {
-                File sourceDirFile = new File(sourceDir);
+                File sourceDirFile = new File(sourceDir).getCanonicalFile();
                 if (!sourceDirFile.exists()) {
-                    throw new RuntimeException("Source dir doesn't exists "
-                                        + sourceDirFile);
+//                    throw new RuntimeException("Source dir doesn't exists "
+//                                        + sourceDirFile);
+                	continue;
                 }
                 addDirRecursively(destination.getName().substring(0,destination.getName().indexOf(".")),
                                     sourceDirFile.getAbsolutePath(),
@@ -95,6 +94,7 @@ public class Zip {
         File[] files = dirFile.listFiles();
         if (files != null) {
             for (File file : files) {
+            	file=file.getCanonicalFile();
                 if (!filePredicate.test(file)) {
                     continue;
                 }

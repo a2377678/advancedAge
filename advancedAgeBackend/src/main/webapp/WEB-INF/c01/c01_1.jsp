@@ -1,6 +1,7 @@
 <!doctype html>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
 <meta charset="utf-8">
@@ -285,7 +286,10 @@ $(function(){
       <div id="page_tab">
         <div class="file_title-1">申請單位資料</div>
       </div>
-        
+      <input type="hidden" id="aaid" value="${base[0].aaid }">
+      <input type="hidden" id="verifyUnit" value="${unit }">
+      <input type="hidden" id="verifyPerson" value="${id}">
+      <input type="hidden" id="updator" value="${id}">
       <!------ 申請單位資料 ------> 
       <table class="table_03" id="unitDataTable">
         <tr>
@@ -385,9 +389,24 @@ $(function(){
         </tr>
         <c:forEach items="${base[0].get('allowanceFrequencyRecord').split(';') }" var="item" varStatus="status">
        		<c:set var="employmenyListReceiptSize" value="0"/>
+       		<c:set var="employmenyListReceiptSuccess" value="0"/>
+       		<c:set var="employmenyListReceiptFail" value="0"/>
+       		<c:set var="employmenyListReceiptAmounts" value="0"/>
        		<c:forEach items="${employmenyListReceipt}" var="i">
        			<c:if test="${status.count==i.baseAllowanceFrequency}">
        				<c:set var="employmenyListReceiptSize" value="${employmenyListReceiptSize+1 }"/>
+       			</c:if>
+       			<c:if test="${status.count==i.baseAllowanceFrequency && not empty i.approveStatus && i.approveStatus!=3 }">
+       				<c:set var="employmenyListReceiptSuccess" value="${employmenyListReceiptSuccess+1 }"/>
+       			</c:if>
+       			<c:if test="${status.count==i.baseAllowanceFrequency && not empty i.approveStatus && i.approveStatus==3 }">
+       				<c:set var="employmenyListReceiptFail" value="${employmenyListReceiptFail+1 }"/>
+       			</c:if>
+       			<c:if test="${status.count==i.baseAllowanceFrequency && not empty i.adjustAmounts}">
+       				<c:set var="employmenyListReceiptAmounts" value="${employmenyListReceiptAmounts+i.adjustAmounts }"/>
+       			</c:if>
+       			<c:if test="${status.count==i.baseAllowanceFrequency && empty i.adjustAmounts}">
+       				<c:set var="employmenyListReceiptAmounts" value="${employmenyListReceiptAmounts+i.amounts }"/>
        			</c:if>
        		</c:forEach>
        		
@@ -396,16 +415,22 @@ $(function(){
 		        <td>${base[0].get("checkEmploymentPerson") }</td>
 		        <td>${item.split('、')[1].substring(0,4)-1911}${item.split('、')[1].substring(4)}</td>
 		        <td>${employmenyListReceiptSize }</td>
-		        <td><a href="#" onclick="openData('${base[0].get('seq')}',${base[0].get('id')},${base[0].get('year')},${status.count})"><u>審核</u></a></td>
-		        <td><a href="#" target="_blank"><u>檢視</u></a></td>
-		        <td>${base[0].get("checkEmploymentPerson") }</td>
-		        <td>${employmenyListReceipt.size()-base[0].get("checkEmploymentPerson") }</td>
-		        <td>40%</td>
-		        <td><a href="c01_result"><u>檢視</u></a></td>
-		        <td><span class="text_pass">符合</span></td>
-		        <td>120000</td>
+		        <td><a href="#" onclick="openData('${base[0].get('seq')}',${base[0].get('id')},${base[0].get('year')},${status.count},'1')"><u>審核</u></a></td>
+		        <td><a href="#"><u>檢視</u></a></td>
+		        
+		        <td>${employmenyListReceiptSuccess}</td>
+		        <td>${employmenyListReceiptFail}</td>
+		        <td><fmt:formatNumber type = "number" 
+         maxFractionDigits = "1" value = "${employmenyListReceiptSuccess/employmenyListReceiptSize*100}" />%</td>
+		        <td><a href="#" onclick="openData('${base[0].get('seq')}',${base[0].get('id')},${base[0].get('year')},${status.count},'2')"><u>檢視</u></a></td>
 		        <td>
-		        	<c:if test="${item.split('、')[2]==0}"><button type="button" class="btn_05">核定</button></c:if>
+		        	<c:if test="${employmenyListReceiptSuccess/employmenyListReceiptSize*100>30}"><span class="text_pass">符合</span></c:if>
+		        	<c:if test="${employmenyListReceiptSuccess/employmenyListReceiptSize*100<30}"><span class="text_warn">不符合</span></c:if>
+		        </td>
+		        
+		        <td><fmt:formatNumber type = "number" value = "${employmenyListReceiptAmounts}" /></td>
+		        <td>
+		        	<c:if test="${item.split('、')[2]==0}"><button type="button" class="btn_05" onclick="verify('${base[0].get('allowanceFrequencyRecord')}','${item.split('、')[0] }')">核定</button></c:if>
 		        	<c:if test="${item.split('、')[2]==1}">已核定</c:if>
 		        </td>
 	        </tr>
@@ -495,7 +520,7 @@ $(function(){
       
       
       <div class="btn_box-3">
-      <button type="button" class="btn_02">返回列表</button>
+      <button type="button" class="btn_02" onclick="cancel()">返回列表</button>
       </div>
       
 

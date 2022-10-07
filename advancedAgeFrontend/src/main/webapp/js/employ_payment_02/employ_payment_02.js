@@ -290,6 +290,7 @@ function listSave(){
 		if($(this).find('input[name^="identification"]').val()!='')
 		{
 			data.seq=$('#seq').val();
+			data.sid=$('#sid').val();
 			data.advancedAgeBaseId=$('#baseId').val();
 			data.name=$(this).find('input[name^="name"]').val();
 			data.identification=$(this).find('input[name^="identification"]').val();
@@ -354,11 +355,10 @@ function listSave(){
 function fileUpload(){
 	if($('#uploadFile').val() != '')
 	{
-		
 		let file = new FormData();
 		file.append('uploadFile',$('#uploadFile').get(0).files[0]);
 		file.append('baseId',$('#baseId').val());
-		file.append('seq',$('#seq').val());
+		file.append('sid',$('#sid').val());
 		$.confirm({
 		    title: '請領名單上傳前確認',
 		    animation: 'zoom',
@@ -455,7 +455,7 @@ function next(){
 		    dataType:"text", //ajax返回值text（json格式也可用這返回，也可設成json）
 			contentType:"application/json",
 		    success: function(json){  
-				location.href='employ_payment_03?seq='+$('#seq').val();
+				location.href='employ_payment_03?sid='+$('#sid').val();
 		    },
 		    error: function(json){
 			    alert('稍等5秒再試');

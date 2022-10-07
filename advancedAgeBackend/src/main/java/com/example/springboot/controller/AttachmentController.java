@@ -156,9 +156,9 @@ public class AttachmentController {
 		try{
 	        // 1.得到要下載的檔名稱
 	        String filename = path.substring(path.lastIndexOf("/")+1,path.length());
-	        filename = new String(filename.getBytes("iso8859-1"), "utf-8"); // 解決中文亂碼
+//	        filename = new String(filename.getBytes("iso8859-1"), "utf-8"); // 解決中文亂碼
 	        //檔案所在位置
-	        File file = new File(localPath+path.substring(0, path.lastIndexOf("/")), filename);
+	        File file = new File(localPath+path.substring(0, path.lastIndexOf("/")), filename).getCanonicalFile();
 	        if (file.exists()) {
 	            // 檔案存在，完成下載
 	            // 下載注意事項1--設定下載檔案的mimeType
@@ -192,7 +192,7 @@ public class AttachmentController {
 	}
 	
 	public void SaveFileFromInputStream(InputStream stream,String path,String filename) throws IOException{  
-		File directory = new File(localPath+path+"/"+filename);
+		File directory = new File(localPath+path+"/"+filename).getCanonicalFile();
 		
 		//路徑是否存在
 		if (!directory.getParentFile().exists()) {
@@ -219,21 +219,21 @@ public class AttachmentController {
         stream.close();      
     }
 	
-	public void addAdvancedAgeApply(HttpServletRequest request, HttpServletResponse response
-			,AdvancedAgeApply apply){ 
-		session = request.getSession();
-		ObjectMapper objectMapper = new ObjectMapper();
-		String json="";
-		try {
-			json = objectMapper.writeValueAsString(apply);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String body = api.httpPost(ip+"addAdvancedAgeApply",json);
-		JSONObject object = new JSONObject(body);
-		session.setAttribute("advancedAgeApplyId", object.get("id"));
-	}
+//	public void addAdvancedAgeApply(HttpServletRequest request, HttpServletResponse response
+//			,AdvancedAgeApply apply){ 
+//		session = request.getSession();
+//		ObjectMapper objectMapper = new ObjectMapper();
+//		String json="";
+//		try {
+//			json = objectMapper.writeValueAsString(apply);
+//		} catch (JsonProcessingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		String body = api.httpPost(ip+"addAdvancedAgeApply",json);
+//		JSONObject object = new JSONObject(body);
+//		session.setAttribute("advancedAgeApplyId", object.get("id"));
+//	}
 	
 
 	public AdvancedAgeBase selectATypeAdvancedAgeBase(AdvancedAgeBase base) {

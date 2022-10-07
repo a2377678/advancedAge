@@ -17,7 +17,7 @@ function aVerify(){
         },
         success: function (result) {
             if (result.split(";")[0]=='success') {
-                location.href='employ_payment_02?seq='+result.split(";")[1];
+                location.href='employ_payment_02?sid='+result.split(";")[1];
             } else if(result=='no base'){
 				alert("案件未送出申請");
 			}else if(result=='audit'){

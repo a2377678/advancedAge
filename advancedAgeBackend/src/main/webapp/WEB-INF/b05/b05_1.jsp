@@ -440,9 +440,9 @@ $(function(){
           <td colspan="3">${plan.items}</td>
         </tr>
         <tr>
-          <th>目前員工人數</th>
-          <td>${plan.employmentNumber}</td>
-          <th>65歲以上人數</th>
+          <th width="18%">目前員工人數</th>
+          <td width="35%">${plan.employmentNumber}</td>
+          <th width="18%">65歲以上人數</th>
           <td>${plan.highEmploymentNumber}</td>
         </tr>
         <tr>
@@ -699,7 +699,7 @@ $(function(){
       <div class="btn_box-3">
       <!---<input type="reset" class="btn_02" value="取消修改" />--->
       <!---<input type="submit" class="btn_01" value="儲存資料" />--->
-      <button type="reset" class="btn_02">取消修改</button>
+      <button type="button" class="btn_02" onclick="cancel()">取消修改</button>
       <button type="button" class="btn_01" onclick="save()">案件核定</button>
       </div>
 

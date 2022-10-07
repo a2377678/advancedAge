@@ -68,7 +68,7 @@
     
     <div class="page">
 <%--     <a href="pdf?seq=${seq }" type="button">下載申請書電子檔</a> --%>
-	  <button onclick="downloadPdf('${seq }')">下載申請書電子檔</button>
+	  <button onclick="downloadPdf('${sid }')">下載申請書電子檔</button>
       <button onclick="javascript:location.href='index'">回首頁</button>
     </div>
         

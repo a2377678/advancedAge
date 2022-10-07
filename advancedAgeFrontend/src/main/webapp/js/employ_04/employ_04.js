@@ -272,31 +272,31 @@ function upload(){
 		$('input[name^="registerProof"]').each(function(){
 			registerFiles.append('registerFiles',$(this)[0].files[0]);
 		});
-		registerFiles.append('seq',$('#seq').val());
+		registerFiles.append('sid',$('#sid').val());
 		
 		let insureFiles = new FormData();
 		$('input[name^="insureProof"]').each(function(){
 			insureFiles.append('insureFiles',$(this)[0].files[0]);
 		});
-		insureFiles.append('seq',$('#seq').val());
+		insureFiles.append('sid',$('#sid').val());
 		
 		let salaryFiles = new FormData();
 		$('input[name^="salaryProof"]').each(function(){
 			salaryFiles.append('salaryFiles',$(this)[0].files[0]);
 		});
-		salaryFiles.append('seq',$('#seq').val());
+		salaryFiles.append('sid',$('#sid').val());
 		
 		let attendanceFiles = new FormData();
 		$('input[name^="attendanceProof"]').each(function(){
 			attendanceFiles.append('attendanceFiles',$(this)[0].files[0]);
 		});
-		attendanceFiles.append('seq',$('#seq').val());
+		attendanceFiles.append('sid',$('#sid').val());
 		
 		let necessaryFiles = new FormData();
 		$('input[name^="necessaryProof"]').each(function(){
 			necessaryFiles.append('necessaryFiles',$(this)[0].files[0]);
 		});
-		necessaryFiles.append('seq',$('#seq').val());
+		necessaryFiles.append('sid',$('#sid').val());
 		
 		if(registerFiles.get('registerFiles') != 'undefined' || insureFiles.get('insureFiles') != 'undefined'  || salaryFiles.get('salaryFiles') != 'undefined' || attendanceFiles.get('attendanceFiles') != 'undefined' || necessaryFiles.get('necessaryFiles') != 'undefined' ){
 			$('#loader-container').show();
@@ -308,7 +308,6 @@ function upload(){
 			   	processData: false,
 				data: registerFiles,
 				success: function(res) {
-					
 					$.ajax({
 					   	type: 'post',
 						url: 'advancedAgeApplyInsureFileUplolad',// 資料不需要編碼
@@ -317,8 +316,7 @@ function upload(){
 					   	processData: false,
 						data: insureFiles,
 						success: function(res) {
-					   	// 判斷是否接收成功
-						   	$.ajax({
+					   		$.ajax({
 							   	type: 'post',
 								url: 'advancedAgeApplySalaryFileUplolad',// 資料不需要編碼
 								enctype: 'multipart/form-data',	   	
@@ -326,7 +324,6 @@ function upload(){
 							   	processData: false,
 								data: salaryFiles,
 								success: function(res) {
-							   	// 判斷是否接收成功
 								   	$.ajax({
 									   	type: 'post',
 										url: 'advancedAgeApplyAttendanceFileUplolad',// 資料不需要編碼
@@ -335,7 +332,6 @@ function upload(){
 									   	processData: false,
 										data: attendanceFiles,
 										success: function(res) {
-									   	// 判斷是否接收成功
 										   	$.ajax({
 											   	type: 'post',
 												url: 'advancedAgeApplyNecessaryFileUplolad',// 資料不需要編碼

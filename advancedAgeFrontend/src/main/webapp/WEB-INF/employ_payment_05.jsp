@@ -112,7 +112,7 @@
     </div>
     
     <div class="page">
-      <button onclick="javascript:location.href=''">下載申請書電子檔</button>
+<!--       <button onclick="javascript:location.href=''">下載申請書電子檔</button> -->
       <button onclick="javascript:location.href='index'">回首頁</button>
     </div>
         

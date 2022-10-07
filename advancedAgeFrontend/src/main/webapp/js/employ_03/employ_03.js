@@ -14,7 +14,7 @@ $(function(){
 			    url: 'delAdvancedAgeEmploymentList',
 			    data: {
 					identification : $(this).parent().parent('li').find('input[name^="identification"]').val(),
-					seq : $('#seq').val()
+					sid : $('#sid').val()
 			    },
 			    dataType:"text", //ajax返回值text（json格式也可用這返回，也可設成json）
 			    success: function(json){
@@ -90,7 +90,7 @@ function planSave(showMsg,upload){
 			continueEmploymentNumber : $('#continueEmploymentNumber').val(),
 			continueEmploymentPercentage : $('#continueEmploymentPercentage').val(),
 			attachEmploymentList : upload,
-			seq : $('#seq').val()
+			sid : $('#sid').val()
 //			attachFriendlyMeasures : $('#attachFriendlyMeasures').val()==''?'N':'Y',
 //			friendlyMeasures : $('#friendlyMeasures').val(),
 //			attachAssistanceMeasures : $('#attachAssistanceMeasures').val()==''?'N':'Y',
@@ -338,7 +338,7 @@ function listSave(showMsg){
 			continueEmploymentNumber : $('#continueEmploymentNumber').val(),
 			continueEmploymentPercentage : $('#continueEmploymentPercentage').val(),
 			attachEmploymentList : 'N',
-			seq : $('#seq').val()
+			sid : $('#sid').val()
 //			attachFriendlyMeasures : $('#attachFriendlyMeasures').val()==''?'N':'Y',
 //			friendlyMeasures : $('#friendlyMeasures').val(),
 //			attachAssistanceMeasures : $('#attachAssistanceMeasures').val()==''?'N':'Y',
@@ -419,7 +419,7 @@ function fileUpload(showMsg){
 			continueEmploymentNumber : $('#continueEmploymentNumber').val(),
 			continueEmploymentPercentage : $('#continueEmploymentPercentage').val(),
 			attachEmploymentList : 'Y',
-			seq : $('#seq').val()
+			sid : $('#sid').val()
 //			attachFriendlyMeasures : $('#attachFriendlyMeasures').val()==''?'N':'Y',
 //			friendlyMeasures : $('#friendlyMeasures').val(),
 //			attachAssistanceMeasures : $('#attachAssistanceMeasures').val()==''?'N':'Y',
@@ -433,6 +433,7 @@ function fileUpload(showMsg){
 			{
 				let file = new FormData();
 				file.append('uploadFile',$('#uploadFile').get(0).files[0]);
+				file.append('sid',$('#sid').val());
 				$.confirm({
 				    title: '補助名單上傳前確認',
 				    animation: 'zoom',
@@ -449,7 +450,7 @@ function fileUpload(showMsg){
 							data: file,
 							success: function(res) {
 						   	// 判斷是否接收成功
-								if(res='success')
+								if(res.indexOf('success')!=-1)
 								{
 							   		alert('檔案已上傳');
 									window.location.reload();
@@ -585,7 +586,7 @@ function totalSave(showMsg){
 				continueEmploymentNumber : $('#continueEmploymentNumber').val(),
 				continueEmploymentPercentage : $('#continueEmploymentPercentage').val(),
 				attachEmploymentList : 'N',
-				seq : $('#seq').val()
+				sid : $('#sid').val()
 	//			attachFriendlyMeasures : $('#attachFriendlyMeasures').val()==''?'N':'Y',
 	//			friendlyMeasures : $('#friendlyMeasures').val(),
 	//			attachAssistanceMeasures : $('#attachAssistanceMeasures').val()==''?'N':'Y',
@@ -672,7 +673,7 @@ function totalSave(showMsg){
 				continueEmploymentNumber : $('#continueEmploymentNumber').val(),
 				continueEmploymentPercentage : $('#continueEmploymentPercentage').val(),
 				attachEmploymentList : 'Y',
-				seq : $('#seq').val()
+				sid : $('#sid').val()
 	//			attachFriendlyMeasures : $('#attachFriendlyMeasures').val()==''?'N':'Y',
 	//			friendlyMeasures : $('#friendlyMeasures').val(),
 	//			attachAssistanceMeasures : $('#attachAssistanceMeasures').val()==''?'N':'Y',
@@ -686,6 +687,7 @@ function totalSave(showMsg){
 				{
 					let file = new FormData();
 					file.append('uploadFile',$('#uploadFile').get(0).files[0]);
+					file.append('sid',$('#sid').val());
 					$.confirm({
 					    title: '補助名單上傳前確認',
 					    animation: 'zoom',
@@ -702,7 +704,7 @@ function totalSave(showMsg){
 								data: file,
 								success: function(res) {
 							   	// 判斷是否接收成功
-									if(res='success')
+									if(res=='success')
 									{
 										if(showMsg=='Y')
 										{
@@ -760,7 +762,7 @@ function next(){
 					continueEmploymentNumber : $('#continueEmploymentNumber').val(),
 					continueEmploymentPercentage : $('#continueEmploymentPercentage').val(),
 					attachEmploymentList : 'N',
-					seq : $('#seq').val()
+					sid : $('#sid').val()
 		//			attachFriendlyMeasures : $('#attachFriendlyMeasures').val()==''?'N':'Y',
 		//			friendlyMeasures : $('#friendlyMeasures').val(),
 		//			attachAssistanceMeasures : $('#attachAssistanceMeasures').val()==''?'N':'Y',
@@ -812,9 +814,9 @@ function next(){
 						    dataType:"text", //ajax返回值text（json格式也可用這返回，也可設成json）
 							contentType:"application/json",
 						    success: function(json){ 
-						   		if(json='success')
+						   		if(json=='success')
 								{
-									location.href='employ_04?seq='+$('#seq').val();
+									location.href='employ_04?sid='+$('#sid').val();
 								}
 						    },
 						    error: function(json){
@@ -846,7 +848,7 @@ function next(){
 					continueEmploymentNumber : $('#continueEmploymentNumber').val(),
 					continueEmploymentPercentage : $('#continueEmploymentPercentage').val(),
 					attachEmploymentList : 'Y',
-					seq : $('#seq').val()
+					sid : $('#sid').val()
 		//			attachFriendlyMeasures : $('#attachFriendlyMeasures').val()==''?'N':'Y',
 		//			friendlyMeasures : $('#friendlyMeasures').val(),
 		//			attachAssistanceMeasures : $('#attachAssistanceMeasures').val()==''?'N':'Y',
@@ -860,6 +862,7 @@ function next(){
 					{
 						let file = new FormData();
 						file.append('uploadFile',$('#uploadFile').get(0).files[0]);
+						file.append('sid',$('#sid').val());
 						$.confirm({
 						    title: '補助名單上傳前確認',
 						    animation: 'zoom',
@@ -876,9 +879,9 @@ function next(){
 									data: file,
 									success: function(res) {
 								   	// 判斷是否接收成功
-										if(res='success')
+										if(res=='success')
 										{
-									   			location.href='employ_04?seq='+$('#seq').val();
+									   			location.href='employ_04?sid='+$('#sid').val();
 										}
 									}
 								});
@@ -898,7 +901,7 @@ function next(){
 						}
 						else
 						{
-							location.href='employ_04?seq='+$('#seq').val();
+							location.href='employ_04?sid='+$('#sid').val();
 						}
 					}
 			    },

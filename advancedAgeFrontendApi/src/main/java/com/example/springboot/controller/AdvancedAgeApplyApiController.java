@@ -193,7 +193,7 @@ public class AdvancedAgeApplyApiController {
 	public void delAdvancedAgeEmploymentListbyId(AdvancedAgeEmploymentList employmentList) {
 		advancedAgeEmploymentListExample = new AdvancedAgeEmploymentListExample();
 		advancedAgeEmploymentListExample.createCriteria().andAdvancedAgePlanIdEqualTo(employmentList.getAdvancedAgePlanId());
-		System.out.println("del = "+advancedAgeEmploymentListService.deleteByExample(advancedAgeEmploymentListExample));
+		advancedAgeEmploymentListService.deleteByExample(advancedAgeEmploymentListExample);
 	}
 	
 	@ApiOperation(value = "新增繼續僱用補助名單_請領")
@@ -251,7 +251,6 @@ public class AdvancedAgeApplyApiController {
 		advancedAgeEmploymentListReceiptExample = new AdvancedAgeEmploymentListReceiptExample();
 		advancedAgeEmploymentListReceiptExample.setOrderByClause("id asc");
 		advancedAgeEmploymentListReceiptExample.createCriteria().andAdvancedAgeBaseIdEqualTo(employmentListReceipt.getAdvancedAgeBaseId()).andBaseAllowanceFrequencyEqualTo(0);
-		System.out.println("recore freq"+searchBase.getAllowanceFrequencyRecord().split(";").length);
 		employmentListReceipt.setBaseAllowanceFrequency(searchBase.getAllowanceFrequencyRecord().split(";").length);
 		advancedAgeEmploymentListReceiptService.updateByExampleSelective(employmentListReceipt,advancedAgeEmploymentListReceiptExample);
 		
@@ -294,7 +293,7 @@ public class AdvancedAgeApplyApiController {
 	public void delAdvancedAgeEmploymentListReceiptbyId(AdvancedAgeEmploymentListReceipt employmentListReceipt) {
 		advancedAgeEmploymentListReceiptExample = new AdvancedAgeEmploymentListReceiptExample();
 		advancedAgeEmploymentListReceiptExample.createCriteria().andAdvancedAgeBaseIdEqualTo(employmentListReceipt.getAdvancedAgeBaseId()).andBaseAllowanceFrequencyEqualTo(0);
-		System.out.println("del = "+advancedAgeEmploymentListReceiptService.deleteByExample(advancedAgeEmploymentListReceiptExample));
+		advancedAgeEmploymentListReceiptService.deleteByExample(advancedAgeEmploymentListReceiptExample);
 	}
 	
 	@ApiOperation(value = "新增近3年申請繼續僱用補助人數及留用狀況")

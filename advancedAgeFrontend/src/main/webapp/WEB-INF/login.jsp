@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="zh-hant-TW">
 <head>
 <meta charset="UTF-8">
@@ -54,11 +55,13 @@
     <h2>驗證身分</h2>
     
     <!---申辦前準備--->
+    <%
+	 String redirect = request.getParameter("type");
+	%>
     <h3>請先「登入帳號」或使用「工商憑證」進行登入，<br>
     若您忘記密碼請聯繫我們，將由人工查詢及回覆。</h3>
-    
     <div class="login">
-    	<input type="hidden" id="type" name="type" value="<%=request.getParameter("type")%>">
+    	<input type="hidden" id="type" name="type" value="<c:out value="<%=redirect %>"/>">
       <div class="mode style-2">
         <div class="title_line">無卡申請</div>
         <div class="title_word">帳號登入</div>

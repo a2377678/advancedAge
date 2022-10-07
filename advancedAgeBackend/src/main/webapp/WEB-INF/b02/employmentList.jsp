@@ -170,13 +170,12 @@
     <!--------- 報表內容end --------->
 
 
-	
-
   </div>
-  <div class="page">
-      <button type="button" onclick="doPrint()">列印資料</button>
-      <button id="gpdf">Generate PDF</button>
-    </div>
+  <div class="p_btn_box-3">
+      <button type="button" class="p_btn_03" onclick="doPrint()">列印清冊</button>
+      <button type="button" class="p_btn_03" id="gpdf">另存PDF</button>
+      <!---<button type="button" class="p_btn_02">取消修改</button>--->
+      </div>
   
   <script src="js/b02/employmentList.js"></script>
   

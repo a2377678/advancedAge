@@ -125,7 +125,7 @@ public class AttachmentController {
 	@RequestMapping(value = "/advancedAgeApplyRegisterFileUplolad", method = RequestMethod.POST)
 	public void advancedAgeApplyRegisterFileUplolad(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value="registerFiles", required=false) MultipartFile[] registerFiles,
-			@RequestParam(value="seq", required=false) String seq){ 
+			@RequestParam(value="sid", required=false) String sid){ 
 		session = request.getSession();
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -136,7 +136,7 @@ public class AttachmentController {
 					attach = new Attachment();
 					
 					base = new AdvancedAgeBase();
-					base.setSeq(seq);
+					base.setSeq(session.getAttribute(sid+"seq").toString());
 					AdvancedAgeBase result=selectATypeAdvancedAgeBase(base);
 					if(result.getFileStatusRecord()==null)
 					{
@@ -148,7 +148,7 @@ public class AttachmentController {
 					}
 					
 					attach.setFileBelong("A");
-					attach.setFileBelongId(Integer.valueOf(session.getAttribute(base.getSeq()+"advancedAgeApplyId").toString()));
+					attach.setFileBelongId(Integer.valueOf(session.getAttribute(session.getId()+"advancedAgeApplyId").toString()));
 					attach.setFileName(registerFiles[i].getOriginalFilename());
 					attach.setFileType("register");
 					attach.setFilePath("/"+attach.getFileBelong()+"/"+attach.getFileBelongId()+"/"+attach.getFileType()+"/"+attach.getFileFrequency());
@@ -165,6 +165,19 @@ public class AttachmentController {
 					e.printStackTrace();
 				}
 				api.httpPost(ip+"fileUplolad",json);
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			response.setContentType("text/html;charset=UTF-8");
+			try {
+				response.getWriter().print("success");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			//申請書附件確認
 //			AdvancedAgeApply apply = new AdvancedAgeApply();
@@ -177,7 +190,7 @@ public class AttachmentController {
 	@RequestMapping(value = "/advancedAgeApplyInsureFileUplolad", method = RequestMethod.POST)
 	public void advancedAgeApplyInsureFileUplolad(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value="insureFiles", required=false) MultipartFile[] insureFiles,
-			@RequestParam(value="seq", required=false) String seq){ 
+			@RequestParam(value="sid", required=false) String sid){ 
 		session = request.getSession();
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -188,7 +201,7 @@ public class AttachmentController {
 					attach = new Attachment();
 					
 					base = new AdvancedAgeBase();
-					base.setSeq(seq);
+					base.setSeq(session.getAttribute(sid+"seq").toString());
 					AdvancedAgeBase result=selectATypeAdvancedAgeBase(base);
 					if(result.getFileStatusRecord()==null)
 					{
@@ -200,7 +213,7 @@ public class AttachmentController {
 					}
 					
 					attach.setFileBelong("A");
-					attach.setFileBelongId(Integer.valueOf(session.getAttribute(base.getSeq()+"advancedAgeApplyId").toString()));
+					attach.setFileBelongId(Integer.valueOf(session.getAttribute(session.getId()+"advancedAgeApplyId").toString()));
 					attach.setFileName(insureFiles[i].getOriginalFilename());
 					attach.setFileType("insure");
 					attach.setFilePath("/"+attach.getFileBelong()+"/"+attach.getFileBelongId()+"/"+attach.getFileType()+"/"+attach.getFileFrequency());
@@ -216,6 +229,19 @@ public class AttachmentController {
 					e.printStackTrace();
 				}
 				api.httpPost(ip+"fileUplolad",json);
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			response.setContentType("text/html;charset=UTF-8");
+			try {
+				response.getWriter().print("success");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			//申請書附件確認
 //			AdvancedAgeApply apply = new AdvancedAgeApply();
@@ -228,7 +254,7 @@ public class AttachmentController {
 	@RequestMapping(value = "/advancedAgeApplySalaryFileUplolad", method = RequestMethod.POST)
 	public void advancedAgeApplySalaryFileUplolad(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value="salaryFiles", required=false) MultipartFile[] salaryFiles,
-			@RequestParam(value="seq", required=false) String seq){ 
+			@RequestParam(value="sid", required=false) String sid){ 
 		session = request.getSession();
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -239,7 +265,7 @@ public class AttachmentController {
 					attach = new Attachment();
 					
 					base = new AdvancedAgeBase();
-					base.setSeq(seq);
+					base.setSeq(session.getAttribute(sid+"seq").toString());
 					AdvancedAgeBase result=selectATypeAdvancedAgeBase(base);
 					if(result.getFileStatusRecord()==null)
 					{
@@ -251,7 +277,7 @@ public class AttachmentController {
 					}
 					
 					attach.setFileBelong("A");
-					attach.setFileBelongId(Integer.valueOf(session.getAttribute(base.getSeq()+"advancedAgeApplyId").toString()));
+					attach.setFileBelongId(Integer.valueOf(session.getAttribute(session.getId()+"advancedAgeApplyId").toString()));
 					attach.setFileName(salaryFiles[i].getOriginalFilename());
 					attach.setFileType("salary");
 					attach.setFilePath("/"+attach.getFileBelong()+"/"+attach.getFileBelongId()+"/"+attach.getFileType()+"/"+attach.getFileFrequency());
@@ -267,6 +293,19 @@ public class AttachmentController {
 					e.printStackTrace();
 				}
 				api.httpPost(ip+"fileUplolad",json);
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			response.setContentType("text/html;charset=UTF-8");
+			try {
+				response.getWriter().print("success");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			//申請書附件確認
 //			AdvancedAgeApply apply = new AdvancedAgeApply();
@@ -279,7 +318,7 @@ public class AttachmentController {
 	@RequestMapping(value = "/advancedAgeApplyAttendanceFileUplolad", method = RequestMethod.POST)
 	public void advancedAgeApplyAttendanceFileUplolad(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value="attendanceFiles", required=false) MultipartFile[] attendanceFiles,
-			@RequestParam(value="seq", required=false) String seq){ 
+			@RequestParam(value="sid", required=false) String sid){ 
 		session = request.getSession();
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -290,7 +329,7 @@ public class AttachmentController {
 					attach = new Attachment();
 					
 					base = new AdvancedAgeBase();
-					base.setSeq(seq);
+					base.setSeq(session.getAttribute(sid+"seq").toString());
 					AdvancedAgeBase result=selectATypeAdvancedAgeBase(base);
 					if(result.getFileStatusRecord()==null)
 					{
@@ -302,7 +341,7 @@ public class AttachmentController {
 					}
 					
 					attach.setFileBelong("A");
-					attach.setFileBelongId(Integer.valueOf(session.getAttribute(base.getSeq()+"advancedAgeApplyId").toString()));
+					attach.setFileBelongId(Integer.valueOf(session.getAttribute(session.getId()+"advancedAgeApplyId").toString()));
 					attach.setFileName(attendanceFiles[i].getOriginalFilename());
 					attach.setFileType("attendance");
 					attach.setFilePath("/"+attach.getFileBelong()+"/"+attach.getFileBelongId()+"/"+attach.getFileType()+"/"+attach.getFileFrequency());
@@ -314,10 +353,21 @@ public class AttachmentController {
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				api.httpPost(ip+"fileUplolad",json);
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			response.setContentType("text/html;charset=UTF-8");
+			try {
+				response.getWriter().print("success");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			//此類型檔案上傳為後續新增，AdvancedAgeApply當初沒有欄位紀錄
 			//申請書附件確認
@@ -332,7 +382,7 @@ public class AttachmentController {
 	@RequestMapping(value = "/advancedAgeApplyNecessaryFileUplolad", method = RequestMethod.POST)
 	public void advancedAgeApplyNecessaryFileUplolad(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value="necessaryFiles", required=false) MultipartFile[] necessaryFiles,
-			@RequestParam(value="seq", required=false) String seq){ 
+			@RequestParam(value="sid", required=false) String sid){ 
 		session = request.getSession();
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -343,7 +393,7 @@ public class AttachmentController {
 					attach = new Attachment();
 					
 					base = new AdvancedAgeBase();
-					base.setSeq(seq);
+					base.setSeq(session.getAttribute(sid+"seq").toString());
 					AdvancedAgeBase result=selectATypeAdvancedAgeBase(base);
 					if(result.getFileStatusRecord()==null)
 					{
@@ -355,7 +405,7 @@ public class AttachmentController {
 					}
 					
 					attach.setFileBelong("A");
-					attach.setFileBelongId(Integer.valueOf(session.getAttribute(base.getSeq()+"advancedAgeApplyId").toString()));
+					attach.setFileBelongId(Integer.valueOf(session.getAttribute(session.getId()+"advancedAgeApplyId").toString()));
 					attach.setFileName(necessaryFiles[i].getOriginalFilename());
 					attach.setFileType("necessary");
 					attach.setFilePath("/"+attach.getFileBelong()+"/"+attach.getFileBelongId()+"/"+attach.getFileType()+"/"+attach.getFileFrequency());
@@ -367,10 +417,21 @@ public class AttachmentController {
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				api.httpPost(ip+"fileUplolad",json);
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			response.setContentType("text/html;charset=UTF-8");
+			try {
+				response.getWriter().print("success");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 //			session.removeAttribute("attachmentSeq");
 			//此類型檔案上傳為後續新增，AdvancedAgeApply當初沒有欄位紀錄
@@ -481,14 +542,13 @@ public class AttachmentController {
 	
 	@RequestMapping(value = "/addAdvancedAgeEmploymentListFromFile", method = RequestMethod.POST)
 	public void addAdvancedAgeEmploymentListFromFile(HttpServletRequest request, HttpServletResponse response
-			,@RequestParam(value="uploadFile", required=false) MultipartFile uploadFile) throws Exception{ 
+			,@RequestParam(value="uploadFile", required=false) MultipartFile uploadFile
+			,@RequestParam(value="sid", required=false) String sid ) throws Exception{ 
 		session = request.getSession();
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
-		String applyId=session.getAttribute("advancedAgeApplyId").toString();
-		String planId=session.getAttribute("advancedAgePlanId").toString();
-		session.removeAttribute("advancedAgePlanId");
-		session.removeAttribute("advancedAgeApplyId");
+		String applyId=session.getAttribute(sid+"advancedAgeApplyId").toString();
+		String planId=session.getAttribute(sid+"advancedAgePlanId").toString();
 		Attachment attach = new Attachment();
 		attach.setFileBelong("A");
 		attach.setFileBelongId(Integer.valueOf(applyId));
@@ -510,9 +570,8 @@ public class AttachmentController {
 		api.httpPost(ip+"fileUplolad",json);
 		
         String destFileName=localPath+attach.getFilePath()+"/"+uploadFile.getOriginalFilename();
-        System.out.println(destFileName);
         
-        File destFile = new File(destFileName);
+        File destFile = new File(destFileName).getCanonicalFile();
         try {
 			uploadFile.transferTo(destFile);
 		} catch (IllegalStateException e) {
@@ -522,11 +581,9 @@ public class AttachmentController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
- 
-        System.out.println("上傳成功");
+        System.out.println("刪除舊檔案");
         delAdvancedAgeEmploymentListbyId(request, response, new AdvancedAgeEmploymentList(),planId);
-        System.out.println("讀取EXCEL內容");
-        
+        System.out.println("刪除finish");
         Sheet sheet;
         InputStream fis = null;
  
@@ -548,7 +605,6 @@ public class AttachmentController {
  
         int totalRowNum = sheet.getLastRowNum();
  
-        System.out.println("表格共有："+totalRowNum+"列");
         
         List<AdvancedAgeEmploymentList> list = new ArrayList<AdvancedAgeEmploymentList>();
         AdvancedAgeEmploymentList data;
@@ -557,14 +613,7 @@ public class AttachmentController {
             Row row = sheet.getRow(i);
             if(row!=null && !getCellValue(row.getCell(1)).equals("")){
                 int columnNum=row.getPhysicalNumberOfCells();
-                System.out.println("該列共有行數："+columnNum);
-//                for(int j=0;j<columnNum;j++){
-//                    System.out.println("當前處理第"+i+"列，第"+j+"行");
-//                    Cell cell = row.getCell(j);
-//                    
-//                    System.out.println(getCellValue(cell));
-//                    
-//                }
+                
                 data.setName(getCellValue(row.getCell(1)));
                 data.setIdentification(getCellValue(row.getCell(2)));
                 if(getCellValue(row.getCell(3)).equals("勞工保險")){
@@ -609,7 +658,6 @@ public class AttachmentController {
 		try {
 			response.getWriter().print("success");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -618,8 +666,7 @@ public class AttachmentController {
 	public void addAdvancedAgeEmploymentListReceiptFromFile(HttpServletRequest request, HttpServletResponse response
 			,@RequestParam(value="uploadFile", required=true) MultipartFile uploadFile,
 			@RequestParam(value="baseId", required=true) String baseId,
-			@RequestParam(value="seq", required=true) String seq) throws Exception{ 
-		System.out.println("baseId = "+baseId);
+			@RequestParam(value="sid", required=true) String sid) throws Exception{ 
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
 		Attachment attach = new Attachment();
@@ -652,9 +699,8 @@ public class AttachmentController {
 		api.httpPost(ip+"fileUplolad",json);
 		
         String destFileName=localPath+attach.getFilePath()+"/"+uploadFile.getOriginalFilename();
-        System.out.println(destFileName);
         
-        File destFile = new File(destFileName);
+        File destFile = new File(destFileName).getCanonicalFile();
         try {
 			uploadFile.transferTo(destFile);
 		} catch (IllegalStateException e) {
@@ -665,11 +711,9 @@ public class AttachmentController {
 			e.printStackTrace();
 		}
  
-        System.out.println("上傳成功");
         AdvancedAgeEmploymentListReceipt receipt = new AdvancedAgeEmploymentListReceipt();
         receipt.setAdvancedAgeBaseId(Integer.valueOf(baseId));
         delAdvancedAgeEmploymentListReceiptbyId(request, response, receipt);
-        System.out.println("讀取EXCEL內容");
         
         Sheet sheet;
         InputStream fis = null;
@@ -692,7 +736,6 @@ public class AttachmentController {
  
         int totalRowNum = sheet.getLastRowNum();
  
-        System.out.println("表格共有："+totalRowNum+"列");
         
         List<AdvancedAgeEmploymentListReceipt> list = new ArrayList<AdvancedAgeEmploymentListReceipt>();
         AdvancedAgeEmploymentListReceipt data;
@@ -701,17 +744,10 @@ public class AttachmentController {
             Row row = sheet.getRow(i);
             if(row!=null && !getCellValue(row.getCell(1)).equals("")){
                 int columnNum=row.getPhysicalNumberOfCells();
-                System.out.println("該列共有行數："+columnNum);
-//                for(int j=0;j<columnNum;j++){
-//                    System.out.println("當前處理第"+i+"列，第"+j+"行");
-//                    Cell cell = row.getCell(j);
-//                    
-//                    System.out.println(getCellValue(cell));
-//                    
-//                }
+                
                 data.setAdvancedAgeBaseId(Integer.valueOf(baseId));
                 data.setBaseAllowanceFrequency(0);
-                data.setSeq(seq);
+                data.setSeq(session.getAttribute(sid+"seq").toString());
                 data.setName(getCellValue(row.getCell(1)));
                 data.setIdentification(getCellValue(row.getCell(2)));
                 if(getCellValue(row.getCell(3)).equals("勞工保險")){
@@ -759,7 +795,7 @@ public class AttachmentController {
             }
         }
         AdvancedAgeEmploymentListReceipt[] dataList = list.toArray(new AdvancedAgeEmploymentListReceipt[list.size()]);
-        addAdvancedAgeEmploymentListReceipt(request,response,dataList,searchBase.getSeq());
+        addAdvancedAgeEmploymentListReceipt(request,response,dataList,sid);
         workbook.close();
 		response.setContentType("text/html;charset=UTF-8");
 		try {
@@ -794,13 +830,13 @@ public class AttachmentController {
 	@RequestMapping(value = "/download", method = RequestMethod.GET)
 	public void download(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("path") String path){ 
-		
+        
 		try{
 	        // 1.得到要下載的檔名稱
 	        String filename = path.substring(path.lastIndexOf("/")+1,path.length());
-	        filename = new String(filename.getBytes("iso8859-1"), "utf-8"); // 解決中文亂碼
+//	        filename = new String(filename.getBytes("iso8859-1"), "utf-8"); // 解決中文亂碼
 	        //檔案所在位置
-	        File file = new File(localPath+path.substring(0, path.lastIndexOf("/")), filename);
+	        File file = new File(localPath+path.substring(0, path.lastIndexOf("/")), filename).getCanonicalFile();
 	        if (file.exists()) {
 	            // 檔案存在，完成下載
 	            // 下載注意事項1--設定下載檔案的mimeType
@@ -834,7 +870,7 @@ public class AttachmentController {
 	}
 	
 	public void SaveFileFromInputStream(InputStream stream,String path,String filename) throws IOException{  
-		File directory = new File(localPath+path+"/"+filename);
+		File directory = new File(localPath+path+"/"+filename).getCanonicalFile();
 		
 		//路徑是否存在
 		if (!directory.getParentFile().exists()) {
@@ -862,26 +898,26 @@ public class AttachmentController {
     }
 	
 	public void deleteRealFile(String path,String filename) throws IOException{  
-		File directory = new File(localPath+path+"/"+filename);
+		File directory = new File(localPath+path+"/"+filename).getCanonicalFile();
 		
 		directory.delete();
     }
 	
-	public void addAdvancedAgeApply(HttpServletRequest request, HttpServletResponse response
-			,AdvancedAgeApply apply){ 
-		session = request.getSession();
-		ObjectMapper objectMapper = new ObjectMapper();
-		String json="";
-		try {
-			json = objectMapper.writeValueAsString(apply);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String body = api.httpPost(ip+"addAdvancedAgeApply",json);
-		JSONObject object = new JSONObject(body);
-		session.setAttribute("advancedAgeApplyId", object.get("id"));
-	}
+//	public void addAdvancedAgeApply(HttpServletRequest request, HttpServletResponse response
+//			,AdvancedAgeApply apply){ 
+//		session = request.getSession();
+//		ObjectMapper objectMapper = new ObjectMapper();
+//		String json="";
+//		try {
+//			json = objectMapper.writeValueAsString(apply);
+//		} catch (JsonProcessingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		String body = api.httpPost(ip+"addAdvancedAgeApply",json);
+//		JSONObject object = new JSONObject(body);
+//		session.setAttribute("advancedAgeApplyId", object.get("id"));
+//	}
 	
 	public void delAdvancedAgeEmploymentListbyId(HttpServletRequest request, HttpServletResponse response
 			,AdvancedAgeEmploymentList list,String planId){ 
@@ -891,9 +927,7 @@ public class AttachmentController {
 		list.setAdvancedAgePlanId(Integer.valueOf(planId));
 		try {
 			json = objectMapper.writeValueAsString(list);
-			System.out.println("json : "+json);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		api.httpPost(ip+"delAdvancedAgeEmploymentListbyId",json);
@@ -913,9 +947,7 @@ public class AttachmentController {
 		String json="";
 		try {
 			json = objectMapper.writeValueAsString(listReceipt);
-			System.out.println("json : "+json);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		api.httpPost(ip+"delAdvancedAgeEmploymentListReceiptbyId",json);
@@ -939,9 +971,7 @@ public class AttachmentController {
 				list[i].setAdvancedAgePlanId(Integer.valueOf(planId));
 				try {
 					json = objectMapper.writeValueAsString(list[i]);
-					System.out.println("json : "+json);
 				} catch (JsonProcessingException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				api.httpPost(ip+"addAdvancedAgeEmploymentList",json);
@@ -951,35 +981,32 @@ public class AttachmentController {
 		
 			response.getWriter().print("success");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
 	public void addAdvancedAgeEmploymentListReceipt(HttpServletRequest request, HttpServletResponse response
-			,@RequestBody AdvancedAgeEmploymentListReceipt[] list,String seq){ 
+			,@RequestBody AdvancedAgeEmploymentListReceipt[] list,String sid){ 
 		session = request.getSession();
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
+		System.out.println("sid = "+sid);
 		try {
 			for(int i=0;i<list.length;i++)
 			{
-				list[i].setCompanyName(session.getAttribute(seq+"companyName").toString());
+				list[i].setCompanyName(session.getAttribute(sid+"companyName").toString());
 				try {
 					json = objectMapper.writeValueAsString(list[i]);
-					System.out.println("json : "+json);
 				} catch (JsonProcessingException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				api.httpPost(ip+"addAdvancedAgeEmploymentListReceipt",json);
-				Thread.sleep(500);
+				Thread.sleep(200);
 			}
 			response.setContentType("text/html;charset=UTF-8");
 		
 			response.getWriter().print("success");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

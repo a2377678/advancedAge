@@ -155,6 +155,7 @@ $(function(){
       填寫後上傳</em>
       </div>
       
+      <input type="hidden" id="sid" name="sid" value="${sid}">
       <input type="hidden" id="seq" name="seq" value="${seq}">
       <input type="hidden" id="baseId" name="baseId" value="${baseId}">
       <div id="page_tab">

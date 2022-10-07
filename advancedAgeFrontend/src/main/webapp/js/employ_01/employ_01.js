@@ -18,7 +18,7 @@ function aVerify(){
         success: function (result) {
 //			alert(result);
             if (result.split(";")[0]=='success') {
-                location.href='employ_02?seq='+result.split(";")[1];
+                location.href='employ_02?sid='+result.split(";")[1];
             } else if(result=='password error'){
 				alert("密碼錯誤");
 			}else{

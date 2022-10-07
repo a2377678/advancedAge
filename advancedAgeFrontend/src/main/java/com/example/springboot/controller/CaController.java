@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.cms.AttributeTable;
 import org.bouncycastle.asn1.cms.Attribute;
@@ -47,9 +48,7 @@ public class CaController {
 		byte[] sig=Base64.decode(sigb64);
 		try {
 			cms = new CMSSignedData(sig);
-//			System.out.println("Got signature");
 		} catch (CMSException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -104,7 +103,6 @@ public class CaController {
 	            }
 	        }
 	        byte[] data=(byte[])cms.getSignedContent().getContent();
-//	        System.out.println("TBS="+new String(data,"UTF8"));
 	        
 	        return true;
 		} catch (Exception e) {
@@ -124,35 +122,30 @@ public class CaController {
         //SERIALNUMBER=82798010, O=弘捷資訊服務有限公司, C=TW
         session=request.getSession();
         String cardData[]=getDn().split(",");
-        String seq="",companyName="";
+        String companyName="";
         for(int i=0;i<cardData.length;i++) {
         	if(cardData[i].indexOf("SERIALNUMBER=")!=-1)
         	{
-//        		System.out.println("seq : "+cardData[i].substring(cardData[i].indexOf("=")+1, cardData[i].length()));
-        		session.setAttribute(seq+"seq", cardData[i].substring(cardData[i].indexOf("=")+1, cardData[i].length()));
+        		session.setAttribute(session.getId()+"seq", cardData[i].substring(cardData[i].indexOf("=")+1, cardData[i].length()));
         	}
         	else if(cardData[i].indexOf("O=")!=-1)
         	{
-//        		System.out.println("name : "+cardData[i].substring(cardData[i].indexOf("=")+1, cardData[i].length()));
         		companyName = cardData[i].substring(cardData[i].indexOf("=")+1, cardData[i].length());
-        		session.setAttribute(seq+"companyName", cardData[i].substring(cardData[i].indexOf("=")+1, cardData[i].length()));
+        		session.setAttribute(session.getId()+"companyName", cardData[i].substring(cardData[i].indexOf("=")+1, cardData[i].length()));
         	}
         }
         
 		try {
 			response.setContentType("text/html;charset=UTF-8");
-			if(session.getAttribute(seq+"seq") == null || session.getAttribute(seq+"companyName") == null)
+			if(session.getAttribute(session.getId()+"seq") == null || session.getAttribute(session.getId()+"companyName") == null)
 			{
-//				System.out.println("fail seq : "+session.getAttribute("seq")+" name : "+session.getAttribute("name"));
 				response.getWriter().print("fail");
 			}
 			else
 			{
-//				System.out.println("success");
-				response.getWriter().print("success;"+session.getAttribute(seq+"seq"));
+				response.getWriter().print("success;"+StringEscapeUtils.escapeHtml(session.getAttribute(session.getId()+"seq").toString()));
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

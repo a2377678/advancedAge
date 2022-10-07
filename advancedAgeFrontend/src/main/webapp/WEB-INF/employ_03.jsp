@@ -78,7 +78,7 @@
       <label for="items">主要業務/產品/服務</label>
       <input type="text" size="86%" id="items" name="items" value="${plan.items}" required>
       </div>
-      <input type="hidden" id="seq" value="${seq}"/>
+      <input type="hidden" id="sid" value="${sid}"/>
       <div class="full">
       <label for="employmentNumber">目前員工人數</label>
       <input type="number" step="1" min="0" id="employmentNumber" name="employmentNumber" value="${plan.employmentNumber}" required>
@@ -688,7 +688,7 @@ C=(B)/(A) x 100%">
     </div>
    	
     <div class="page">
-      <button onclick="javascript:location.href='employ_02?seq=${seq}'">回上頁</button>
+      <button onclick="javascript:location.href='employ_02?sid=${sid}'">回上頁</button>
       <button onclick="totalSave('Y')">暫存資料</button>
       <button onclick="next()">下一步</button>
     </div>

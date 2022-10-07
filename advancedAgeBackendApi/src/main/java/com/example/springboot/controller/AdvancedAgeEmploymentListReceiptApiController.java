@@ -58,4 +58,10 @@ public class AdvancedAgeEmploymentListReceiptApiController {
 		example.setOrderByClause("id asc");
 		return advancedAgeEmploymentListReceiptService.selectByExample(example);
 	}
+	
+	@ApiOperation(value = "編輯繼續僱用補助名單")
+	@RequestMapping(value = "/editAdvancedAgeEmploymentListReceipt", method = RequestMethod.POST)
+	public int editAdvancedAgeEmploymentListReceipt(AdvancedAgeEmploymentListReceipt advancedAgeEmploymentListReceipt) {
+		return advancedAgeEmploymentListReceiptService.updateByPrimaryKeySelective(advancedAgeEmploymentListReceipt);
+	}
 }

@@ -32,17 +32,14 @@ public class AdvancedAgeBaseController {
 		try {
 			json = objectMapper.writeValueAsString(base);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("json = "+json);
 		String jsondata = api.httpPost(ip+"fileStatusSave",json);
 		response.setContentType("text/html;charset=UTF-8");
 		try {
 //			if(jsondata !=null)
 				response.getWriter().print("success");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -54,17 +51,14 @@ public class AdvancedAgeBaseController {
 		try {
 			json = objectMapper.writeValueAsString(base);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("json = "+json);
 		String jsondata = api.httpPost(ip+"changeFileStatus",json);
 		response.setContentType("text/html;charset=UTF-8");
 		try {
 //			if(jsondata !=null)
 				response.getWriter().print("success");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -76,17 +70,14 @@ public class AdvancedAgeBaseController {
 		try {
 			json = objectMapper.writeValueAsString(base);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("json = "+json);
 		String jsondata = api.httpPost(ip+"saveBase",json);
 		response.setContentType("text/html;charset=UTF-8");
 		try {
 //			if(jsondata !=null)
 				response.getWriter().print("success");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

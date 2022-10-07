@@ -73,7 +73,7 @@
     <!---申辦前準備--->
     <h3>請確實填寫資料，如有不實，主管機關可駁回<br>
     申請案或停止補貼，並負法律責任。</h3>
-    
+    <input type="hidden" id="sid" name="sid" value="${sid }">
     <form id="form" action="employ_03" method="post">
     <div class="form">
     

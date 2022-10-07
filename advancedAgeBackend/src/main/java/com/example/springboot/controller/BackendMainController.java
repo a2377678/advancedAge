@@ -50,6 +50,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.owasp.esapi.ESAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -125,7 +126,6 @@ public class BackendMainController {
 	@RequestMapping(value = "/login")
 	public String login(HttpServletRequest request,UserInfo userInfo){ 
 		session = request.getSession();
-		System.out.println("session id = "+session.getId());
 		if(userInfo.getAccount()!=null) {
 			
 			try {
@@ -150,7 +150,6 @@ public class BackendMainController {
 					session.setAttribute(loginUser.getAccount()+"unit",loginUser.getUnit());
 					session.setAttribute(loginUser.getAccount()+"jurisdiction",loginUser.getJurisdiction());
 					session.setAttribute(loginUser.getAccount()+"functionPermission",selectFunctionPermission(functionPermission));
-					System.out.println("login setAttribute Account = "+loginUser.getAccount()+"account");
 					UserLoginRecord loginRecord = new UserLoginRecord();
 					loginRecord.setLoginId(loginUser.getId());
 					loginRecord.setAccount(loginUser.getAccount());
@@ -205,21 +204,16 @@ public class BackendMainController {
 	
 	@RequestMapping(value = "/saveRar", method = RequestMethod.POST)
 	public void saveRar(HttpServletResponse response,Attachment attachment,String date){ 
-//		System.out.println("download id = "+attachment.getFileBelongId());
-//		System.out.println("download freq = "+attachment.getFileFrequency());
-//		System.out.println("download date = "+date);
 		try {
 			zip.ZipDirs(filePath+"/A/"+attachment.getFileBelongId(), date+".rar", true, f -> true,filePath+"/A/"+attachment.getFileBelongId()+"/register/"+attachment.getFileFrequency(),filePath+"/A/"+attachment.getFileBelongId()+"/salary/"+attachment.getFileFrequency(),filePath+"/A/"+attachment.getFileBelongId()+"/insure/"+attachment.getFileFrequency(),filePath+"/A/"+attachment.getFileBelongId()+"/attendance/"+attachment.getFileFrequency(),filePath+"/A/"+attachment.getFileBelongId()+"/necessary/"+attachment.getFileFrequency());
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
 	@RequestMapping(value = "/downloadRar")
 	public void downloadRar(String path,HttpServletResponse response) {
-//		System.out.println("path = "+path);
 		path=filePath+path;
 //    下載的檔名是啥
       String fileName = path.substring(path.lastIndexOf("/") + 1);
@@ -228,7 +222,6 @@ public class BackendMainController {
       response.setHeader("Content-Disposition","attachment;filename="+ URLEncoder.encode(fileName,"utf-8"));//分號改成冒號會展示圖片而不會下載
 //    獲取下載檔案的輸入流
       FileInputStream in=new FileInputStream(path);
-//      System.out.println("path after = "+path);
 //    建立緩衝區
       int len=0;
       byte[] buffer=new byte[1024];
@@ -249,9 +242,6 @@ public class BackendMainController {
 
 	@RequestMapping(value = "/saveRarAll", method = RequestMethod.POST)
 	public void saveRarAll(HttpServletResponse response,Attachment attachment,String date){ 
-		System.out.println("download id = "+attachment.getFileBelongId());
-		System.out.println("download freq = "+attachment.getFileFrequency());
-		System.out.println("download date = "+date);
 		try {
 			zip.ZipDirs(filePath+"/A/"+attachment.getFileBelongId(), "allFile.rar", true, f -> true,filePath+"/A/"+attachment.getFileBelongId()+"/register",filePath+"/A/"+attachment.getFileBelongId()+"/salary",filePath+"/A/"+attachment.getFileBelongId()+"/insure",filePath+"/A/"+attachment.getFileBelongId()+"/attendance",filePath+"/A/"+attachment.getFileBelongId()+"/necessary");
 			
@@ -264,9 +254,6 @@ public class BackendMainController {
 	@RequestMapping(value = "/a01")
 	public String a01(HttpServletRequest request,Model model,AdvancedAgeBase base,Pagination pagination,UserInfo userInfo,String account){ 
 		session=request.getSession();
-		System.out.println("account = "+account);
-		System.out.println("session id = "+session.getId());
-		System.out.println("session.getAttribute(account+\"account\") = "+session.getAttribute(account+"account"));
 		if (!request.isRequestedSessionIdValid() || session == null || session.getAttribute(account+"account") == null) {
 			return "redirect:/login";
 		}
@@ -308,7 +295,6 @@ public class BackendMainController {
 		base.setSeq(apply.getSeq());
 		base.setId(apply.getId());
 		AdvancedAgeBase nbase = selectATypeAdvancedAgeBaseFileStatusRecord(base);
-		System.out.println("nbase getEmailTime = "+nbase.getEmailTime());
 		model.addAttribute("base", nbase);
 		
 		//userinfo
@@ -365,9 +351,6 @@ public class BackendMainController {
 	@RequestMapping(value = "/a02")
 	public String a02(HttpServletRequest request,Model model,AdvancedAgeBase base,Pagination pagination,UserInfo userInfo,String account){ 
 		session=request.getSession();
-		System.out.println("account = "+account);
-		System.out.println("session id = "+session.getId());
-		System.out.println("session.getAttribute(account+\"account\") = "+session.getAttribute(account+"account"));
 		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
 			return "redirect:/login";
 		}
@@ -377,7 +360,6 @@ public class BackendMainController {
 		model.addAttribute("unitList", getUnit().toList());
 		base.setFileStatus("3");
 		if(base.getUnit() != null) {
-			System.out.println("unit = "+base.getUnit());
 			//所有資料
 			jsonArray = selectATypeAdvancedAgeBaseFileStatus(base);
 			JSONArray pageArray = new JSONArray();
@@ -659,7 +641,6 @@ public class BackendMainController {
 			return "redirect:/login";
 		}
 		setModel(account,model);
-		System.out.println("data : "+base.getSeq());
 		model.addAttribute("base", base);
 		if(apply.getApplyYear() != null) {
 			// ------基礎表 start------
@@ -747,7 +728,6 @@ public class BackendMainController {
 	@RequestMapping(value = "/employmentList")
 	public String employmentList(Model model,AdvancedAgeBase base,AdvancedAgeApply apply,String account){
 		setModel(account,model);
-		System.out.println("test = "+base.getSeq());
 		if(apply.getApplyYear() != null) {
 			// ------基礎表 start------
 			base.setYear(apply.getApplyYear());
@@ -1073,7 +1053,6 @@ public class BackendMainController {
 			return "redirect:/login";
 		}
 		setModel(account,model);
-		System.out.println("seq = "+base.getSeq());
 		if(base.getSeq()!=null && !base.getSeq().equals(""))
 		{
 			base.setYear(String.valueOf(applyYear));
@@ -1212,7 +1191,6 @@ public class BackendMainController {
 			return "redirect:/login";
 		}
 		setModel(account,model);
-		System.out.println("data : "+base.getSeq());
 		model.addAttribute("base", base);
 		if(apply.getApplyYear() != null) {
 			// ------基礎表 start------
@@ -1345,7 +1323,6 @@ public class BackendMainController {
 			return "redirect:/login";
 		}
 		setModel(account,model);
-		System.out.println("data : "+base.getSeq());
 		model.addAttribute("base", base);
 		if(apply.getApplyYear() != null) {
 			// ------基礎表 start------
@@ -1398,7 +1375,6 @@ public class BackendMainController {
 	@RequestMapping(value = "/c01_list")
 	public String c01_list(HttpServletRequest request,Model model,AdvancedAgeEmploymentListReceipt listReceipt,String account,String year){ 
 		session=request.getSession();
-		System.out.println("in list = "+account);
 		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
 			return "redirect:/login";
 		}
@@ -1448,9 +1424,66 @@ public class BackendMainController {
 		// ------繼續僱用名單_請領 start------
 		model.addAttribute("employmenyListReceipt", selectAdvancedAgeEmploymentListReceiptsByFrequency(listReceipt).toList());
 		// ------繼續僱用名單_請領 end--------
-		sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+		sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm");
 		model.addAttribute("time", (Integer.valueOf((String) sdf.format(new Date()).substring(0,4))-1911)+sdf.format(new Date()).substring(4));
 		return "c01/c01_list";
+	}
+	
+	@RequestMapping(value = "/c01_result")
+	public String c01_result(HttpServletRequest request,Model model,AdvancedAgeEmploymentListReceipt listReceipt,String account,String year){ 
+		session=request.getSession();
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+			return "redirect:/login";
+		}
+		setModel(account,model);
+		AdvancedAgeBase base = new AdvancedAgeBase();
+		
+		model.addAttribute("base", base);
+		// ------基礎表 start------
+		base.setYear(year);
+		base.setSeq(listReceipt.getSeq());
+		model.addAttribute("base", selectATypeAdvancedAgeBase(base).toList());
+		// ------基礎表 end------
+		
+		// ------人員列表 start------
+		UserInfo userInfo = new UserInfo();
+//			userInfo.setUnit(nbase.getVerifyUnit());
+		model.addAttribute("userList", selectUserInfo(userInfo).toList());
+		// ------人員列表 end------
+		
+		// ------單位列表 start------
+		model.addAttribute("unitList", getUnit().toList());
+		// ------單位列表 end------
+		
+		// ------申請表 start------
+		AdvancedAgeApply apply= new AdvancedAgeApply();
+		apply.setSeq(listReceipt.getSeq());
+		apply.setApplyYear(year);
+		apply = selectAdvancedAgeApply(apply);
+		model.addAttribute("apply", apply);
+		// ------申請表 end--------
+		
+		// ------計畫表 start------
+		AdvancedAgePlan plan = new AdvancedAgePlan();
+		if(apply.getId()!=null) {
+			plan.setAdvancedAgeApplyId(apply.getId());
+			plan = selectAdvancedAgePlan(plan);
+			model.addAttribute("plan", plan);
+		}
+		// ------計畫表 end--------
+		// ------繼續僱用名單 start------
+		AdvancedAgeEmploymentList employmenyList = new AdvancedAgeEmploymentList();
+		if(plan.getId()!=null) {
+			employmenyList.setAdvancedAgePlanId(plan.getId());
+			model.addAttribute("employmenyList", selectAdvancedAgeEmploymentLists(employmenyList).toList());
+		}
+		// ------繼續僱用名單 end--------
+		// ------繼續僱用名單_請領 start------
+		model.addAttribute("employmenyListReceipt", selectAdvancedAgeEmploymentListReceiptsByFrequency(listReceipt).toList());
+		// ------繼續僱用名單_請領 end--------
+		sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm");
+		model.addAttribute("time", (Integer.valueOf((String) sdf.format(new Date()).substring(0,4))-1911)+sdf.format(new Date()).substring(4));
+		return "c01/c01_result";
 	}
 	
 	@RequestMapping(value = "/j01")
@@ -1510,7 +1543,6 @@ public class BackendMainController {
 	@RequestMapping(value = "/j02_1")
 	public String j02_1(HttpServletRequest request,Model model,UserInfo userInfo,String account,String editAccount){
 		session=request.getSession();
-		System.out.println("account = "+account);
 		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
 			return "redirect:/login";
 		}
@@ -1594,11 +1626,6 @@ public class BackendMainController {
 		setModel(account,model);
 		if(userLoginRecord.getUnit() != null)
 		{
-			System.out.println("unit = "+userLoginRecord.getUnit());
-			System.out.println("jurisdiction = "+userLoginRecord.getJurisdiction());
-			System.out.println("name = "+userLoginRecord.getUsername());
-			System.out.println("unloginStartDateit = "+loginStartDate);
-			System.out.println("loginEndDate = "+loginEndDate);
 			
 			//所有資料
 			jsonArray = selectUserLoginRecord(userLoginRecord,loginStartDate,loginEndDate);
@@ -1789,7 +1816,6 @@ public class BackendMainController {
 			e.printStackTrace();
 		}
 		json = json.substring(0,json.length()-1)+",\"loginStartDate\":"+(loginStartDate==""?"":"\""+loginStartDate+"\"")+",\"loginEndDate\":"+(loginEndDate==""?"":"\""+loginEndDate+"\"")+"}";
-		System.out.println("json = "+json);
 		String jsondata = api.httpPost(ip+"selectUserLoginRecord",json);
 		JSONArray array = new JSONArray(jsondata);
 		return array;
@@ -1917,7 +1943,6 @@ public class BackendMainController {
 			e.printStackTrace();
 		}
 		String jsondata = api.httpPost(ip+"selectUserInfoLogin",json);
-		System.out.println("jsondata = "+jsondata);
 		UserInfo searchUser = new UserInfo();
 		try {
 			if (!jsondata.equals(""))

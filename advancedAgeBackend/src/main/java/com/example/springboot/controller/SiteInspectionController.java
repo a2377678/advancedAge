@@ -8,6 +8,7 @@ import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -41,19 +42,15 @@ public class SiteInspectionController {
 		try {
 			json = objectMapper.writeValueAsString(siteInspection);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("json = "+json);
 		String jsondata = api.httpPost(ip+"addSiteInspection",json);
-		System.out.println("jsondata = "+jsondata);
 		
 		response.setContentType("text/html;charset=UTF-8");
 		try {
 			siteInspection = objectMapper.readValue(jsondata, SiteInspection.class);
-			response.getWriter().print("{\"status\":\"success\",\"id\":"+siteInspection.getId()+"}");
+			response.getWriter().print("{\"status\":\"success\",\"id\":"+StringEscapeUtils.escapeHtml(siteInspection.getId().toString())+"}");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -65,19 +62,15 @@ public class SiteInspectionController {
 		try {
 			json = objectMapper.writeValueAsString(siteInspection);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("json = "+json);
 		String jsondata = api.httpPost(ip+"editSiteInspectionData",json);
-		System.out.println("jsondata = "+jsondata);
 		
 		response.setContentType("text/html;charset=UTF-8");
 		try {
 			siteInspection = objectMapper.readValue(jsondata, SiteInspection.class);
-			response.getWriter().print("{\"status\":\"success\",\"id\":"+siteInspection.getId()+"}");
+			response.getWriter().print("{\"status\":\"success\",\"id\":"+StringEscapeUtils.escapeHtml(siteInspection.getId().toString())+"}");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

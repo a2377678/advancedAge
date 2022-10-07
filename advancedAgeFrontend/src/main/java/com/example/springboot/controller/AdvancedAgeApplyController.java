@@ -55,31 +55,28 @@ public class AdvancedAgeApplyController {
 			apply.setAttachDocumentsApply("Y");
 			json = objectMapper.writeValueAsString(apply);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String body = api.httpPost(ip+"addAdvancedAgeApply",json);
 		JSONObject object = new JSONObject(body);
-		session.setAttribute(apply.getSeq()+"advancedAgeApplyId", object.get("id"));
+		session.setAttribute(session.getId()+"advancedAgeApplyId", object.get("id"));
 		response.setContentType("text/html;charset=UTF-8");
 		try {
 			response.getWriter().print("success");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
 	@RequestMapping(value = "/addAdvancedAgePlan", method = RequestMethod.POST)
 	public void addAdvancedAgePlan(HttpServletRequest request, HttpServletResponse response
-			,AdvancedAgePlan plan,String seq){ 
+			,AdvancedAgePlan plan,String sid){ 
 		session = request.getSession();
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
-		plan.setAdvancedAgeApplyId(Integer.valueOf(session.getAttribute(seq+"advancedAgeApplyId").toString()));
+		plan.setAdvancedAgeApplyId(Integer.valueOf(session.getAttribute(sid+"advancedAgeApplyId").toString()));
 		try {
 			json = objectMapper.writeValueAsString(plan);
-			System.out.println("json : "+json);
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -92,11 +89,9 @@ public class AdvancedAgeApplyController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		session.setAttribute(seq+"advancedAgePlanId", object.get("id"));
-		session.setAttribute("advancedAgePlanId", object.get("id"));
-		session.setAttribute("advancedAgeApplyId", object.get("advancedAgeApplyId"));
+		session.setAttribute(sid+"advancedAgePlanId", object.get("id"));
 		AdvancedAgeApply apply = new AdvancedAgeApply();
-		apply.setSeq(session.getAttribute(seq+"seq").toString());
+		apply.setSeq(session.getAttribute(sid+"seq").toString());
 		apply.setAttachDocumentsPlan("Y");
 		addAdvancedAgeApply(request,response,apply);
 	}
@@ -105,9 +100,7 @@ public class AdvancedAgeApplyController {
 	public void addAdvancedAgeEmploymentList(HttpServletRequest request, HttpServletResponse response
 			,@RequestBody AdvancedAgeEmploymentList[] list){ 
 		session = request.getSession();
-		String seqData=session.getAttribute("advancedAgePlanId").toString();
-		session.removeAttribute("advancedAgePlanId");
-		session.removeAttribute("advancedAgeApplyId");
+		String seqData=session.getAttribute(session.getId()+"advancedAgePlanId").toString();
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
 		try {
@@ -116,13 +109,12 @@ public class AdvancedAgeApplyController {
 				list[i].setAdvancedAgePlanId(Integer.valueOf(seqData));
 				try {
 					json = objectMapper.writeValueAsString(list[i]);
-					System.out.println("json : "+json);
 				} catch (JsonProcessingException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				api.httpPost(ip+"addAdvancedAgeEmploymentList",json);
-				Thread.sleep(500);
+				Thread.sleep(100);
 			}
 			response.setContentType("text/html;charset=UTF-8");
 		
@@ -135,15 +127,13 @@ public class AdvancedAgeApplyController {
 	
 	@RequestMapping(value = "/delAdvancedAgeEmploymentList", method = RequestMethod.POST)
 	public void delAdvancedAgeEmploymentList(HttpServletRequest request, HttpServletResponse response
-			,AdvancedAgeEmploymentList list,String seq){ 
-		System.out.println("seq = "+seq);
+			,AdvancedAgeEmploymentList list,String sid){ 
 		session = request.getSession();
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
-		list.setAdvancedAgePlanId(Integer.valueOf(session.getAttribute(seq+"advancedAgePlanId").toString()));
+		list.setAdvancedAgePlanId(Integer.valueOf(session.getAttribute(sid+"advancedAgePlanId").toString()));
 		try {
 			json = objectMapper.writeValueAsString(list);
-			System.out.println("json : "+json);
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -167,16 +157,15 @@ public class AdvancedAgeApplyController {
 		try {
 			for(int i=0;i<list.length;i++)
 			{
-				list[i].setCompanyName(session.getAttribute(list[i].getSeq()+"companyName").toString());
+				list[i].setCompanyName(session.getAttribute(session.getId()+"companyName").toString());
 				try {
 					json = objectMapper.writeValueAsString(list[i]);
-					System.out.println("json : "+json);
 				} catch (JsonProcessingException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				api.httpPost(ip+"addAdvancedAgeEmploymentListReceipt",json);
-				Thread.sleep(500);
+				Thread.sleep(100);
 			}
 			response.setContentType("text/html;charset=UTF-8");
 		
@@ -195,7 +184,6 @@ public class AdvancedAgeApplyController {
 		String json="";
 		try {
 			json = objectMapper.writeValueAsString(listReceipt);
-			System.out.println("json : "+json);
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -221,7 +209,6 @@ public class AdvancedAgeApplyController {
 			list[i].setAdvancedAgePlanId(Integer.valueOf(session.getAttribute("advancedAgePlanId").toString()));
 			try {
 				json = objectMapper.writeValueAsString(list[i]);
-				System.out.println("json : "+json);
 			} catch (JsonProcessingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -246,7 +233,6 @@ public class AdvancedAgeApplyController {
 		
 		try {
 			json = objectMapper.writeValueAsString(base);
-			System.out.println("json : "+json);
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -270,10 +256,8 @@ public class AdvancedAgeApplyController {
 		//修改案件狀態
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
-		System.out.println("base id = "+base.getId());
 		try {
 			json = objectMapper.writeValueAsString(base);
-			System.out.println("json : "+json);
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -282,7 +266,6 @@ public class AdvancedAgeApplyController {
 		
 		//修改補助名單此次請領次數
 		json="";
-		System.out.println("base id = "+base.getId());
 		AdvancedAgeEmploymentListReceipt receipt = new AdvancedAgeEmploymentListReceipt();
 		receipt.setAdvancedAgeBaseId(base.getId());
 		try {

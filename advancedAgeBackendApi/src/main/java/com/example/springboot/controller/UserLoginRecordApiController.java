@@ -70,8 +70,6 @@ public class UserLoginRecordApiController {
 			}
 		}
 		userLoginRecordExample.setOrderByClause("login_time desc");
-		System.out.println("loginStartDate = "+loginStartDate);
-		System.out.println("loginEndDate = "+loginEndDate);
 		List<UserLoginRecord> list = userLoginRecordService.selectByExample(userLoginRecordExample);
 		return list;
 	}

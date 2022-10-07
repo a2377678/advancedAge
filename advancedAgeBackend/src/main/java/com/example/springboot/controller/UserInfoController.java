@@ -61,8 +61,6 @@ public class UserInfoController {
 		String jsondata = api.httpPost(ip + "selectUserInfoData", json);
 		JSONObject object = new JSONObject(jsondata);
 		try {
-			System.out.println("decryptPassword = "+decryptPassword(object.get("password").toString(),key));
-			System.out.println("info.getPassword() = "+info.getPassword());
 			if(decryptPassword(object.get("password").toString(),key).equals(info.getPassword()))
 			{
 				info.setPassword(encryptPassword(newPassword,key));

@@ -45,7 +45,7 @@ public class ParameterController {
 		}
 		try {
 			response.setContentType("text/html;charset=UTF-8");
-			response.getWriter().println(result);
+			response.getWriter().print(result);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

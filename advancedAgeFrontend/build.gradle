@@ -41,5 +41,9 @@ dependencies {
 	
 	// https://mvnrepository.com/artifact/com.itextpdf/itext-asian
 	implementation group: 'com.itextpdf', name: 'itext-asian', version: '5.2.0'
+	
+	// https://mvnrepository.com/artifact/org.owasp.esapi/esapi
+	implementation group: 'org.owasp.esapi', name: 'esapi', version: '2.5.0.0'
+	
 }
 

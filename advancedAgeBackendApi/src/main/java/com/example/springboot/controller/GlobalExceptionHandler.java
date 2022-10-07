@@ -12,7 +12,6 @@ public class GlobalExceptionHandler {
     public String handleGlobalException(HttpServletRequest req, Exception e) {
         //列印異常資訊：
         //e.printStackTrace();
-        System.out.println("GlobalExceptionHandler.handleGlobalException()");
         
         return e.getMessage();
     }

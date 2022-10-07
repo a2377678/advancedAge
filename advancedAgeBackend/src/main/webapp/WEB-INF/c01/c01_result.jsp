@@ -6,20 +6,25 @@
 <head>
 <meta charset="utf-8">
 <title>繼續僱用高齡者補助計畫 - 請領補助清冊</title>
+
 <link href="css/print.css" rel="stylesheet" type="text/css">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script> 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/c01/c01_list.js"></script>
+<script type="text/javascript" src="js/c01/c01_result.js"></script>
+<style>
+@page {
+     margin: 0.3cm 0.5cm 0.1cm 0.5cm;  /*print邊界*/
+}
+</style>
+
 </head>
 
 <body>
   
-  <!--startprint-->
+  
   <!--------- 報表頁面 --------->
-  <div class="report_page break_before" id="export_content">
+  <div class="report_page break_before">
   
     <!--------- 標題 --------->
     <div class="report_title">
@@ -33,8 +38,7 @@
       
       <div class="print_info">
         <div class="p-date"><span>列印日期：</span>${time }</div>
-        <div class="p-page"><span>審核單位：</span>${unitName}</div>
-        <div class="p-user"><span>審核人員：</span>${name}</div>
+        <div class="p-user"><span>製表人員：</span>${unitName} ${name}</div>
       </div>
       
       <div class="item">補助項目：繼續僱用高齡者補助計畫</div>
@@ -46,7 +50,6 @@
     
     <!--------- 報表內容 --------->
     <div class="report_main">
-    
       <table class="m">
         <thead>
           <tr>
@@ -62,8 +65,6 @@
             <th>本次金額</th>
           </tr>
         </thead>
-        <input type="hidden" id="baseId" value="${base[0].id }">
-        
         <c:choose>
         	<c:when test="${not empty employmenyListReceipt}">
         	<c:set var="employmenyListReceiptAmounts" value="0"/>
@@ -77,7 +78,7 @@
             <td>${base[0].get('aaid') }</td>
             <td>${base[0].get('companyName') }</td>
             <td id="seq">${base[0].get('seq') }</td>
-            <td>${base[0].get('allowanceFrequencyRecord').split(';')[employmenyListReceipt[0].baseAllowanceFrequency-1].split('、')[1].substring(0,4)-1911}${base[0].get('allowanceFrequencyRecord').split(';')[employmenyListReceipt[0].baseAllowanceFrequency-1].split('、')[1].substring(4,10).replaceAll('-','/')}</td>
+            <td>${base[0].get('allowanceFrequencyRecord').split(';')[employmenyListReceipt[0].baseAllowanceFrequency].split('、')[1].substring(0,4)-1911}${base[0].get('allowanceFrequencyRecord').split(';')[employmenyListReceipt[0].baseAllowanceFrequency].split('、')[1].substring(4,10).replaceAll('-','/')}</td>
             <td id="nearHighEmploymentNumber">${plan.nearHighEmploymentNumber } 人</td>
             <td id="employmenyListReceiptNumber">${employmenyListReceipt.size()} 人</td>
             <td id="checkEmploymentPerson"></td>
@@ -87,12 +88,8 @@
           </tr>
         </tbody>
       </table>
-      
-      
       <br><br>
-      
-      
-      <table class="m">
+      <table class="s">
         <thead>
           <tr>
             <th rowspan="2" style="width: 5%;">編號</th>
@@ -106,8 +103,8 @@
             <th colspan="3" style="width: 8%;">申請補助 ( 按月計 )</th>
             <th colspan="3" style="width: 8%;">申請補助 ( 按時計 )</th>
             <th rowspan="2">本次<br>
-            合計<br>
-            請領</th>
+              合計<br>
+              請領</th>
             <th rowspan="2" style="width: 10%;">審核結果</th>
             <th rowspan="2">修正金額</th>
           </tr>
@@ -182,13 +179,11 @@
 		            </td>
 	            </c:if>
 	            <td>
-	            <select name="approveStatus" id="approveStatus${status.count}">
-	              <option selected value>---</option>
-	              <option value="1" <c:if test="${item.approveStatus==1 }">selected</c:if>>符合</option>
-	              <option value="2" <c:if test="${item.approveStatus==2 }">selected</c:if>>部分符合</option>
-	              <option value="3" <c:if test="${item.approveStatus==3 }">selected</c:if>>不符合</option>
-	            </select></td>
-	            <td><input type="text" size="3" id="adjustAmounts${status.count}" name="adjustAmounts" value="${item.adjustAmounts }"></td>
+	            	<c:if test="${item.approveStatus==1 }">符合</c:if>
+	            	<c:if test="${item.approveStatus==2 }">部分符合</c:if>
+	            	<c:if test="${item.approveStatus==3 }">不符合</c:if>
+	            </td>
+	            <td><fmt:formatNumber type = "number" value = "${item.adjustAmounts }" /></td>
 	          </tr> 
 	          <tr>
 	            <th>計薪備註：</th>
@@ -197,6 +192,7 @@
 	      	</c:forEach>
 	        </c:when>
         </c:choose>
+        </tbody>
 <!--           <tr> -->
 <!--             <td rowspan="2">1</td> -->
 <!--             <td>王先生</td> -->
@@ -213,41 +209,132 @@
 <!--             <td>&nbsp;</td> -->
 <!--             <td>&nbsp;</td> -->
 <!--             <td>45000</td> -->
-<!--             <td> -->
-<!--             <select name="select3" id="select3"> -->
-<!--               <option>---</option> -->
-<!--               <option selected>符合</option> -->
-<!--               <option>部分符合</option> -->
-<!--               <option>不符合</option> -->
-<!--             </select></td> -->
-<!--             <td><input type="text" size="3"></td> -->
+<!--             <td>符合</td> -->
+<!--             <td>&nbsp;</td> -->
 <!--           </tr> -->
 <!--           <tr> -->
 <!--             <th>計薪備註：</th> -->
 <!--             <td colspan="15" style=" text-align:left;">4~6 月份領月薪，勞工已於７月份離職退保</td> -->
 <!--           </tr> -->
-        </tbody>
+<!--           <tr> -->
+<!--             <td rowspan="2">2</td> -->
+<!--             <td>陳先生</td> -->
+<!--             <td>A198765432</td> -->
+<!--             <td>&nbsp;</td> -->
+<!--             <td>&nbsp;</td> -->
+<!--             <td>50000</td> -->
+<!--             <td>按時</td> -->
+<!--             <td>2</td> -->
+<!--             <td>&nbsp;</td> -->
+<!--             <td>&nbsp;</td> -->
+<!--             <td>&nbsp;</td> -->
+<!--             <td>111/04/01</td> -->
+<!--             <td>111/06/30</td> -->
+<!--             <td>225</td> -->
+<!--             <td>45000</td> -->
+<!--             <td>符合</td> -->
+<!--             <td>&nbsp;</td> -->
+<!--           </tr> -->
+<!--           <tr> -->
+<!--             <th>計薪備註</th> -->
+<!--             <td colspan="15" style=" text-align:left;">4月75小時，5月75小時，6月75小時</td> -->
+<!--           </tr> -->
+<!--           <tr> -->
+<!--             <td rowspan="2">3</td> -->
+<!--             <td>廖先生</td> -->
+<!--             <td>B123456789</td> -->
+<!--             <td>&nbsp;</td> -->
+<!--             <td>&nbsp;</td> -->
+<!--             <td>45000</td> -->
+<!--             <td>混合</td> -->
+<!--             <td>1</td> -->
+<!--             <td>111/1/1</td> -->
+<!--             <td>111/4/30</td> -->
+<!--             <td>4</td> -->
+<!--             <td>111/5/1</td> -->
+<!--             <td>111/6/30</td> -->
+<!--             <td>65</td> -->
+<!--             <td>80000</td> -->
+<!--             <td>部分符合</td> -->
+<!--             <td>78000</td> -->
+<!--           </tr> -->
+<!--           <tr> -->
+<!--             <th>計薪備註</th> -->
+<!--             <td colspan="15" style=" text-align:left;">1~4月份領月薪，5月65小時，6月65小時</td> -->
+<!--           </tr> -->
       </table>
-       
-      <!--endprint-->
-      <br><br><br>
+      <br><br>
+      <c:set var="employmenyListReceiptSuccess" value="0"/>
+      <c:set var="employmenyListReceiptFail" value="0"/>
+      <c:set var="employmenyListReceiptAmounts" value="0"/>
+      <c:choose>
+        	<c:when test="${not empty employmenyListReceipt}">
+	      	<c:forEach items="${employmenyListReceipt}" var="item" varStatus="status">
+	      		<c:if test="${not empty item.approveStatus && item.approveStatus!=3}">
+	      			<c:set var="employmenyListReceiptSuccess" value="${employmenyListReceiptSuccess+1 }"/>
+	      		</c:if>
+	      		<c:if test="${not empty item.approveStatus && item.approveStatus==3}">
+	      			<c:set var="employmenyListReceiptFail" value="${employmenyListReceiptFail+1 }"/>
+	      		</c:if>
+	      		
+	      		<c:if test="${not empty item.approveStatus && item.approveStatus==1}">
+	      			<c:set var="employmenyListReceiptAmounts" value="${employmenyListReceiptAmounts+item.amounts }"/>
+	      		</c:if>
+	      		<c:if test="${not empty item.approveStatus && item.approveStatus==2}">
+	      			<c:set var="employmenyListReceiptAmounts" value="${employmenyListReceiptAmounts+item.adjustAmounts }"/>
+	      		</c:if>
+	      	</c:forEach>
+	        </c:when>
+        </c:choose>
+      <table class="m">
+        <thead>
+          <tr>
+            <th style="width: 5%;">本次請領審核結果</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th style="height: 60px;">經審核符合資格合計 ${employmenyListReceiptSuccess} 人，計核發繼續僱用補助 <fmt:formatNumber type = "number" value = "${employmenyListReceiptAmounts }" /> 元； 不符合資格計 ${employmenyListReceiptFail } 人。</th>
+          </tr>
+        </tbody>
+      </table> 
+     
       
+      <div class="note-3">
+        <div>
+          <p>*按月計酬：第1-6個月每人每月補助13,000元，未滿6個月不予發給；第7-18個月每人每月補助15,000元，最長12個月。 <br>
+          **非按月計酬：第1-6個月每人每小時補助70元，每月最高補助13,000元，未滿6個月不予發給；第7-18個月每人每小時補助80元，每月最高補有15,000元，最長12個月。 </p>
+</div>
+      </div>
+      
+      <div class="signature-3">
+        <table>
+          <tr>
+            <td style="height: 60px;">承辦人員</td>
+            <td style="height: 60px;">業務主管</td>
+            <td style="height: 60px;">機關首長</td>
+          </tr>
+        </table>
+      </div>    
+       
+      
+      <div class="signature-3">
+        <table>
+          <tr>
+            <td style="text-align:center">本署審核日期：中 華 民 國　111　年　12　月　6　日</td>
+          </tr>
+        </table>
+      </div> 
            
       
     </div>
-    
     <!--------- 報表內容end --------->
-	
+
 
 
 
   </div>
-  <div class="p_btn_box-3">
-      <button type="button" class="p_btn_03" onclick="doPrint()">列印清冊</button>
-      <button type="button" class="p_btn_03" id="gpdf">另存PDF</button>
-      <button type="button" class="p_btn_02" onclick="window.close();">取消修改</button>
-      <button type="button" class="p_btn_01" onclick="save()">儲存修改</button>
-      </div>
+  
   
   
   

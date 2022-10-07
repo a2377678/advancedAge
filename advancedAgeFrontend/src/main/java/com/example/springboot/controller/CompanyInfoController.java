@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -47,16 +48,14 @@ public class CompanyInfoController {
 		try {
 			json = objectMapper.writeValueAsString(info);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String body = api.httpPost(ip + "addCompanyInfo", json);
 		JSONObject object = new JSONObject(body);
 		response.setContentType("text/html;charset=UTF-8");
 		try {
-			response.getWriter().print(object.get("id"));
+			response.getWriter().print(StringEscapeUtils.escapeHtml(object.get("id").toString()));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -69,11 +68,9 @@ public class CompanyInfoController {
 		try {
 			json = objectMapper.writeValueAsString(info);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String body = api.httpPost(ip + "editCompanyInfo", json);
-		System.out.println("company id = " + body);
+		api.httpPost(ip + "editCompanyInfo", json);
 	}
 	
 	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
@@ -87,22 +84,18 @@ public class CompanyInfoController {
 			searchInfo.setPassword(encryptPassword(info.getPassword(),key));
 			json = objectMapper.writeValueAsString(searchInfo);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String jsondata = api.httpPost(ip+"checkCompanyInfo",json);
 		JSONObject object = new JSONObject(jsondata);
 		
 		try {
-			System.out.println("decryptPassword = "+decryptPassword(object.get("password").toString(),key));
-			System.out.println("info.getPassword() = "+info.getPassword());
 			if(decryptPassword(object.get("password").toString(),key).equals(info.getPassword()))
 			{
 				info.setPassword(encryptPassword(newPassword,key));
 				try {
 					json = objectMapper.writeValueAsString(info);
 				} catch (JsonProcessingException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				jsondata = api.httpPost(ip + "changeCompanyPassword", json);
@@ -116,7 +109,6 @@ public class CompanyInfoController {
 		
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

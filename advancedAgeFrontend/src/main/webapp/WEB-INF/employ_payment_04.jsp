@@ -117,7 +117,7 @@
         
         <!---上傳名單
         <div class="full">繼續僱用補助名單清冊_統編66668888_1101123.xlsx　110/11/23  16:45　21KB</div>--->
-        <input type="hidden" id="seq"name="seq" value="${seq}">
+        <input type="hidden" id="sid"name="sid" value="${sid}">
         <input type="hidden" id="baseId" name="baseId" value="${baseId}">
         <!---填寫名單--->
         <c:choose><c:when test="${not empty advancedAgeEmploymentListReceipts}">
@@ -329,7 +329,7 @@
       </div>
       <!--endprint-->
       <div class="page">
-        <button onclick="javascript:location.href='employ_payment_02?seq=${seq}'">返回修改</button>
+        <button onclick="javascript:location.href='employ_payment_02?sid=${sid}'">返回修改</button>
         <button onclick="doPrint()">列印資料</button>
         <button onclick="finish()">送出請領資料</button>
       </div>

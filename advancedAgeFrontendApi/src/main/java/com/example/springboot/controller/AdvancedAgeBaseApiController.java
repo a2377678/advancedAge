@@ -45,7 +45,6 @@ public class AdvancedAgeBaseApiController {
 	public List<AdvancedAgeBase> selectATypeAdvancedAgeBaseFileStatus(AdvancedAgeBase base) {
 		advancedAgeBaseExample = new AdvancedAgeBaseExample();
 		AdvancedAgeBaseExample.Criteria c= advancedAgeBaseExample.createCriteria();
-		System.out.println("seq = "+base.getSeq());
 		c.andSeqEqualTo(base.getSeq());
 		c.andYearEqualTo(String.valueOf(applyYear));
 		c.andCaseTypeEqualTo("A");
@@ -99,7 +98,8 @@ public class AdvancedAgeBaseApiController {
 		if(searchBase.getAllowanceFrequencyRecord()==null || searchBase.getAllowanceFrequencyRecord().equals("")) {
 			base.setAllowanceFrequencyRecord("1、"+sdf.format(new Date()).toString()+"、0;");
 		}else{
-			base.setAllowanceFrequencyRecord(searchBase.getAllowanceFrequencyRecord()+"1、"+sdf.format(new Date()).toString()+"、0;");
+			base.setCaseStatus(null);
+			base.setAllowanceFrequencyRecord(searchBase.getAllowanceFrequencyRecord()+(searchBase.getAllowanceFrequencyRecord().split(";").length+1)+"、"+sdf.format(new Date()).toString()+"、0;");
 		}
 		base.setId(null);
 		base.setUpdateTime(new Date());

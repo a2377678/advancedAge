@@ -176,7 +176,7 @@
  
     <!-------------原核定函影本------------>
     <div class="form">
-    	<input type="hidden" id="seq" value="${seq }">
+    	<input type="hidden" id="sid" value="${sid }">
     	<input type="hidden" id="baseId" value="${baseId }">
       <div class="title_main">
         <span>原核定函影本</span>
@@ -482,8 +482,8 @@
     </div>
     
     <div class="page">
-      <button onclick="javascript:location.href='employ_payment_02?seq=${seq}'">回上頁</button>
-      <button onclick="javascript:location.href='employ_payment_04?seq=${seq}'">下一步</button>
+      <button onclick="javascript:location.href='employ_payment_02?sid=${sid}'">回上頁</button>
+      <button onclick="javascript:location.href='employ_payment_04?sid=${sid}'">下一步</button>
     </div>
     
   </div>
