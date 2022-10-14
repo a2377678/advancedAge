@@ -221,6 +221,85 @@ public class FrontendMainController {
 		base = new AdvancedAgeBase();
 		base.setSeq(session.getAttribute(sid+"seq").toString());
 		model.addAttribute("base", selectATypeAdvancedAgeBase(base));
+		// 行業別列表
+		String result = api.httpGet(ip + "getIndustryList");
+		JSONArray jsonArray = new JSONArray(result);
+		List<Object> list = jsonArray.toList();
+		model.addAttribute("industryList", list);
+		// 縣市列表
+		result = api.httpGet(ip + "getCityList");
+		jsonArray = new JSONArray(result);
+		list = jsonArray.toList();
+		model.addAttribute("cityList", list);
+
+		apply = new AdvancedAgeApply();
+		if (session.getAttribute(sid+"seq") != null) {
+			// ------申請表 start------
+			apply.setSeq(session.getAttribute(sid+"seq").toString());
+			AdvancedAgeApply searchApply = selectAdvancedAgeApply(apply);
+			model.addAttribute("apply", searchApply);
+
+			String apiResponse = api.httpGet(ip + "getAreaList?cityCode=" + searchApply.getContactCity());
+			jsonArray = new JSONArray(apiResponse);
+			list = jsonArray.toList();
+			model.addAttribute("areaList", list);
+			// ------申請表 end--------
+
+			// ------計畫書 start------
+			plan = new AdvancedAgePlan();
+			employmentList = new AdvancedAgeEmploymentList();
+
+			plan.setAdvancedAgeApplyId(searchApply.getId());
+			AdvancedAgePlan searchPlan = selectAdvancedAgePlan(plan,sid);
+			model.addAttribute("plan", searchPlan);
+			
+			if (searchPlan.getAttachEmploymentList() != null
+					&& searchPlan.getAttachEmploymentList().equals("Y")) {
+				attachment = new Attachment();
+				attachment.setFileBelong("A");
+				attachment.setFileBelongId(searchApply.getId());
+				attachment.setFileType("employmentList");
+				attachment.setFileFrequency(1);
+				model.addAttribute("employmentListAttachment", selectFiles(attachment).toList());
+			}
+			// ------繼續雇用名單 start------
+			employmentList = new AdvancedAgeEmploymentList();
+			employmentList.setAdvancedAgePlanId(searchPlan.getId());
+			model.addAttribute("advancedAgeEmploymentLists", selectAdvancedAgeEmploymentLists(employmentList).toList());
+			// ------繼續雇用名單 end------
+//			employedSituation = new AdvancedAgeApplyEmployedSituation();
+//			employedSituation.setAdvancedAgePlanId(searchPlan.getId());
+//			model.addAttribute("advancedAgeApplyEmployedSituations",
+//					selectAdvancedAgeApplyEmployedSituations(employedSituation).toList());
+			// ------計畫書 end--------
+
+			// ------檢附文件 start------
+			attachment = new Attachment();
+
+			// 設立登記證明文件
+			attachment.setFileBelong("A");
+			attachment.setFileBelongId(searchApply.getId());
+			attachment.setFileFrequency(1);
+			attachment.setFileType("register");
+			model.addAttribute("registerAttachment", selectFiles(attachment).toList());
+
+			// 投保勞保或職災保險證明文件
+			attachment.setFileType("insure");
+			model.addAttribute("insureAttachment", selectFiles(attachment).toList());
+
+			// 薪資證明或其他證明文件
+			attachment.setFileType("salary");
+			model.addAttribute("salaryAttachment", selectFiles(attachment).toList());
+			
+			// 出勤證明
+			attachment.setFileType("attendance");
+			model.addAttribute("attendanceAttachment", selectFiles(attachment).toList());
+			
+			// 其他經本署或各分署認定有必要提出之文件
+			attachment.setFileType("necessary");
+			model.addAttribute("necessaryAttachment", selectFiles(attachment).toList());
+			// ------檢附文件 end--------
+		}
 		
 
 		return "schedule_pass";
