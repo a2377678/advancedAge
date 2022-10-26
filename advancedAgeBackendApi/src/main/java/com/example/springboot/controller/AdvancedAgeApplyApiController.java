@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,10 +38,17 @@ public class AdvancedAgeApplyApiController {
 	
 	@Autowired
 	AdvancedAgeApplyService advancedAgeApplyService;
+
+	@Value("${api_token}")
+	private String apiToken;
 	
 	@ApiOperation(value = "查詢繼續僱用高齡者補助申請書")
 	@RequestMapping(value = "/selectAdvancedAgeApply", method = RequestMethod.POST)
-	public AdvancedAgeApply selectAdvancedAgeApply(AdvancedAgeApply apply) {
+	public AdvancedAgeApply selectAdvancedAgeApply(AdvancedAgeApply apply,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		
 		AdvancedAgeApplyKey key = new AdvancedAgeApplyKey();
 		key.setApplyYear(String.valueOf(apply.getApplyYear()));

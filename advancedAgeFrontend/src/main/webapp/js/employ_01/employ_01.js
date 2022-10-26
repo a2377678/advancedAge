@@ -16,9 +16,8 @@ function aVerify(){
 			password : $('#password').val()
         },
         success: function (result) {
-//			alert(result);
-            if (result.split(";")[0]=='success') {
-                location.href='employ_02?sid='+result.split(";")[1];
+            if (result=='success') {
+                location.href='employ_02';
             } else if(result=='password error'){
 				alert("密碼錯誤");
 			}else{

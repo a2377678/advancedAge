@@ -22,9 +22,6 @@
 
 
   <!---------------------- top ---------------------->
-<!--   <div id="top"> -->
-<!--     <div id="top_logo"><a href="index.html"><img src="images/logo.png" /></a></div> -->
-<!--   </div> -->
   <%@ include file="../header.jsp" %>
   <!---------------------- top end ---------------------->
 
@@ -33,116 +30,11 @@
     <div><a href="#" class="menu-1 in">繼續僱用高齡者</a></div>
     <div><a href="#" class="menu-2">傳承專業技術與經驗</a></div>
     <div><a href="#" class="menu-3">退休後再就業準備協助措施</a></div>
-    <div><a href="account01?account=${account }" class="account">申請帳號審核管理</a></div>
+    <div><a href="account01" class="account">申請帳號審核管理</a></div>
   </div>
 
   <!---------------------- left menu ---------------------->
   <%@ include file="../leftMenu.jsp" %>
-<!--   <div id="left_menu"> -->
-<!--     <div class="panel-group" id="accordion"> -->
-    
-<!--     -------- collapse1 -------- -->
-<!-- 	<div class="panel panel-default"> -->
-<!-- 		<div class="panel-heading"> -->
-<!-- 			<h4 class="panel-title"> -->
-<!-- 			  <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">收件與補件</a> -->
-<!-- 			</h4> -->
-<!-- 		</div> -->
-<!-- 		<div id="collapse1" class="panel-collapse collapse"> -->
-<!-- 			<div class="panel-body"> -->
-<!-- 				<ul> -->
-<!--                   <li><a href="a01/a01.html">附件檢查與通知</a></li> -->
-<!--                   <li><a href="a02/a02.html">補件回傳案件</a></li> -->
-<!--                 </ul> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-    
-<!--     -------- collapse2 -------- -->
-<!-- 	<div class="panel panel-default"> -->
-<!-- 		<div class="panel-heading"> -->
-<!-- 			<h4 class="panel-title"> -->
-<!-- 			  <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">案件審查</a> -->
-<!-- 			</h4> -->
-<!-- 		</div> -->
-<!-- 		<div id="collapse2" class="panel-collapse collapse"> -->
-<!-- 			<div class="panel-body"> -->
-<!-- 				<ul> -->
-<!--                   <li><a href="b01/b01.html">申請案件查詢</a></li> -->
-<!--                   <li><a href="b02/b02.html">案件審核</a></li> -->
-<!--                   <li><a href="b03/b03.html">停止補助名單管理</a></li> -->
-<!--                   <li><a href="b04/b04.html">實地查核登錄</a></li> -->
-<!--                 </ul> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-    
-<!--     -------- collapse3 -------- -->
-<!-- 	<div class="panel panel-default"> -->
-<!-- 		<div class="panel-heading"> -->
-<!-- 			<h4 class="panel-title"> -->
-<!-- 			<a data-toggle="collapse" data-parent="#accordion" href="#collapse3">請款與核銷</a> -->
-<!-- 			</h4> -->
-<!-- 		</div> -->
-<!-- 		<div id="collapse3" class="panel-collapse collapse"> -->
-<!-- 			<div class="panel-body"> -->
-<!-- 				<ul> -->
-<!--                   <li><a href="c01/c01.html">請款審核</a></li> -->
-<!--                   <li><a href="c02/c02.html">案件核銷</a></li> -->
-<!--                 </ul> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-
-    
-    
-<!--     -------- collapse8 -------- -->
-<!--     <div class="panel panel-default"> -->
-<!-- 		<div class="panel-heading"> -->
-<!-- 			<h4 class="panel-title"> -->
-<!-- 				<a data-toggle="collapse" data-parent="#accordion" href="#collapse8">彙整與統計</a> -->
-<!-- 			</h4> -->
-<!-- 		</div> -->
-<!-- 		<div id="collapse8" class="panel-collapse collapse"> -->
-<!-- 			<div class="panel-body"> -->
-<!-- 				<ul> -->
-<!--                   <li><a href="index.html" class="in">統計概況 (儀錶板)</a></li> -->
-<!--                   <li><a href="#">繼續僱用申請人數</a></li> -->
-<!--                   <li><a href="#">繼續僱用補助金額</a></li> -->
-<!--                   <li><a href="#">原有薪資級距</a></li> -->
-<!--                   <li><a href="#">申請單位行業別</a></li> -->
-<!--                   <li><a href="#">申請單位補助金額</a></li> -->
-<!--                   <li><a href="#">申請單位申請情形</a></li> -->
-<!--                 </ul> -->
-<!-- 		  </div> -->
-<!-- 		</div> -->
-<!-- 	</div>     -->
-
-
-    
-    
-<!--     -------- collapse10 -------- -->
-<!--     <div class="panel panel-default"> -->
-<!-- 		<div class="panel-heading-in"> -->
-<!-- 			<h4 class="panel-title"> -->
-<!-- 				<a data-toggle="collapse" data-parent="#accordion" href="#collapse10">權限與系統管理</a> -->
-<!-- 			</h4> -->
-<!-- 		</div> -->
-<!-- 		<div id="collapse10" class="panel-collapse collapse in"> -->
-<!-- 			<div class="panel-body"> -->
-<!-- 				<ul> -->
-<!--                   <li><a href="j01/j01.html">使用者資料維護</a></li> -->
-<!--                   <li><a href="j02/j02.html">使用者帳號與權限</a></li> -->
-<!--                   <li><a href="j03/j03.html" class="in">群組權限管理</a></li> -->
-<!--                   <li><a href="j04/j04.html">系統登入紀錄</a></li> -->
-<!--                 </ul> -->
-<!-- 		  </div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-    
-    
-<!--   </div> -->
-<!--   </div> -->
   <!---------------------- left menu end ---------------------->
 
 
@@ -160,11 +52,10 @@
       <div id="account">
         <a>登入單位：
         	${unitName }&nbsp;${name }</a>
-        <a href="logout?account=${account }">登出</a>
+        <a href="logout">登出</a>
       </div>
       
 	<c:if test="${jurisdiction==1 }">
-<%--       <%if(Integer.valueOf(session.getAttribute("jurisdiction").toString())!=2){  %> --%>
       <!------------------- search ------------------->
       
       <div id="search_bar">
@@ -181,10 +72,6 @@
             </select>
             </td>
             <th>
-            <!---<div class="btn_box-td">
-              <button type="button" class="btn_01" value="開始查詢">開始查詢</button>
-              <button type="button" class="btn_02" value="清除">清除</button>
-            </div>--->
             </th>
           </tr>
         </table>
@@ -218,9 +105,6 @@
       <br><br><br>
       </c:if>
       <c:if test="${jurisdiction!=1 }"><p>無此權限</p></c:if>
-<%--       <%}else{ %> --%>
-<!--   		<p>無此權限</p> -->
-<%--   	<%} %> --%>
       
 
     </div>

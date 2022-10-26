@@ -21,7 +21,7 @@ function finish(){
 	    dataType:"text", //ajax返回值text（json格式也可用這返回，也可設成json）
 	    success: function(json){
 			if(json=='success'){
-				location.href='employ_06?sid='+$('#sid').val();
+				location.href='employ_06?';
 			}
 		}
 	})

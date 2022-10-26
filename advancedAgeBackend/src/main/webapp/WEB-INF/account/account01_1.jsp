@@ -22,18 +22,15 @@
 
 
   <!---------------------- top ---------------------->
-<!--   <div id="top"> -->
-<!--     <div id="top_logo"><a href="index.html"><img src="images/logo.png" /></a></div> -->
-<!--   </div> -->
   <%@ include file="../header.jsp" %>
   <!---------------------- top end ---------------------->
 
     
   <div id="main_menu">
-    <div><a href="a01?account=${account}" class="menu-1">繼續僱用高齡者</a></div>
+    <div><a href="a01" class="menu-1">繼續僱用高齡者</a></div>
     <div><a href="#" class="menu-2">傳承專業技術與經驗</a></div>
     <div><a href="#" class="menu-3">退休後再就業準備協助措施</a></div>
-    <div><a href="account01?account=${account}" class="account in">申請帳號審核管理</a></div>
+    <div><a href="account01" class="account in">申請帳號審核管理</a></div>
   </div>
 
   <!---------------------- left menu ---------------------->
@@ -50,8 +47,8 @@
 		<div id="collapse1" class="panel-collapse collapse in">
 			<div class="panel-body">
 				<ul>
-          <li><a href="account01?account=${account}" class="in">新申請帳號</a></li>
-          <li><a href="account02?account=${account}">帳密查詢回覆</a></li>
+          <li><a href="account01" class="in">新申請帳號</a></li>
+          <li><a href="account02">帳密查詢回覆</a></li>
         </ul>
 			</div>
 		</div>
@@ -84,7 +81,6 @@
 
       <!------------------- search ------------------->
       <form action="account01" method="post" id="searchForm">
-      <input type="hidden" name="account" value="${account }">
       <div id="search_bar">
         <table class="table_01">
           <tr>
@@ -104,7 +100,7 @@
       </form>
       <!------------------- 申請帳號資料 ------------------->
       <div class="file_title-2">申請帳號資料</div>
-      	<input type="hidden" id="email" name="email" value="${companyInfoData.get('email') }">
+      	<input type="text" id="email" name="email" value="${companyInfoData.get('email') }" style="display:none">
         <table class="table_03">
           <tr>
             <th width="18%">事業單位名稱</th>
@@ -181,16 +177,10 @@
             <th>審核單位</th>
             <td>勞動力發展署</td>
           </tr>
-          <tr>
-            <th>審核日期</th>
-            <td>111-09-02　14:05</td>
-            <th>審核人員</th>
-            <td>陳OO</td>
-          </tr>
         </table>
-      <input type="hidden" id="verifyUnit" value="${unit }">
-      <input type="hidden" id="verifyPerson" value="${id }">
-      <input type="hidden" id="dataSeq" value="${companyInfoData.get('seq') }">
+      <input type="text" id="verifyUnit" value="${unit }" style="display:none">
+      <input type="text" id="verifyPerson" value="${id }" style="display:none">
+      <input type="text" id="dataSeq" value="${companyInfoData.get('seq') }" style="display:none">
       
       <div class="text-center h5 pt-4">經人工審核(電訪)確認後，發送密碼至電子信箱</div>
       

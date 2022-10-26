@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,11 +29,17 @@ public class CompanyInfoApiController {
 	CompanyInfoExample companyInfoExample;
 	Date date = new Date();
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	
+
+	@Value("${api_token}")
+	private String apiToken;
 	
 	@ApiOperation(value = "查詢申請公司 帳號列表")
 	@RequestMapping(value = "/selectCompanyInfo", method = RequestMethod.POST)
-	public List<CompanyInfo> selectCompanyInfo(CompanyInfo info) {
+	public List<CompanyInfo> selectCompanyInfo(CompanyInfo info,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		companyInfoExample = new CompanyInfoExample();
 		CompanyInfoExample.Criteria c= companyInfoExample.createCriteria();
 		if(info.getSeq() != null && !info.getSeq().equals("")) 
@@ -49,13 +56,21 @@ public class CompanyInfoApiController {
 	
 	@ApiOperation(value = "查詢申請公司資料")
 	@RequestMapping(value = "/selectCompanyInfoData", method = RequestMethod.POST)
-	public CompanyInfo selectCompanyInfoData(CompanyInfo info) {
+	public CompanyInfo selectCompanyInfoData(CompanyInfo info,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		return companyInfoService.selectByPrimaryKey(info.getSeq());
 	}
 	
 	@ApiOperation(value = "編輯公司資訊(無卡申請)")
 	@RequestMapping(value = "/editCompanyInfo", method = RequestMethod.POST)
-	public int editCompanyInfo(CompanyInfo info) {
+	public int editCompanyInfo(CompanyInfo info,String token) {
+		if(!token.equals(apiToken))
+		{
+			return 0;
+		}
 		info.setUpdateTime(date);
 		int a=companyInfoService.updateByPrimaryKeySelective(info);
 		

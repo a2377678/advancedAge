@@ -1,8 +1,12 @@
 package com.example.springboot.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -17,6 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller 
 public class AdvancedAgeEmploymentListReceiptController { 
+	
+	Logger logger = LogManager.getLogger(AdvancedAgeEmploymentListReceiptController.class);
 	
 	@Autowired
 	public CallApi api;
@@ -35,18 +41,15 @@ public class AdvancedAgeEmploymentListReceiptController {
 				try {
 					json = objectMapper.writeValueAsString(list[i]);
 				} catch (JsonProcessingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.warn(e.getMessage());
 				}
 				api.httpPost(ip+"editAdvancedAgeEmploymentListReceipt",json);
-				Thread.sleep(500);
 			}
 			response.setContentType("text/html;charset=UTF-8");
 		
 			response.getWriter().print("success");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (IOException e) {
+			logger.warn(e.getMessage());
+		} 
 	}
 }

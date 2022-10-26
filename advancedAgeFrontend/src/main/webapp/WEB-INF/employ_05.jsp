@@ -23,32 +23,6 @@
   
   <!--- header --->
   <%@ include file="header.jsp" %>
-<!--   <header> -->
-<!--     <div class="navigation"> -->
-<!--       <div class="top_logo"><img src="images/top_logo.png"></div> -->
-<!--       <nav> -->
-<!--         <ul> -->
-<!--         　　<li><a href="employ" title="帳號申請／登入">帳號申請／登入</a></li> -->
-<!--         　　<li><a href="#" title="網站導覽">網站導覽</a></li> -->
-<!--         </ul> -->
-<!--       </nav> -->
-<!--     </div> -->
-    
-<!--     - nav - -->
-<!--     <nav class="main_menu"> -->
-<!--       <ul> -->
-<!--         <li><a href="index" title="首頁" class="m1">首頁</a></li> -->
-<!--         <li><a href="require" title="補助計畫" class="m2">補助計畫</a></li> -->
-<!--         <li><a href="employ" title="線上申辦" class="m3-in in">線上申辦</a></li> -->
-<!--         <li><a href="#" title="案件查詢" class="m4">案件查詢</a></li> -->
-<!--         <li><a href="#" title="申請教學" class="m5">申請教學</a></li> -->
-<!--         <li><a href="#" title="資料下載" class="m6">資料下載</a></li> -->
-<!--         <li><a href="#" title="諮詢服務" class="m7">諮詢服務</a></li> -->
-<!--       </ul> -->
-<!--     </nav> -->
-<!--     - nav end -  -->
-    
-<!--   </header> -->
   <!--- header end ---> 
   
   <!--- main --->
@@ -67,25 +41,21 @@
     <div id="pdf">
     <!--startprint-->
     <div class="form">
-    	<input type="hidden" id="sid" value="${sid}">
       <div class="title_main"><span>申請書</span></div>
     
       <div>單位名稱：${apply.companyName}</div>
-      <input type="hidden" id="companyName" value="${apply.companyName}">
+      <input type="text" id="companyName" value="${apply.companyName}" style="display:none">
         
       <div>統一編號：${apply.seq}</div>
-      <input type="hidden" id="seq" value="${apply.seq}">
-<!--       <div style="color:red">負責人：吳先生</div> -->
+      <input type="text" id="seq" value="${apply.seq}" style="display:none">
         
       <div>行業別：<c:forEach items="${industryList}" var="item"><c:if test="${item.code==apply.industry}">${item.name}</c:if></c:forEach></div>
         
       <div>勞保投保證號：${apply.guaranteeNumber.replace(";","、")}</div>
         
-<!--       <div class="full" style="color:red">登記地址：</div> -->
-        
       <div class="full">聯絡地址：
       	<c:forEach items="${cityList}" var="item"><c:if test="${item.code==apply.contactCity}">${item.name}</c:if></c:forEach><c:forEach items="${areaList}" var="item"><c:if test="${item.code==apply.contactArea}">${item.name}</c:if></c:forEach>${apply.contactAddress}
-      	<input type="hidden" id="city" value="${apply.contactCity}">
+      	<input type="text" id="city" value="${apply.contactCity}" style="display:none">
       </div>
         
       <div>聯絡人：${apply.contactName}</div>
@@ -131,16 +101,6 @@ title="繼續僱用高齡者
 才符合補助資格
 C=(B)/(A) x 100%">
 </div>
-        
-<!--       <div class="full"> -->
-<%--       現行友善措施：${plan.friendlyMeasures} --%>
-<!--       </div> -->
-        
-<!--       <div class="full"> -->
-<%--       協助穩定就業措施：${plan.assistanceMeasures}</div> --%>
-        
-<!--       <div class="full"> -->
-<%--       輔導措施預期成效：${plan.expectedMeasuresEffectiveness}</div> --%>
         
     </div>
     
@@ -215,26 +175,11 @@ C=(B)/(A) x 100%">
 		      	</c:forEach>
         	</c:when></c:choose>
           
-            
-            
           </ol>
         </div>
 	  </c:if>
              
     </div>
-    
-    
-    
-<!--     <div class="form"> -->
-    
-<!--       <div class="title_main"><span>近三年申請之留任狀況</span></div> -->
-    
-<!--       <div class="full" style="color:red">近三年申請之留任狀況_統編66668888_1101123.xlsx　110/11/23  16:50　17KB</div> -->
-
-             
-<!--     </div> -->
-    
-    
     
     <div class="form">
     
@@ -326,7 +271,7 @@ C=(B)/(A) x 100%">
     <!--endprint-->
     
     <div class="page">
-      <button type="button" onclick="javascript:location.href='employ_02?sid=${sid}'">返回修改</button>
+      <button type="button" onclick="javascript:location.href='employ_02'">返回修改</button>
       <button type="button" onclick="doPrint()">列印資料</button>
       <!--- Button trigger modal --->
       <button type="button" class="" data-bs-toggle="modal" data-bs-target="#sure">送出案件</button>

@@ -23,9 +23,6 @@
 
 
   <!---------------------- top ---------------------->
-<!--   <div id="top"> -->
-<!--     <div id="top_logo"><a href="index"><img src="images/logo.png" /></a></div> -->
-<!--   </div> -->
 	<%@ include file="header.jsp" %>
   <!---------------------- top end ---------------------->
 
@@ -39,97 +36,6 @@
 
   <!---------------------- left menu ---------------------->
   		<%@ include file="leftMenu.jsp" %>
-<!--   <div id="left_menu"> -->
-<!--     <div class="panel-group" id="accordion"> -->
-    
-<!--     -------- collapse1 -------- -->
-<!-- 	<div class="panel panel-default"> -->
-<!-- 		<div class="panel-heading"> -->
-<!-- 			<h4 class="panel-title"> -->
-<!-- 			  <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">收件與補件</a> -->
-<!-- 			</h4> -->
-<!-- 		</div> -->
-<!-- 		<div id="collapse1" class="panel-collapse collapse"> -->
-<!-- 			<div class="panel-body"> -->
-<!-- 				<ul> -->
-<!--                   <li><a href="a01/a01.html">案件查詢</a></li> -->
-<!--                   <li><a href="a02/a02.html">附件檢查與通知</a></li> -->
-<!--                   <li><a href="a03/a03.html">回傳案件</a></li> -->
-<!--                 </ul> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-    
-<!--     -------- collapse2 -------- -->
-<!-- 	<div class="panel panel-default"> -->
-<!-- 		<div class="panel-heading"> -->
-<!-- 			<h4 class="panel-title"> -->
-<!-- 			  <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">查核與撥款</a> -->
-<!-- 			</h4> -->
-<!-- 		</div> -->
-<!-- 		<div id="collapse2" class="panel-collapse collapse"> -->
-<!-- 			<div class="panel-body"> -->
-<!-- 				<ul> -->
-<!--                   <li><a href="b01/b01-1.html">案件審核</a></li> -->
-<!--                   <li><a href="b02/b02.html">登錄停止補助名單</a></li> -->
-<!--                   <li><a href="b03/b03.html">核定清冊／請款</a></li> -->
-<!--                   <li><a href="b04/b04.html">核銷案件</a></li> -->
-<!--                 </ul> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-
-    
-    
-<!--     -------- collapse8 -------- -->
-<!--     <div class="panel panel-default"> -->
-<!-- 		<div class="panel-heading-in"> -->
-<!-- 			<h4 class="panel-title"> -->
-<!-- 				<a data-toggle="collapse" data-parent="#accordion" href="#collapse8">彙整與統計</a> -->
-<!-- 			</h4> -->
-<!-- 		</div> -->
-<!-- 		<div id="collapse8" class="panel-collapse collapse in"> -->
-<!-- 			<div class="panel-body"> -->
-<!-- 				<ul> -->
-<!--                   <li><a href="index.html" class="in">統計儀錶板</a></li> -->
-<!--                   <li><a href="#">行業(職業)別統計</a></li> -->
-<!--                   <li><a href="#">申請單位屬性統計</a></li> -->
-<!--                   <li><a href="#">補助金額統計</a></li> -->
-<!--                   <li><a href="#">近3年申請情形統計</a></li> -->
-<!--                   <li><a href="#">繼續僱用金額統計</a></li> -->
-<!--                   <li><a href="#">繼續僱用人數統計</a></li> -->
-<!--                   <li><a href="#">原有薪資級距統計</a></li> -->
-<!--                   <li><a href="#">年齡區間統計</a></li> -->
-<!--                 </ul> -->
-<!-- 		  </div> -->
-<!-- 		</div> -->
-<!-- 	</div>     -->
-
-
-    
-    
-<!--     -------- collapse10 -------- -->
-<!--     <div class="panel panel-default"> -->
-<!-- 		<div class="panel-heading"> -->
-<!-- 			<h4 class="panel-title"> -->
-<!-- 				<a data-toggle="collapse" data-parent="#accordion" href="#collapse10">系統管理</a> -->
-<!-- 			</h4> -->
-<!-- 		</div> -->
-<!-- 		<div id="collapse10" class="panel-collapse collapse"> -->
-<!-- 			<div class="panel-body"> -->
-<!-- 				<ul> -->
-<!--                   <li><a href="j01/j01.html">使用者資料維護</a></li> -->
-<!--                   <li><a href="j02/j02.html">使用者帳號與權限</a></li> -->
-<!--                   <li><a href="j03/j03.html">群組權限管理</a></li> -->
-<!--                   <li><a href="j04/j04.html">系統登入紀錄</a></li> -->
-<!--                 </ul> -->
-<!-- 		  </div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-    
-    
-<!--   </div> -->
-<!--   </div> -->
   <!---------------------- left menu end ---------------------->
 
 

@@ -16,16 +16,21 @@ import java.util.HashMap;
 
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
+import com.example.springboot.controller.FrontendMainController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @PropertySource("classpath:application.properties")
 @Component
 public class CallApi { 
+	
+	Logger logger = LogManager.getLogger(CallApi.class);
 	
 	HttpClient client;
 	HttpRequest request;
@@ -36,35 +41,35 @@ public class CallApi {
 	ObjectMapper mapper;
 	String requestBody;
 	HttpURLConnection con;
-	public String httpGet(String ip){
-		URL url;
-		try {
-			url = new URL(ip);
-			//只有開頭是http/https才可通過
-			if (!url.getProtocol().equals("http") && !url.getProtocol().equals("https")) {
-				return "";
-			    }
-		} catch (MalformedURLException e1) {
-			e1.printStackTrace();
-			return "";
-		}
-		
-		client = HttpClient.newHttpClient();
-        request = HttpRequest.newBuilder()
-                .uri(URI.create(ip))
-                .build();
-        
-		
-		try {
-			response = client.send(request,
-			        HttpResponse.BodyHandlers.ofString());
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		return response.body();
-	}
+//	public String httpGet(String ip){
+//		URL url;
+//		try {
+//			url = new URL(ip);
+//			//只有開頭是http/https才可通過
+//			if (!url.getProtocol().equals("http") && !url.getProtocol().equals("https")) {
+//				return "";
+//			    }
+//		} catch (MalformedURLException e1) {
+//			logger.warn(e1.getMessage());
+//			return "";
+//		}
+//		
+//		client = HttpClient.newHttpClient();
+//        request = HttpRequest.newBuilder()
+//                .uri(URI.create(ip))
+//                .build();
+//        
+//		
+//		try {
+//			response = client.send(request,
+//			        HttpResponse.BodyHandlers.ofString());
+//		} catch (IOException e) {
+//			logger.warn(e.getMessage());
+//		} catch (InterruptedException e) {
+//			logger.warn(e.getMessage());
+//		}
+//		return response.body();
+//	}
 	
 	public String httpPost(String ip,String json){
 		URL url;
@@ -75,7 +80,7 @@ public class CallApi {
 				return "";
 			    }
 		} catch (MalformedURLException e1) {
-			e1.printStackTrace();
+			logger.warn(e1.getMessage());
 			return "";
 		}
 		
@@ -105,19 +110,23 @@ public class CallApi {
                 content = new StringBuilder();
 
                 while ((line = br.readLine()) != null) {
-                    content.append(line);
-                    content.append(System.lineSeparator());
+                    content.append(line).append(System.lineSeparator());
                 }
             }
 
 
-        }catch(Exception e) {
+        }catch(IOException e) {
+        	logger.warn(e.getMessage());
         }
         finally {
             con.disconnect();
         }
-		
-		return content.toString();
+		if(content==null)
+		{
+			return "";
+		}else {
+			return content.toString();
+		}
 	}
 	
 	public String convertToString(String json) {
@@ -137,6 +146,6 @@ public class CallApi {
 				}
 			}
 		}
-		return result;
+		return result+"&token="+SystemConfig.getProperty("api_token");
 	}
 }

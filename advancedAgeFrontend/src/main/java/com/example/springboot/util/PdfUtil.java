@@ -1,7 +1,13 @@
 package com.example.springboot.util;
 
+import java.io.IOException;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
@@ -12,42 +18,45 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 
 public class PdfUtil {
-	 // ¼Ð·Ç¦rÅé
-	 public static Font NORMALFONT;
-	 // ¥[²Ê¦rÅé
-	 public static Font BOLDFONT;
-	 //©T©w°ª
-	 public static float fixedHeight = 27f;
-	 //¶¡¶Z
-	 public static int spacing = 5;
+	static Logger logger = LogManager.getLogger(PdfUtil.class);
+	 // ï¿½Ð·Ç¦rï¿½ï¿½
+	 static Font NORMALFONT;
+	 // ï¿½[ï¿½Ê¦rï¿½ï¿½
+	 static Font BOLDFONT;
+	 //ï¿½Tï¿½wï¿½ï¿½
+	 static float fixedHeight = 27f;
+	 //ï¿½ï¿½ï¿½Z
+	 static int spacing = 5;
 
 	 static {
 	  try {
 	   BaseFont bfChinese = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.NOT_EMBEDDED);
 	   NORMALFONT = new Font(bfChinese, 10, Font.NORMAL);
 	   BOLDFONT = new Font(bfChinese, 14, Font.BOLD);
-	  } catch (Exception e) {
-	   e.printStackTrace();
-	  }
+	  } catch (IOException e) {
+		  logger.warn(e.getMessage());
+	  } catch (DocumentException e) {
+		  logger.warn(e.getMessage());
+	}
 
 	 }
 
 	 public static Document createDocument() {
-	  //¥Í¦¨pdf
+	  //ï¿½Í¦ï¿½pdf
 	  Document document = new Document();
-	  // ­¶­±¤j¤p
+	  // ï¿½ï¿½ï¿½ï¿½ï¿½jï¿½p
 	  Rectangle rectangle = new Rectangle(PageSize.A4);
-	  // ­¶­±­I´ºÃC¦â
+	  // ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½Cï¿½ï¿½
 	  rectangle.setBackgroundColor(BaseColor.WHITE);
 	  document.setPageSize(rectangle);
-	  // ­¶Ãä¶Z ¥ª¡A¥k¡A¤W¡A¤U
+	  // ï¿½ï¿½ï¿½ï¿½Z ï¿½ï¿½ï¿½Aï¿½kï¿½Aï¿½Wï¿½Aï¿½U
 	  document.setMargins(20, 20, 20, 20);
 	  return document;
 	 }
 
 
 	 /**
-	  * @param text ¬q¸¨¤º®e
+	  * @param text ï¿½qï¿½ï¿½ï¿½ï¿½ï¿½e
 	  * @return
 	  */
 	 public static Paragraph createParagraph(String text, Font font) {
@@ -60,22 +69,24 @@ public class PdfUtil {
 
 
 	 public static Font createFont(int fontNumber, int fontSize, BaseColor fontColor) {
-	  //¤¤¤å¦rÅé ----¤£µM¤¤¤å·|¶Ã½X
+	  //ï¿½ï¿½ï¿½ï¿½rï¿½ï¿½ ----ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½ï¿½|ï¿½Ã½X
 	  BaseFont bf = null;
 	  try {
 //	   bf = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.NOT_EMBEDDED);
 	   bf = BaseFont.createFont("C:/Windows/Fonts/mingliu.ttc,0",BaseFont.IDENTITY_H,BaseFont.NOT_EMBEDDED);
 	   return new Font(bf, fontNumber, fontSize, fontColor);
-	  } catch (Exception e) {
-	   e.printStackTrace();
-	  }
+	  } catch (IOException e) {
+		  logger.warn(e.getMessage());
+	  } catch (DocumentException e) {
+		  logger.warn(e.getMessage());
+	}
 	  return new Font(bf, Font.DEFAULTSIZE, Font.NORMAL, BaseColor.BLACK);
 	 }
 
 	 /**
-	  * ÁôÂÃªí®æÃä®Ø½u
+	  * ï¿½ï¿½ï¿½Ãªï¿½ï¿½ï¿½ï¿½Ø½u
 	  *
-	  * @param cell ³æ¤¸®æ
+	  * @param cell ï¿½æ¤¸ï¿½ï¿½
 	  */
 	 public static void disableBorderSide(PdfPCell cell) {
 	  if (cell != null) {
@@ -88,7 +99,7 @@ public class PdfUtil {
 
 
 	 /**
-	  * ³Ð«Ø©~¤¤±o³æ¤¸®æ
+	  * ï¿½Ð«Ø©~ï¿½ï¿½ï¿½oï¿½æ¤¸ï¿½ï¿½
 	  *
 	  * @return
 	  */
@@ -101,7 +112,7 @@ public class PdfUtil {
 	 }
 
 	 /**
-	  * ³Ð«Ø«ü©w¤å¦r±o³æ¤¸®æ
+	  * ï¿½Ð«Ø«ï¿½ï¿½wï¿½ï¿½rï¿½oï¿½æ¤¸ï¿½ï¿½
 	  *
 	  * @param text
 	  * @return
@@ -117,7 +128,7 @@ public class PdfUtil {
 	 }
 
 	 /**
-	  * @param len ªí®æ¦C¼Æ
+	  * @param len ï¿½ï¿½ï¿½Cï¿½ï¿½
 	  * @return
 	  */
 	 public static PdfPTable createPdfPTable(int len) {

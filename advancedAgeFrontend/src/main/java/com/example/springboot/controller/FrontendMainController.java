@@ -4,36 +4,26 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.StringReader;
 import java.net.URLEncoder;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Date;
 import java.util.List;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.springboot.entity.AdvancedAgeApply;
 import com.example.springboot.entity.AdvancedAgeApplyEmployedSituation;
@@ -45,25 +35,19 @@ import com.example.springboot.entity.Attachment;
 import com.example.springboot.entity.CompanyInfo;
 import com.example.springboot.entity.Parameter;
 import com.example.springboot.entity.ParameterKey;
+import com.example.springboot.util.AesUtil;
 import com.example.springboot.util.CallApi;
 import com.example.springboot.util.PdfUtil;
 import com.example.springboot.util.RandomValidateCodeUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.html.simpleparser.HTMLWorker;
-import com.itextpdf.text.pdf.ColumnText;
-import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -71,6 +55,8 @@ import com.itextpdf.text.pdf.PdfWriter;
 @Controller
 public class FrontendMainController {
 
+	Logger logger = LogManager.getLogger(FrontendMainController.class);
+	
 	CallApi api = new CallApi();
 
 	@Value("${api_ip}")
@@ -113,7 +99,8 @@ public class FrontendMainController {
 	}
 
 	@RequestMapping(value = "/login")
-	public String login() {
+	public String login(@ModelAttribute("type") String type,Model model) {
+		model.addAttribute("type",type);
 		return "login";
 	}
 	
@@ -123,32 +110,32 @@ public class FrontendMainController {
 	}
 	
 	@RequestMapping(value = "/schedule")
-	public String schedule(HttpServletRequest request,Model model,String sid) {
-		if (!request.isRequestedSessionIdValid() || session == null || session.getAttribute(sid+"seq") == null) {
-			return "redirect:/login?type="+StringEscapeUtils.escapeHtml("AA");
+	public String schedule(HttpServletRequest request,Model model,RedirectAttributes redirectAttrs) {
+		session=request.getSession();
+		if (!request.isRequestedSessionIdValid() || session == null || session.getAttribute(session.getId()+"seq") == null) {
+			redirectAttrs.addFlashAttribute("type", StringEscapeUtils.escapeHtml("AA"));
+			return "redirect:/login";
 		}
 		base = new AdvancedAgeBase();
-		base.setSeq(session.getAttribute(sid+"seq").toString());
+		base.setSeq(session.getAttribute(session.getId()+"seq").toString());
 		model.addAttribute("base", selectATypeAdvancedAgeBase(base));
 		// 行業別列表
-		String result = api.httpGet(ip + "getIndustryList");
-		JSONArray jsonArray = new JSONArray(result);
+		JSONArray jsonArray = new JSONArray(api.httpPost(ip + "getIndustryList",""));
 		List<Object> list = jsonArray.toList();
 		model.addAttribute("industryList", list);
 		// 縣市列表
-		result = api.httpGet(ip + "getCityList");
-		jsonArray = new JSONArray(result);
+		jsonArray = new JSONArray(api.httpPost(ip + "getCityList",""));
 		list = jsonArray.toList();
 		model.addAttribute("cityList", list);
 
 		apply = new AdvancedAgeApply();
-		if (session.getAttribute(sid+"seq") != null) {
+		if (session.getAttribute(session.getId()+"seq") != null) {
 			// ------申請表 start------
-			apply.setSeq(session.getAttribute(sid+"seq").toString());
+			apply.setSeq(session.getAttribute(session.getId()+"seq").toString());
 			AdvancedAgeApply searchApply = selectAdvancedAgeApply(apply);
 			model.addAttribute("apply", searchApply);
 
-			String apiResponse = api.httpGet(ip + "getAreaList?cityCode=" + searchApply.getContactCity());
+			String apiResponse = api.httpPost(ip + "getAreaList?cityCode=" + searchApply.getContactCity(),"");
 			jsonArray = new JSONArray(apiResponse);
 			list = jsonArray.toList();
 			model.addAttribute("areaList", list);
@@ -159,7 +146,7 @@ public class FrontendMainController {
 			employmentList = new AdvancedAgeEmploymentList();
 
 			plan.setAdvancedAgeApplyId(searchApply.getId());
-			AdvancedAgePlan searchPlan = selectAdvancedAgePlan(plan,sid);
+			AdvancedAgePlan searchPlan = selectAdvancedAgePlan(plan,session.getId());
 			model.addAttribute("plan", searchPlan);
 			
 			if (searchPlan.getAttachEmploymentList() != null
@@ -214,32 +201,32 @@ public class FrontendMainController {
 	}
 	
 	@RequestMapping(value = "/schedule_pass")
-	public String schedule_pass(HttpServletRequest request,Model model,String sid) {
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(sid+"seq") == null) {
-			return "redirect:/login?type=AR";
+	public String schedule_pass(HttpServletRequest request,Model model,RedirectAttributes redirectAttrs) {
+		session=request.getSession();
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"seq") == null) {
+			redirectAttrs.addFlashAttribute("type", StringEscapeUtils.escapeHtml("AR"));
+			return "redirect:/login";
 		}
 		base = new AdvancedAgeBase();
-		base.setSeq(session.getAttribute(sid+"seq").toString());
+		base.setSeq(session.getAttribute(session.getId()+"seq").toString());
 		model.addAttribute("base", selectATypeAdvancedAgeBase(base));
 		// 行業別列表
-		String result = api.httpGet(ip + "getIndustryList");
-		JSONArray jsonArray = new JSONArray(result);
+		JSONArray jsonArray = new JSONArray(api.httpPost(ip + "getIndustryList",""));
 		List<Object> list = jsonArray.toList();
 		model.addAttribute("industryList", list);
 		// 縣市列表
-		result = api.httpGet(ip + "getCityList");
-		jsonArray = new JSONArray(result);
+		jsonArray = new JSONArray(api.httpPost(ip + "getCityList",""));
 		list = jsonArray.toList();
 		model.addAttribute("cityList", list);
 
 		apply = new AdvancedAgeApply();
-		if (session.getAttribute(sid+"seq") != null) {
+		if (session.getAttribute(session.getId()+"seq") != null) {
 			// ------申請表 start------
-			apply.setSeq(session.getAttribute(sid+"seq").toString());
+			apply.setSeq(session.getAttribute(session.getId()+"seq").toString());
 			AdvancedAgeApply searchApply = selectAdvancedAgeApply(apply);
 			model.addAttribute("apply", searchApply);
 
-			String apiResponse = api.httpGet(ip + "getAreaList?cityCode=" + searchApply.getContactCity());
+			String apiResponse = api.httpPost(ip + "getAreaList?cityCode=" + searchApply.getContactCity(),"");
 			jsonArray = new JSONArray(apiResponse);
 			list = jsonArray.toList();
 			model.addAttribute("areaList", list);
@@ -250,7 +237,7 @@ public class FrontendMainController {
 			employmentList = new AdvancedAgeEmploymentList();
 
 			plan.setAdvancedAgeApplyId(searchApply.getId());
-			AdvancedAgePlan searchPlan = selectAdvancedAgePlan(plan,sid);
+			AdvancedAgePlan searchPlan = selectAdvancedAgePlan(plan,session.getId());
 			model.addAttribute("plan", searchPlan);
 			
 			if (searchPlan.getAttachEmploymentList() != null
@@ -312,38 +299,35 @@ public class FrontendMainController {
 	}
 
 	@RequestMapping(value = "/employ_02")
-	public String employ_02(HttpServletRequest request, Model model,String sid) {
-		model.addAttribute("sid", sid);
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(sid+"seq") == null) {
+	public String employ_02(HttpServletRequest request, Model model) {
+		session=request.getSession();
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"seq") == null) {
 			return "redirect:/employ_01";
 		}
 		base = new AdvancedAgeBase();
-		base.setSeq(session.getAttribute(sid+"seq").toString());
+		base.setSeq(session.getAttribute(session.getId()+"seq").toString());
 		if(selectATypeAdvancedAgeBase(base).getFileStatus()!=null && !selectATypeAdvancedAgeBase(base).getFileStatus().equals("2"))
 		{
-			return "redirect:/employ_06?sid="+sid;
+			return "redirect:/employ_06";
 		}
 //		行業別列表
-		String result = api.httpGet(ip + "getIndustryList");
-		JSONArray jsonArray = new JSONArray(result);
+		JSONArray jsonArray = new JSONArray(api.httpPost(ip + "getIndustryList", ""));
 		List<Object> list = jsonArray.toList();
 		model.addAttribute("industryList", list);
 //		縣市列表
-		result = api.httpGet(ip + "getCityList");
-		jsonArray = new JSONArray(result);
+		jsonArray = new JSONArray(api.httpPost(ip + "getCityList", ""));
 		list = jsonArray.toList();
 		model.addAttribute("cityList", list);
 
 //      資料是否已存在
 		apply = new AdvancedAgeApply();
-		apply.setSeq(session.getAttribute(sid+"seq").toString());
+		apply.setSeq(session.getAttribute(session.getId()+"seq").toString());
 		AdvancedAgeApply searchApply = selectAdvancedAgeApply(apply);
-		searchApply.setCompanyName(session.getAttribute(sid+"companyName").toString());
-		searchApply.setSeq(session.getAttribute(sid+"seq").toString());
+		searchApply.setCompanyName(session.getAttribute(session.getId()+"companyName").toString());
+		searchApply.setSeq(session.getAttribute(session.getId()+"seq").toString());
 		model.addAttribute("apply", searchApply);
 
-		String apiResponse = api.httpGet(ip + "getAreaList?cityCode=" + searchApply.getContactCity());
-		jsonArray = new JSONArray(apiResponse);
+		jsonArray = new JSONArray(api.httpPost(ip + "getAreaList?cityCode=" + searchApply.getContactCity(),""));
 		list = jsonArray.toList();
 		model.addAttribute("areaList", list);
 
@@ -351,23 +335,23 @@ public class FrontendMainController {
 	}
 
 	@RequestMapping(value = "/employ_03")
-	public String employ_03(HttpServletRequest request,Model model,String sid) {
-		model.addAttribute("sid", sid);
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(sid+"seq") == null) {
+	public String employ_03(HttpServletRequest request,Model model) {
+		session=request.getSession();
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"seq") == null) {
 			return "redirect:/employ_01";
 		}
 		base = new AdvancedAgeBase();
-		base.setSeq(session.getAttribute(sid+"seq").toString());
+		base.setSeq(session.getAttribute(session.getId()+"seq").toString());
 		if(selectATypeAdvancedAgeBase(base).getFileStatus()!=null && !selectATypeAdvancedAgeBase(base).getFileStatus().equals("2"))
 		{
-			return "redirect:/employ_06?seq="+sid;
+			return "redirect:/employ_06?seq="+session.getId();
 		}
 //      資料是否已存在
 		plan = new AdvancedAgePlan();
 		employmentList = new AdvancedAgeEmploymentList();
-		if (session.getAttribute(sid+"advancedAgeApplyId") != null) {
-			plan.setAdvancedAgeApplyId(Integer.valueOf(session.getAttribute(sid+"advancedAgeApplyId").toString()));
-			AdvancedAgePlan searchPlan = selectAdvancedAgePlan(plan,sid);
+		if (session.getAttribute(session.getId()+"advancedAgeApplyId") != null) {
+			plan.setAdvancedAgeApplyId(Integer.valueOf(session.getAttribute(session.getId()+"advancedAgeApplyId").toString()));
+			AdvancedAgePlan searchPlan = selectAdvancedAgePlan(plan,session.getId());
 			model.addAttribute("plan", searchPlan);
 			//0727刪除
 //			if (searchPlan.getAttachAssistanceMeasures() != null
@@ -404,7 +388,7 @@ public class FrontendMainController {
 					&& searchPlan.getAttachEmploymentList().equals("Y")) {
 				attachment = new Attachment();
 				attachment.setFileBelong("A");
-				attachment.setFileBelongId(Integer.valueOf(session.getAttribute(sid+"advancedAgeApplyId").toString()));
+				attachment.setFileBelongId(Integer.valueOf(session.getAttribute(session.getId()+"advancedAgeApplyId").toString()));
 				attachment.setFileType("employmentList");
 				attachment.setFileFrequency(1);
 				model.addAttribute("employmentListAttachment", selectFiles(attachment).toList());
@@ -430,23 +414,23 @@ public class FrontendMainController {
 	}
 
 	@RequestMapping(value = "/employ_04")
-	public String employ_04(HttpServletRequest request,Model model,String sid) {
-		model.addAttribute("sid", sid);
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(sid+"seq") == null) {
+	public String employ_04(HttpServletRequest request,Model model) {
+		session=request.getSession();
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"seq") == null) {
 			return "redirect:/employ_01";
 		}
 		base = new AdvancedAgeBase();
-		base.setSeq(session.getAttribute(sid+"seq").toString());
+		base.setSeq(session.getAttribute(session.getId()+"seq").toString());
 		if(selectATypeAdvancedAgeBase(base).getFileStatus()!=null && !selectATypeAdvancedAgeBase(base).getFileStatus().equals("2"))
 		{
-			return "redirect:/employ_06?seq="+sid;
+			return "redirect:/employ_06";
 		}
 //      資料是否已存在
 		attachment = new Attachment();
-		if (session.getAttribute(sid+"advancedAgeApplyId") != null) {
+		if (session.getAttribute(session.getId()+"advancedAgeApplyId") != null) {
 			// 設立登記證明文件
 			attachment.setFileBelong("A");
-			attachment.setFileBelongId(Integer.valueOf(session.getAttribute(sid+"advancedAgeApplyId").toString()));
+			attachment.setFileBelongId(Integer.valueOf(session.getAttribute(session.getId()+"advancedAgeApplyId").toString()));
 			attachment.setFileType("register");
 			model.addAttribute("registerAttachment", selectFiles(attachment).toList());
 
@@ -471,37 +455,34 @@ public class FrontendMainController {
 	}
 
 	@RequestMapping(value = "/employ_05")
-	public String employ_05(HttpServletRequest request,Model model,String sid) {
-		model.addAttribute("sid", sid);
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(sid+"seq") == null) {
+	public String employ_05(HttpServletRequest request,Model model) {
+		session=request.getSession();
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"seq") == null) {
 			return "redirect:/employ_01";
 		}
 		base = new AdvancedAgeBase();
-		base.setSeq(session.getAttribute(sid+"seq").toString());
+		base.setSeq(session.getAttribute(session.getId()+"seq").toString());
 		if(selectATypeAdvancedAgeBase(base).getFileStatus()!=null && !selectATypeAdvancedAgeBase(base).getFileStatus().equals("2"))
 		{
-			return "redirect:/employ_06?sid="+sid;
+			return "redirect:/employ_06";
 		}
 		// 行業別列表
-		String result = api.httpGet(ip + "getIndustryList");
-		JSONArray jsonArray = new JSONArray(result);
+		JSONArray jsonArray = new JSONArray(api.httpPost(ip + "getIndustryList",""));
 		List<Object> list = jsonArray.toList();
 		model.addAttribute("industryList", list);
 		// 縣市列表
-		result = api.httpGet(ip + "getCityList");
-		jsonArray = new JSONArray(result);
+		jsonArray = new JSONArray(api.httpPost(ip + "getCityList",""));
 		list = jsonArray.toList();
 		model.addAttribute("cityList", list);
 
 		apply = new AdvancedAgeApply();
-		if (session.getAttribute(sid+"seq") != null) {
+		if (session.getAttribute(session.getId()+"seq") != null) {
 			// ------申請表 start------
-			apply.setSeq(session.getAttribute(sid+"seq").toString());
+			apply.setSeq(session.getAttribute(session.getId()+"seq").toString());
 			AdvancedAgeApply searchApply = selectAdvancedAgeApply(apply);
 			model.addAttribute("apply", searchApply);
 
-			String apiResponse = api.httpGet(ip + "getAreaList?cityCode=" + searchApply.getContactCity());
-			jsonArray = new JSONArray(apiResponse);
+			jsonArray = new JSONArray(api.httpPost(ip + "getAreaList?cityCode=" + searchApply.getContactCity(),""));
 			list = jsonArray.toList();
 			model.addAttribute("areaList", list);
 			// ------申請表 end--------
@@ -510,14 +491,14 @@ public class FrontendMainController {
 			plan = new AdvancedAgePlan();
 
 			plan.setAdvancedAgeApplyId(searchApply.getId());
-			AdvancedAgePlan searchPlan = selectAdvancedAgePlan(plan,sid);
+			AdvancedAgePlan searchPlan = selectAdvancedAgePlan(plan,session.getId());
 			model.addAttribute("plan", searchPlan);
 			
 			if (searchPlan.getAttachEmploymentList() != null
 					&& searchPlan.getAttachEmploymentList().equals("Y")) {
 				attachment = new Attachment();
 				attachment.setFileBelong("A");
-				attachment.setFileBelongId(Integer.valueOf(session.getAttribute(sid+"advancedAgeApplyId").toString()));
+				attachment.setFileBelongId(Integer.valueOf(session.getAttribute(session.getId()+"advancedAgeApplyId").toString()));
 				attachment.setFileType("employmentList");
 				attachment.setFileFrequency(1);
 				model.addAttribute("employmentListAttachment", selectFiles(attachment).toList());
@@ -565,9 +546,9 @@ public class FrontendMainController {
 	}
 
 	@RequestMapping(value = "/employ_06")
-	public String employ_06(HttpServletRequest request,Model model,String sid) {
-		model.addAttribute("sid", sid);
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(sid+"seq") == null) {
+	public String employ_06(HttpServletRequest request,Model model) {
+		session=request.getSession();
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"seq") == null) {
 			return "redirect:/employ_01";
 		}
 		return "employ_06";
@@ -584,13 +565,13 @@ public class FrontendMainController {
 	}
 	
 	@RequestMapping(value = "/employ_payment_02")
-	public String employ_payment_02(HttpServletRequest request, Model model,String sid) {
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(sid+"seq") == null) {
+	public String employ_payment_02(HttpServletRequest request, Model model) {
+		session=request.getSession();
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"seq") == null) {
 			return "redirect:/employ_payment_01";
 		}
-		model.addAttribute("sid", sid);
-		model.addAttribute("seq", session.getAttribute(sid+"seq"));
-		model.addAttribute("baseId", session.getAttribute(sid+"baseId").toString());
+		model.addAttribute("seq", session.getAttribute(session.getId()+"seq"));
+		model.addAttribute("baseId", session.getAttribute(session.getId()+"baseId").toString());
 //		-----------申請過後不能再申請---------
 //		base = new AdvancedAgeBase();
 //		base.setId(Integer.valueOf(session.getAttribute(seq+"baseId").toString()));
@@ -623,8 +604,8 @@ public class FrontendMainController {
 		//------------自動帶入名稱 end------------*/
 			
 		employmentListReceipt = new AdvancedAgeEmploymentListReceipt();
-		employmentListReceipt.setAdvancedAgeBaseId(Integer.valueOf(session.getAttribute(sid+"baseId").toString()));
-		employmentListReceipt.setSeq(session.getAttribute(sid+"seq").toString());
+		employmentListReceipt.setAdvancedAgeBaseId(Integer.valueOf(session.getAttribute(session.getId()+"baseId").toString()));
+		employmentListReceipt.setSeq(session.getAttribute(session.getId()+"seq").toString());
 		model.addAttribute("advancedAgeEmploymentListReceipts",selectAdvancedAgeEmploymentListReceipts(employmentListReceipt).toList());
 
 		
@@ -632,16 +613,16 @@ public class FrontendMainController {
 	}
 
 	@RequestMapping(value = "/employ_payment_03")
-	public String employ_payment_03(HttpServletRequest request, Model model,String sid) {
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(sid+"seq") == null) {
+	public String employ_payment_03(HttpServletRequest request, Model model) {
+		session=request.getSession();
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"seq") == null) {
 			return "redirect:/employ_payment_01";
 		}
-		model.addAttribute("sid", sid);
-		model.addAttribute("baseId", session.getAttribute(sid+"baseId").toString());
+		model.addAttribute("baseId", session.getAttribute(session.getId()+"baseId").toString());
 		
 //		-----------申請過後不能再申請---------
 		base = new AdvancedAgeBase();
-		base.setId(Integer.valueOf(session.getAttribute(sid+"baseId").toString()));
+		base.setId(Integer.valueOf(session.getAttribute(session.getId()+"baseId").toString()));
 //		if(Integer.valueOf(selectAdvancedAgeBaseById(base).getCaseStatus())>3)
 //		{
 //			return "redirect:/employ_payment_05?seq="+seq;
@@ -654,10 +635,10 @@ public class FrontendMainController {
 		
 //      資料是否已存在
 		attachment = new Attachment();
-		if (session.getAttribute(sid+"baseId") != null) {
+		if (session.getAttribute(session.getId()+"baseId") != null) {
 			// 原核定函影本
 			attachment.setFileBelong("BA");
-			attachment.setFileBelongId(Integer.valueOf(session.getAttribute(sid+"baseId").toString()));
+			attachment.setFileBelongId(Integer.valueOf(session.getAttribute(session.getId()+"baseId").toString()));
 			attachment.setFileType("approved");
 			model.addAttribute("approvedAttachment", selectFiles(attachment).toList());
 
@@ -685,15 +666,15 @@ public class FrontendMainController {
 	}
 
 	@RequestMapping(value = "/employ_payment_04")
-	public String employ_payment_04(HttpServletRequest request, Model model,String sid) {
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(sid+"seq") == null) {
+	public String employ_payment_04(HttpServletRequest request, Model model) {
+		session=request.getSession();
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"seq") == null) {
 			return "redirect:/employ_payment_01";
 		}
-		model.addAttribute("sid",sid);
-		model.addAttribute("baseId", session.getAttribute(sid+"baseId").toString());
+		model.addAttribute("baseId", session.getAttribute(session.getId()+"baseId").toString());
 //		-----------申請過後不能再申請---------
 //		base = new AdvancedAgeBase();
-		base.setId(Integer.valueOf(session.getAttribute(sid+"baseId").toString()));
+		base.setId(Integer.valueOf(session.getAttribute(session.getId()+"baseId").toString()));
 //		if(Integer.valueOf(selectAdvancedAgeBaseById(base).getCaseStatus())>3)
 //		{
 //			return "redirect:/employ_payment_05?seq="+seq;
@@ -705,15 +686,15 @@ public class FrontendMainController {
 		}
 		
 		employmentListReceipt = new AdvancedAgeEmploymentListReceipt();
-		employmentListReceipt.setAdvancedAgeBaseId(Integer.valueOf(session.getAttribute(sid+"baseId").toString()));
-		employmentListReceipt.setSeq(session.getAttribute(sid+"seq").toString());
+		employmentListReceipt.setAdvancedAgeBaseId(Integer.valueOf(session.getAttribute(session.getId()+"baseId").toString()));
+		employmentListReceipt.setSeq(session.getAttribute(session.getId()+"seq").toString());
 		model.addAttribute("advancedAgeEmploymentListReceipts",selectAdvancedAgeEmploymentListReceipts(employmentListReceipt).toList());
 		
 		attachment = new Attachment();
-		if (session.getAttribute(sid+"baseId") != null) {
+		if (session.getAttribute(session.getId()+"baseId") != null) {
 			// 原核定函影本
 			attachment.setFileBelong("BA");
-			attachment.setFileBelongId(Integer.valueOf(session.getAttribute(sid+"baseId").toString()));
+			attachment.setFileBelongId(Integer.valueOf(session.getAttribute(session.getId()+"baseId").toString()));
 			attachment.setFileType("approved");
 			model.addAttribute("approvedAttachment", selectFiles(attachment).toList());
 
@@ -741,8 +722,9 @@ public class FrontendMainController {
 	}
 
 	@RequestMapping(value = "/employ_payment_05")
-	public String employ_payment_05(HttpServletRequest request, Model model,String sid) {
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(sid+"seq") == null) {
+	public String employ_payment_05(HttpServletRequest request, Model model) {
+		session=request.getSession();
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"seq") == null) {
 			return "redirect:/employ_payment_01";
 		}
 		return "employ_payment_05";
@@ -761,13 +743,11 @@ public class FrontendMainController {
 	@RequestMapping(value = "/register_01")
 	public String register_01(Model model) {
 //		行業別列表
-		String result = api.httpGet(ip + "getIndustryList");
-		JSONArray jsonArray = new JSONArray(result);
+		JSONArray jsonArray = new JSONArray(api.httpPost(ip + "getIndustryList",""));
 		List<Object> list = jsonArray.toList();
 		model.addAttribute("industryList", list);
 //		縣市列表
-		result = api.httpGet(ip + "getCityList");
-		jsonArray = new JSONArray(result);
+		jsonArray = new JSONArray(api.httpPost(ip + "getCityList",""));
 		list = jsonArray.toList();
 		model.addAttribute("cityList", list);
 
@@ -809,41 +789,52 @@ public class FrontendMainController {
 		path=filePath+path;
 //    下載的檔名是啥
       String fileName = path.substring(path.lastIndexOf("/") + 1);
+      FileInputStream in = null;
+      ServletOutputStream out = null;
       try{
-//    設定瀏覽器能夠支援下載的東西，中文檔名需要指定編碼方式，否則可能會亂碼
-      response.setHeader("Content-Disposition","attachment;filename="+ URLEncoder.encode(fileName,"utf-8"));//分號改成冒號會展示圖片而不會下載
-//    獲取下載檔案的輸入流
-      FileInputStream in=new FileInputStream(path);
-//    建立緩衝區
-      int len=0;
-      byte[] buffer=new byte[1024];
-//    獲取outputStream物件
-      ServletOutputStream out= response.getOutputStream();
-//    將FileOutputStream流寫入buffer,使用outputStream將緩衝區資料輸出到客戶端
-      while((len=in.read(buffer))>0)
-      {
-          out.write(buffer,0,len);
-      }
-
-      in.close();
-      out.close();
-      }catch(Exception e) {
-    	  e.getStackTrace();
+//	      設定瀏覽器能夠支援下載的東西，中文檔名需要指定編碼方式，否則可能會亂碼
+	      response.setHeader("Content-Disposition","attachment;filename="+ URLEncoder.encode(fileName,"utf-8"));//分號改成冒號會展示圖片而不會下載
+//	      獲取下載檔案的輸入流
+	      in = new FileInputStream(path);
+//	      建立緩衝區
+	      int len=0;
+	      byte[] buffer=new byte[1024];
+//	      獲取outputStream物件
+	      out = response.getOutputStream();
+//	      將FileOutputStream流寫入buffer,使用outputStream將緩衝區資料輸出到客戶端
+	      while((len=in.read(buffer))>0)
+	      {
+	          out.write(buffer,0,len);
+	      }
+	
+      }catch(IOException e) {
+    	  logger.warn(e.getMessage());
+      }finally {
+    	  try {
+			in.close();
+			out.close();
+		} catch (IOException e) {
+			logger.warn(e.getMessage());
+		}
       }
 	 }
 	
 	@RequestMapping(value = "/pdf")
-	public void pdf(String sid,HttpServletResponse response) throws FileNotFoundException, DocumentException {
+	public void pdf(HttpServletRequest request,HttpServletResponse response) {
+		session=request.getSession();
 		// 第一步：建立一個文件例項 設定文件紙張為A4，文件排列方式為橫向排列
 		// 實現A4紙頁面 並且縱向排列（不設定則為橫向
 		Document document = new Document();
 		// 第二步：建立PdfWriter物件，設定pdf生成路徑
 		// 申請資料
 		apply = new AdvancedAgeApply();
-		apply.setSeq(session.getAttribute(sid+"seq").toString());
+		apply.setSeq(session.getAttribute(session.getId()+"seq").toString());
 		AdvancedAgeApply searchApply = selectAdvancedAgeApply(apply);
-				
-		PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream(filePath+"/A/"+searchApply.getId()+"/data.pdf"));
+		FileOutputStream outputStream = null;
+		try {
+		
+			outputStream = new FileOutputStream(filePath+"/A/"+searchApply.getId()+"/data.pdf");
+		PdfWriter pdfWriter = PdfWriter.getInstance(document, outputStream);
 		// 第三步：開啟文件進行我們需要的操作
 		document.open();
 
@@ -884,10 +875,8 @@ public class FrontendMainController {
 		table2.addCell(spaceCell);
 
 		// 行業別列表
-		String result = api.httpGet(ip + "getIndustryList");
-		JSONArray jsonArray = new JSONArray(result);
+		JSONArray jsonArray = new JSONArray(api.httpPost(ip + "getIndustryList",""));
 		JSONObject jsonObject = null;
-		ObjectMapper mapper = new ObjectMapper();
 		for (int i = 0; i < jsonArray.length(); i++) {
 			jsonObject = jsonArray.getJSONObject(i);
 			if (searchApply.getIndustry().equals(jsonObject.get("code"))) {
@@ -905,15 +894,13 @@ public class FrontendMainController {
 
 		String address = "";
 		// 縣市列表
-		result = api.httpGet(ip + "getCityList");
-		jsonArray = new JSONArray(result);
+		jsonArray = new JSONArray(api.httpPost(ip + "getCityList",""));
 		for (int i = 0; i < jsonArray.length(); i++) {
 			jsonObject = jsonArray.getJSONObject(i);
 			if (searchApply.getContactCity().equals(jsonObject.get("code"))) {
 				address = jsonObject.get("name").toString();
 				// 地區列表
-				result = api.httpGet(ip + "getAreaList?cityCode=" + searchApply.getContactCity());
-				jsonArray = new JSONArray(result);
+				jsonArray = new JSONArray(api.httpPost(ip + "getAreaList?cityCode=" + searchApply.getContactCity(),""));
 				for (int j = 0; j < jsonArray.length(); j++) {
 					jsonObject = jsonArray.getJSONObject(j);
 					if (searchApply.getContactArea().equals(jsonObject.get("code"))) {
@@ -977,7 +964,7 @@ public class FrontendMainController {
 		// 申請資料
 		plan = new AdvancedAgePlan();
 		plan.setAdvancedAgeApplyId(searchApply.getId());
-		AdvancedAgePlan searchPlan = selectAdvancedAgePlan(plan,sid);
+		AdvancedAgePlan searchPlan = selectAdvancedAgePlan(plan,session.getId());
 		spaceCell.setPhrase(new Paragraph("主要業務/產品/服務:" + searchPlan.getItems(), content));
 		table4.addCell(spaceCell);
 
@@ -1283,13 +1270,23 @@ public class FrontendMainController {
 		document.close();
 		// 關閉書寫流
 		pdfWriter.close();
-		
+		}catch(FileNotFoundException e ) {
+			logger.warn(e.getMessage());
+		}catch(DocumentException e) {
+			logger.warn(e.getMessage());
+		}
+		finally {
+			try {
+				outputStream.close();
+			} catch (IOException e) {
+				logger.warn(e.getMessage());
+			}
+		}
 		response.setContentType("text/html;charset=UTF-8");
 		try {
 			response.getWriter().print("{\"status\":\"success\",\"path\":\""+"/A/"+StringEscapeUtils.escapeHtml(searchApply.getId().toString())+"/data.pdf\"}");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 
 	}
@@ -1301,7 +1298,7 @@ public class FrontendMainController {
 		try {
 			json = objectMapper.writeValueAsString(apply);
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		String jsondata = api.httpPost(ip + "selectAdvancedAgeApply", json);
 		ObjectMapper mapper = new ObjectMapper();
@@ -1309,9 +1306,9 @@ public class FrontendMainController {
 			if (!jsondata.equals(""))
 				searchApply = mapper.readValue(jsondata, AdvancedAgeApply.class);
 		} catch (JsonMappingException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		return searchApply;
 	}
@@ -1323,7 +1320,7 @@ public class FrontendMainController {
 		try {
 			json = objectMapper.writeValueAsString(plan);
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		String jsondata = api.httpPost(ip + "selectAdvancedAgePlan", json);
 		ObjectMapper mapper = new ObjectMapper();
@@ -1332,9 +1329,9 @@ public class FrontendMainController {
 			if (!jsondata.equals(""))
 				searchPlan = mapper.readValue(jsondata, AdvancedAgePlan.class);
 		} catch (JsonMappingException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		session.setAttribute(sid+"advancedAgePlanId", searchPlan.getId());
 		return searchPlan;
@@ -1346,11 +1343,9 @@ public class FrontendMainController {
 		try {
 			json = objectMapper.writeValueAsString(employmentList);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip + "selectAdvancedAgeEmploymentLists", json);
-		JSONArray array = new JSONArray(jsondata);
+		JSONArray array = new JSONArray(api.httpPost(ip + "selectAdvancedAgeEmploymentLists", json));
 		return array;
 	}
 
@@ -1360,11 +1355,9 @@ public class FrontendMainController {
 		try {
 			json = objectMapper.writeValueAsString(employmentListReceipt);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip + "selectAdvancedAgeEmploymentListReceipts", json);
-		JSONArray array = new JSONArray(jsondata);
+		JSONArray array = new JSONArray(api.httpPost(ip + "selectAdvancedAgeEmploymentListReceipts", json));
 		return array;
 	}
 	
@@ -1374,11 +1367,9 @@ public class FrontendMainController {
 		try {
 			json = objectMapper.writeValueAsString(employmentSituation);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip + "selectAdvancedAgeApplyEmployedSituations", json);
-		JSONArray array = new JSONArray(jsondata);
+		JSONArray array = new JSONArray(api.httpPost(ip + "selectAdvancedAgeApplyEmployedSituations", json));
 		return array;
 	}
 
@@ -1388,11 +1379,9 @@ public class FrontendMainController {
 		try {
 			json = objectMapper.writeValueAsString(attachment);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip + "selectFiles", json);
-		JSONArray array = new JSONArray(jsondata);
+		JSONArray array = new JSONArray(api.httpPost(ip + "selectFiles", json));
 		return array;
 	}
 	
@@ -1403,21 +1392,17 @@ public class FrontendMainController {
 		try {
 			json = objectMapper.writeValueAsString(base);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip + "selectATypeAdvancedAgeBase", json);
-		JSONArray array = new JSONArray(jsondata);
+		JSONArray array = new JSONArray(api.httpPost(ip + "selectATypeAdvancedAgeBase", json));
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			if (array.length()>0) {
 				searchBase = mapper.readValue(array.getJSONObject(0).toString(), AdvancedAgeBase.class);}
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		return searchBase;
 	}
@@ -1429,8 +1414,7 @@ public class FrontendMainController {
 		try {
 			json = objectMapper.writeValueAsString(base);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		String jsondata = api.httpPost(ip + "selectAdvancedAgeBaseById", json);
 		ObjectMapper mapper = new ObjectMapper();
@@ -1439,27 +1423,21 @@ public class FrontendMainController {
 			if (!jsondata.equals(""))
 				searchBase = mapper.readValue(jsondata, AdvancedAgeBase.class);
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		return searchBase;
 	}
 	
 	@RequestMapping(value = "/getVerify")
 	public void getVerify(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			response.setContentType("image/jpeg");// 設置相應類型,告訴瀏覽器輸出的內容為圖片
-			response.setHeader("Pragma", "No-cache");// 設置響應頭信息，告訴瀏覽器不要緩存此內容
-			response.setHeader("Cache-Control", "no-cache");
-			response.setDateHeader("Expire", 0);
-			RandomValidateCodeUtil randomValidateCode = new RandomValidateCodeUtil();
-			randomValidateCode.getRandcode(request, response);// 輸出驗證碼圖片方法
-		} catch (Exception e) {
-//            logger.error("獲取驗證碼失敗>>>>   ", e);
-		}
+		response.setContentType("image/jpeg");// 設置相應類型,告訴瀏覽器輸出的內容為圖片
+		response.setHeader("Pragma", "No-cache");// 設置響應頭信息，告訴瀏覽器不要緩存此內容
+		response.setHeader("Cache-Control", "no-cache");
+		response.setDateHeader("Expire", 0);
+		RandomValidateCodeUtil randomValidateCode = new RandomValidateCodeUtil();
+		randomValidateCode.getRandcode(request, response);// 輸出驗證碼圖片方法
 	}
 
 	/**
@@ -1472,7 +1450,6 @@ public class FrontendMainController {
 			throws IOException {
 		try {
 			session = request.getSession();
-			System.out.println("session id = "+session.getId());
 			// 從session中獲取隨機數
 			String inputStr = verifyInput;
 			String random = (String) session.getAttribute("RANDOMVALIDATECODEKEY");
@@ -1480,8 +1457,8 @@ public class FrontendMainController {
 				response.setContentType("text/html;charset=UTF-8");
 				response.getWriter().print("fail");
 			}
-			if (random.equals(inputStr)) {
-				info.setPassword(encryptPassword(info.getPassword(),key));
+			if (random != null && random.equals(inputStr)) {
+				info.setPassword(AesUtil.encrypt(info.getPassword()));
 				JSONObject company = checkCompanyInfo(info);
 				if(company.get("seq").equals(null))
 				{
@@ -1492,17 +1469,17 @@ public class FrontendMainController {
 					session.setAttribute(session.getId()+"seq", info.getSeq());
 					session.setAttribute(session.getId()+"companyName", company.get("companyName"));
 					response.setContentType("text/html;charset=UTF-8");
-					response.getWriter().print("success;"+StringEscapeUtils.escapeHtml(session.getId()));
+					response.getWriter().print("success");
 				}
 			} else {
 				response.setContentType("text/html;charset=UTF-8");
 				response.getWriter().print("fail");
 			}
-		} catch (Exception e) {
-//            logger.error("驗證碼校驗失敗", e);
+		} catch (IOException e) {
+			logger.warn(e.getMessage());
 			response.setContentType("text/html;charset=UTF-8");
 			response.getWriter().print("fail");
-		}
+		} 
 	}
 
 	@RequestMapping(value = "/paymentCheckVerify", method = RequestMethod.POST)
@@ -1517,8 +1494,8 @@ public class FrontendMainController {
 				response.setContentType("text/html;charset=UTF-8");
 				response.getWriter().print("fail");
 			}
-			if (random.equals(inputStr)) {
-				info.setPassword(encryptPassword(info.getPassword(),key));
+			if (random != null && random.equals(inputStr)) {
+				info.setPassword(AesUtil.encrypt(info.getPassword()));
 				JSONObject company = checkCompanyInfo(info);
 				if(company.get("seq").equals(null))
 				{
@@ -1547,15 +1524,15 @@ public class FrontendMainController {
 					else{
 						session.setAttribute(session.getId()+"baseId", searchBase.getId());
 						response.setContentType("text/html;charset=UTF-8");
-						response.getWriter().print("success;"+StringEscapeUtils.escapeHtml(session.getId()));
+						response.getWriter().print("success");
 					}
 				}
 			} else {
 				response.setContentType("text/html;charset=UTF-8");
 				response.getWriter().print("fail");
 			}
-		} catch (Exception e) {
-//            logger.error("驗證碼校驗失敗", e);
+		} catch (IOException e) {
+			logger.warn(e.getMessage());
 			response.setContentType("text/html;charset=UTF-8");
 			response.getWriter().print("fail");
 		}
@@ -1567,18 +1544,10 @@ public class FrontendMainController {
 		try {
 			json = objectMapper.writeValueAsString(info);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip+"checkCompanyInfo",json);
-		JSONObject object = new JSONObject(jsondata);
+		JSONObject object = new JSONObject(api.httpPost(ip+"checkCompanyInfo",json));
 		return object;
 	}
 	
-	public String encryptPassword(String data, String key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-	    Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-	    cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key.getBytes(), "AES"));
-	    byte[] result = cipher.doFinal(data.getBytes());
-	    return Base64.getEncoder().encodeToString(result);
-	}
 }

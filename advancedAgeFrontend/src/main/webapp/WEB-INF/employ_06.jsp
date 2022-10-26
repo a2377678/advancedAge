@@ -16,32 +16,6 @@
   
   <!--- header --->
   <%@ include file="header.jsp" %>
-<!--   <header> -->
-<!--     <div class="navigation"> -->
-<!--       <div class="top_logo"><img src="images/top_logo.png"></div> -->
-<!--       <nav> -->
-<!--         <ul> -->
-<!--         　　<li><a href="employ" title="帳號申請／登入">帳號申請／登入</a></li> -->
-<!--         　　<li><a href="#" title="網站導覽">網站導覽</a></li> -->
-<!--         </ul> -->
-<!--       </nav> -->
-<!--     </div> -->
-    
-<!--     - nav - -->
-<!--     <nav class="main_menu"> -->
-<!--       <ul> -->
-<!--         <li><a href="index" title="首頁" class="m1">首頁</a></li> -->
-<!--         <li><a href="require" title="補助計畫" class="m2">補助計畫</a></li> -->
-<!--         <li><a href="employ" title="線上申辦" class="m3-in in">線上申辦</a></li> -->
-<!--         <li><a href="#" title="案件查詢" class="m4">案件查詢</a></li> -->
-<!--         <li><a href="#" title="申請教學" class="m5">申請教學</a></li> -->
-<!--         <li><a href="#" title="資料下載" class="m6">資料下載</a></li> -->
-<!--         <li><a href="#" title="諮詢服務" class="m7">諮詢服務</a></li> -->
-<!--       </ul> -->
-<!--     </nav> -->
-<!--     - nav end -  -->
-    
-<!--   </header> -->
   <!--- header end ---> 
   
   <!--- main --->
@@ -67,8 +41,7 @@
     </div>
     
     <div class="page">
-<%--     <a href="pdf?seq=${seq }" type="button">下載申請書電子檔</a> --%>
-	  <button onclick="downloadPdf('${sid }')">下載申請書電子檔</button>
+	  <button onclick="downloadPdf()">下載申請書電子檔</button>
       <button onclick="javascript:location.href='index'">回首頁</button>
     </div>
         

@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.springboot.entity.CompanyInfo;
+import com.example.springboot.util.AesUtil;
 import com.example.springboot.util.CallApi;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,15 +34,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller
 public class CompanyInfoController {
 
+	Logger logger = LogManager.getLogger(CompanyInfoController.class);
+	
 	CallApi api = new CallApi();
 
 	@Value("${api_ip}")
 	private String ip;
 
 	HttpSession session;
-	
-	@Value("${encrypt_key}")
-	private String key;
 
 	@RequestMapping(value = "/addCompanyInfo", method = RequestMethod.POST)
 	public void addCompanyInfo(HttpServletRequest request, HttpServletResponse response, CompanyInfo info) {
@@ -48,15 +51,14 @@ public class CompanyInfoController {
 		try {
 			json = objectMapper.writeValueAsString(info);
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String body = api.httpPost(ip + "addCompanyInfo", json);
-		JSONObject object = new JSONObject(body);
+		JSONObject object = new JSONObject(api.httpPost(ip + "addCompanyInfo", json));
 		response.setContentType("text/html;charset=UTF-8");
 		try {
 			response.getWriter().print(StringEscapeUtils.escapeHtml(object.get("id").toString()));
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 	}
 	
@@ -68,9 +70,15 @@ public class CompanyInfoController {
 		try {
 			json = objectMapper.writeValueAsString(info);
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		api.httpPost(ip + "editCompanyInfo", json);
+		JSONObject object = new JSONObject(api.httpPost(ip + "editCompanyInfo", json));
+		response.setContentType("text/html;charset=UTF-8");
+		try {
+			response.getWriter().print(StringEscapeUtils.escapeHtml(object.get("id").toString()));
+		} catch (IOException e) {
+			logger.warn(e.getMessage());
+		}
 	}
 	
 	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
@@ -81,24 +89,23 @@ public class CompanyInfoController {
 		CompanyInfo searchInfo = new CompanyInfo();
 		try {
 			searchInfo.setSeq(info.getSeq());
-			searchInfo.setPassword(encryptPassword(info.getPassword(),key));
+			searchInfo.setPassword(AesUtil.encrypt(info.getPassword()));
 			json = objectMapper.writeValueAsString(searchInfo);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		String jsondata = api.httpPost(ip+"checkCompanyInfo",json);
-		JSONObject object = new JSONObject(jsondata);
+		} catch (JsonProcessingException e) {
+			logger.warn(e.getMessage());
+		} 
+		JSONObject object = new JSONObject(api.httpPost(ip+"checkCompanyInfo",json));
 		
 		try {
-			if(decryptPassword(object.get("password").toString(),key).equals(info.getPassword()))
+			if(AesUtil.decrypt(object.get("password").toString().replaceAll(" ","+").getBytes()).equals(info.getPassword()))
 			{
-				info.setPassword(encryptPassword(newPassword,key));
+				info.setPassword(AesUtil.encrypt(newPassword));
 				try {
 					json = objectMapper.writeValueAsString(info);
 				} catch (JsonProcessingException e) {
-					e.printStackTrace();
+					logger.warn(e.getMessage());
 				}
-				jsondata = api.httpPost(ip + "changeCompanyPassword", json);
+				api.httpPost(ip + "changeCompanyPassword", json);
 				response.getWriter().print("success");
 			}
 			else
@@ -107,23 +114,10 @@ public class CompanyInfoController {
 			}
 			response.setContentType("text/html;charset=UTF-8");
 		
-			
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (IOException e) {
+			logger.warn(e.getMessage());
+		} catch (JSONException e) {
+			logger.warn(e.getMessage());
 		}
-	}
-	
-	public String encryptPassword(String data, String key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-	    Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-	    cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key.getBytes(), "AES"));
-	    byte[] result = cipher.doFinal(data.getBytes());
-	    return Base64.getEncoder().encodeToString(result);
-	}
-
-	public String decryptPassword(String data, String key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-	    Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-	    cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(key.getBytes(), "AES"));
-	    byte[] result = cipher.doFinal(Base64.getDecoder().decode(data.replace(" ","+")));
-	    return new String(result);
 	}
 }

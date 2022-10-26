@@ -22,18 +22,15 @@
 
 
   <!---------------------- top ---------------------->
-<!--   <div id="top"> -->
-<!--     <div id="top_logo"><a href="index.html"><img src="images/logo.png" /></a></div> -->
-<!--   </div> -->
   <%@ include file="../header.jsp" %>
   <!---------------------- top end ---------------------->
 
     
   <div id="main_menu">
-    <div><a href="a01?account=${account}" class="menu-1">繼續僱用高齡者</a></div>
+    <div><a href="a01" class="menu-1">繼續僱用高齡者</a></div>
     <div><a href="#" class="menu-2">傳承專業技術與經驗</a></div>
     <div><a href="#" class="menu-3">退休後再就業準備協助措施</a></div>
-    <div><a href="account01?account=${account}" class="account in">申請帳號審核管理</a></div>
+    <div><a href="account01" class="account in">申請帳號審核管理</a></div>
   </div>
 
   <!---------------------- left menu ---------------------->
@@ -50,8 +47,8 @@
 		<div id="collapse1" class="panel-collapse collapse in">
 			<div class="panel-body">
 				<ul>
-          <li><a href="account01?account=${account}" class="in">新申請帳號</a></li>
-          <li><a href="account02?account=${account}">帳密查詢回覆</a></li>
+          <li><a href="account01" class="in">新申請帳號</a></li>
+          <li><a href="account02">帳密查詢回覆</a></li>
         </ul>
 			</div>
 		</div>
@@ -78,13 +75,12 @@
       <div id="account">
         <a>登入單位：
         	${unitName }&nbsp;${name }</a>
-        <a href="logout?account=${account}">登出</a>
+        <a href="logout">登出</a>
       </div>
       
 
       <!------------------- search ------------------->
       <form action="account01" method="post" id="searchForm">
-      <input type="hidden" name="account" value="${account }">
       <div id="search_bar">
         <table class="table_01">
           <tr>
@@ -102,10 +98,10 @@
         </table>
       </div>
       
-      <input type="hidden" name="numbersOfPage" value="${pagination.numbersOfPage}"/>
-      <input type="hidden" name="page" id="page" value="${pagination.page}"/>
-      <input type="hidden" name="totalNumbers" value="${pagination.totalNumbers}"/>
-      <input type="hidden" name="totalPages" value="${pagination.totalPages}"/>
+      <input type="text" name="numbersOfPage" value="${pagination.numbersOfPage}" style="display:none">
+      <input type="text" name="page" id="page" value="${pagination.page}" style="display:none">
+      <input type="text" name="totalNumbers" value="${pagination.totalNumbers}" style="display:none">
+      <input type="text" name="totalPages" value="${pagination.totalPages}" style="display:none">
       </form>
       <!------------------- list ------------------->
       <div class="audit_list">
@@ -170,11 +166,10 @@
       	</div>
       
       <form action="account01_1" method="post" id="dataForm">
-      	<input type="hidden" id="searchSeq" name="searchSeq">
-      	<input type="hidden" id="searchCompanyName" name="searchCompanyName">
-      	<input type="hidden" id="dataSeq" name="seq">
-      	<input type="hidden" id="id" name="id">
-      	<input type="hidden" name="account" value=${account }>
+      	<input type="text" id="searchSeq" name="searchSeq" style="display:none">
+      	<input type="text" id="searchCompanyName" name="searchCompanyName" style="display:none">
+      	<input type="text" id="dataSeq" name="seq" style="display:none">
+      	<input type="text" id="id" name="id" style="display:none">
       </form>
     </div>
       

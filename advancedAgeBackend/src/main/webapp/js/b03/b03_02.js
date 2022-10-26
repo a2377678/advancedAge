@@ -30,7 +30,7 @@ $(function(){
 function addBlackListFile(num){
 	$('button[onclick^="addBlackListFile"]').hide();
 	$('#listFile').append('<div>'+
-                '<input type="file" id="blackListFile'+(Number(num)+1)+'" name="blackListFile"> '+
+                '<input type="file" id="blackListFile'+(Number(num)+1)+'" name="blackListFile" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z,.tiff"> '+
 				'<button class="add" onclick="delBlackListFile('+(Number(num)+1)+')">－</button> '+
                 '<button class="add" onclick="addBlackListFile('+(Number(num)+1)+')" style>＋</button>'+
               '</div>');
@@ -80,7 +80,7 @@ function upload(id){
 	   	processData: false,
 		data: blackListFiles,
 		success: function(result) {
-			location.href='b03?account='+$('input[name="account"]').val();
+			location.href='b03';
 		}
 	});
 }

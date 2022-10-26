@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,6 +39,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller 
 public class AdvancedAgeApplyController {
 	
+	Logger logger = LogManager.getLogger(AdvancedAgeApplyController.class);
+	
 	CallApi api = new CallApi();
 	
 	HttpSession session;
@@ -55,43 +59,34 @@ public class AdvancedAgeApplyController {
 			apply.setAttachDocumentsApply("Y");
 			json = objectMapper.writeValueAsString(apply);
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String body = api.httpPost(ip+"addAdvancedAgeApply",json);
-		JSONObject object = new JSONObject(body);
+		JSONObject object = new JSONObject(api.httpPost(ip+"addAdvancedAgeApply",json));
 		session.setAttribute(session.getId()+"advancedAgeApplyId", object.get("id"));
 		response.setContentType("text/html;charset=UTF-8");
 		try {
 			response.getWriter().print("success");
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 	}
 	
 	@RequestMapping(value = "/addAdvancedAgePlan", method = RequestMethod.POST)
 	public void addAdvancedAgePlan(HttpServletRequest request, HttpServletResponse response
-			,AdvancedAgePlan plan,String sid){ 
+			,AdvancedAgePlan plan){ 
 		session = request.getSession();
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
-		plan.setAdvancedAgeApplyId(Integer.valueOf(session.getAttribute(sid+"advancedAgeApplyId").toString()));
+		plan.setAdvancedAgeApplyId(Integer.valueOf(session.getAttribute(session.getId()+"advancedAgeApplyId").toString()));
 		try {
 			json = objectMapper.writeValueAsString(plan);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String body = api.httpPost(ip+"addAdvancedAgePlan",json);
-		JSONObject object = new JSONObject(body);
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		session.setAttribute(sid+"advancedAgePlanId", object.get("id"));
+		JSONObject object = new JSONObject(api.httpPost(ip+"addAdvancedAgePlan",json));
+		session.setAttribute(session.getId()+"advancedAgePlanId", object.get("id"));
 		AdvancedAgeApply apply = new AdvancedAgeApply();
-		apply.setSeq(session.getAttribute(sid+"seq").toString());
+		apply.setSeq(session.getAttribute(session.getId()+"seq").toString());
 		apply.setAttachDocumentsPlan("Y");
 		addAdvancedAgeApply(request,response,apply);
 	}
@@ -110,41 +105,36 @@ public class AdvancedAgeApplyController {
 				try {
 					json = objectMapper.writeValueAsString(list[i]);
 				} catch (JsonProcessingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.warn(e.getMessage());
 				}
 				api.httpPost(ip+"addAdvancedAgeEmploymentList",json);
-				Thread.sleep(100);
 			}
 			response.setContentType("text/html;charset=UTF-8");
 		
 			response.getWriter().print("success");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (IOException e) {
+			logger.warn(e.getMessage());
+		} 
 	}
 	
 	@RequestMapping(value = "/delAdvancedAgeEmploymentList", method = RequestMethod.POST)
 	public void delAdvancedAgeEmploymentList(HttpServletRequest request, HttpServletResponse response
-			,AdvancedAgeEmploymentList list,String sid){ 
+			,AdvancedAgeEmploymentList list){ 
 		session = request.getSession();
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
-		list.setAdvancedAgePlanId(Integer.valueOf(session.getAttribute(sid+"advancedAgePlanId").toString()));
+		list.setAdvancedAgePlanId(Integer.valueOf(session.getAttribute(session.getId()+"advancedAgePlanId").toString()));
 		try {
 			json = objectMapper.writeValueAsString(list);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		api.httpPost(ip+"delAdvancedAgeEmploymentList",json);
 		response.setContentType("text/html;charset=UTF-8");
 		try {
 			response.getWriter().print("success");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 	}
 	
@@ -161,19 +151,16 @@ public class AdvancedAgeApplyController {
 				try {
 					json = objectMapper.writeValueAsString(list[i]);
 				} catch (JsonProcessingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.warn(e.getMessage());
 				}
 				api.httpPost(ip+"addAdvancedAgeEmploymentListReceipt",json);
-				Thread.sleep(100);
 			}
 			response.setContentType("text/html;charset=UTF-8");
 		
 			response.getWriter().print("success");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (IOException e) {
+			logger.warn(e.getMessage());
+		} 
 	}
 	
 	@RequestMapping(value = "/delAdvancedAgeEmploymentListReceipt", method = RequestMethod.POST)
@@ -185,16 +172,14 @@ public class AdvancedAgeApplyController {
 		try {
 			json = objectMapper.writeValueAsString(listReceipt);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		api.httpPost(ip+"delAdvancedAgeEmploymentListReceipt",json);
 		response.setContentType("text/html;charset=UTF-8");
 		try {
 			response.getWriter().print("success");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 	}
 	
@@ -210,8 +195,7 @@ public class AdvancedAgeApplyController {
 			try {
 				json = objectMapper.writeValueAsString(list[i]);
 			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.warn(e.getMessage());
 			}
 			api.httpPost(ip+"addAdvancedAgeApplyEmployedSituation",json);
 		}
@@ -219,8 +203,7 @@ public class AdvancedAgeApplyController {
 		try {
 			response.getWriter().print("success");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 	}
 	
@@ -234,18 +217,15 @@ public class AdvancedAgeApplyController {
 		try {
 			json = objectMapper.writeValueAsString(base);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String body = api.httpPost(ip+"addATypeAdvancedAgeBase",json);
-		JSONObject object = new JSONObject(body);
+		api.httpPost(ip+"addATypeAdvancedAgeBase",json);
 		
 		response.setContentType("text/html;charset=UTF-8");
 		try {
 			response.getWriter().print("success");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 	}
 	
@@ -259,10 +239,9 @@ public class AdvancedAgeApplyController {
 		try {
 			json = objectMapper.writeValueAsString(base);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String body = api.httpPost(ip+"editAdvancedAgeBase",json);
+		api.httpPost(ip+"editAdvancedAgeBase",json);
 		
 		//修改補助名單此次請領次數
 		json="";
@@ -271,8 +250,7 @@ public class AdvancedAgeApplyController {
 		try {
 			json = objectMapper.writeValueAsString(receipt);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		api.httpPost(ip+"editAdvancedAgeEmploymentListReceipt",json);
 		
@@ -280,8 +258,7 @@ public class AdvancedAgeApplyController {
 		try {
 			response.getWriter().print("success");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		
 	}

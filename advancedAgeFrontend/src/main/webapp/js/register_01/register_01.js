@@ -6,7 +6,7 @@ $(function(){
 			if($('#registerCity').val()!='')
 			{
 				$.ajax({
-				    type: "GET",
+				    type: "POST",
 				    url: 'getAreaList',
 				    data: {
 				    	cityCode : $('#registerCity').val()
@@ -28,7 +28,7 @@ $(function(){
 			if($('#contactCity').val()!='')
 			{
 				$.ajax({
-				    type: "GET",
+				    type: "POST",
 				    url: 'getAreaList',
 				    data: {
 				    	cityCode : $('#contactCity').val()
@@ -51,7 +51,7 @@ $(function(){
 			if($('#registerCity').val()!='')
 			{
 				$.ajax({
-				    type: "GET",
+				    type: "POST",
 				    url: 'getAreaList',
 				    data: {
 				    	cityCode : $('#registerCity').val()
@@ -88,7 +88,7 @@ $(function(){
 		if($('#contactCity').val()!='')
 		{
 			$.ajax({
-			    type: "GET",
+			    type: "POST",
 			    url: 'getAreaList',
 			    data: {
 			    	cityCode : $('#contactCity').val()
@@ -115,7 +115,7 @@ $(function(){
 			if($('#contactCity').val()!='')
 			{
 				$.ajax({
-				    type: "GET",
+				    type: "POST",
 				    url: 'getAreaList',
 				    data: {
 				    	cityCode : $('#contactCity').val()

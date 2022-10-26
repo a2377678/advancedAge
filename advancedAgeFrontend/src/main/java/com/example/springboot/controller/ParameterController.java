@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +21,8 @@ import com.example.springboot.util.CallApi;
 @Controller 
 public class ParameterController {
 	
+	Logger logger = LogManager.getLogger(ParameterController.class);
+	
 	CallApi api = new CallApi();
 	
 	@Value("${api_ip}")
@@ -30,7 +34,7 @@ public class ParameterController {
 	@RequestMapping(value = "/getAreaList")
 	public void getAreaList(HttpServletRequest request, HttpServletResponse response){ 
 		String code= request.getParameter("cityCode").toString();
-		apiResponse=api.httpGet(ip+"getAreaList?cityCode="+code);
+		apiResponse=api.httpPost(ip+"getAreaList?cityCode="+code,"");
 		jsonArray = new JSONArray(apiResponse); 
 		jsonObject = new JSONObject();
 		result="";
@@ -47,8 +51,7 @@ public class ParameterController {
 			response.setContentType("text/html;charset=UTF-8");
 			response.getWriter().print(result);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 	}
 }

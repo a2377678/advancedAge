@@ -4,38 +4,45 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.util.Random;
+import java.io.IOException;
+import java.security.SecureRandom;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.example.springboot.controller.BackendMainController;
+
 public class RandomValidateCodeUtil {
 
+	Logger logger = LogManager.getLogger(RandomValidateCodeUtil.class);
 
-    public static final String RANDOMCODEKEY= "RANDOMVALIDATECODEKEY";//©ñ¨ìsession¤¤ªºkey
-    private String randString = "0123456789";//ÀH¾÷²£¥Í¥u¦³¼Æ¦rªº¦r²Å¦ê private String
-//    private String randString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";//ÀH¾÷²£¥Í¥u¦³¦r¥Àªº¦r²Å¦ê
-//    private String randString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//ÀH¾÷²£¥Í¼Æ¦r»P¦r¥À²Õ¦Xªº¦r²Å¦ê
-    private int width = 95;// ¹Ï¤ù¼e
-    private int height = 25;// ¹Ï¤ù°ª
-    private int lineSize = 40;// ·FÂZ½u¼Æ¶q
-    private int stringNum = 4;// ÀH¾÷²£¥Í¦r²Å¼Æ¶q
+    public static final String RANDOMCODEKEY= "RANDOMVALIDATECODEKEY";//ï¿½ï¿½ï¿½sessionï¿½ï¿½ï¿½ï¿½key
+    private String randString = "0123456789";//ï¿½Hï¿½ï¿½ï¿½ï¿½ï¿½Í¥uï¿½ï¿½ï¿½Æ¦rï¿½ï¿½ï¿½rï¿½Å¦ï¿½ private String
+//    private String randString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";//ï¿½Hï¿½ï¿½ï¿½ï¿½ï¿½Í¥uï¿½ï¿½ï¿½rï¿½ï¿½ï¿½ï¿½ï¿½rï¿½Å¦ï¿½
+//    private String randString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//ï¿½Hï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¦rï¿½Pï¿½rï¿½ï¿½ï¿½Õ¦Xï¿½ï¿½ï¿½rï¿½Å¦ï¿½
+    private int width = 95;// ï¿½Ï¤ï¿½ï¿½e
+    private int height = 25;// ï¿½Ï¤ï¿½ï¿½ï¿½
+    private int lineSize = 40;// ï¿½Fï¿½Zï¿½uï¿½Æ¶q
+    private int stringNum = 4;// ï¿½Hï¿½ï¿½ï¿½ï¿½ï¿½Í¦rï¿½Å¼Æ¶q
 
 //    private static final Logger logger = LoggerFactory.getLogger(RandomValidateCodeUtil.class);
 
-    private Random random = new Random();
+    private SecureRandom random = new SecureRandom();
 
     /**
-     * Àò±o¦rÅé
+     * ï¿½ï¿½oï¿½rï¿½ï¿½
      */
     private Font getFont() {
         return new Font("Fixedsys", Font.CENTER_BASELINE, 18);
     }
 
     /**
-     * Àò±oÃC¦â
+     * ï¿½ï¿½oï¿½Cï¿½ï¿½
      */
     private Color getRandColor(int fc, int bc) {
         if (fc > 255)
@@ -49,41 +56,41 @@ public class RandomValidateCodeUtil {
     }
 
     /**
-     * ¥Í¦¨ÀH¾÷¹Ï¤ù
+     * ï¿½Í¦ï¿½ï¿½Hï¿½ï¿½ï¿½Ï¤ï¿½
      */
     public void getRandcode(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        // BufferedImageÃþ¬O¨ã¦³½w¨R°ÏªºImageÃþ,ImageÃþ¬O¥Î©ó´y­z¹Ï¹³«H®§ªºÃþ
+        // BufferedImageï¿½ï¿½ï¿½Oï¿½ã¦³ï¿½wï¿½Rï¿½Ïªï¿½Imageï¿½ï¿½,Imageï¿½ï¿½ï¿½Oï¿½Î©ï¿½yï¿½zï¿½Ï¹ï¿½ï¿½Hï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_BGR);
-        Graphics g = image.getGraphics();// ²£¥ÍImage¹ï¶HªºGraphics¹ï¶H,§ï¹ï¶H¥i¥H¦b¹Ï¹³¤W¶i¦æ¦UºØÃ¸¨î¾Þ§@
-        g.fillRect(0, 0, width, height);//¹Ï¤ù¤j¤p
-        g.setFont(new Font("Times New Roman", Font.ROMAN_BASELINE, 20));//¦rÅé¤j¤p
-        g.setColor(getRandColor(110, 133));//¦rÅéÃC¦â
-        // Ã¸¨î·FÂZ½u
+        Graphics g = image.getGraphics();// ï¿½ï¿½ï¿½ï¿½Imageï¿½ï¿½Hï¿½ï¿½Graphicsï¿½ï¿½H,ï¿½ï¿½ï¿½Hï¿½iï¿½Hï¿½bï¿½Ï¹ï¿½ï¿½Wï¿½iï¿½ï¿½Uï¿½ï¿½Ã¸ï¿½ï¿½Þ§@
+        g.fillRect(0, 0, width, height);//ï¿½Ï¤ï¿½ï¿½jï¿½p
+        g.setFont(new Font("Times New Roman", Font.ROMAN_BASELINE, 20));//ï¿½rï¿½ï¿½jï¿½p
+        g.setColor(getRandColor(110, 133));//ï¿½rï¿½ï¿½ï¿½Cï¿½ï¿½
+        // Ã¸ï¿½ï¿½Fï¿½Zï¿½u
         for (int i = 0; i <= lineSize; i++) {
             drowLine(g);
         }
-        // Ã¸¨îÀH¾÷¦r²Å
+        // Ã¸ï¿½ï¿½ï¿½Hï¿½ï¿½ï¿½rï¿½ï¿½
         String randomString = "";
         for (int i = 1; i <= stringNum; i++) {
             randomString = drowString(g, randomString, i);
         }
 //        logger.info(randomString);
-        //±N¥Í¦¨ªºÀH¾÷¦r²Å¦ê«O¦s¨ìsession¤¤
+        //ï¿½Nï¿½Í¦ï¿½ï¿½ï¿½ï¿½Hï¿½ï¿½ï¿½rï¿½Å¦ï¿½Oï¿½sï¿½ï¿½sessionï¿½ï¿½
         session.removeAttribute(RANDOMCODEKEY);
         session.setAttribute(RANDOMCODEKEY, randomString);
         g.dispose();
         try {
-            // ±N¤º¦s¤¤ªº¹Ï¤ù³q¹L¬y°Ê§Î¦¡¿é¥X¨ì«È¤áºÝ
+            // ï¿½Nï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½Ï¤ï¿½ï¿½qï¿½Lï¿½yï¿½Ê§Î¦ï¿½ï¿½ï¿½Xï¿½ï¿½È¤ï¿½ï¿½
             ImageIO.write(image, "JPEG", response.getOutputStream());
-        } catch (Exception e) {
-//            logger.error("±N¤º¦s¤¤ªº¹Ï¤ù³q¹L¬y°Ê§Î¦¡¿é¥X¨ì«È¤áºÝ¥¢±Ñ>>>>   ", e);
+        } catch (IOException e) {
+        	logger.warn(e.getMessage());
         }
 
     }
 
     /**
-     * Ã¸¨î¦r²Å¦ê
+     * Ã¸ï¿½ï¿½rï¿½Å¦ï¿½
      */
     private String drowString(Graphics g, String randomString, int i) {
         g.setFont(getFont());
@@ -98,7 +105,7 @@ public class RandomValidateCodeUtil {
     }
 
     /**
-     * Ã¸¨î·FÂZ½u
+     * Ã¸ï¿½ï¿½Fï¿½Zï¿½u
      */
     private void drowLine(Graphics g) {
         int x = random.nextInt(width);
@@ -109,7 +116,7 @@ public class RandomValidateCodeUtil {
     }
 
     /**
-     * Àò¨úÀH¾÷ªº¦r²Å
+     * ï¿½ï¿½ï¿½ï¿½Hï¿½ï¿½ï¿½ï¿½ï¿½rï¿½ï¿½
      */
     public String getRandomString(int num) {
         return String.valueOf(randString.charAt(num));

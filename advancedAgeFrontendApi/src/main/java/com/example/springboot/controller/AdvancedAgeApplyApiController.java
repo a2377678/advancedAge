@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -78,25 +79,36 @@ public class AdvancedAgeApplyApiController {
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	int applyYear=Integer.valueOf(sdf.format(date).substring(0,4))-1911;
 	
+	@Value("${api_token}")
+	private String apiToken;
+	
 	@ApiOperation(value = "新增繼續僱用高齡者補助申請書")
 	@RequestMapping(value = "/addAdvancedAgeApply", method = RequestMethod.POST)
-	public AdvancedAgeApply addAdvancedAgeApply(AdvancedAgeApply apply) {
-		apply.setApplyYear(String.valueOf(applyYear));
-		if(selectAdvancedAgeApply(apply) == null)
+	public AdvancedAgeApply addAdvancedAgeApply(AdvancedAgeApply apply,String token) {
+		if(!token.equals(apiToken))
 		{
-			int a=advancedAgeApplyService.insertSelective(apply);
+			return null;
+		}
+		apply.setApplyYear(String.valueOf(applyYear));
+		if(selectAdvancedAgeApply(apply,token) == null)
+		{
+			advancedAgeApplyService.insertSelective(apply);
 		}
 		else
 		{
 			apply.setUpdateTime(date);
-			int a=advancedAgeApplyService.updateByPrimaryKeySelective(apply);
+			advancedAgeApplyService.updateByPrimaryKeySelective(apply);
 		}
-		return selectAdvancedAgeApply(apply) == null?apply:selectAdvancedAgeApply(apply);
+		return selectAdvancedAgeApply(apply,token) == null?apply:selectAdvancedAgeApply(apply,token);
 	}
 	
 	@ApiOperation(value = "查詢繼續僱用高齡者補助申請書")
 	@RequestMapping(value = "/selectAdvancedAgeApply", method = RequestMethod.POST)
-	public AdvancedAgeApply selectAdvancedAgeApply(AdvancedAgeApply apply) {
+	public AdvancedAgeApply selectAdvancedAgeApply(AdvancedAgeApply apply,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		
 		AdvancedAgeApplyKey key = new AdvancedAgeApplyKey();
 		if(apply.getApplyYear() == null || apply.getApplyYear().equals(""))
@@ -111,37 +123,49 @@ public class AdvancedAgeApplyApiController {
 	
 	@ApiOperation(value = "新增繼續僱用高齡者補助計畫書")
 	@RequestMapping(value = "/addAdvancedAgePlan", method = RequestMethod.POST)
-	public AdvancedAgePlan addAdvancedAgePlan(AdvancedAgePlan plan) {
+	public AdvancedAgePlan addAdvancedAgePlan(AdvancedAgePlan plan,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		advancedAgeApplyExample = new AdvancedAgeApplyExample();
 		advancedAgeApplyExample.createCriteria().andIdEqualTo(plan.getAdvancedAgeApplyId());
 		plan.setCompanyName(advancedAgeApplyService.selectByExample(advancedAgeApplyExample).get(0).getCompanyName());
-		if(selectAdvancedAgePlan(plan) == null)
+		if(selectAdvancedAgePlan(plan,token) == null)
 		{
 			advancedAgePlanService.insertSelective(plan);
 		}
 		else
 		{
-			if(selectAdvancedAgePlan(plan).getAttachAssistanceMeasures() != null && selectAdvancedAgePlan(plan).getAttachAssistanceMeasures().equals("Y"))
+			if(selectAdvancedAgePlan(plan,token).getAttachAssistanceMeasures() != null && selectAdvancedAgePlan(plan,token).getAttachAssistanceMeasures().equals("Y"))
 				plan.setAttachAssistanceMeasures("Y");
-			if(selectAdvancedAgePlan(plan).getAttachExpectedMeasuresEffectiveness() != null && selectAdvancedAgePlan(plan).getAttachExpectedMeasuresEffectiveness().equals("Y"))
+			if(selectAdvancedAgePlan(plan,token).getAttachExpectedMeasuresEffectiveness() != null && selectAdvancedAgePlan(plan,token).getAttachExpectedMeasuresEffectiveness().equals("Y"))
 				plan.setAttachExpectedMeasuresEffectiveness("Y");
-			if(selectAdvancedAgePlan(plan).getAttachFriendlyMeasures() != null && selectAdvancedAgePlan(plan).getAttachFriendlyMeasures().equals("Y"))
+			if(selectAdvancedAgePlan(plan,token).getAttachFriendlyMeasures() != null && selectAdvancedAgePlan(plan,token).getAttachFriendlyMeasures().equals("Y"))
 				plan.setAttachFriendlyMeasures("Y");
 			advancedAgePlanService.updateByPrimaryKeySelective(plan);
 		}
-		return selectAdvancedAgePlan(plan) == null?plan:selectAdvancedAgePlan(plan);
+		return selectAdvancedAgePlan(plan,token) == null?plan:selectAdvancedAgePlan(plan,token);
 	}
 	
 	@ApiOperation(value = "查詢繼續僱用高齡者補助計畫書")
 	@RequestMapping(value = "/selectAdvancedAgePlan", method = RequestMethod.POST)
-	public AdvancedAgePlan selectAdvancedAgePlan(AdvancedAgePlan plan) {
+	public AdvancedAgePlan selectAdvancedAgePlan(AdvancedAgePlan plan,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		return advancedAgePlanService.selectByPrimaryKey(plan.getAdvancedAgeApplyId());
 	}
 	
 	@ApiOperation(value = "新增繼續僱用補助名單")
 	@RequestMapping(value = "/addAdvancedAgeEmploymentList", method = RequestMethod.POST)
-	public AdvancedAgeEmploymentList addAdvancedAgeEmploymentList(AdvancedAgeEmploymentList employmentList) {
-		if(selectAdvancedAgeEmploymentList(employmentList) == null)
+	public AdvancedAgeEmploymentList addAdvancedAgeEmploymentList(AdvancedAgeEmploymentList employmentList,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
+		if(selectAdvancedAgeEmploymentList(employmentList,token) == null)
 		{
 			advancedAgeEmploymentListService.insertSelective(employmentList);
 		}
@@ -160,7 +184,11 @@ public class AdvancedAgeApplyApiController {
 	
 	@ApiOperation(value = "查詢繼續僱用補助名單(單筆，新增時確認是否已存在)")
 	@RequestMapping(value = "/selectAdvancedAgeEmploymentList", method = RequestMethod.POST)
-	public AdvancedAgeEmploymentList selectAdvancedAgeEmploymentList(AdvancedAgeEmploymentList employmentList) {
+	public AdvancedAgeEmploymentList selectAdvancedAgeEmploymentList(AdvancedAgeEmploymentList employmentList,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		advancedAgeEmploymentListKey = new AdvancedAgeEmploymentListKey();
 		advancedAgeEmploymentListKey.setAdvancedAgePlanId(employmentList.getAdvancedAgePlanId());
 		advancedAgeEmploymentListKey.setIdentification(employmentList.getIdentification());
@@ -170,7 +198,11 @@ public class AdvancedAgeApplyApiController {
 	
 	@ApiOperation(value = "查詢繼續僱用補助名單(多筆，畫面顯示)")
 	@RequestMapping(value = "/selectAdvancedAgeEmploymentLists", method = RequestMethod.POST)
-	public List<AdvancedAgeEmploymentList> selectAdvancedAgeEmploymentLists(AdvancedAgeEmploymentList employmentList) {
+	public List<AdvancedAgeEmploymentList> selectAdvancedAgeEmploymentLists(AdvancedAgeEmploymentList employmentList,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		advancedAgeEmploymentListExample = new AdvancedAgeEmploymentListExample();
 		advancedAgeEmploymentListExample.setOrderByClause("id asc");
 		advancedAgeEmploymentListExample.createCriteria().andAdvancedAgePlanIdEqualTo(employmentList.getAdvancedAgePlanId());
@@ -180,8 +212,12 @@ public class AdvancedAgeApplyApiController {
 	
 	@ApiOperation(value = "刪除繼續僱用補助名單")
 	@RequestMapping(value = "/delAdvancedAgeEmploymentList", method = RequestMethod.POST)
-	public AdvancedAgeEmploymentList delAdvancedAgeEmploymentList(AdvancedAgeEmploymentList employmentList) {
-		if(selectAdvancedAgeEmploymentList(employmentList) != null)
+	public AdvancedAgeEmploymentList delAdvancedAgeEmploymentList(AdvancedAgeEmploymentList employmentList,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
+		if(selectAdvancedAgeEmploymentList(employmentList,token) != null)
 		{
 			advancedAgeEmploymentListService.deleteByPrimaryKey(employmentList);
 		}
@@ -190,16 +226,24 @@ public class AdvancedAgeApplyApiController {
 	
 	@ApiOperation(value = "用 ID 刪除繼續僱用補助名單")
 	@RequestMapping(value = "/delAdvancedAgeEmploymentListbyId", method = RequestMethod.POST)
-	public void delAdvancedAgeEmploymentListbyId(AdvancedAgeEmploymentList employmentList) {
-		advancedAgeEmploymentListExample = new AdvancedAgeEmploymentListExample();
-		advancedAgeEmploymentListExample.createCriteria().andAdvancedAgePlanIdEqualTo(employmentList.getAdvancedAgePlanId());
-		advancedAgeEmploymentListService.deleteByExample(advancedAgeEmploymentListExample);
+	public void delAdvancedAgeEmploymentListbyId(AdvancedAgeEmploymentList employmentList,String token) {
+		if(token.equals(apiToken))
+		{
+			advancedAgeEmploymentListExample = new AdvancedAgeEmploymentListExample();
+			advancedAgeEmploymentListExample.createCriteria().andAdvancedAgePlanIdEqualTo(employmentList.getAdvancedAgePlanId());
+			advancedAgeEmploymentListService.deleteByExample(advancedAgeEmploymentListExample);
+		}
+		
 	}
 	
 	@ApiOperation(value = "新增繼續僱用補助名單_請領")
 	@RequestMapping(value = "/addAdvancedAgeEmploymentListReceipt", method = RequestMethod.POST)
-	public AdvancedAgeEmploymentListReceipt addAdvancedAgeEmploymentListReceipt(AdvancedAgeEmploymentListReceipt employmentListReceipt) {
-		if(selectAdvancedAgeEmploymentListReceipt(employmentListReceipt) == null)
+	public AdvancedAgeEmploymentListReceipt addAdvancedAgeEmploymentListReceipt(AdvancedAgeEmploymentListReceipt employmentListReceipt,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
+		if(selectAdvancedAgeEmploymentListReceipt(employmentListReceipt,token) == null)
 		{
 			employmentListReceipt.setBaseAllowanceFrequency(0);
 			advancedAgeEmploymentListReceiptService.insertSelective(employmentListReceipt);
@@ -243,7 +287,11 @@ public class AdvancedAgeApplyApiController {
 	
 	@ApiOperation(value = "編輯繼續僱用補助名單_此次請領次數")
 	@RequestMapping(value = "/editAdvancedAgeEmploymentListReceipt", method = RequestMethod.POST)
-	public AdvancedAgeEmploymentListReceipt editAdvancedAgeEmploymentListReceipt(AdvancedAgeEmploymentListReceipt employmentListReceipt) {
+	public AdvancedAgeEmploymentListReceipt editAdvancedAgeEmploymentListReceipt(AdvancedAgeEmploymentListReceipt employmentListReceipt,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		advancedAgeBaseExample = new AdvancedAgeBaseExample();
 		advancedAgeBaseExample.createCriteria().andIdEqualTo(employmentListReceipt.getAdvancedAgeBaseId());
 		AdvancedAgeBase searchBase = advancedAgeBaseService.selectByExample(advancedAgeBaseExample).get(0);
@@ -259,7 +307,11 @@ public class AdvancedAgeApplyApiController {
 	
 	@ApiOperation(value = "查詢繼續僱用補助名單_請領(單筆，新增時確認是否已存在)")
 	@RequestMapping(value = "/selectAdvancedAgeEmploymentListReceipt", method = RequestMethod.POST)
-	public AdvancedAgeEmploymentListReceipt selectAdvancedAgeEmploymentListReceipt(AdvancedAgeEmploymentListReceipt employmentListReceipt) {
+	public AdvancedAgeEmploymentListReceipt selectAdvancedAgeEmploymentListReceipt(AdvancedAgeEmploymentListReceipt employmentListReceipt,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		advancedAgeEmploymentListReceiptKey = new AdvancedAgeEmploymentListReceiptKey();
 		advancedAgeEmploymentListReceiptKey.setAdvancedAgeBaseId(employmentListReceipt.getAdvancedAgeBaseId());
 		advancedAgeEmploymentListReceiptKey.setSeq(employmentListReceipt.getSeq());
@@ -271,7 +323,11 @@ public class AdvancedAgeApplyApiController {
 	
 	@ApiOperation(value = "查詢繼續僱用補助名單_請領(多筆，畫面顯示)")
 	@RequestMapping(value = "/selectAdvancedAgeEmploymentListReceipts", method = RequestMethod.POST)
-	public List<AdvancedAgeEmploymentListReceipt> selectAdvancedAgeEmploymentListReceipts(AdvancedAgeEmploymentListReceipt employmentListReceipt) {
+	public List<AdvancedAgeEmploymentListReceipt> selectAdvancedAgeEmploymentListReceipts(AdvancedAgeEmploymentListReceipt employmentListReceipt,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		advancedAgeEmploymentListReceiptExample = new AdvancedAgeEmploymentListReceiptExample();
 		advancedAgeEmploymentListReceiptExample.setOrderByClause("id asc");
 		advancedAgeEmploymentListReceiptExample.createCriteria().andAdvancedAgeBaseIdEqualTo(employmentListReceipt.getAdvancedAgeBaseId()).andSeqEqualTo(employmentListReceipt.getSeq()).andBaseAllowanceFrequencyEqualTo(0);
@@ -281,25 +337,36 @@ public class AdvancedAgeApplyApiController {
 	
 	@ApiOperation(value = "刪除繼續僱用補助名單_請領")
 	@RequestMapping(value = "/delAdvancedAgeEmploymentListReceipt", method = RequestMethod.POST)
-	public void delAdvancedAgeEmploymentListReceipt(AdvancedAgeEmploymentListReceipt employmentListReceipt) {
-		if(selectAdvancedAgeEmploymentListReceipt(employmentListReceipt) != null)
+	public void delAdvancedAgeEmploymentListReceipt(AdvancedAgeEmploymentListReceipt employmentListReceipt,String token) {
+		if(token.equals(apiToken))
 		{
-			advancedAgeEmploymentListReceiptService.deleteByPrimaryKey(employmentListReceipt);
+			if(selectAdvancedAgeEmploymentListReceipt(employmentListReceipt,token) != null)
+			{
+				advancedAgeEmploymentListReceiptService.deleteByPrimaryKey(employmentListReceipt);
+			}
 		}
+		
 	}
 	
 	@ApiOperation(value = "用 ID 刪除繼續僱用補助名單_請領")
 	@RequestMapping(value = "/delAdvancedAgeEmploymentListReceiptbyId", method = RequestMethod.POST)
-	public void delAdvancedAgeEmploymentListReceiptbyId(AdvancedAgeEmploymentListReceipt employmentListReceipt) {
-		advancedAgeEmploymentListReceiptExample = new AdvancedAgeEmploymentListReceiptExample();
-		advancedAgeEmploymentListReceiptExample.createCriteria().andAdvancedAgeBaseIdEqualTo(employmentListReceipt.getAdvancedAgeBaseId()).andBaseAllowanceFrequencyEqualTo(0);
-		advancedAgeEmploymentListReceiptService.deleteByExample(advancedAgeEmploymentListReceiptExample);
+	public void delAdvancedAgeEmploymentListReceiptbyId(AdvancedAgeEmploymentListReceipt employmentListReceipt,String token) {
+		if(token.equals(apiToken))
+		{
+			advancedAgeEmploymentListReceiptExample = new AdvancedAgeEmploymentListReceiptExample();
+			advancedAgeEmploymentListReceiptExample.createCriteria().andAdvancedAgeBaseIdEqualTo(employmentListReceipt.getAdvancedAgeBaseId()).andBaseAllowanceFrequencyEqualTo(0);
+			advancedAgeEmploymentListReceiptService.deleteByExample(advancedAgeEmploymentListReceiptExample);
+		}
 	}
 	
 	@ApiOperation(value = "新增近3年申請繼續僱用補助人數及留用狀況")
 	@RequestMapping(value = "/addAdvancedAgeApplyEmployedSituation", method = RequestMethod.POST)
-	public AdvancedAgeApplyEmployedSituation addAdvancedAgeApplyEmployedSituation(AdvancedAgeApplyEmployedSituation employedSituation) {
-		if(selectAdvancedAgeApplyEmployedSituation(employedSituation) == null)
+	public AdvancedAgeApplyEmployedSituation addAdvancedAgeApplyEmployedSituation(AdvancedAgeApplyEmployedSituation employedSituation,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
+		if(selectAdvancedAgeApplyEmployedSituation(employedSituation,token) == null)
 		{
 			advancedAgeApplyEmployedSituationService.insertSelective(employedSituation);
 		}
@@ -312,7 +379,11 @@ public class AdvancedAgeApplyApiController {
 	
 	@ApiOperation(value = "查詢近3年申請繼續僱用補助人數及留用狀況(單筆，新增時確認是否已存在)")
 	@RequestMapping(value = "/selectAdvancedAgeApplyEmployedSituation", method = RequestMethod.POST)
-	public AdvancedAgeApplyEmployedSituation selectAdvancedAgeApplyEmployedSituation(AdvancedAgeApplyEmployedSituation employedSituation) {
+	public AdvancedAgeApplyEmployedSituation selectAdvancedAgeApplyEmployedSituation(AdvancedAgeApplyEmployedSituation employedSituation,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		advancedAgeApplyEmployedSituationKey = new AdvancedAgeApplyEmployedSituationKey();
 		advancedAgeApplyEmployedSituationKey.setAdvancedAgePlanId(employedSituation.getAdvancedAgePlanId());
 		advancedAgeApplyEmployedSituationKey.setIdentification(employedSituation.getIdentification());
@@ -321,7 +392,11 @@ public class AdvancedAgeApplyApiController {
 	
 	@ApiOperation(value = "查詢近3年申請繼續僱用補助人數及留用狀況(多筆，畫面顯示)")
 	@RequestMapping(value = "/selectAdvancedAgeApplyEmployedSituations", method = RequestMethod.POST)
-	public List<AdvancedAgeApplyEmployedSituation> selectAdvancedAgeApplyEmployedSituations(AdvancedAgeApplyEmployedSituation employedSituation) {
+	public List<AdvancedAgeApplyEmployedSituation> selectAdvancedAgeApplyEmployedSituations(AdvancedAgeApplyEmployedSituation employedSituation,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		advancedAgeApplyEmployedSituationExample = new AdvancedAgeApplyEmployedSituationExample();
 		advancedAgeApplyEmployedSituationExample.createCriteria().andAdvancedAgePlanIdEqualTo(employedSituation.getAdvancedAgePlanId());
 		

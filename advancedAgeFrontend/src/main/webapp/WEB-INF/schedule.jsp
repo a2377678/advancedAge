@@ -23,32 +23,6 @@
   
   <!--- header --->
   <%@ include file="header.jsp" %>
-<!--   <header> -->
-<!--     <div class="navigation"> -->
-<!--       <div class="top_logo"><img src="images/top_logo.png"></div> -->
-<!--       <nav> -->
-<!--         <ul> -->
-<!--           <li><a href="login.html" title="帳號申請／登入">帳號申請／登入</a></li> -->
-<!--           <li><a href="sitemap.html" title="網站導覽">網站導覽</a></li> -->
-<!--         </ul> -->
-<!--       </nav> -->
-<!--     </div> -->
-    
-<!--     - nav - -->
-<!--     <nav class="main_menu"> -->
-<!--       <ul> -->
-<!--         <li><a href="index.html" title="首頁" class="m1">首頁</a></li> -->
-<!--         <li><a href="require.html" title="補助計畫" class="m2">補助計畫</a></li> -->
-<!--         <li><a href="employ.html" title="線上申辦" class="m3">線上申辦</a></li> -->
-<!--         <li><a href="schedule.html" title="案件查詢" class="m4-in in">案件查詢</a></li> -->
-<!--         <li><a href="teaching.html" title="申請教學" class="m5">申請教學</a></li> -->
-<!--         <li><a href="download.html" title="資料下載" class="m6">資料下載</a></li> -->
-<!--         <li><a href="service.html" title="諮詢服務" class="m7">諮詢服務</a></li> -->
-<!--       </ul> -->
-<!--     </nav> -->
-<!--     - nav end -  -->
-    
-<!--   </header> -->
   <!--- header end ---> 
   
   <!--- main --->
@@ -80,7 +54,7 @@
         <div>勞保投保證號：${apply.guaranteeNumber.replace(";","、")}</div>
         <div class="full">聯絡地址：
         	<c:forEach items="${cityList}" var="item"><c:if test="${item.code==apply.contactCity}">${item.name}</c:if></c:forEach><c:forEach items="${areaList}" var="item"><c:if test="${item.code==apply.contactArea}">${item.name}</c:if></c:forEach>${apply.contactAddress}
-      		<input type="hidden" id="city" value="${apply.contactCity}">
+      		<input type="text" id="city" value="${apply.contactCity}" style="display:none">
 		</div>
         <div>聯絡人：${apply.contactName}</div>
         <div>聯絡人職稱：${apply.contactJobtitle}</div>

@@ -23,32 +23,6 @@
   
   <!--- header --->
   <%@ include file="header.jsp" %>
-<!--   <header> -->
-<!--     <div class="navigation"> -->
-<!--       <div class="top_logo"><img src="images/top_logo.png"></div> -->
-<!--       <nav> -->
-<!--         <ul> -->
-<!--         　　<li><a href="employ" title="帳號申請／登入">帳號申請／登入</a></li> -->
-<!--         　　<li><a href="#" title="網站導覽">網站導覽</a></li> -->
-<!--         </ul> -->
-<!--       </nav> -->
-<!--     </div> -->
-    
-<!--     - nav - -->
-<!--     <nav class="main_menu"> -->
-<!--       <ul> -->
-<!--         <li><a href="index" title="首頁" class="m1">首頁</a></li> -->
-<!--         <li><a href="require" title="補助計畫" class="m2">補助計畫</a></li> -->
-<!--         <li><a href="employ" title="線上申辦" class="m3-in in">線上申辦</a></li> -->
-<!--         <li><a href="#" title="案件查詢" class="m4">案件查詢</a></li> -->
-<!--         <li><a href="#" title="申請教學" class="m5">申請教學</a></li> -->
-<!--         <li><a href="#" title="資料下載" class="m6">資料下載</a></li> -->
-<!--         <li><a href="#" title="諮詢服務" class="m7">諮詢服務</a></li> -->
-<!--       </ul> -->
-<!--     </nav> -->
-<!--     - nav end -  -->
-    
-<!--   </header> -->
   <!--- header end ---> 
   
   <!--- main --->
@@ -59,21 +33,10 @@
     <h1>繼續僱用高齡者補助計畫</h1>
     <h2>申請流程 Step2. 填寫申請書</h2>
     
-    <!---備妥項目
-    <div class="notice">
-      <div>您是否已備妥下列項目了呢 ?</div>
-      <ol>
-        <li>工商憑證與讀卡機</li>
-        <li>設立登記證明文件</li>
-        <li>投保或職災保險證明文件</li>
-        <li>繼續僱用者近3個月薪資證明文件</li>
-      </ol>
-    </div>--->
     
     <!---申辦前準備--->
     <h3>請確實填寫資料，如有不實，主管機關可駁回<br>
     申請案或停止補貼，並負法律責任。</h3>
-    <input type="hidden" id="sid" name="sid" value="${sid }">
     <form id="form" action="employ_03" method="post">
     <div class="form">
     
@@ -101,25 +64,6 @@
       	<c:forEach  items="${industryList}"  var="item"  varStatus="userStatus">
       		<option value="${item.code}" <c:if test="${apply.industry==item.code}">selected</c:if> >${item.name}</option>
       	</c:forEach>
-<!--         <option>農、林、漁、牧業</option> -->
-<!--         <option>礦業及土石採取業</option> -->
-<!--         <option>製造業</option> -->
-<!--         <option>電力及燃氣供應業</option> -->
-<!--         <option>營建工程業</option> -->
-<!--         <option>用水供應及汙染整治業</option> -->
-<!--         <option>批發及零售業</option> -->
-<!--         <option>運輸及倉儲業</option> -->
-<!--         <option>住宿及餐飲業</option> -->
-<!--         <option>出版、影音製作、傳播及資通訊服務業</option> -->
-<!--         <option>金融及保險業</option> -->
-<!--         <option>不動產業</option> -->
-<!--         <option>專業、科學及技術服務業</option> -->
-<!--         <option>支援服務業</option> -->
-<!--         <option>公共行政及國防；強制性社會安全</option> -->
-<!--         <option>教育業</option> -->
-<!--         <option>醫療保健及社會工作服務業</option> -->
-<!--         <option>藝術、娛樂及休閒服務業</option> -->
-<!--         <option>其他服務業</option> -->
       </select>
       <a href="https://mobile.stat.gov.tw/StandardIndustrialQuery.aspx" target="_blank" title="(另開新視窗)"><img src="images/icon_qu.png" alt="行業別分類說明"></a> 
       </div>
@@ -160,21 +104,6 @@
 		    </c:otherwise>
 	    </c:choose>
       </div>
-      <!---  
-      <div class="full">
-      <label for="">登記地址</label>
-      <select name="city" id="">
-        <option>請選擇</option>
-        <option>台北市</option>
-        <option>新北市</option>
-      </select>
-      <select name="area" id="">
-        <option>請選擇</option>
-        <option>中正區</option>
-        <option>松山區</option>
-      </select>
-      <input name="input" type="text" id="" size="65%" placeholder="請填寫詳細地址">
-      </div>--->
         
       <div class="full">
       <label for="contactCity">聯絡地址</label>
@@ -183,16 +112,12 @@
         <c:forEach  items="${cityList}"  var="item"  varStatus="userStatus">
       		<option value="${item.code}" <c:if test="${apply.contactCity==item.code}">selected</c:if>>${item.name}</option>
       	</c:forEach>
-<!--         <option>台北市</option> -->
-<!--         <option>新北市</option> -->
       </select>
       <select name="contactArea" id="contactArea" required>
         <option value>請選擇</option>
         <c:forEach  items="${areaList}"  var="item"  varStatus="userStatus">
       		<option value="${item.code}" <c:if test="${apply.contactArea==item.code}">selected</c:if>>${item.name}</option>
       	</c:forEach>
-<!--         <option>中正區</option> -->
-<!--         <option>松山區</option> -->
       </select>
       <input type="text" id="contactAddress" name="contactAddress" size="65%" placeholder="請填寫詳細地址" value="${apply.contactAddress}" required>
       </div>

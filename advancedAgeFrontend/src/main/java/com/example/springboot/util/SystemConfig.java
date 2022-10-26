@@ -3,6 +3,8 @@ package com.example.springboot.util;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
@@ -10,17 +12,18 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SystemConfig {
+	Logger logger = LogManager.getLogger(SystemConfig.class);
 	private static Properties props ;
 	public SystemConfig(){
 		try {
 			Resource resource = new ClassPathResource("/application.properties");//
 			props = PropertiesLoaderUtils.loadProperties(resource);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 	}
 	/**
-	* Àò¨úÄÝ©Ê
+	* ï¿½ï¿½ï¿½ï¿½Ý©ï¿½
 	* @param key
 	* @return
 	*/
@@ -28,16 +31,16 @@ public class SystemConfig {
 		return props == null ? null : props.getProperty(key);
 	}
 	/**
-	* Àò¨úÄÝ©Ê
-	* @param key ÄÝ©Êkey
-	* @param defaultValue ÄÝ©Êvalue
+	* ï¿½ï¿½ï¿½ï¿½Ý©ï¿½
+	* @param key ï¿½Ý©ï¿½key
+	* @param defaultValue ï¿½Ý©ï¿½value
 	* @return
 	*/
 	public static String getProperty(String key,String defaultValue){
 		return props == null ? null : props.getProperty(key, defaultValue);
 	}
 	/**
-	* Àò¨úproperyiesÄÝ©Ê
+	* ï¿½ï¿½ï¿½properyiesï¿½Ý©ï¿½
 	* @return
 	*/
 	public static Properties getProperties(){

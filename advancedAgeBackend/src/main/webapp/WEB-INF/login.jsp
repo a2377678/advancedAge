@@ -15,31 +15,14 @@
   <form action="login" method="post">
   <div id="login">
     <table width="100%" border="0" cellspacing="0" class="login_tb">
-<!--       <tr> -->
-<!--         <th nowrap>所屬單位：</th> -->
-<!--         <td><select name="select5"> -->
-<!--           <option>全部</option> -->
-<!--           <option>業務科1科</option> -->
-<!--           <option>業務科2科</option> -->
-<!--           <option>業務科3科</option> -->
-<!--           <option>業務科4科</option> -->
-<!--         </select></td> -->
-<!--       </tr> -->
       <tr>
         <th nowrap>帳　號：</th>
         <td><input type="text" size="20" name="account"></td>
       </tr>
       <tr>
         <th nowrap>密　碼：</th>
-        <td><input type="text" size="20" name="password"></td>
+        <td><input type="password" size="18" name="password"></td>
       </tr>
-<!--       <tr> -->
-<!--         <th nowrap>驗證碼：</th> -->
-<!--         <td> -->
-<!--         <input id="txbValid1" type="text" size="7"> -->
-<!--         <img id="imgCode1" src="images/checkcode.gif" > -->
-<!--         <img id="imgCode2" src="images/refresh_25x25.png"></td> -->
-<!--       </tr> -->
       <tr>
         <th>&nbsp;</th>
         <td><%if(session.getAttribute("message")!=null){ %><span style="color:red;"><%=session.getAttribute("message") %></span> <%} %></td>

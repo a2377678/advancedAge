@@ -1,9 +1,10 @@
 function addData(){
 	let a = /[0-9]/i; 
 	let b = /[a-zA-Z]/i;
+	let reg=/^(?=.*[a-zA-Z])(?=.*[1-9])(?=.*[\W]).{12,}$/;
 	if(a.test($('#userAccount').val()) && b.test($('#userAccount').val()) &&$('#userAccount').val().length>=6){
-		if(a.test($('#password').val()) && b.test($('#password').val()) && $('#password').val().length>=6){
-			$('#addForm').submit();
+		if(reg.test($('#password').val())){
+		$('#addForm').submit();
 		}
 		else
 		{
@@ -14,4 +15,6 @@ function addData(){
 	{
 		alert('帳號格式錯誤');
 	}
+	
+	
 }

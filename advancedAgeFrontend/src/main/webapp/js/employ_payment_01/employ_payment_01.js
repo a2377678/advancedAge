@@ -16,8 +16,8 @@ function aVerify(){
 			password : $('#password').val()
         },
         success: function (result) {
-            if (result.split(";")[0]=='success') {
-                location.href='employ_payment_02?sid='+result.split(";")[1];
+            if (result=='success') {
+                location.href='employ_payment_02';
             } else if(result=='no base'){
 				alert("案件未送出申請");
 			}else if(result=='audit'){

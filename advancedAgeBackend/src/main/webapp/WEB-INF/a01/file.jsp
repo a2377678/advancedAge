@@ -8,9 +8,6 @@
 <meta charset="utf-8">
 <title>促進中高齡者及高齡者就業相關補助計畫系統</title>
 
-
-
-
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 <link href="css/document.css" rel="stylesheet" type="text/css">
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
@@ -64,12 +61,12 @@
         </tr>
       </table>
     </div>
-    <input type="hidden" id="email" value="${apply.email}"/>
-    <input type="hidden" id="baseId" value="${base.id}"/>
-    <input type="hidden" id="applyId" value="${apply.id}">
-    <input type="hidden" id="baseAaid" value="${base.aaid}">
-    <input type="hidden" id="verifyUnit" value="${unit}">
-    <input type="hidden" id="verifyPerson" value="${id}">
+    <input type="text" id="email" value="${apply.email}" style="display:none">
+    <input type="text" id="baseId" value="${base.id}" style="display:none">
+    <input type="text" id="applyId" value="${apply.id}" style="display:none">
+    <input type="text" id="baseAaid" value="${base.aaid}" style="display:none">
+    <input type="text" id="verifyUnit" value="${unit}" style="display:none">
+    <input type="text" id="verifyPerson" value="${id}" style="display:none">
     <!----- 檢附文件 ----->
     <div class="file_title-2">檢附文件</div>
     
@@ -218,17 +215,6 @@
             <label for="necessaryFileStatus4${recordStatus.count}"><input name="necessaryFileStatus4${recordStatus.count}" type="checkbox" id="necessaryFileStatus4${recordStatus.count}" value="4" <c:if test="${recordItem.split('、')[4].indexOf('4')!=-1}">checked</c:if>>符合</label>
           </div>
         </li>
-<!--         <li> -->
-<!--           <div class="file-name">Excel 文件</div> -->
-<!--           <div class="file-preview"> -->
-<!--             <a href="04-01.html" class="visited">01</a> -->
-<!--           </div> -->
-<!--           <div class="file-check"> -->
-<!--             <label for="q01_1"><input type="checkbox" name="q01_1" value="" id="q01_1">未附、尚有缺件</label> -->
-<!--             <label for="q01_2"><input type="checkbox" name="q01_2" value="" id="q01_2">不清晰、無法瀏覽</label> -->
-<!--             <label for="q01_3"><input type="checkbox" name="q01_3" value="" id="q01_3">格式不符、內容有誤</label> -->
-<!--           </div> -->
-<!--         </li> -->
         
       </ul>
       
@@ -239,11 +225,9 @@
 	          <button type="button" <c:if test="${recordStatus.last}">class="btn_a1s"</c:if><c:if test="${!recordStatus.last}">class="btn_a3s" onclick="fileStatusSave()"</c:if>>儲存</button>
 	          <button type="button" class="btn_a2s" value="${recordStatus.count}">下載</button>
           </span>
-<%--           <span class="time">${recordItem[3].substring(recordItem[3].indexOf(" ")+1,recordItem[3].length())}</span> --%>
-<%--           <span class="date">${recordItem}</span> --%>
           <span class="time">${recordItem.split('、')[5].substring(recordItem.split('、')[5].indexOf(" ")+1,recordItem.split('、')[5].length())}</span>
           <span class="date">${recordItem.split('、')[5].substring(0,4)-1911}${recordItem.split('、')[5].substring(4,recordItem.split('、')[5].indexOf(" "))}</span>
-		  <input type="hidden" id="uploadTime${recordStatus.count}" name="uploadTime${recordStatus.count}" value="${recordItem.split('、')[5]}">
+		  <input type="text" id="uploadTime${recordStatus.count}" name="uploadTime${recordStatus.count}" value="${recordItem.split('、')[5]}" style="display:none">
         </span>
       </div>
       
@@ -283,83 +267,6 @@
 		        </div>
         	</c:forEach>
         </c:when></c:choose>
-        <!--------- 紀錄1 --------->
-<!--         <div class="accordion-item"> -->
-<!--           <h2 class="accordion-header" id="flush-heading-1"> -->
-<!--             <button class="accordion-button fs-6 bg-light" type="button" data-bs-toggle="collapse"  -->
-<!--               data-bs-target="#flush-collapse-1" aria-expanded="false" aria-controls="flush-collapsefa-stack-1"> -->
-<!--               <span class="text-success fw-bold">通知日期：111-09-05</span> -->
-<!--               <span class="text-muted px-5">審查單位：勞動力發展署</span> -->
-<!--               <span class="text-muted">審查人員：張OO</span> -->
-<!--             </button> -->
-<!--           </h2> -->
-<!--           <div id="flush-collapse-1" class="accordion-collapse collapse"  -->
-<!--             aria-labelledby="flush-heading-1" data-bs-parent="#accordionFlushExample"> -->
-<!--             <div class="accordion-body fs-6"> -->
-<!--             臺端申請本部111年度繼續僱用高齡者補助，經查核附件尚有缺件或不符規定。 -->
-<!--             需補附件項目及原因如下：<br> -->
-<!--             設立登記證明：格式不符、內容有誤<br> -->
-<!--             勞保/職災保險證明：不清晰、無法瀏覽<br> -->
-<!--             薪資證明：未附、尚有缺件<br> -->
-<!--             補件網址：<br> -->
-<!--             經通知限期補正，因逾期未補件，依規定不予受理。<br> -->
-<!--             本項補助申請之附件檢查 "電子E-mail通知" 於 111年09月05日 發送， -->
-<!--             線上查詢內容與公文通知如有不同時，以公文通知為主。 -->
-<!--             </div> -->
-<!--           </div> -->
-<!--         </div> -->
-        
-        <!--------- 紀錄2 --------->
-<!--         <div class="accordion-item"> -->
-<!--           <h2 class="accordion-header" id="flush-heading-2"> -->
-<!--             <button class="accordion-button fs-6 bg-light" type="button" data-bs-toggle="collapse"  -->
-<!--               data-bs-target="#flush-collapse-2" aria-expanded="false" aria-controls="flush-collapsefa-stack-2"> -->
-<!--               <span class="text-success fw-bold">通知日期：111-09-08</span> -->
-<!--               <span class="text-muted px-5">審查單位：勞動力發展署</span> -->
-<!--               <span class="text-muted">審查人員：張OO</span> -->
-<!--             </button> -->
-<!--           </h2> -->
-<!--           <div id="flush-collapse-2" class="accordion-collapse collapse"  -->
-<!--             aria-labelledby="flush-heading-2" data-bs-parent="#accordionFlushExample"> -->
-<!--             <div class="accordion-body fs-6"> -->
-<!--             臺端申請本部111年度繼續僱用高齡者補助，經查核附件尚有缺件或不符規定。 -->
-<!--             需補附件項目及原因如下：<br> -->
-<!--             設立登記證明：格式不符、內容有誤<br> -->
-<!--             勞保/職災保險證明：不清晰、無法瀏覽<br> -->
-<!--             薪資證明：未附、尚有缺件<br> -->
-<!--             補件網址：<br> -->
-<!--             經通知限期補正，因逾期未補件，依規定不予受理。<br> -->
-<!--             本項補助申請之附件檢查 "電子E-mail通知" 於 111年09月08日 發送， -->
-<!--             線上查詢內容與公文通知如有不同時，以公文通知為主。 -->
-<!--             </div> -->
-<!--           </div> -->
-<!--         </div> -->
-        
-        <!--------- 紀錄3 --------->
-<!--         <div class="accordion-item"> -->
-<!--           <h2 class="accordion-header" id="flush-heading-3"> -->
-<!--             <button class="accordion-button fs-6 bg-light text-dark" type="button" data-bs-toggle="collapse"  -->
-<!--               data-bs-target="#flush-collapse-3" aria-expanded="false" aria-controls="flush-collapsefa-stack-3"> -->
-<!--               <span class="text-success fw-bold">通知日期：111-09-10</span> -->
-<!--               <span class="text-muted px-5">審查單位：勞動力發展署</span> -->
-<!--               <span class="text-muted">審查人員：張OO</span> -->
-<!--             </button> -->
-<!--           </h2> -->
-<!--           <div id="flush-collapse-3" class="accordion-collapse collapse"  -->
-<!--             aria-labelledby="flush-heading-3" data-bs-parent="#accordionFlushExample"> -->
-<!--             <div class="accordion-body fs-6"> -->
-<!--             臺端申請本部111年度繼續僱用高齡者補助，經查核附件尚有缺件或不符規定。 -->
-<!--             需補附件項目及原因如下：<br> -->
-<!--             設立登記證明：格式不符、內容有誤<br> -->
-<!--             勞保/職災保險證明：不清晰、無法瀏覽<br> -->
-<!--             薪資證明：未附、尚有缺件<br> -->
-<!--             補件網址：<br> -->
-<!--             經通知限期補正，因逾期未補件，依規定不予受理。<br> -->
-<!--             本項補助申請之附件檢查 "電子E-mail通知" 於 111年09月10日 發送， -->
-<!--             線上查詢內容與公文通知如有不同時，以公文通知為主。 -->
-<!--             </div> -->
-<!--           </div> -->
-<!--         </div> -->
 
       </div>
 
@@ -405,11 +312,6 @@
         </tr>
       </table>
     </div>
-    
-    
-    
-
-    
     
   </div>
   <div class="center">

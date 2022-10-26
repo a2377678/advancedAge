@@ -1,10 +1,5 @@
-function clearSearchData(){
-	$('#seq').val('');
-	$('#companyName').val('');
-}
-
 function cancel(){
-	$('#searchForm').submit();
+	location.href='account02';
 }
 
 function sendMail(){
@@ -27,7 +22,7 @@ function sendMail(){
 				},
 				success: function(res) {
 //			   	// 判斷是否接收成功
-				   	location.href='account01';
+				   	location.href='account02';
 				}
 			});
 			

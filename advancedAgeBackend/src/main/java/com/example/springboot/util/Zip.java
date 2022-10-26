@@ -8,10 +8,6 @@ import java.util.zip.ZipOutputStream;
 
 public class Zip {
 
-    public static void main (String[] args) throws IOException {
-        ZipDirs("D:\\test2", "myFile.zip", true, f -> true,
-                            "D:\\temp2", "c:\\temp");
-    }
 
     /**
      * This method is the entry point for creating a zip file.

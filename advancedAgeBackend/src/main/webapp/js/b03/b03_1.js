@@ -1,5 +1,31 @@
 $(function(){
 	
+	$('#banStartDate').datepicker({ 
+		changeMonth: true,
+	    changeYear: true,
+		dateFormat: "yymmdd",
+		onSelect: function (dateText, inst) {
+            dateText = dateText - 19110000;
+            dateText = dateText.toString().substr(0, 3) + '-' + dateText.toString().substr(3, 2) + '-' + dateText.toString().substr(5, 2);
+            $(this).val(dateText);
+        } 
+	});
+	let banStartDate;
+	$('#banEndDate').datepicker({ 
+		changeMonth: true,
+	    changeYear: true,
+		dateFormat: "yymmdd",
+		beforeShow : function(input_html,init){
+			banStartDate=$('#banStartDate').val();
+			$(this).datepicker('option','minDate',(Number(banStartDate.replaceAll('-',''))+19110001).toString());
+		},
+		onSelect : function (dateText, inst) {
+            dateText = dateText - 19110000;
+            dateText = dateText.toString().substr(0, 3) + '-' + dateText.toString().substr(3, 2) + '-' + dateText.toString().substr(5, 2);
+            $(this).val(dateText);
+        } 
+	});
+	
 
 	$('#saveBanStartDate').datepicker({ 
 		changeMonth: true,
@@ -30,7 +56,7 @@ $(function(){
 function addBlackListFile(num){
 	$('button[onclick^="addBlackListFile"]').hide();
 	$('#listFile').append('<div>'+
-                '<input type="file" id="blackListFile'+(Number(num)+1)+'" name="blackListFile"> '+
+                '<input type="file" id="blackListFile'+(Number(num)+1)+'" name="blackListFile" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z,.tiff"> '+
 				'<button type="button" class="add" onclick="delBlackListFile('+(Number(num)+1)+')"> －</button> '+
                 '<button type="button" class="add" onclick="addBlackListFile('+(Number(num)+1)+')" style>＋</button> '+
               '</div>');
@@ -77,7 +103,7 @@ function upload(id){
 		   	processData: false,
 			data: blackListFiles,
 			success: function(result) {
-				location.href='b03?account='+$('input[name="account"]').val();
+				location.href='b03';
 			}
 		});
 	

@@ -43,5 +43,5 @@ function verify(record,frequency){
 }
 
 function cancel(){
-	location.href='c01?account='+$('input[name="account"]').val();
+	location.href='c01';
 }

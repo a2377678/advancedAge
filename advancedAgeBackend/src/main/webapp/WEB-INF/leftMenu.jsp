@@ -19,7 +19,7 @@ String requestURI=request.getRequestURI().replace(path,"").replace("/WEB-INF",""
 		<div id="collapse0" class="panel-collapse collapse <%if(requestURI.indexOf("/b01")!=-1){ %>in<%} %>">
 			<div class="panel-body">
 				<ul>
-                  <li><a href="b01?account=${account }" <%if(requestURI.indexOf("/b01")!=-1){ %>class="in"<%} %>>申請案件查詢</a></li>
+                  <li><a href="b01" <%if(requestURI.indexOf("/b01")!=-1){ %>class="in"<%} %>>申請案件查詢</a></li>
                 </ul>
 			</div>
 		</div>
@@ -35,8 +35,8 @@ String requestURI=request.getRequestURI().replace(path,"").replace("/WEB-INF",""
 		<div id="collapse1" class="panel-collapse collapse <%if(requestURI.indexOf("/a")!=-1){ %>in<%} %>">
 			<div class="panel-body">
 				<ul>
-                  <li><a href="a01?account=${account }" <%if(requestURI.indexOf("/a01")!=-1){ %>class="in"<%} %>>附件檢查與通知</a></li>
-                  <li><a href="a02?account=${account }" <%if(requestURI.indexOf("/a02")!=-1){ %>class="in"<%} %>>補件回傳案件</a></li>
+                  <li><a href="a01" <%if(requestURI.indexOf("/a01")!=-1){ %>class="in"<%} %>>附件檢查與通知</a></li>
+                  <li><a href="a02" <%if(requestURI.indexOf("/a02")!=-1){ %>class="in"<%} %>>補件回傳案件</a></li>
                 </ul>
 			</div>
 		</div>
@@ -52,8 +52,8 @@ String requestURI=request.getRequestURI().replace(path,"").replace("/WEB-INF",""
 		<div id="collapse2" class="panel-collapse collapse <%if(requestURI.indexOf("/b02")!=-1 || requestURI.indexOf("/b05")!=-1){ %>in<%} %>">
 			<div class="panel-body">
 				<ul>
-                  <li><a href="b02?account=${account }" <%if(requestURI.indexOf("/b02")!=-1){ %>class="in"<%} %>>案件審核</a></li>
-                  <li><a href="b05?account=${account }" <%if(requestURI.indexOf("/b05")!=-1){ %>class="in"<%} %>>核定管理</a></li>
+                  <li><a href="b02" <%if(requestURI.indexOf("/b02")!=-1){ %>class="in"<%} %>>案件審核</a></li>
+                  <li><a href="b05" <%if(requestURI.indexOf("/b05")!=-1){ %>class="in"<%} %>>核定管理</a></li>
                 </ul>
 			</div>
 		</div>
@@ -69,7 +69,7 @@ String requestURI=request.getRequestURI().replace(path,"").replace("/WEB-INF",""
 		<div id="collapse3" class="panel-collapse collapse <%if(requestURI.indexOf("/c01")!=-1){ %>in<%} %>">
 			<div class="panel-body">
 				<ul>
-                  <li><a href="c01?account=${account }" <%if(requestURI.indexOf("/c01")!=-1){ %>class="in"<%} %>>請領核銷作業</a></li>
+                  <li><a href="c01" <%if(requestURI.indexOf("/c01")!=-1){ %>class="in"<%} %>>請領核銷作業</a></li>
                 </ul>
 			</div>
 		</div>
@@ -85,8 +85,8 @@ String requestURI=request.getRequestURI().replace(path,"").replace("/WEB-INF",""
 		<div id="collapse4" class="panel-collapse collapse <%if(requestURI.indexOf("/b03")!=-1 || requestURI.indexOf("/b04")!=-1){ %>in<%} %>">
 			<div class="panel-body">
 				<ul>
-                  <li><a href="b03?account=${account }" <%if(requestURI.indexOf("/b03")!=-1){ %>class="in"<%} %>>停止補助名單</a></li>
-                  <li><a href="b04?account=${account }" <%if(requestURI.indexOf("/b04")!=-1){ %>class="in"<%} %>>實地查核登錄</a></li>
+                  <li><a href="b03" <%if(requestURI.indexOf("/b03")!=-1){ %>class="in"<%} %>>停止補助名單</a></li>
+                  <li><a href="b04" <%if(requestURI.indexOf("/b04")!=-1){ %>class="in"<%} %>>實地查核登錄</a></li>
                 </ul>
 			</div>
 		</div>
@@ -103,7 +103,7 @@ String requestURI=request.getRequestURI().replace(path,"").replace("/WEB-INF",""
 		<div id="collapse8" class="panel-collapse collapse <%if(requestURI.indexOf("/index")!=-1){ %>in<%} %>">
 			<div class="panel-body">
 				<ul>
-                  <li><a href="index?account=${account }" <%if(requestURI.indexOf("/index")!=-1){ %>class="in"<%} %>>統計概況 (儀錶板)</a></li>
+                  <li><a href="index" <%if(requestURI.indexOf("/index")!=-1){ %>class="in"<%} %>>統計概況 (儀錶板)</a></li>
                   <li><a href="#">繼續僱用申請人數</a></li>
                   <li><a href="#">繼續僱用補助金額</a></li>
                   <li><a href="#">原有薪資級距</a></li>
@@ -128,10 +128,10 @@ String requestURI=request.getRequestURI().replace(path,"").replace("/WEB-INF",""
 		<div id="collapse10" class="panel-collapse collapse <%if(requestURI.indexOf("/j")!=-1){ %>in<%} %>">
 			<div class="panel-body">
 				<ul>
-                  <li><a href="j01?account=${account }" <%if(requestURI.indexOf("/j01")!=-1){ %>class="in"<%} %>>使用者資料維護</a></li>
-                  <li><a href="j02?account=${account }" <%if(requestURI.indexOf("/j02")!=-1){ %>class="in"<%} %>>使用者帳號與權限</a></li>
-                  <li><a href="j03?account=${account }" <%if(requestURI.indexOf("/j03")!=-1){ %>class="in"<%} %>>群組權限管理</a></li>
-                  <li><a href="j04?account=${account }" <%if(requestURI.indexOf("/j04")!=-1){ %>class="in"<%} %>>系統登入紀錄</a></li>
+                  <li><a href="j01" <%if(requestURI.indexOf("/j01")!=-1){ %>class="in"<%} %>>使用者資料維護</a></li>
+                  <li><a href="j02" <%if(requestURI.indexOf("/j02")!=-1){ %>class="in"<%} %>>使用者帳號與權限</a></li>
+                  <li><a href="j03" <%if(requestURI.indexOf("/j03")!=-1){ %>class="in"<%} %>>群組權限管理</a></li>
+                  <li><a href="j04" <%if(requestURI.indexOf("/j04")!=-1){ %>class="in"<%} %>>系統登入紀錄</a></li>
                 </ul>
 		  </div>
 		</div>

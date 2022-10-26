@@ -15,8 +15,8 @@ public class AdvancedAgeApplication extends SpringBootServletInitializer {
         return application.sources(AdvancedAgeApplication.class);
     }
 
-	public static void main(String[] args) {
-		SpringApplication.run(AdvancedAgeApplication.class, args);
-	}
+//	public static void main(String[] args) {
+//		SpringApplication.run(AdvancedAgeApplication.class, args);
+//	}
 
 }

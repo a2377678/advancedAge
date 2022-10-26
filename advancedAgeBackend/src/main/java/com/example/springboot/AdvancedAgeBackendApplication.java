@@ -7,8 +7,8 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 public class AdvancedAgeBackendApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(AdvancedAgeBackendApplication.class, args);
-	}
+//	public static void main(String[] args) {
+//		SpringApplication.run(AdvancedAgeBackendApplication.class, args);
+//	}
 
 }

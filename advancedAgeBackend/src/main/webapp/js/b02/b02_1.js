@@ -154,7 +154,7 @@ function save(){
 	    dataType:"text", //ajax返回值text（json格式也可用這返回，也可設成json）
 	    success: function(json){  
 			if(json=='success'){
-				location.href='b02?account='+$('input[name="account"]').val();
+				location.href='b02';
 			}
 	    },
 	    error: function(json){
@@ -164,5 +164,5 @@ function save(){
 }
 
 function cancel(){
-	location.href='b02?account='+$('input[name="account"]').val();
+	location.href='b02';
 }

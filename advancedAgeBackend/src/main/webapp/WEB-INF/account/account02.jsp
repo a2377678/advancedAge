@@ -16,21 +16,16 @@
 
 </head>
 
-
-
 <body>
 
 
   <!---------------------- top ---------------------->
-<!--   <div id="top"> -->
-<!--     <div id="top_logo"><a href="index.html"><img src="images/logo.png" /></a></div> -->
-<!--   </div> -->
   <%@ include file="../header.jsp" %>
   <!---------------------- top end ---------------------->
 
     
   <div id="main_menu">
-    <div><a href="a01?account=${account}" class="menu-1">繼續僱用高齡者</a></div>
+    <div><a href="a01" class="menu-1">繼續僱用高齡者</a></div>
     <div><a href="#" class="menu-2">傳承專業技術與經驗</a></div>
     <div><a href="#" class="menu-3">退休後再就業準備協助措施</a></div>
     <div><a href="account01" class="account in">申請帳號審核管理</a></div>
@@ -50,8 +45,8 @@
 		<div id="collapse1" class="panel-collapse collapse in">
 			<div class="panel-body">
 				<ul>
-          <li><a href="account01?account=${account}">新申請帳號</a></li>
-          <li><a href="account02?account=${account}" class="in">帳密查詢回覆</a></li>
+          <li><a href="account01">新申請帳號</a></li>
+          <li><a href="account02" class="in">帳密查詢回覆</a></li>
         </ul>
 			</div>
 		</div>
@@ -106,46 +101,6 @@
 	        </li>
         
       	</c:forEach></c:when></c:choose>
-<!--         <li> -->
-<!--           <a href="account02_1"> -->
-<!--           <span class="no">1</span> -->
-<!--           <span class="update_time">111-09-01</span> -->
-<!--           <span class="tax_id_number">85561470</span> -->
-<!--           <span class="company_name">資訊科技股份有限公司</span> -->
-<!--           </a> -->
-<!--         </li> -->
-<!--         <li> -->
-<!--           <a href="account_02-1.html"> -->
-<!--           <span class="no">2</span> -->
-<!--           <span class="update_time">111-09-01</span> -->
-<!--           <span class="tax_id_number">66320005</span> -->
-<!--           <span class="company_name">OO資訊股份有限公司</span> -->
-<!--           </a> -->
-<!--         </li> -->
-<!--         <li> -->
-<!--           <a href="account_02-1.html"> -->
-<!--           <span class="no">3</span> -->
-<!--           <span class="update_time">111-09-02</span> -->
-<!--           <span class="tax_id_number">79459910</span> -->
-<!--           <span class="company_name">OO股份有限公司</span> -->
-<!--           </a> -->
-<!--         </li> -->
-<!--         <li> -->
-<!--           <a href="account_02-1.html"> -->
-<!--           <span class="no">4</span> -->
-<!--           <span class="update_time">111-09-02</span> -->
-<!--           <span class="tax_id_number">51278064</span> -->
-<!--           <span class="company_name">OO股份有限公司</span> -->
-<!--           </a> -->
-<!--         </li> -->
-<!--         <li> -->
-<!--           <a href="account_02-1.html"> -->
-<!--           <span class="no">5</span> -->
-<!--           <span class="update_time">111-09-02</span> -->
-<!--           <span class="tax_id_number">22345678</span> -->
-<!--           <span class="company_name">OOOO股份有限公司</span> -->
-<!--           </a> -->
-<!--         </li> -->
       </ol>
       
       <div class="page_number">
@@ -181,9 +136,8 @@
       	</div>
       
       <form action="account02_1" method="post" id="dataForm">
-      	<input type="hidden" id="dataSeq" name="seq">
-      	<input type="hidden" id="id" name="id">
-      	<input type="hidden" name="account" value=${account }>
+      	<input type="text" id="dataSeq" name="seq" style="display:none">
+      	<input type="text" id="id" name="id" style="display:none">
       </form>
       
       

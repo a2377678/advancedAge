@@ -13,35 +13,29 @@
 
 <body>
 <div class=""> 
-  
+  <!-- Modal-1-1 -->
+          <div class="modal modal-dialog-scrollable fade" id="exampleModal-1-1"
+           tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+              <div class="modal-content">
+                <img src="/file/SAMPLE/公司設立登記證明文件-1.jpg" alt="公司設立登記證明文件">
+              </div>
+            </div>
+          </div>
+          <!-- Modal-1-1 -->
+          
+          <!-- Modal-1-2 -->
+          <div class="modal modal-dialog-scrollable fade" id="exampleModal-1-2"
+           tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <img src="/file/SAMPLE/法人登記書-1.jpg" alt="法人登記書範本">
+              </div>
+            </div>
+          </div>
+          <!-- Modal-1-2 -->
   <!--- header --->
   <%@ include file="header.jsp" %>
-<!--   <header> -->
-<!--     <div class="navigation"> -->
-<!--       <div class="top_logo"><img src="images/top_logo.png"></div> -->
-<!--       <nav> -->
-<!--         <ul> -->
-<!--         　　<li><a href="employ" title="帳號申請／登入">帳號申請／登入</a></li> -->
-<!--         　　<li><a href="#" title="網站導覽">網站導覽</a></li> -->
-<!--         </ul> -->
-<!--       </nav> -->
-<!--     </div> -->
-    
-<!--     - nav - -->
-<!--     <nav class="main_menu"> -->
-<!--       <ul> -->
-<!--         <li><a href="index" title="首頁" class="m1">首頁</a></li> -->
-<!--         <li><a href="require" title="補助計畫" class="m2">補助計畫</a></li> -->
-<!--         <li><a href="employ" title="線上申辦" class="m3-in in">線上申辦</a></li> -->
-<!--         <li><a href="#" title="案件查詢" class="m4">案件查詢</a></li> -->
-<!--         <li><a href="#" title="申請教學" class="m5">申請教學</a></li> -->
-<!--         <li><a href="#" title="資料下載" class="m6">資料下載</a></li> -->
-<!--         <li><a href="#" title="諮詢服務" class="m7">諮詢服務</a></li> -->
-<!--       </ul> -->
-<!--     </nav> -->
-<!--     - nav end -  -->
-    
-<!--   </header> -->
   <!--- header end ---> 
   
   <!--- main --->
@@ -121,16 +115,20 @@
     
       <div class="title_main">
       <span>設立登記證明文件</span>
-      <em>須加蓋公司單位及負責人用印 (公司大小章)
-      【<a href="#" title="上傳檔案範例 (另開視窗)">範例</a>】</em>
+        <em>須加蓋公司單位及負責人用印 (公司大小章)
+          <!-- Button trigger modal-1 -->
+          <button type="button" class="btn btn-success px-2 py-0" data-bs-toggle="modal" 
+          data-bs-target="#exampleModal-1-1">範例 1</button>
+          <button type="button" class="btn btn-success px-2 py-0" data-bs-toggle="modal" 
+          data-bs-target="#exampleModal-1-2">範例 2</button>
+        </em>
       </div>
       
-      <div class="file_box">  
+      <div class="file_box" id="register">  
         <div class="full">
-        <label for="">文件(1)</label>
-        <input type="file" id="">
-        <button class="add">－</button>
-        <button class="add">＋</button>
+	        <label for="registerProof1">文件(1)</label>
+	        <input type="file" id="registerProof1" name="registerProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z" required>
+	        <button type="button" class="add" onclick="addRegisterProof(1)" style>＋</button>
         </div>
       </div>
       

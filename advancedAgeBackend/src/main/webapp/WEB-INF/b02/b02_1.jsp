@@ -18,14 +18,10 @@
 </head>
 
 
-
 <body>
 
 
   <!---------------------- top ---------------------->
-<!--   <div id="top"> -->
-<!--     <div id="top_logo"><a href="../index.html"><img src="../images/logo.png" /></a></div> -->
-<!--   </div> -->
   <%@ include file="../header.jsp" %>
   <!---------------------- top end ---------------------->
 
@@ -34,116 +30,11 @@
     <div><a href="javascript:void(0);" class="menu-1 in">繼續僱用高齡者</a></div>
     <div><a href="javascript:void(0);" class="menu-2">傳承專業技術與經驗</a></div>
     <div><a href="javascript:void(0);" class="menu-3">退休後再就業準備協助措施</a></div>
-    <div><a href="account01?account=${account }" class="account">申請帳號審核管理</a></div>
+    <div><a href="account01" class="account">申請帳號審核管理</a></div>
   </div>
 
   <!---------------------- left menu ---------------------->
   <%@ include file="../leftMenu.jsp" %>
-<!--   <div id="left_menu"> -->
-<!--     <div class="panel-group" id="accordion"> -->
-    
-<!--     -------- collapse1 -------- -->
-<!-- 	<div class="panel panel-default"> -->
-<!-- 		<div class="panel-heading"> -->
-<!-- 			<h4 class="panel-title"> -->
-<!-- 			  <a data-toggle="collapse" data-parent="javascript:void(0);accordion" href="javascript:void(0);collapse1">收件與補件</a> -->
-<!-- 			</h4> -->
-<!-- 		</div> -->
-<!-- 		<div id="collapse1" class="panel-collapse collapse in"> -->
-<!-- 			<div class="panel-body"> -->
-<!-- 				<ul> -->
-<!--                   <li><a href="a01/a01.html">附件檢查與通知</a></li> -->
-<!--                   <li><a href="a01/a01.html">補件回傳案件</a></li> -->
-<!--                 </ul> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-    
-<!--     -------- collapse2 -------- -->
-<!-- 	<div class="panel panel-default"> -->
-<!-- 		<div class="panel-heading-in"> -->
-<!-- 			<h4 class="panel-title"> -->
-<!-- 			  <a data-toggle="collapse" data-parent="javascript:void(0);accordion" href="javascript:void(0);collapse2">案件審查</a> -->
-<!-- 			</h4> -->
-<!-- 		</div> -->
-<!-- 		<div id="collapse2" class="panel-collapse collapse in"> -->
-<!-- 			<div class="panel-body"> -->
-<!-- 				<ul> -->
-<!--                   <li><a href="b01/b01.html">申請案件查詢</a></li> -->
-<!--                   <li><a href="b02/b02.html" class="in">案件審核</a></li> -->
-<!--                   <li><a href="b03/b03.html">停止補助名單管理</a></li> -->
-<!--                   <li><a href="b04/b04.html">實地查核登錄</a></li> -->
-<!--                 </ul> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-    
-<!--     -------- collapse3 -------- -->
-<!-- 	<div class="panel panel-default"> -->
-<!-- 		<div class="panel-heading"> -->
-<!-- 			<h4 class="panel-title"> -->
-<!-- 			  <a data-toggle="collapse" data-parent="javascript:void(0);accordion" href="javascript:void(0);collapse3">請款與核銷</a> -->
-<!-- 			</h4> -->
-<!-- 		</div> -->
-<!-- 		<div id="collapse3" class="panel-collapse collapse in"> -->
-<!-- 			<div class="panel-body"> -->
-<!-- 				<ul> -->
-<!--                   <li><a href="c01/c01.html">請款審核</a></li> -->
-<!--                   <li><a href="c02/c02.html">案件核銷</a></li> -->
-<!--                 </ul> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-
-    
-    
-<!--     -------- collapse8 -------- -->
-<!--     <div class="panel panel-default"> -->
-<!-- 		<div class="panel-heading"> -->
-<!-- 			<h4 class="panel-title"> -->
-<!-- 				<a data-toggle="collapse" data-parent="javascript:void(0);accordion" href="javascript:void(0);collapse8">彙整與統計</a> -->
-<!-- 			</h4> -->
-<!-- 		</div> -->
-<!-- 		<div id="collapse8" class="panel-collapse collapse"> -->
-<!-- 			<div class="panel-body"> -->
-<!-- 				<ul> -->
-<!--                   <li><a href="index.html" class="in">統計概況 (儀錶板)</a></li> -->
-<!--                   <li><a href="javascript:void(0);">繼續僱用申請人數</a></li> -->
-<!--                   <li><a href="javascript:void(0);">繼續僱用補助金額</a></li> -->
-<!--                   <li><a href="javascript:void(0);">原有薪資級距</a></li> -->
-<!--                   <li><a href="javascript:void(0);">申請單位行業別</a></li> -->
-<!--                   <li><a href="javascript:void(0);">申請單位補助金額</a></li> -->
-<!--                   <li><a href="javascript:void(0);">申請單位申請情形</a></li> -->
-<!--                 </ul> -->
-<!-- 		  </div> -->
-<!-- 		</div> -->
-<!-- 	</div>     -->
-
-
-    
-    
-<!--     -------- collapse10 -------- -->
-<!--     <div class="panel panel-default"> -->
-<!-- 		<div class="panel-heading"> -->
-<!-- 			<h4 class="panel-title"> -->
-<!-- 				<a data-toggle="collapse" data-parent="javascript:void(0);accordion" href="javascript:void(0);collapse10">權限與系統管理</a> -->
-<!-- 			</h4> -->
-<!-- 		</div> -->
-<!-- 		<div id="collapse10" class="panel-collapse collapse"> -->
-<!-- 			<div class="panel-body"> -->
-<!-- 				<ul> -->
-<!--                   <li><a href="j01/j01.html">使用者資料維護</a></li> -->
-<!--                   <li><a href="j02/j02.html">使用者帳號與權限</a></li> -->
-<!--                   <li><a href="j03/j03.html">群組權限管理</a></li> -->
-<!--                   <li><a href="j04/j04.html">系統登入紀錄</a></li> -->
-<!--                 </ul> -->
-<!-- 		  </div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-    
-    
-<!--   </div> -->
-<!--   </div> -->
   <!---------------------- left menu end ---------------------->
 
 
@@ -161,7 +52,7 @@
       <div id="account">
         <a>登入單位：
         	${unitName }&nbsp;${name }</a>
-        <a href="logout?account=${account }">登出</a>
+        <a href="logout">登出</a>
       </div>
       
 
@@ -173,10 +64,10 @@
       </div>
         
       <!------ 申請單位資料 ------> 
-      <input type="hidden" id="aaid" name="aaid" value="${base[0].get('aaid') }"/>
-      <input type="hidden" id="verifyUnit" value="${unit }">
-      <input type="hidden" id="verifyPerson" value="${id }">
-      <input type="hidden" id="updator" value="${id }">
+      <input type="text" id="aaid" name="aaid" value="${base[0].get('aaid') }" style="display:none">
+      <input type="text" id="verifyUnit" value="${unit }" style="display:none">
+      <input type="text" id="verifyPerson" value="${id }" style="display:none">
+      <input type="text" id="updator" value="${id }" style="display:none">
       <table class="table_03" id="unitDataTable">
         <tr>
           <th width="18%">案件編號</th>
@@ -246,7 +137,6 @@
       
       <!------ 資格條件及切結事項 ------>
 	  <table class="table_03" id="conditionTable" style="display:none">
-	  <!---<table class="table_03" id="conditionTable">--->
         <tr>
           <th colspan="2">檢核項目</th>
           <th>填寫</th>
@@ -381,26 +271,6 @@
         </tr>
       </table> 
         
-      <!------補助人數 / 留用狀況
-      <table class="table_03" id="situationTable" style="display:none">
-        <tr>
-          <th width="18%">主要業務 / 服務項目</th>
-          <td width="35%">補助人數 / 留用狀況 ...</td>
-          <th width="18%">成立時間</th>
-          <td>2018/09/30</td>
-        </tr>
-        <tr>
-          <th>目前員工人數</th>
-          <td> 40</td>
-          <th>65歲以上人數</th>
-          <td>1</td>
-        </tr>
-      </table>------>
-      
-      
-      
-      
-      
       <!------------------- table 3 ------------------->
       <div class="file_title-2">檢附文件審核</div>
         <table class="table_04">
@@ -418,12 +288,10 @@
             <td><c:if test="${base[0].get('fileStatus')==4}"><span class="text_pass">合格</span></c:if>
             <c:if test="${base[0].get('fileStatus')!=4}"><span class="text_warn">缺件</span></c:if></td>
             <td width="14%"><a href="javascript:void(0);" onclick="attachment('${base[0].get("seq")}','${base[0].get("year")}','${base[0].get("id")}')"><u>查看資訊頁</u></a></td>
-<%--             <td width="12%"><a onclick="downloadFile('${apply.id}')"><u>下載檔案</u></a></td> --%>
             <td style="text-align:left"><input type="text" id="checkAttachmentRemark" value="${base[0].checkAttachmentRemark }" size="50"></td>
           </tr>
         </table>
 
-        
         
         <!------------------- table ------------------->
       <div class="file_title-2">相關檢核項目</div>
@@ -502,18 +370,6 @@
             <td style="text-align:left"><a href="https://announcement.mol.gov.tw/" target="_blank"><u>查詢系統</u></a>&nbsp; (另開頁面) </td>
             <td><input type="text" size="50" id="checkViolationlaborlawsRemark" value="${base[0].checkViolationlaborlawsRemark}"></td>
           </tr>
-          <!---<tr>
-            <td><b>本屬補捐助</b></td>
-            <td>
-            <select name="select" id="select2">
-              <option>---</option>
-              <option>合格</option>
-              <option>不合格</option>
-            </select>
-            </td>
-            <td style="text-align:left"></td>
-            <td><input type="text" size="50"></td>
-          </tr>--->
         </table>
 		
        <!------------------- table 3 ------------------->
@@ -568,9 +424,6 @@
 
       
       <div class="btn_box-3">
-      <!---<input type="reset" class="btn_02" value="取消修改" />--->
-      <!---<input type="submit" class="btn_01" value="儲存資料" />--->
-      
       <input type="button" class="btn_02" value="取消修改" onclick="cancel()"/>
       <input type="button" class="btn_01" value="儲存資料" onclick="save()"/>
       </div>
@@ -579,10 +432,9 @@
 
 
       <form method="post" id="dataForm" target="_blank">
-      	<input type="hidden" id="dataSeq" name="seq">
-      	<input type="hidden" id="applyYear" name="applyYear">
-      	<input type="hidden" id="dataId" name="id">
-      	<input type="hidden" name="account" value="${account }"/>
+      	<input type="text" id="dataSeq" name="seq" style="display:none">
+      	<input type="text" id="applyYear" name="applyYear" style="display:none">
+      	<input type="text" id="dataId" name="id" style="display:none">
       </form>
   
   

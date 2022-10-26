@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,10 +40,17 @@ public class AdvancedAgeBaseApiController {
 	Date date = new Date();
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	int applyYear=Integer.valueOf(sdf.format(date).substring(0,4))-1911;
+
+	@Value("${api_token}")
+	private String apiToken;
 	
 	@ApiOperation(value = "查詢繼續僱用高齡者補助附件狀態")
 	@RequestMapping(value = "/selectATypeAdvancedAgeBase", method = RequestMethod.POST)
-	public List<AdvancedAgeBase> selectATypeAdvancedAgeBaseFileStatus(AdvancedAgeBase base) {
+	public List<AdvancedAgeBase> selectATypeAdvancedAgeBaseFileStatus(AdvancedAgeBase base,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		advancedAgeBaseExample = new AdvancedAgeBaseExample();
 		AdvancedAgeBaseExample.Criteria c= advancedAgeBaseExample.createCriteria();
 		c.andSeqEqualTo(base.getSeq());
@@ -55,7 +63,11 @@ public class AdvancedAgeBaseApiController {
 
 	@ApiOperation(value = "新增繼續僱用高齡者補助申請書中高齡基礎表")
 	@RequestMapping(value = "/addATypeAdvancedAgeBase", method = RequestMethod.POST)
-	public AdvancedAgeBase addAdvancedAgeBase(AdvancedAgeBase base) {
+	public AdvancedAgeBase addAdvancedAgeBase(AdvancedAgeBase base,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		SimpleDateFormat asdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		base.setYear(String.valueOf(applyYear));
 		base.setCaseType("A");
@@ -90,11 +102,15 @@ public class AdvancedAgeBaseApiController {
 	
 	@ApiOperation(value = "編輯繼續僱用高齡者補助狀態")
 	@RequestMapping(value = "/editAdvancedAgeBase", method = RequestMethod.POST)
-	public AdvancedAgeBase editAdvancedAgeBase(AdvancedAgeBase base) {
+	public AdvancedAgeBase editAdvancedAgeBase(AdvancedAgeBase base,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		advancedAgeBaseExample = new AdvancedAgeBaseExample();
 		advancedAgeBaseExample.createCriteria().andIdEqualTo(base.getId());
-		AdvancedAgeBase searchBase = selectAdvancedAgeBaseById(base);
+		AdvancedAgeBase searchBase = selectAdvancedAgeBaseById(base,token);
 		if(searchBase.getAllowanceFrequencyRecord()==null || searchBase.getAllowanceFrequencyRecord().equals("")) {
 			base.setAllowanceFrequencyRecord("1、"+sdf.format(new Date()).toString()+"、0;");
 		}else{
@@ -109,7 +125,11 @@ public class AdvancedAgeBaseApiController {
 	
 	@ApiOperation(value = "查詢繼續僱用高齡者補助狀態")
 	@RequestMapping(value = "/selectAdvancedAgeBaseById", method = RequestMethod.POST)
-	public AdvancedAgeBase selectAdvancedAgeBaseById(AdvancedAgeBase base) {
+	public AdvancedAgeBase selectAdvancedAgeBaseById(AdvancedAgeBase base,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		advancedAgeBaseExample = new AdvancedAgeBaseExample();
 		advancedAgeBaseExample.createCriteria().andIdEqualTo(base.getId());
 		AdvancedAgeBase searchBase = advancedAgeBaseApplyService.selectByExample(advancedAgeBaseExample).get(0);

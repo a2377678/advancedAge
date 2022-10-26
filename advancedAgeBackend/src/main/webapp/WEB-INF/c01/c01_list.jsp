@@ -62,7 +62,7 @@
             <th>本次金額</th>
           </tr>
         </thead>
-        <input type="hidden" id="baseId" value="${base[0].id }">
+        <input type="text" id="baseId" value="${base[0].id }" style="display:none">
         
         <c:choose>
         	<c:when test="${not empty employmenyListReceipt}">
@@ -197,35 +197,6 @@
 	      	</c:forEach>
 	        </c:when>
         </c:choose>
-<!--           <tr> -->
-<!--             <td rowspan="2">1</td> -->
-<!--             <td>王先生</td> -->
-<!--             <td>A123456789</td> -->
-<!--             <td>111/07/01</td> -->
-<!--             <td>勞保</td> -->
-<!--             <td>50000</td> -->
-<!--             <td>按月</td> -->
-<!--             <td>2</td> -->
-<!--             <td>111/04/01</td> -->
-<!--             <td>111/06/30</td> -->
-<!--             <td>3</td> -->
-<!--             <td>&nbsp;</td> -->
-<!--             <td>&nbsp;</td> -->
-<!--             <td>&nbsp;</td> -->
-<!--             <td>45000</td> -->
-<!--             <td> -->
-<!--             <select name="select3" id="select3"> -->
-<!--               <option>---</option> -->
-<!--               <option selected>符合</option> -->
-<!--               <option>部分符合</option> -->
-<!--               <option>不符合</option> -->
-<!--             </select></td> -->
-<!--             <td><input type="text" size="3"></td> -->
-<!--           </tr> -->
-<!--           <tr> -->
-<!--             <th>計薪備註：</th> -->
-<!--             <td colspan="15" style=" text-align:left;">4~6 月份領月薪，勞工已於７月份離職退保</td> -->
-<!--           </tr> -->
         </tbody>
       </table>
        

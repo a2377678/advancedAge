@@ -23,80 +23,6 @@
   
   <!--- header --->
   <%@ include file="header.jsp" %>
-<!--   <header> -->
-
-<!--     ---------- nav ---------- -->
-<!--     <nav class="navbar navbar-expand-lg bg-gray navbar-dark fixed-top p-0"> -->
-        
-<!--           <div class="navigation w-100"> -->
-<!--             <a class="navbar-brand" href="#"><img src="images/top_logo.png"></a> -->
-<!--             <a class="sitemap text-light float-end p-3" href="sitemap" title="網站導覽">網站導覽</a> -->
-          
-<!--             <button class="navbar-toggler" type="button" data-toggle="collapse"  -->
-<!--               data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"  -->
-<!--               aria-expanded="false" aria-label="Toggle navigation"> -->
-<!--               <span class="navbar-toggler-icon"></span> -->
-<!--             </button> -->
-
-<!--             <div class="collapse navbar-collapse main_menu" id="navbarSupportedContent"> -->
-              
-<!--               <ul class="navbar-nav mr-auto"> -->
-              
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="index" title="首頁" class="m1">首頁</a> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="#" title="補助計畫" class="navbar-dark nav-link dropdown-toggle m2" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">補助計畫</a> -->
-<!--                   <ul class="dropdown-menu rounded" aria-labelledby="navbarDropdownMenuLink"> -->
-<!--                     <li><a class="dropdown-item text-light" href="require" title="繼續僱用高齡者補助計畫說明">繼續僱用高齡者補助計畫說明</a></li> -->
-<!--                   </ul> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="employ" title="線上申辦" class="navbar-dark nav-link dropdown-toggle m3-in in" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">線上申辦</a> -->
-<!--                   <ul class="dropdown-menu rounded" aria-labelledby="navbarDropdownMenuLink"> -->
-<!--                     <li><a class="dropdown-item text-light" href="employ" title="繼續雇用高齡者補助 - 申請作業">繼續僱用高齡者補助 - 申請作業</a></li> -->
-<!--                     <li><a class="dropdown-item text-light" href="employ_payment" title="繼續雇用高齡者補助 - 請領作業">繼續僱用高齡者補助 - 請領作業</a></li> -->
-<!--                     -
-<!--                     <li><hr class="dropdown-divider"></li> -->
-<!--                     <li><a class="dropdown-item text-white-50" href="#">退休者傳承專業技術 - 尚未開放</a></li> -->
-<!--                     <li><hr class="dropdown-divider"></li> -->
-<!--                     <li><a class="dropdown-item text-white-50" href="#">退休後再就業準備 - 尚未開放</a></li> -->
-<!--                     ---> -->
-<!--                   </ul> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item text-dark"> -->
-<!--                   <a href="schedule" title="案件查詢" class="navbar-dark nav-link dropdown-toggle m4" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">案件查詢</a> -->
-<!--                   <ul class="dropdown-menu rounded" aria-labelledby="navbarDropdownMenuLink"> -->
-<!--                     <li><a class="dropdown-item text-light" href="schedule" title="繼續僱用高齡者補助 - 申請進度">繼續僱用高齡者補助 - 申請進度</a></li> -->
-<!--                     <li><a class="dropdown-item text-light" href="schedule_pass" title="繼續僱用高齡者補助 - 請領進度">繼續僱用高齡者補助 - 請領進度</a></li> -->
-<!--                   </ul> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="teaching" title="申請教學" class="m5">申請教學</a> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="download" title="資料下載" class="m6">資料下載</a> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="service" title="諮詢服務" class="m7">諮詢服務</a> -->
-<!--                 </li>  -->
-                
-<!--               </ul> -->
-            
-<!--             </div> -->
-          
-<!--           </div> -->
-          
-<!--     </nav> -->
-<!--     ---------- nav end ----------  -->
-    
-<!--   </header> -->
   <!--- header end ---> 
   
   
@@ -115,10 +41,7 @@
       <div class="form">
         <div class="title_main"><span>繼續僱用補助請領清冊</span></div>
         
-        <!---上傳名單
-        <div class="full">繼續僱用補助名單清冊_統編66668888_1101123.xlsx　110/11/23  16:45　21KB</div>--->
-        <input type="hidden" id="sid"name="sid" value="${sid}">
-        <input type="hidden" id="baseId" name="baseId" value="${baseId}">
+        <input type="text" id="baseId" name="baseId" value="${baseId}" style="display:none">
         <!---填寫名單--->
         <c:choose><c:when test="${not empty advancedAgeEmploymentListReceipts}">
 	        <c:forEach items="${advancedAgeEmploymentListReceipts}" var="item" varStatus="status">
@@ -329,7 +252,7 @@
       </div>
       <!--endprint-->
       <div class="page">
-        <button onclick="javascript:location.href='employ_payment_02?sid=${sid}'">返回修改</button>
+        <button onclick="javascript:location.href='employ_payment_02'">返回修改</button>
         <button onclick="doPrint()">列印資料</button>
         <button onclick="finish()">送出請領資料</button>
       </div>

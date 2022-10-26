@@ -21,32 +21,6 @@
   
   <!--- header --->
   <%@ include file="header.jsp" %>
-<!--   <header> -->
-<!--     <div class="navigation"> -->
-<!--       <div class="top_logo"><img src="images/top_logo.png"></div> -->
-<!--       <nav> -->
-<!--         <ul> -->
-<!--         　　<li><a href="employ" title="帳號申請／登入">帳號申請／登入</a></li> -->
-<!--         　　<li><a href="#" title="網站導覽">網站導覽</a></li> -->
-<!--         </ul> -->
-<!--       </nav> -->
-<!--     </div> -->
-    
-<!--     - nav - -->
-<!--     <nav class="main_menu"> -->
-<!--       <ul> -->
-<!--         <li><a href="index" title="首頁" class="m1">首頁</a></li> -->
-<!--         <li><a href="require" title="補助計畫" class="m2">補助計畫</a></li> -->
-<!--         <li><a href="employ" title="線上申辦" class="m3-in in">線上申辦</a></li> -->
-<!--         <li><a href="#" title="案件查詢" class="m4">案件查詢</a></li> -->
-<!--         <li><a href="#" title="申請教學" class="m5">申請教學</a></li> -->
-<!--         <li><a href="#" title="資料下載" class="m6">資料下載</a></li> -->
-<!--         <li><a href="#" title="諮詢服務" class="m7">諮詢服務</a></li> -->
-<!--       </ul> -->
-<!--     </nav> -->
-<!--     - nav end -  -->
-    
-<!--   </header> -->
   <!--- header end ---> 
   
   <!--- main --->
@@ -69,16 +43,10 @@
       <form id="form">
       <div class="title_main"><span>僱用資料及輔導措施</span></div>
     
-      <!---<div>
-      <label for="">成立時間</label>
-      <input type="text" placeholder="yyymmdd">
-      </div>--->
-        
       <div class="full">
       <label for="items">主要業務/產品/服務</label>
       <input type="text" size="86%" id="items" name="items" value="${plan.items}" required>
       </div>
-      <input type="hidden" id="sid" value="${sid}"/>
       <div class="full">
       <label for="employmentNumber">目前員工人數</label>
       <input type="number" step="1" min="0" id="employmentNumber" name="employmentNumber" value="${plan.employmentNumber}" required>
@@ -163,11 +131,6 @@ C=(B)/(A) x 100%">
 	          <label for="identification${status.count}">身分證字號</label>
 	          <input type="text" id="identification${status.count}" name="identification${status.count}" value="${item.identification}">
 	          </div>
-	        
-	          <!---<div class="ss">
-	          <label for="">出生年月日</label>
-	          <input type="text" placeholder="yyymmdd">
-	          </div>--->
 	        
 	          <div class="ss">
 	          <label for="insuranceType${status.count}">保險類型</label>
@@ -259,11 +222,6 @@ C=(B)/(A) x 100%">
 	          <input type="text" id="identification1" name="identification">
 	          </div>
 	        
-	          <!---<div class="ss">
-	          <label for="">出生年月日</label>
-	          <input type="text" placeholder="yyymmdd">
-	          </div>--->
-	        
 	          <div class="ss">
 	          <label for="insuranceType1">保險類型</label>
 	          <select id="insuranceType1" name="insuranceType">
@@ -353,11 +311,6 @@ C=(B)/(A) x 100%">
 	          <label for="identification2">身分證字號</label>
 	          <input type="text" id="identification2" name="identification">
 	          </div>
-	        
-	          <!---<div class="ss">
-	          <label for="">出生年月日</label>
-	          <input type="text" placeholder="yyymmdd">
-	          </div>--->
 	        
 	          <div class="ss">
 	          <label for="insuranceType2">保險類型</label>
@@ -449,11 +402,6 @@ C=(B)/(A) x 100%">
 	          <input type="text" id="identification3" name="identification">
 	          </div>
 	        
-	          <!---<div class="ss">
-	          <label for="">出生年月日</label>
-	          <input type="text" placeholder="yyymmdd">
-	          </div>--->
-	        
 	          <div class="ss">
 	          <label for="insuranceType3">保險類型</label>
 	          <select id="insuranceType3" name="insuranceType">
@@ -539,7 +487,6 @@ C=(B)/(A) x 100%">
 	      </form>
 	      <div class="btn_box">
 	      <button class="subjoin" onclick="listAdd()">＋增加欄位</button>
-	<!--       <button class="delete" onclick="listDelete()">－減少欄位</button> -->
 	      <button class="save" onclick="listSave('Y')">暫存資料</button>
 	      </div>
       </div>
@@ -572,115 +519,6 @@ C=(B)/(A) x 100%">
 
 
 
-    <!-------------近三年申請之留任狀況------------>
-<!--     <div class="form"> -->
-    
-<!--       <div class="title_main"><span>近三年申請之留任狀況</span> -->
-<!--       <em>請視需要自行增刪欄位，若需填寫較多員工，建議下載 -->
-<!--       【<a href="#" title="Excel申請專用表格(另開視窗)">留任狀況專用表格.xlsx</a>】 -->
-<!--       填寫後上傳</em> -->
-<!--       </div> -->
-      
-<!--       <ol class="staff" id="situationStaff"> -->
-<%--       	<c:choose><c:when test="${advancedAgeApplyEmployedSituations != '[]'}"> --%>
-<%--         <c:forEach items="${advancedAgeApplyEmployedSituations}" var="item" varStatus="status"> --%>
-<!--         	<li> -->
-<!-- 	          <div class="ss"> -->
-<%-- 	          <label for="applyYear${status.count}">申請年度</label> --%>
-<%-- 	          <input type="text" pattern="[0-9]" placeholder="yyy" maxlength="3" id="applyYear${status.count}" name="applyYear" value="${item.applyYear}"> --%>
-<!-- 	          </div> -->
-	        
-<!-- 	          <div class="ss"> -->
-<%-- 	          <label for="workName${status.count}">補助勞工姓名</label> --%>
-<%-- 	          <input type="text" id="workName${status.count}" name="workName" value="${item.name}"> --%>
-<!-- 	          </div> -->
-	        
-<!-- 	          <div class="ss"> -->
-<%-- 	          <label for="workIdentification${status.count}">身分證字號</label> --%>
-<%-- 	          <input type="text" id="workIdentification${status.count}" name="workIdentification" value="${item.identification}">  --%>
-<!-- 	          </div> -->
-	        
-<!-- 	          <div class="ss"> -->
-<%-- 	          <label for="employedAmong${status.count}">獲補助月數</label> --%>
-<%-- 	          <input type="number" step="1" min="0" id="employedAmong${status.count}" name="employedAmong" value="${item.employedAmong}"> --%>
-<!-- 	          </div> -->
-	        
-<!-- 	          <div class="full"> -->
-<!-- 	          <label for="employedExpiredStatus1">續期滿後留任狀況：</label> -->
-<!-- 	            <span> -->
-<%-- 	            <input type="radio" name="employedExpiredStatus${status.count}" value="1" id="employedExpiredStatus1${status.count}" <c:if test="${item.employedExpiredStatus=='1'}">checked</c:if>> --%>
-<!-- 	            於繼續僱用18個月內離職 -->
-<!-- 	            </span> -->
-<!-- 	            <span> -->
-<%-- 	            <input type="radio" name="employedExpiredStatus${status.count}" value="2" id="employedExpiredStatus2${status.count}" <c:if test="${item.employedExpiredStatus=='2'}">checked</c:if>> --%>
-<!-- 	            於繼續僱用18個月後 -->
-<%-- 	            <input type="number" step="1" min="0" style="width:50px;" id="employedExpiredResign${status.count}" name="employedExpiredResign" value="${item.employedExpiredResign}"> --%>
-<!-- 	            個月離職 -->
-<!-- 	            </span> -->
-<%-- 	            <input type="radio" name="employedExpiredStatus${status.count}" value="3" id="employedExpiredStatus3${status.count}" <c:if test="${item.employedExpiredStatus=='3'}">checked</c:if>> --%>
-<!-- 	            已滿18個月在職中 -->
-<!-- 	          </div> -->
-	
-<!-- 	          <div class="close"><button class="close" title="移除此筆資料">X</button></div> -->
-	          
-<!-- 	        </li> -->
-<%--         </c:forEach> --%>
-<%--         </c:when> --%>
-<%--         <c:otherwise> --%>
-<%-- 	      	<c:forEach var="i" begin="1" end="2"> --%>
-<!-- 	        <li> -->
-<!-- 	          <div class="ss"> -->
-<%-- 	          <label for="applyYear${i}">申請年度</label> --%>
-<%-- 	          <input type="text" pattern="[0-9]" placeholder="yyy" maxlength="3" id="applyYear${i}" name="applyYear"> --%>
-<!-- 	          </div> -->
-	        
-<!-- 	          <div class="ss"> -->
-<%-- 	          <label for="workName${i}">補助勞工姓名</label> --%>
-<%-- 	          <input type="text" id="workName${i}" name="workName"> --%>
-<!-- 	          </div> -->
-	        
-<!-- 	          <div class="ss"> -->
-<%-- 	          <label for="workIdentification${i}">身分證字號</label> --%>
-<%-- 	          <input type="text" id="workIdentification${i}" name="workIdentification">  --%>
-<!-- 	          </div> -->
-	        
-<!-- 	          <div class="ss"> -->
-<%-- 	          <label for="employedAmong${i}">獲補助月數</label> --%>
-<%-- 	          <input type="number" step="1" min="0" id="employedAmong${i}" name="employedAmong"> --%>
-<!-- 	          </div> -->
-	        
-<!-- 	          <div class="full"> -->
-<%-- 	          <label for="employedExpiredStatus1${i}">續期滿後留任狀況：</label> --%>
-<!-- 	            <span> -->
-<%-- 	            <input type="radio" name="employedExpiredStatus${i}" value="1" id="employedExpiredStatus1${i}"> --%>
-<!-- 	            於繼續僱用18個月內離職 -->
-<!-- 	            </span> -->
-<!-- 	            <span> -->
-<%-- 	            <input type="radio" name="employedExpiredStatus${i}" value="2" id="employedExpiredStatus2${i}"> --%>
-<!-- 	            於繼續僱用18個月後 -->
-<%-- 	            <input type="number" step="1" min="0" style="width:50px;" id="employedExpiredResign${i}" name="employedExpiredResign"> --%>
-<!-- 	            個月離職 -->
-<!-- 	            </span> -->
-<%-- 	            <input type="radio" name="employedExpiredStatus${i}" value="3" id="employedExpiredStatus3${i}"> --%>
-<!-- 	            已滿18個月在職中 -->
-<!-- 	          </div> -->
-	
-<!-- 	          <div class="close"><button class="close" title="移除此筆資料">X</button></div> -->
-	          
-<!-- 	        </li> -->
-	        
-<%-- 	      </c:forEach> --%>
-<%-- 	    </c:otherwise></c:choose> --%>
-<!--       </ol> -->
-      
-      
-<!--       <div class="btn_box"> -->
-<!--       <button class="subjoin" onclick="situationAdd()">＋增加欄位</button> -->
-<!--       <button class="delete" onclick="situationDelete()">－減少欄位</button> -->
-<!--       <button class="save" onclick="situationSave()">暫存資料</button> -->
-<!--       </div>   -->
-      
-<!--     </div> -->
 
     <!------------ loading 效果 ------------>
     <div id="loader-container" style="display:none;">
@@ -688,14 +526,10 @@ C=(B)/(A) x 100%">
     </div>
    	
     <div class="page">
-      <button onclick="javascript:location.href='employ_02?sid=${sid}'">回上頁</button>
+      <button onclick="javascript:location.href='employ_02'">回上頁</button>
       <button onclick="totalSave('Y')">暫存資料</button>
       <button onclick="next()">下一步</button>
     </div>
-<!--     <div id=loading style="position:fixed; left:423px; top:261px; width:227px; height:20px; z-index:1;margin-top:5%;margin-left:20%"> -->
-<!-- <p style="font-weight:bold;">正在載入中,請稍等.....</p> -->
-<!-- <img src="images/loading.gif" style="width:100px;"></div> -->
-<!-- 	</div> -->
     
   </div>
   <!------------ 申請流程 END ------------>

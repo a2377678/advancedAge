@@ -73,32 +73,6 @@
   <!-- Modal-4 -->
   <!--- header --->
   <%@ include file="header.jsp" %>
-<!--   <header> -->
-<!--     <div class="navigation"> -->
-<!--       <div class="top_logo"><img src="images/top_logo.png"></div> -->
-<!--       <nav> -->
-<!--         <ul> -->
-<!--         　　<li><a href="employ" title="帳號申請／登入">帳號申請／登入</a></li> -->
-<!--         　　<li><a href="#" title="網站導覽">網站導覽</a></li> -->
-<!--         </ul> -->
-<!--       </nav> -->
-<!--     </div> -->
-    
-<!--     - nav - -->
-<!--     <nav class="main_menu"> -->
-<!--       <ul> -->
-<!--         <li><a href="index" title="首頁" class="m1">首頁</a></li> -->
-<!--         <li><a href="require" title="補助計畫" class="m2">補助計畫</a></li> -->
-<!--         <li><a href="employ" title="線上申辦" class="m3-in in">線上申辦</a></li> -->
-<!--         <li><a href="#" title="案件查詢" class="m4">案件查詢</a></li> -->
-<!--         <li><a href="#" title="申請教學" class="m5">申請教學</a></li> -->
-<!--         <li><a href="#" title="資料下載" class="m6">資料下載</a></li> -->
-<!--         <li><a href="#" title="諮詢服務" class="m7">諮詢服務</a></li> -->
-<!--       </ul> -->
-<!--     </nav> -->
-<!--     - nav end -  -->
-    
-<!--   </header> -->
   <!--- header end ---> 
   
   <!--- main --->
@@ -118,7 +92,6 @@
  
     <!-------------設立登記證明文件------------>
     <div class="form">
-    	<input type="hidden" id="sid" value="${sid}"/>
       <div class="title_main">
       <span>設立登記證明文件</span>
       <em>須加蓋公司單位及負責人用印 (公司大小章)
@@ -212,12 +185,6 @@
 	        <button class="add" onclick="addInsureProof(1)" style>＋</button>
         </div>
         </c:otherwise></c:choose>
-<!--         <div class="full"> -->
-<!--         <label for="insureProof1">文件(1)</label> -->
-<!--         <input type="file" id="insureProof1" name="insureProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z"> -->
-<!--         <button class="add" onclick="delInsureProof(1)">－</button> -->
-<!--         <button class="add" onclick="addInsureProof(1)" style>＋</button> -->
-<!--         </div> -->
       </div>
       
       
@@ -380,7 +347,7 @@
     </div>
      
     <div class="page">
-      <button onclick="javascript:location.href='employ_03?sid=${sid}'">回上頁</button>
+      <button onclick="javascript:location.href='employ_03'">回上頁</button>
       <!--- Button trigger modal --->
       <button type="button" class="" data-bs-toggle="modal" data-bs-target="#sure">下一步</button>
       <!---------- Modal ---------->
@@ -397,7 +364,7 @@
             </div>
             <div class="pt-3 pb-5">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">返回檢查</button>
-              <button type="button" class="btn btn-primary" onclick="javascript:location.href='employ_05?sid=${sid}'">確認完成，下一步</button>
+              <button type="button" class="btn btn-primary" onclick="javascript:location.href='employ_05'">確認完成，下一步</button>
             </div>
           </div>
         </div>

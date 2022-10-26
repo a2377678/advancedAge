@@ -42,12 +42,6 @@ String requestURI=request.getRequestURI().replace(path,"").replace("/WEB-INF",""
                   <ul class="dropdown-menu rounded" aria-labelledby="navbarDropdownMenuLink">
                     <li><a class="dropdown-item text-light" href="employ" title="繼續雇用高齡者補助 - 申請作業">繼續僱用高齡者補助 - 申請作業</a></li>
                     <li><a class="dropdown-item text-light" href="employ_payment" title="繼續雇用高齡者補助 - 請領作業">繼續僱用高齡者補助 - 請領作業</a></li>
-                    <!---
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item text-white-50" href="#">退休者傳承專業技術 - 尚未開放</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item text-white-50" href="#">退休後再就業準備 - 尚未開放</a></li>
-                    --->
                   </ul>
                 </li>
                 

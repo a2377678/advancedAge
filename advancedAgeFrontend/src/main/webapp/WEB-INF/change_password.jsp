@@ -16,81 +16,6 @@
   
   <!--- header --->
   <%@ include file="header.jsp" %>
-<!--   <header> -->
-
-<!--     ---------- nav ---------- -->
-<!--     <nav class="navbar navbar-expand-lg bg-gray navbar-dark fixed-top p-0"> -->
-        
-<!--           <div class="navigation w-100"> -->
-<!--             <a class="navbar-brand" href="#"><img src="images/top_logo.png"></a> -->
-<!--             <a class="sitemap text-light float-end p-3" href="change_password.html" title="網站導覽">修改密碼</a> -->
-<!--             <a class="sitemap text-light float-end p-3" href="sitemap.html" title="網站導覽">網站導覽</a> -->
-          
-<!--             <button class="navbar-toggler" type="button" data-toggle="collapse"  -->
-<!--               data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"  -->
-<!--               aria-expanded="false" aria-label="Toggle navigation"> -->
-<!--               <span class="navbar-toggler-icon"></span> -->
-<!--             </button> -->
-
-<!--             <div class="collapse navbar-collapse main_menu" id="navbarSupportedContent"> -->
-              
-<!--               <ul class="navbar-nav mr-auto"> -->
-              
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="index.html" title="首頁" class="m1">首頁</a> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="#" title="補助計畫" class="navbar-dark nav-link dropdown-toggle m2" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">補助計畫</a> -->
-<!--                   <ul class="dropdown-menu rounded" aria-labelledby="navbarDropdownMenuLink"> -->
-<!--                     <li><a class="dropdown-item text-light" href="require.html" title="繼續僱用高齡者補助計畫說明">繼續僱用高齡者補助計畫說明</a></li> -->
-<!--                   </ul> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="employ.html" title="線上申辦" class="navbar-dark nav-link dropdown-toggle m3" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">線上申辦</a> -->
-<!--                   <ul class="dropdown-menu rounded" aria-labelledby="navbarDropdownMenuLink"> -->
-<!--                     <li><a class="dropdown-item text-light" href="employ.html" title="繼續雇用高齡者補助 - 申請作業">繼續僱用高齡者補助 - 申請作業</a></li> -->
-<!--                     <li><a class="dropdown-item text-light" href="employ_patmant.html" title="繼續雇用高齡者補助 - 請領作業">繼續僱用高齡者補助 - 請領作業</a></li> -->
-<!--                     -
-<!--                     <li><hr class="dropdown-divider"></li> -->
-<!--                     <li><a class="dropdown-item text-white-50" href="#">退休者傳承專業技術 - 尚未開放</a></li> -->
-<!--                     <li><hr class="dropdown-divider"></li> -->
-<!--                     <li><a class="dropdown-item text-white-50" href="#">退休後再就業準備 - 尚未開放</a></li> -->
-<!--                     ---> -->
-<!--                   </ul> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item text-dark"> -->
-<!--                   <a href="schedule.html" title="案件查詢" class="navbar-dark nav-link dropdown-toggle m4" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">案件查詢</a> -->
-<!--                   <ul class="dropdown-menu rounded" aria-labelledby="navbarDropdownMenuLink"> -->
-<!--                     <li><a class="dropdown-item text-light" href="schedule.html" title="繼續僱用高齡者補助 - 申請進度">繼續僱用高齡者補助 - 申請進度</a></li> -->
-<!--                     <li><a class="dropdown-item text-light" href="schedule_pass.html" title="繼續僱用高齡者補助 - 請領進度">繼續僱用高齡者補助 - 請領進度</a></li> -->
-<!--                   </ul> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="teaching.html" title="申請教學" class="m5">申請教學</a> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="download.html" title="資料下載" class="m6">資料下載</a> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="service.html" title="諮詢服務" class="m7">諮詢服務</a> -->
-<!--                 </li>  -->
-                
-<!--               </ul> -->
-            
-<!--             </div> -->
-          
-<!--           </div> -->
-          
-<!--     </nav> -->
-<!--     ---------- nav end ----------  -->
-    
-<!--   </header> -->
   <!--- header end --->  
   
   <!--- main --->
@@ -101,16 +26,6 @@
     <h1>修改密碼</h1>
     <h2>請輸入帳號及新舊密碼</h2>
     
-    <!---備妥項目
-    <div class="notice">
-      <div>您是否已備妥下列項目了呢 ?</div>
-      <ol>
-        <li>工商憑證與讀卡機</li>
-        <li>設立登記證明文件</li>
-        <li>投保或職災保險證明文件</li>
-        <li>繼續僱用者近3個月薪資證明文件</li>
-      </ol>
-    </div>--->
     
     <!---帳號申請--->
     <h3>密碼長度至少12字元，需有英文、數字、特殊符號 ( !@#$%* ) 的組合。</h3>

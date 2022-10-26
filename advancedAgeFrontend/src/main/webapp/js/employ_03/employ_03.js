@@ -13,8 +13,7 @@ $(function(){
 			    type: "POST",
 			    url: 'delAdvancedAgeEmploymentList',
 			    data: {
-					identification : $(this).parent().parent('li').find('input[name^="identification"]').val(),
-					sid : $('#sid').val()
+					identification : $(this).parent().parent('li').find('input[name^="identification"]').val()
 			    },
 			    dataType:"text", //ajax返回值text（json格式也可用這返回，也可設成json）
 			    success: function(json){
@@ -89,8 +88,7 @@ function planSave(showMsg,upload){
 			nearHighEmploymentNumber : $('#nearHighEmploymentNumber').val(),
 			continueEmploymentNumber : $('#continueEmploymentNumber').val(),
 			continueEmploymentPercentage : $('#continueEmploymentPercentage').val(),
-			attachEmploymentList : upload,
-			sid : $('#sid').val()
+			attachEmploymentList : upload
 //			attachFriendlyMeasures : $('#attachFriendlyMeasures').val()==''?'N':'Y',
 //			friendlyMeasures : $('#friendlyMeasures').val(),
 //			attachAssistanceMeasures : $('#attachAssistanceMeasures').val()==''?'N':'Y',
@@ -337,8 +335,7 @@ function listSave(showMsg){
 			nearHighEmploymentNumber : $('#nearHighEmploymentNumber').val(),
 			continueEmploymentNumber : $('#continueEmploymentNumber').val(),
 			continueEmploymentPercentage : $('#continueEmploymentPercentage').val(),
-			attachEmploymentList : 'N',
-			sid : $('#sid').val()
+			attachEmploymentList : 'N'
 //			attachFriendlyMeasures : $('#attachFriendlyMeasures').val()==''?'N':'Y',
 //			friendlyMeasures : $('#friendlyMeasures').val(),
 //			attachAssistanceMeasures : $('#attachAssistanceMeasures').val()==''?'N':'Y',
@@ -418,8 +415,7 @@ function fileUpload(showMsg){
 			nearHighEmploymentNumber : $('#nearHighEmploymentNumber').val(),
 			continueEmploymentNumber : $('#continueEmploymentNumber').val(),
 			continueEmploymentPercentage : $('#continueEmploymentPercentage').val(),
-			attachEmploymentList : 'Y',
-			sid : $('#sid').val()
+			attachEmploymentList : 'Y'
 //			attachFriendlyMeasures : $('#attachFriendlyMeasures').val()==''?'N':'Y',
 //			friendlyMeasures : $('#friendlyMeasures').val(),
 //			attachAssistanceMeasures : $('#attachAssistanceMeasures').val()==''?'N':'Y',
@@ -433,7 +429,6 @@ function fileUpload(showMsg){
 			{
 				let file = new FormData();
 				file.append('uploadFile',$('#uploadFile').get(0).files[0]);
-				file.append('sid',$('#sid').val());
 				$.confirm({
 				    title: '補助名單上傳前確認',
 				    animation: 'zoom',
@@ -585,8 +580,7 @@ function totalSave(showMsg){
 				nearHighEmploymentNumber : $('#nearHighEmploymentNumber').val(),
 				continueEmploymentNumber : $('#continueEmploymentNumber').val(),
 				continueEmploymentPercentage : $('#continueEmploymentPercentage').val(),
-				attachEmploymentList : 'N',
-				sid : $('#sid').val()
+				attachEmploymentList : 'N'
 	//			attachFriendlyMeasures : $('#attachFriendlyMeasures').val()==''?'N':'Y',
 	//			friendlyMeasures : $('#friendlyMeasures').val(),
 	//			attachAssistanceMeasures : $('#attachAssistanceMeasures').val()==''?'N':'Y',
@@ -672,8 +666,7 @@ function totalSave(showMsg){
 				nearHighEmploymentNumber : $('#nearHighEmploymentNumber').val(),
 				continueEmploymentNumber : $('#continueEmploymentNumber').val(),
 				continueEmploymentPercentage : $('#continueEmploymentPercentage').val(),
-				attachEmploymentList : 'Y',
-				sid : $('#sid').val()
+				attachEmploymentList : 'Y'
 	//			attachFriendlyMeasures : $('#attachFriendlyMeasures').val()==''?'N':'Y',
 	//			friendlyMeasures : $('#friendlyMeasures').val(),
 	//			attachAssistanceMeasures : $('#attachAssistanceMeasures').val()==''?'N':'Y',
@@ -687,7 +680,6 @@ function totalSave(showMsg){
 				{
 					let file = new FormData();
 					file.append('uploadFile',$('#uploadFile').get(0).files[0]);
-					file.append('sid',$('#sid').val());
 					$.confirm({
 					    title: '補助名單上傳前確認',
 					    animation: 'zoom',
@@ -761,8 +753,7 @@ function next(){
 					nearHighEmploymentNumber : $('#nearHighEmploymentNumber').val(),
 					continueEmploymentNumber : $('#continueEmploymentNumber').val(),
 					continueEmploymentPercentage : $('#continueEmploymentPercentage').val(),
-					attachEmploymentList : 'N',
-					sid : $('#sid').val()
+					attachEmploymentList : 'N'
 		//			attachFriendlyMeasures : $('#attachFriendlyMeasures').val()==''?'N':'Y',
 		//			friendlyMeasures : $('#friendlyMeasures').val(),
 		//			attachAssistanceMeasures : $('#attachAssistanceMeasures').val()==''?'N':'Y',
@@ -816,7 +807,7 @@ function next(){
 						    success: function(json){ 
 						   		if(json=='success')
 								{
-									location.href='employ_04?sid='+$('#sid').val();
+									location.href='employ_04';
 								}
 						    },
 						    error: function(json){
@@ -847,8 +838,7 @@ function next(){
 					nearHighEmploymentNumber : $('#nearHighEmploymentNumber').val(),
 					continueEmploymentNumber : $('#continueEmploymentNumber').val(),
 					continueEmploymentPercentage : $('#continueEmploymentPercentage').val(),
-					attachEmploymentList : 'Y',
-					sid : $('#sid').val()
+					attachEmploymentList : 'Y'
 		//			attachFriendlyMeasures : $('#attachFriendlyMeasures').val()==''?'N':'Y',
 		//			friendlyMeasures : $('#friendlyMeasures').val(),
 		//			attachAssistanceMeasures : $('#attachAssistanceMeasures').val()==''?'N':'Y',
@@ -862,7 +852,6 @@ function next(){
 					{
 						let file = new FormData();
 						file.append('uploadFile',$('#uploadFile').get(0).files[0]);
-						file.append('sid',$('#sid').val());
 						$.confirm({
 						    title: '補助名單上傳前確認',
 						    animation: 'zoom',
@@ -881,7 +870,12 @@ function next(){
 								   	// 判斷是否接收成功
 										if(res=='success')
 										{
-									   			location.href='employ_04?sid='+$('#sid').val();
+									   		location.href='employ_04';
+										}
+										else
+										{
+											$('#loader-container').hide();
+											alert('檔案錯誤');
 										}
 									}
 								});
@@ -901,7 +895,7 @@ function next(){
 						}
 						else
 						{
-							location.href='employ_04?sid='+$('#sid').val();
+							location.href='employ_04';
 						}
 					}
 			    },

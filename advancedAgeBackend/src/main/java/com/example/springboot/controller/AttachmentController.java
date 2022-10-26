@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +39,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller 
 public class AttachmentController {
+
+	Logger logger = LogManager.getLogger(AttachmentController.class);
 	
 	@Autowired
 	CallApi api;
@@ -61,6 +66,15 @@ public class AttachmentController {
 		if(blackListFiles !=null) {
 			for(int i=0;i<blackListFiles.length;i++) {
 				try {
+					String extension = FilenameUtils.getExtension(blackListFiles[i].getOriginalFilename());
+					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
+							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z")
+							&& !extension.toLowerCase().trim().equals("tiff"))
+	                {
+						logger.warn("companyInfoRegisterFileUplolad 檔案格式錯誤");
+						throw new Exception("請確認副檔名是否正確!");
+	                }
 					attach = new Attachment();
 					attach.setFileBelong("BL");
 					attach.setFileBelongId(Integer.valueOf(id));
@@ -75,8 +89,9 @@ public class AttachmentController {
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.warn(e.getMessage());
+				}catch (Exception e) {
+					logger.warn(e.getMessage());
 				}
 				api.httpPost(ip+"fileUplolad",json);
 			}
@@ -94,6 +109,15 @@ public class AttachmentController {
 		if(blackListFiles !=null) {
 			for(int i=0;i<blackListFiles.length;i++) {
 				try {
+					String extension = FilenameUtils.getExtension(blackListFiles[i].getOriginalFilename());
+					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
+							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z")
+							&& !extension.toLowerCase().trim().equals("tiff"))
+	                {
+						logger.warn("companyInfoRegisterFileUplolad 檔案格式錯誤");
+						throw new Exception("請確認副檔名是否正確!");
+	                }
 					attach = new Attachment();
 					attach.setFileBelong("SI");
 					attach.setFileBelongId(Integer.valueOf(id));
@@ -108,8 +132,9 @@ public class AttachmentController {
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.warn(e.getMessage());
+				}catch (Exception e) {
+					logger.warn(e.getMessage());
 				}
 				api.httpPost(ip+"fileUplolad",json);
 			}
@@ -127,6 +152,15 @@ public class AttachmentController {
 		if(blackListFiles !=null) {
 			for(int i=0;i<blackListFiles.length;i++) {
 				try {
+					String extension = FilenameUtils.getExtension(blackListFiles[i].getOriginalFilename());
+					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
+							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z")
+							&& !extension.toLowerCase().trim().equals("tiff"))
+	                {
+						logger.warn("companyInfoRegisterFileUplolad 檔案格式錯誤");
+						throw new Exception("請確認副檔名是否正確!");
+	                }
 					attach = new Attachment();
 					attach.setFileBelong("SI");
 					attach.setFileBelongId(Integer.valueOf(id));
@@ -141,8 +175,9 @@ public class AttachmentController {
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.warn(e.getMessage());
+				}catch (Exception e) {
+					logger.warn(e.getMessage());
 				}
 				api.httpPost(ip+"fileUplolad",json);
 			}
@@ -152,13 +187,15 @@ public class AttachmentController {
 	@RequestMapping(value = "/download", method = RequestMethod.GET)
 	public void download(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("path") String path){ 
-		
+		FileInputStream fis = null;
+        OutputStream os = null;
 		try{
 	        // 1.得到要下載的檔名稱
 	        String filename = path.substring(path.lastIndexOf("/")+1,path.length());
 //	        filename = new String(filename.getBytes("iso8859-1"), "utf-8"); // 解決中文亂碼
 	        //檔案所在位置
 	        File file = new File(localPath+path.substring(0, path.lastIndexOf("/")), filename).getCanonicalFile();
+	        
 	        if (file.exists()) {
 	            // 檔案存在，完成下載
 	            // 下載注意事項1--設定下載檔案的mimeType
@@ -171,8 +208,8 @@ public class AttachmentController {
 	            response.setHeader("content-disposition", "attachment;filename="
 	                    + filename);
 
-	            FileInputStream fis = new FileInputStream(file); // 讀取要下載檔案的內容
-	            OutputStream os = response.getOutputStream();// 將要下載的檔案內容通過輸出流寫回到瀏覽器
+	            fis = new FileInputStream(file); // 讀取要下載檔案的內容
+	            os = response.getOutputStream();// 將要下載的檔案內容通過輸出流寫回到瀏覽器
 	            int len = -1;
 	            byte[] b = new byte[1024 * 100];
 
@@ -180,43 +217,66 @@ public class AttachmentController {
 	                os.write(b, 0, len);
 	                os.flush();
 	            }
-	            os.close();
-	            fis.close();
+	            
 	        } else {
 	            throw new RuntimeException("下載資源不存在");
 	        }
-	        }catch (IOException e){
-
-	        }
-		
+        }catch (IOException e){
+        	logger.warn(e.getMessage());
+        }finally {
+        	try {
+				fis.close();
+				os.close();
+			} catch (IOException e) {
+				logger.warn(e.getMessage());
+			}
+        }
 	}
 	
-	public void SaveFileFromInputStream(InputStream stream,String path,String filename) throws IOException{  
-		File directory = new File(localPath+path+"/"+filename).getCanonicalFile();
-		
-		//路徑是否存在
-		if (!directory.getParentFile().exists()) {
-		    try {
-		    	directory.getParentFile().mkdirs();
-		    	directory.createNewFile();
-		    } catch (IOException e) {
-		        e.printStackTrace();
-		    }
+	public void SaveFileFromInputStream(InputStream stream,String path,String filename){  
+		File directory;
+		try {
+			directory = new File(localPath+path+"/"+filename).getCanonicalFile();
+			//路徑是否存在
+			if (!directory.getParentFile().exists()) {
+			    try {
+			    	boolean checkPFile = directory.getParentFile().mkdirs();
+			    	if(checkPFile)
+			    	{
+			    		directory.createNewFile();
+			    	}
+			    } catch (IOException e) {
+			    	logger.warn(e.getMessage());
+			    }
+			}
+		} catch (IOException e1) {
+			logger.warn(e1.getMessage());
 		}
 		
 		//存檔
-        FileOutputStream fs=new FileOutputStream(localPath+path+"/"+filename);
-        byte[] buffer =new byte[1024*1024];
-        int bytesum = 0;
-        int byteread = 0; 
-        while ((byteread=stream.read(buffer))!=-1)
-        {
-           bytesum =byteread;
-           fs.write(buffer,0,byteread);
-           fs.flush();
-        } 
-        fs.close();
-        stream.close();      
+        FileOutputStream fs=null;
+		try {
+			fs = new FileOutputStream(localPath+path+"/"+filename);
+			byte[] buffer =new byte[1024*1024];
+	        int byteread = 0; 
+	        while ((byteread=stream.read(buffer))!=-1)
+	        {
+	           fs.write(buffer,0,byteread);
+	           fs.flush();
+	        } 
+		} catch (FileNotFoundException e) {
+			logger.warn(e.getMessage());
+		} catch (IOException e) {
+			logger.warn(e.getMessage());
+		}finally {
+			try {
+				fs.close();
+				stream.close(); 
+			} catch (IOException e) {
+				logger.warn(e.getMessage());
+			}
+			
+		}
     }
 	
 //	public void addAdvancedAgeApply(HttpServletRequest request, HttpServletResponse response
@@ -243,21 +303,17 @@ public class AttachmentController {
 		try {
 			json = objectMapper.writeValueAsString(base);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip + "selectATypeAdvancedAgeBase", json);
-		JSONArray array = new JSONArray(jsondata);
+		JSONArray array = new JSONArray(api.httpPost(ip + "selectATypeAdvancedAgeBase", json));
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			if (array.length()>0) {
 				searchBase = mapper.readValue(array.getJSONObject(0).toString(), AdvancedAgeBase.class);}
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		return searchBase;
 	}

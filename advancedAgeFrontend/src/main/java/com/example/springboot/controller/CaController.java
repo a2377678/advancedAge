@@ -1,7 +1,9 @@
 package com.example.springboot.controller; 
 
 import java.io.IOException;
+import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
@@ -12,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.cms.AttributeTable;
 import org.bouncycastle.asn1.cms.Attribute;
@@ -22,6 +26,7 @@ import org.bouncycastle.cms.CMSSignedData;
 import org.bouncycastle.cms.SignerInformation;
 import org.bouncycastle.cms.SignerInformationStore;
 import org.bouncycastle.cms.jcajce.JcaSimpleSignerInfoVerifierBuilder;
+import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.util.Store;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +38,7 @@ import com.example.springboot.util.Base64;
 @Controller 
 public class CaController { 
 	
+	Logger logger = LogManager.getLogger(CaController.class);
 	CMSSignedData cms;
 	X509Certificate userCert;
 	Date signTime;
@@ -45,11 +51,10 @@ public class CaController {
 	public final ASN1ObjectIdentifier CARDSN_OID=new ASN1ObjectIdentifier("2.16.886.1.100.2.204");
 	
 	public void setB64SignedData(String sigb64){
-		byte[] sig=Base64.decode(sigb64);
 		try {
-			cms = new CMSSignedData(sig);
+			cms = new CMSSignedData(Base64.decode(sigb64));
 		} catch (CMSException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 	}
 	public String getCardSN(){return cardNumber;}
@@ -105,8 +110,17 @@ public class CaController {
 	        byte[] data=(byte[])cms.getSignedContent().getContent();
 	        
 	        return true;
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (ParseException e) {
+			logger.warn(e.getMessage());
+			return false;
+		} catch (CertificateException e) {
+			logger.warn(e.getMessage());
+			return false;
+		} catch (OperatorCreationException e) {
+			logger.warn(e.getMessage());
+			return false;
+		} catch (CMSException e) {
+			logger.warn(e.getMessage());
 			return false;
 		}
 	}
@@ -122,7 +136,6 @@ public class CaController {
         //SERIALNUMBER=82798010, O=弘捷資訊服務有限公司, C=TW
         session=request.getSession();
         String cardData[]=getDn().split(",");
-        String companyName="";
         for(int i=0;i<cardData.length;i++) {
         	if(cardData[i].indexOf("SERIALNUMBER=")!=-1)
         	{
@@ -130,7 +143,6 @@ public class CaController {
         	}
         	else if(cardData[i].indexOf("O=")!=-1)
         	{
-        		companyName = cardData[i].substring(cardData[i].indexOf("=")+1, cardData[i].length());
         		session.setAttribute(session.getId()+"companyName", cardData[i].substring(cardData[i].indexOf("=")+1, cardData[i].length()));
         	}
         }
@@ -146,7 +158,7 @@ public class CaController {
 				response.getWriter().print("success;"+StringEscapeUtils.escapeHtml(session.getAttribute(session.getId()+"seq").toString()));
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 	}
 }

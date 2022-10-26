@@ -5,6 +5,8 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller 
 public class AdvancedAgeBaseController { 
 	
+	Logger logger = LogManager.getLogger(AdvancedAgeBaseController.class);
+	
 	@Autowired
 	public CallApi api;
 	
@@ -32,15 +36,14 @@ public class AdvancedAgeBaseController {
 		try {
 			json = objectMapper.writeValueAsString(base);
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip+"fileStatusSave",json);
+		api.httpPost(ip+"fileStatusSave",json);
 		response.setContentType("text/html;charset=UTF-8");
 		try {
-//			if(jsondata !=null)
 				response.getWriter().print("success");
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 	}
 	
@@ -51,15 +54,14 @@ public class AdvancedAgeBaseController {
 		try {
 			json = objectMapper.writeValueAsString(base);
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip+"changeFileStatus",json);
+		api.httpPost(ip+"changeFileStatus",json);
 		response.setContentType("text/html;charset=UTF-8");
 		try {
-//			if(jsondata !=null)
 				response.getWriter().print("success");
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 	}
 	
@@ -70,15 +72,14 @@ public class AdvancedAgeBaseController {
 		try {
 			json = objectMapper.writeValueAsString(base);
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip+"saveBase",json);
+		api.httpPost(ip+"saveBase",json);
 		response.setContentType("text/html;charset=UTF-8");
 		try {
-//			if(jsondata !=null)
 				response.getWriter().print("success");
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 	}
 }

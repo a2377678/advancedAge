@@ -17,32 +17,6 @@
   
   <!--- header --->
   <%@ include file="header.jsp" %>
-<!--   <header> -->
-<!--     <div class="navigation"> -->
-<!--       <div class="top_logo"><img src="images/top_logo.png"></div> -->
-<!--       <nav> -->
-<!--         <ul> -->
-<!--           <li><a href="login.html" title="帳號申請／登入">帳號申請／登入</a></li> -->
-<!--           <li><a href="sitemap.html" title="網站導覽">網站導覽</a></li> -->
-<!--         </ul> -->
-<!--       </nav> -->
-<!--     </div> -->
-    
-<!--     - nav - -->
-<!--     <nav class="main_menu"> -->
-<!--       <ul> -->
-<!--         <li><a href="index.html" title="首頁" class="m1">首頁</a></li> -->
-<!--         <li><a href="require.html" title="補助計畫" class="m2">補助計畫</a></li> -->
-<!--         <li><a href="employ.html" title="線上申辦" class="m3">線上申辦</a></li> -->
-<!--         <li><a href="schedule.html" title="案件查詢" class="m4">案件查詢</a></li> -->
-<!--         <li><a href="teaching.html" title="申請教學" class="m5">申請教學</a></li> -->
-<!--         <li><a href="download.html" title="資料下載" class="m6">資料下載</a></li> -->
-<!--         <li><a href="service.html" title="諮詢服務" class="m7">諮詢服務</a></li> -->
-<!--       </ul> -->
-<!--     </nav> -->
-<!--     - nav end -  -->
-    
-<!--   </header> -->
   <!--- header end ---> 
   
   <!--- main --->
@@ -55,13 +29,10 @@
     <h2>驗證身分</h2>
     
     <!---申辦前準備--->
-    <%
-	 String redirect = request.getParameter("type");
-	%>
     <h3>請先「登入帳號」或使用「工商憑證」進行登入，<br>
     若您忘記密碼請聯繫我們，將由人工查詢及回覆。</h3>
     <div class="login">
-    	<input type="hidden" id="type" name="type" value="<c:out value="<%=redirect %>"/>">
+    	<input type="text" id="type" name="type" value="${type }" style="display:none">
       <div class="mode style-2">
         <div class="title_line">無卡申請</div>
         <div class="title_word">帳號登入</div>
@@ -88,13 +59,9 @@
             <div><a href="register_01">註冊帳號</a>　<a href="password_01">忘記帳密</a></div>
           </li>
         
-          <!---<li>
-            <div>( 需檢附文件註冊及查詢 )</div>
-          </li>--->
         
           <li>
           	<div><button onclick="aVerify()">登入</button></div>
-<!--             <div><button onclick="javascript:location.href='employ_02.html'">登入</button></div> -->
           </li>
         
         </ul>
@@ -109,18 +76,18 @@
           <li>
           
           <label for="">密碼</label>
-          <input type="password" pattern="[a-zA-Z0-9]{8,16}" name="pin" id="pin" placeholder="工商憑證卡片PIN碼" value="82798010">
-				<INPUT type="hidden" name="tbs" id="tbs" value="TBS"/>
+          <input type="password" pattern="[a-zA-Z0-9]{8,16}" name="pin" id="pin" placeholder="工商憑證卡片PIN碼" value="">
+				<INPUT type="text" name="tbs" id="tbs" value="TBS" style="display:none">
 <SELECT name="tbsEncoding" id="tbsEncoding" style="display:none"><OPTION value="NONE" selected>NONE</OPTION><OPTION value="base64" >base64</OPTION></SELECT>
 <SELECT name="hashAlgorithm" id="hashAlgorithm" style="display:none"><OPTION value="SHA1">SHA1</OPTION>
   	   <OPTION value="SHA256" selected>SHA256</OPTION>	   <OPTION value="SHA384">SHA384</OPTION>
   	   <OPTION value="SHA512">SHA512</OPTION>	   </SELECT><BR>
-<INPUT type="hidden" name="nonce" id="nonce"/><BR>
+<INPUT type="text" name="nonce" id="nonce" style="display:none"><BR>
 <SELECT name="withCardSN" id="withCardSN" style="display:none"><OPTION value="true">true</OPTION>	   <OPTION value="false" 
   selected>false</OPTION>	   </SELECT>
 
 <TEXTAREA name="b64SignedData" id="ResultSignedData" rows="8" cols="65" style="display:none"></TEXTAREA><br/>
-<input type="hidden" name="returnCode" id="returnCode"/>
+<input type="text" name="returnCode" id="returnCode" style="display:none">
           </li>
           
           <li><div><a href="#">讀卡元件</a>　<a href="https://moeacaweb.nat.gov.tw/MoeaeeWeb/function/cert_3.aspx" target="_blank">忘記密碼</a></div></li>
@@ -130,7 +97,6 @@
         
           <li>
             <div>
-<!--             	<button onclick="javascript:location.href='employ_02'">登入</button> -->
             	<button type="button" id="MakeSignature" onclick="makeSignature()">登入</button>
             </div>
           </li>

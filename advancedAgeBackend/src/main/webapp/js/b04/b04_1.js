@@ -17,7 +17,7 @@ $(function(){
 function addSiteInspectionFile(num){
 	$('button[onclick^="addSiteInspectionFile"]').hide();
 	$('#siteInspection').append('<div>'+
-                '<input type="file" id="siteInspectionFile'+(Number(num)+1)+'" name="siteInspectionFile"> '+
+                '<input type="file" id="siteInspectionFile'+(Number(num)+1)+'" name="siteInspectionFile" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z,.tiff"> '+
 				'<button type="button" class="add" onclick="delSiteInspectionFile('+(Number(num)+1)+')">－</button> '+
                 '<button type="button" class="add" onclick="addSiteInspectionFile('+(Number(num)+1)+')" style>＋</button>'+
               '</div>');
@@ -31,7 +31,7 @@ function delSiteInspectionFile(num){
 function addSiteInspectionOtherFile(num){
 	$('button[onclick^="addSiteInspectionOtherFile"]').hide();
 	$('#siteInspectionOther').append('<div>'+
-                '<input type="file" id="siteInspectionOtherFile'+(Number(num)+1)+'" name="siteInspectionOtherFile"> '+
+                '<input type="file" id="siteInspectionOtherFile'+(Number(num)+1)+'" name="siteInspectionOtherFile" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z,.tiff"> '+
 				'<button type="button" class="add" onclick="delSiteInspectionOtherFile('+(Number(num)+1)+')">－</button> '+
                 '<button type="button" class="add" onclick="addSiteInspectionOtherFile('+(Number(num)+1)+')" style>＋</button>'+
               '</div>');
@@ -91,7 +91,7 @@ function upload(id){
 			   	processData: false,
 				data: siteInspectionOtherFiles,
 				success: function(result) {
-					location.href='b04?account='+$('input[name="account"]').val();
+					location.href='b04';
 				}
 			});
 		}

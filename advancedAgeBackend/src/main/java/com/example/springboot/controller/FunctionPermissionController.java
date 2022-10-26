@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller 
 public class FunctionPermissionController { 
+
+	Logger logger = LogManager.getLogger(FunctionPermissionController.class);
 	
 	@Autowired
 	CallApi api;
@@ -34,7 +38,7 @@ public class FunctionPermissionController {
 		try {
 			json = objectMapper.writeValueAsString(functionPermission);
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		String jsondata = api.httpPost(ip+"selectFunctionPermission",json);
 		
@@ -43,7 +47,7 @@ public class FunctionPermissionController {
 			functionPermission = objectMapper.readValue(jsondata, FunctionPermission.class);
 			response.getWriter().print("{\"status\":\"success\",\"code\":\""+StringEscapeUtils.escapeHtml(functionPermission.getFunctionCode())+"\"}");
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 	}
 	
@@ -54,16 +58,15 @@ public class FunctionPermissionController {
 		try {
 			json = objectMapper.writeValueAsString(functionPermission);
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip+"editFunctionPermission",json);
+		api.httpPost(ip+"editFunctionPermission",json);
 		
 		response.setContentType("text/html;charset=UTF-8");
 		try {
-			functionPermission = objectMapper.readValue(jsondata, FunctionPermission.class);
 			response.getWriter().print("{\"status\":\"success\"}");
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 	}
 }

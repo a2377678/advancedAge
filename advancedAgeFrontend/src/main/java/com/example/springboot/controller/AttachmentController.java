@@ -15,7 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -44,6 +48,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller 
 public class AttachmentController {
 	
+	Logger logger = LogManager.getLogger(AttachmentController.class);
+	
 	CallApi api = new CallApi();
 	
 	HttpSession session;
@@ -67,6 +73,14 @@ public class AttachmentController {
 		if(registerFiles !=null) {
 			for(int i=0;i<registerFiles.length;i++) {
 				try {
+					String extension = FilenameUtils.getExtension(registerFiles[i].getOriginalFilename());
+					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
+							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+	                {
+						logger.warn("companyInfoRegisterFileUplolad 檔案格式錯誤");
+	                    throw new Exception("請確認副檔名是否正確!");
+	                }
 					attach = new Attachment();
 					attach.setFileBelong("E");
 					attach.setFileBelongId(Integer.valueOf(companyInfoId));
@@ -81,8 +95,9 @@ public class AttachmentController {
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.warn(e.getMessage());
+				}catch (Exception e) {
+					logger.warn(e.getMessage());
 				}
 				api.httpPost(ip+"fileUplolad",json);
 			}
@@ -100,6 +115,14 @@ public class AttachmentController {
 		if(authorizeFiles !=null) {
 			for(int i=0;i<authorizeFiles.length;i++) {
 				try {
+					String extension = FilenameUtils.getExtension(authorizeFiles[i].getOriginalFilename());
+					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
+							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+	                {
+						logger.warn("companyInfoAuFileUplolad 檔案格式錯誤");
+	                    throw new Exception("請確認副檔名是否正確!");
+	                }
 					attach = new Attachment();
 					attach.setFileBelong("E");
 					attach.setFileBelongId(Integer.valueOf(companyInfoId));
@@ -114,8 +137,51 @@ public class AttachmentController {
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.warn(e.getMessage());
+				}catch (Exception e) {
+					logger.warn(e.getMessage());
+				}
+				api.httpPost(ip+"fileUplolad",json);
+			}
+		}
+	}
+	
+	@RequestMapping(value = "/forgetCompanyInfoRegisterFileUplolad", method = RequestMethod.POST)
+	public void forgetCompanyInfoRegisterFileUplolad(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam(value="registerFiles", required=false) MultipartFile[] registerFiles,
+			@RequestParam(value="companyInfoId", required=false) String companyInfoId){ 
+		session = request.getSession();
+		Attachment attach;
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json="";
+		if(registerFiles !=null) {
+			for(int i=0;i<registerFiles.length;i++) {
+				try {
+					String extension = FilenameUtils.getExtension(registerFiles[i].getOriginalFilename());
+					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
+							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+	                {
+						logger.warn("forgetCompanyInfoRegisterFileUplolad 檔案格式錯誤");
+	                    throw new Exception("請確認副檔名是否正確!");
+	                }
+					attach = new Attachment();
+					attach.setFileBelong("FG");
+					attach.setFileBelongId(Integer.valueOf(companyInfoId));
+					attach.setFileName(registerFiles[i].getOriginalFilename());
+					attach.setFileFrequency(1);
+					attach.setFileType("register");
+					attach.setFilePath("/"+attach.getFileBelong()+"/"+attach.getFileBelongId()+"/"+attach.getFileType()+"/"+attach.getFileFrequency());
+					attach.setFileSize((int)registerFiles[i].getSize());
+					attach.setFileStatus(1);
+					//寫檔
+					SaveFileFromInputStream(registerFiles[i].getInputStream(),attach.getFilePath(),registerFiles[i].getOriginalFilename());
+					
+					json = objectMapper.writeValueAsString(attach);
+				} catch (IOException e) {
+					logger.warn(e.getMessage());
+				}catch (Exception e) {
+					logger.warn(e.getMessage());
 				}
 				api.httpPost(ip+"fileUplolad",json);
 			}
@@ -124,8 +190,7 @@ public class AttachmentController {
 	
 	@RequestMapping(value = "/advancedAgeApplyRegisterFileUplolad", method = RequestMethod.POST)
 	public void advancedAgeApplyRegisterFileUplolad(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam(value="registerFiles", required=false) MultipartFile[] registerFiles,
-			@RequestParam(value="sid", required=false) String sid){ 
+			@RequestParam(value="registerFiles", required=false) MultipartFile[] registerFiles){ 
 		session = request.getSession();
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -133,10 +198,18 @@ public class AttachmentController {
 		if(registerFiles !=null) {
 			for(int i=0;i<registerFiles.length;i++) {
 				try {
+					String extension = FilenameUtils.getExtension(registerFiles[i].getOriginalFilename());
+					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
+							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+	                {
+						logger.warn("advancedAgeApplyRegisterFileUplolad 檔案格式錯誤");
+	                    throw new Exception("請確認副檔名是否正確!");
+	                }
 					attach = new Attachment();
 					
 					base = new AdvancedAgeBase();
-					base.setSeq(session.getAttribute(sid+"seq").toString());
+					base.setSeq(session.getAttribute(session.getId()+"seq").toString());
 					AdvancedAgeBase result=selectATypeAdvancedAgeBase(base);
 					if(result.getFileStatusRecord()==null)
 					{
@@ -161,23 +234,17 @@ public class AttachmentController {
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.warn(e.getMessage());
+				}catch (Exception e) {
+					logger.warn(e.getMessage());
 				}
 				api.httpPost(ip+"fileUplolad",json);
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 			}
 			response.setContentType("text/html;charset=UTF-8");
 			try {
 				response.getWriter().print("success");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.warn(e.getMessage());
 			}
 			//申請書附件確認
 //			AdvancedAgeApply apply = new AdvancedAgeApply();
@@ -189,8 +256,7 @@ public class AttachmentController {
 	
 	@RequestMapping(value = "/advancedAgeApplyInsureFileUplolad", method = RequestMethod.POST)
 	public void advancedAgeApplyInsureFileUplolad(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam(value="insureFiles", required=false) MultipartFile[] insureFiles,
-			@RequestParam(value="sid", required=false) String sid){ 
+			@RequestParam(value="insureFiles", required=false) MultipartFile[] insureFiles){ 
 		session = request.getSession();
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -198,10 +264,18 @@ public class AttachmentController {
 		if(insureFiles !=null) {
 			for(int i=0;i<insureFiles.length;i++) {
 				try {
+					String extension = FilenameUtils.getExtension(insureFiles[i].getOriginalFilename());
+					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
+							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+	                {
+						logger.warn("advancedAgeApplyInsureFileUplolad 檔案格式錯誤");
+	                    throw new Exception("請確認副檔名是否正確!");
+	                }
 					attach = new Attachment();
 					
 					base = new AdvancedAgeBase();
-					base.setSeq(session.getAttribute(sid+"seq").toString());
+					base.setSeq(session.getAttribute(session.getId()+"seq").toString());
 					AdvancedAgeBase result=selectATypeAdvancedAgeBase(base);
 					if(result.getFileStatusRecord()==null)
 					{
@@ -225,23 +299,17 @@ public class AttachmentController {
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.warn(e.getMessage());
+				}catch (Exception e) {
+					logger.warn(e.getMessage());
 				}
 				api.httpPost(ip+"fileUplolad",json);
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 			}
 			response.setContentType("text/html;charset=UTF-8");
 			try {
 				response.getWriter().print("success");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.warn(e.getMessage());
 			}
 			//申請書附件確認
 //			AdvancedAgeApply apply = new AdvancedAgeApply();
@@ -253,8 +321,7 @@ public class AttachmentController {
 	
 	@RequestMapping(value = "/advancedAgeApplySalaryFileUplolad", method = RequestMethod.POST)
 	public void advancedAgeApplySalaryFileUplolad(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam(value="salaryFiles", required=false) MultipartFile[] salaryFiles,
-			@RequestParam(value="sid", required=false) String sid){ 
+			@RequestParam(value="salaryFiles", required=false) MultipartFile[] salaryFiles){ 
 		session = request.getSession();
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -262,10 +329,18 @@ public class AttachmentController {
 		if(salaryFiles !=null) {
 			for(int i=0;i<salaryFiles.length;i++) {
 				try {
+					String extension = FilenameUtils.getExtension(salaryFiles[i].getOriginalFilename());
+					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
+							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+	                {
+						logger.warn("advancedAgeApplySalaryFileUplolad 檔案格式錯誤");
+	                    throw new Exception("請確認副檔名是否正確!");
+	                }
 					attach = new Attachment();
 					
 					base = new AdvancedAgeBase();
-					base.setSeq(session.getAttribute(sid+"seq").toString());
+					base.setSeq(session.getAttribute(session.getId()+"seq").toString());
 					AdvancedAgeBase result=selectATypeAdvancedAgeBase(base);
 					if(result.getFileStatusRecord()==null)
 					{
@@ -289,23 +364,17 @@ public class AttachmentController {
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.warn(e.getMessage());
+				}catch (Exception e) {
+					logger.warn(e.getMessage());
 				}
 				api.httpPost(ip+"fileUplolad",json);
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 			}
 			response.setContentType("text/html;charset=UTF-8");
 			try {
 				response.getWriter().print("success");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.warn(e.getMessage());
 			}
 			//申請書附件確認
 //			AdvancedAgeApply apply = new AdvancedAgeApply();
@@ -317,8 +386,7 @@ public class AttachmentController {
 	
 	@RequestMapping(value = "/advancedAgeApplyAttendanceFileUplolad", method = RequestMethod.POST)
 	public void advancedAgeApplyAttendanceFileUplolad(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam(value="attendanceFiles", required=false) MultipartFile[] attendanceFiles,
-			@RequestParam(value="sid", required=false) String sid){ 
+			@RequestParam(value="attendanceFiles", required=false) MultipartFile[] attendanceFiles){ 
 		session = request.getSession();
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -326,10 +394,18 @@ public class AttachmentController {
 		if(attendanceFiles !=null) {
 			for(int i=0;i<attendanceFiles.length;i++) {
 				try {
+					String extension = FilenameUtils.getExtension(attendanceFiles[i].getOriginalFilename());
+					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
+							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+	                {
+						logger.warn("advancedAgeApplyAttendanceFileUplolad 檔案格式錯誤");
+	                    throw new Exception("請確認副檔名是否正確!");
+	                }
 					attach = new Attachment();
 					
 					base = new AdvancedAgeBase();
-					base.setSeq(session.getAttribute(sid+"seq").toString());
+					base.setSeq(session.getAttribute(session.getId()+"seq").toString());
 					AdvancedAgeBase result=selectATypeAdvancedAgeBase(base);
 					if(result.getFileStatusRecord()==null)
 					{
@@ -353,21 +429,17 @@ public class AttachmentController {
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
-					e.printStackTrace();
+					logger.warn(e.getMessage());
+				}catch (Exception e) {
+					logger.warn(e.getMessage());
 				}
 				api.httpPost(ip+"fileUplolad",json);
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
 			}
 			response.setContentType("text/html;charset=UTF-8");
 			try {
 				response.getWriter().print("success");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.warn(e.getMessage());
 			}
 			//此類型檔案上傳為後續新增，AdvancedAgeApply當初沒有欄位紀錄
 			//申請書附件確認
@@ -381,8 +453,7 @@ public class AttachmentController {
 	
 	@RequestMapping(value = "/advancedAgeApplyNecessaryFileUplolad", method = RequestMethod.POST)
 	public void advancedAgeApplyNecessaryFileUplolad(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam(value="necessaryFiles", required=false) MultipartFile[] necessaryFiles,
-			@RequestParam(value="sid", required=false) String sid){ 
+			@RequestParam(value="necessaryFiles", required=false) MultipartFile[] necessaryFiles){ 
 		session = request.getSession();
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -390,10 +461,18 @@ public class AttachmentController {
 		if(necessaryFiles !=null) {
 			for(int i=0;i<necessaryFiles.length;i++) {
 				try {
+					String extension = FilenameUtils.getExtension(necessaryFiles[i].getOriginalFilename());
+					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
+							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+	                {
+						logger.warn("advancedAgeApplyNecessaryFileUplolad 檔案格式錯誤");
+	                    throw new Exception("請確認副檔名是否正確!");
+	                }
 					attach = new Attachment();
 					
 					base = new AdvancedAgeBase();
-					base.setSeq(session.getAttribute(sid+"seq").toString());
+					base.setSeq(session.getAttribute(session.getId()+"seq").toString());
 					AdvancedAgeBase result=selectATypeAdvancedAgeBase(base);
 					if(result.getFileStatusRecord()==null)
 					{
@@ -417,21 +496,17 @@ public class AttachmentController {
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
-					e.printStackTrace();
+					logger.warn(e.getMessage());
+				}catch (Exception e) {
+					logger.warn(e.getMessage());
 				}
 				api.httpPost(ip+"fileUplolad",json);
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
 			}
 			response.setContentType("text/html;charset=UTF-8");
 			try {
 				response.getWriter().print("success");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.warn(e.getMessage());
 			}
 //			session.removeAttribute("attachmentSeq");
 			//此類型檔案上傳為後續新增，AdvancedAgeApply當初沒有欄位紀錄
@@ -468,8 +543,7 @@ public class AttachmentController {
 //					
 //					json = objectMapper.writeValueAsString(attach);
 //				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
+//					logger.warn(e.getMessage());
 //				}
 //				api.httpPost(ip+"fileUplolad",json);
 //			}
@@ -500,8 +574,7 @@ public class AttachmentController {
 //					
 //					json = objectMapper.writeValueAsString(attach);
 //				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
+//					logger.warn(e.getMessage());
 //				}
 //				api.httpPost(ip+"fileUplolad",json);
 //			}
@@ -532,8 +605,7 @@ public class AttachmentController {
 //					
 //					json = objectMapper.writeValueAsString(attach);
 //				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
+//					logger.warn(e.getMessage());
 //				}
 //				api.httpPost(ip+"fileUplolad",json);
 //			}
@@ -543,12 +615,19 @@ public class AttachmentController {
 	@RequestMapping(value = "/addAdvancedAgeEmploymentListFromFile", method = RequestMethod.POST)
 	public void addAdvancedAgeEmploymentListFromFile(HttpServletRequest request, HttpServletResponse response
 			,@RequestParam(value="uploadFile", required=false) MultipartFile uploadFile
-			,@RequestParam(value="sid", required=false) String sid ) throws Exception{ 
+			) { 
 		session = request.getSession();
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
-		String applyId=session.getAttribute(sid+"advancedAgeApplyId").toString();
-		String planId=session.getAttribute(sid+"advancedAgePlanId").toString();
+		String applyId=session.getAttribute(session.getId()+"advancedAgeApplyId").toString();
+		String planId=session.getAttribute(session.getId()+"advancedAgePlanId").toString();
+		
+		String extension = FilenameUtils.getExtension(uploadFile.getOriginalFilename());
+		if (!extension.toLowerCase().trim().equals("xlsx") && !extension.toLowerCase().trim().equals("xls"))
+        {
+			logger.warn("addAdvancedAgeEmploymentListFromFile 檔案格式錯誤");
+        }
+		
 		Attachment attach = new Attachment();
 		attach.setFileBelong("A");
 		attach.setFileBelongId(Integer.valueOf(applyId));
@@ -559,48 +638,75 @@ public class AttachmentController {
 		attach.setFileSize((int)uploadFile.getSize());
 		attach.setFileStatus(1);
 		
-		json = objectMapper.writeValueAsString(attach);
+		try {
+			json = objectMapper.writeValueAsString(attach);
+		} catch (JsonProcessingException e1) {
+			logger.warn(e1.getMessage());
+		}
 		//刪除舊檔
 		api.httpPost(ip+"deleteFile",json);
 		
 		//檔案上傳
-		SaveFileFromInputStream(uploadFile.getInputStream(),attach.getFilePath(),uploadFile.getOriginalFilename());
+		try {
+			SaveFileFromInputStream(uploadFile.getInputStream(),attach.getFilePath(),uploadFile.getOriginalFilename());
+		} catch (IOException e1) {
+			logger.warn(e1.getMessage());
+		}
 		
 		//檔案儲存
 		api.httpPost(ip+"fileUplolad",json);
 		
         String destFileName=localPath+attach.getFilePath()+"/"+uploadFile.getOriginalFilename();
         
-        File destFile = new File(destFileName).getCanonicalFile();
+        File destFile=null;
+		try {
+			destFile = new File(destFileName).getCanonicalFile();
+		} catch (IOException e1) {
+			logger.warn(e1.getMessage());
+		}
         try {
 			uploadFile.transferTo(destFile);
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-        System.out.println("刪除舊檔案");
+        logger.info("刪除舊檔案");
         delAdvancedAgeEmploymentListbyId(request, response, new AdvancedAgeEmploymentList(),planId);
-        System.out.println("刪除finish");
+        logger.info("刪除finish");
         Sheet sheet;
-        InputStream fis = null;
- 
-        try {
-			fis = new FileInputStream(destFileName);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
  
         Workbook workbook = null;
-        
+        FileInputStream inputStream = null;
         try {
             workbook= new XSSFWorkbook(destFile);
-        } catch (Exception ex) {
-            workbook = new HSSFWorkbook(fis);
+        } catch (IOException ex) {
+        	try {
+				inputStream=new FileInputStream(destFileName);
+				workbook = new HSSFWorkbook(inputStream);
+			} catch (FileNotFoundException e) {
+				logger.warn(e.getMessage());
+			} catch (IOException e) {
+				logger.warn(e.getMessage());
+			}
+            
+        }catch (InvalidFormatException ex) {
+        	try {
+				inputStream=new FileInputStream(destFileName);
+				workbook = new HSSFWorkbook(inputStream);
+			} catch (FileNotFoundException e) {
+				logger.warn(e.getMessage());
+			} catch (IOException e) {
+				logger.warn(e.getMessage());
+			}
+        }finally {
+        	try {
+				inputStream.close();
+			} catch (IOException e) {
+				logger.warn(e.getMessage());
+			}
         }
+        
         sheet = workbook.getSheetAt(0);
  
         int totalRowNum = sheet.getLastRowNum();
@@ -612,7 +718,6 @@ public class AttachmentController {
         	data = new AdvancedAgeEmploymentList();
             Row row = sheet.getRow(i);
             if(row!=null && !getCellValue(row.getCell(1)).equals("")){
-                int columnNum=row.getPhysicalNumberOfCells();
                 
                 data.setName(getCellValue(row.getCell(1)));
                 data.setIdentification(getCellValue(row.getCell(2)));
@@ -653,22 +758,31 @@ public class AttachmentController {
         }
         AdvancedAgeEmploymentList[] dataList = list.toArray(new AdvancedAgeEmploymentList[list.size()]);
         addAdvancedAgeEmploymentList(request,response,dataList,planId);
-        workbook.close();
+        try {
+			workbook.close();
+		} catch (IOException e1) {
+			logger.warn(e1.getMessage());
+		}
 		response.setContentType("text/html;charset=UTF-8");
 		try {
 			response.getWriter().print("success");
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 	}
 	
 	@RequestMapping(value = "/addAdvancedAgeEmploymentListReceiptFromFile", method = RequestMethod.POST)
 	public void addAdvancedAgeEmploymentListReceiptFromFile(HttpServletRequest request, HttpServletResponse response
 			,@RequestParam(value="uploadFile", required=true) MultipartFile uploadFile,
-			@RequestParam(value="baseId", required=true) String baseId,
-			@RequestParam(value="sid", required=true) String sid) throws Exception{ 
+			@RequestParam(value="baseId", required=true) String baseId){ 
+		session=request.getSession();
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
+		String extension = FilenameUtils.getExtension(uploadFile.getOriginalFilename());
+		if(!extension.toLowerCase().trim().equals("xlsx") && !extension.toLowerCase().trim().equals("xls"))
+        {
+			logger.warn("addAdvancedAgeEmploymentListReceiptFromFile 檔案格式錯誤");
+        }
 		Attachment attach = new Attachment();
 		attach.setFileBelong("BA");
 		attach.setFileBelongId(Integer.valueOf(baseId));
@@ -688,27 +802,38 @@ public class AttachmentController {
 		attach.setFileSize((int)uploadFile.getSize());
 		attach.setFileStatus(1);
 		
-		json = objectMapper.writeValueAsString(attach);
+		try {
+			json = objectMapper.writeValueAsString(attach);
+		} catch (JsonProcessingException e1) {
+			logger.warn(e1.getMessage());
+		}
 		//刪除舊檔
 		api.httpPost(ip+"deleteReceiptFile",json);
 		
 		//檔案上傳
-		SaveFileFromInputStream(uploadFile.getInputStream(),attach.getFilePath(),uploadFile.getOriginalFilename());
+		try {
+			SaveFileFromInputStream(uploadFile.getInputStream(),attach.getFilePath(),uploadFile.getOriginalFilename());
+		} catch (IOException e1) {
+			logger.warn(e1.getMessage());
+		}
 		
 		//檔案儲存
 		api.httpPost(ip+"fileUplolad",json);
 		
         String destFileName=localPath+attach.getFilePath()+"/"+uploadFile.getOriginalFilename();
         
-        File destFile = new File(destFileName).getCanonicalFile();
+        File destFile = null;
+		try {
+			destFile = new File(destFileName).getCanonicalFile();
+		} catch (IOException e1) {
+			logger.warn(e1.getMessage());
+		}
         try {
 			uploadFile.transferTo(destFile);
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
  
         AdvancedAgeEmploymentListReceipt receipt = new AdvancedAgeEmploymentListReceipt();
@@ -716,21 +841,36 @@ public class AttachmentController {
         delAdvancedAgeEmploymentListReceiptbyId(request, response, receipt);
         
         Sheet sheet;
-        InputStream fis = null;
- 
-        try {
-			fis = new FileInputStream(destFileName);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
  
         Workbook workbook = null;
         
+        FileInputStream inputStream = null;
         try {
             workbook= new XSSFWorkbook(destFile);
-        } catch (Exception ex) {
-            workbook = new HSSFWorkbook(fis);
+        } catch (IOException ex) {
+        	try {
+				inputStream=new FileInputStream(destFileName);
+				workbook = new HSSFWorkbook(inputStream);
+			} catch (FileNotFoundException e) {
+				logger.warn(e.getMessage());
+			} catch (IOException e) {
+				logger.warn(e.getMessage());
+			}
+        }catch (InvalidFormatException ex) {
+        	try {
+				inputStream=new FileInputStream(destFileName);
+				workbook = new HSSFWorkbook(inputStream);
+			} catch (FileNotFoundException e) {
+				logger.warn(e.getMessage());
+			} catch (IOException e) {
+				logger.warn(e.getMessage());
+			}
+        }finally {
+        	try {
+				inputStream.close();
+			} catch (IOException e) {
+				logger.warn(e.getMessage());
+			}
         }
         sheet = workbook.getSheetAt(0);
  
@@ -743,11 +883,9 @@ public class AttachmentController {
         	data = new AdvancedAgeEmploymentListReceipt();
             Row row = sheet.getRow(i);
             if(row!=null && !getCellValue(row.getCell(1)).equals("")){
-                int columnNum=row.getPhysicalNumberOfCells();
-                
                 data.setAdvancedAgeBaseId(Integer.valueOf(baseId));
                 data.setBaseAllowanceFrequency(0);
-                data.setSeq(session.getAttribute(sid+"seq").toString());
+                data.setSeq(session.getAttribute(session.getId()+"seq").toString());
                 data.setName(getCellValue(row.getCell(1)));
                 data.setIdentification(getCellValue(row.getCell(2)));
                 if(getCellValue(row.getCell(3)).equals("勞工保險")){
@@ -795,14 +933,17 @@ public class AttachmentController {
             }
         }
         AdvancedAgeEmploymentListReceipt[] dataList = list.toArray(new AdvancedAgeEmploymentListReceipt[list.size()]);
-        addAdvancedAgeEmploymentListReceipt(request,response,dataList,sid);
-        workbook.close();
+        addAdvancedAgeEmploymentListReceipt(request,response,dataList);
+        try {
+			workbook.close();
+		} catch (IOException e1) {
+			logger.warn(e1.getMessage());
+		}
 		response.setContentType("text/html;charset=UTF-8");
 		try {
 			response.getWriter().print("success");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 	}
 	
@@ -830,7 +971,8 @@ public class AttachmentController {
 	@RequestMapping(value = "/download", method = RequestMethod.GET)
 	public void download(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("path") String path){ 
-        
+		FileInputStream fis = null;
+		OutputStream os = null;
 		try{
 	        // 1.得到要下載的檔名稱
 	        String filename = path.substring(path.lastIndexOf("/")+1,path.length());
@@ -849,8 +991,8 @@ public class AttachmentController {
 	            response.setHeader("content-disposition", "attachment;filename="
 	                    + filename);
 
-	            FileInputStream fis = new FileInputStream(file); // 讀取要下載檔案的內容
-	            OutputStream os = response.getOutputStream();// 將要下載的檔案內容通過輸出流寫回到瀏覽器
+	            fis = new FileInputStream(file); // 讀取要下載檔案的內容
+	            os = response.getOutputStream();// 將要下載的檔案內容通過輸出流寫回到瀏覽器
 	            int len = -1;
 	            byte[] b = new byte[1024 * 100];
 
@@ -858,50 +1000,76 @@ public class AttachmentController {
 	                os.write(b, 0, len);
 	                os.flush();
 	            }
-	            os.close();
-	            fis.close();
 	        } else {
 	            throw new RuntimeException("下載資源不存在");
 	        }
 	        }catch (IOException e){
-
+	        	logger.warn(e.getMessage());
+	        }finally {
+	        	 try {
+					os.close();
+					fis.close();
+				} catch (IOException e) {
+					logger.warn(e.getMessage());
+				}
+		         
 	        }
 		
 	}
 	
-	public void SaveFileFromInputStream(InputStream stream,String path,String filename) throws IOException{  
-		File directory = new File(localPath+path+"/"+filename).getCanonicalFile();
-		
-		//路徑是否存在
-		if (!directory.getParentFile().exists()) {
-		    try {
-		    	directory.getParentFile().mkdirs();
-		    	directory.createNewFile();
-		    } catch (IOException e) {
-		        e.printStackTrace();
-		    }
+	public void SaveFileFromInputStream(InputStream stream,String path,String filename){  
+		File directory;
+		try {
+			directory = new File(localPath+path+"/"+filename).getCanonicalFile();
+			//路徑是否存在
+			if (!directory.getParentFile().exists()) {
+			    try {
+			    	boolean checkPFile = directory.getParentFile().mkdirs();
+			    	if(checkPFile)
+			    	{
+			    		directory.createNewFile();
+			    	}
+			    } catch (IOException e) {
+			    	logger.warn(e.getMessage());
+			    }
+			}
+		} catch (IOException e1) {
+			logger.warn(e1.getMessage());
 		}
 		
 		//存檔
-        FileOutputStream fs=new FileOutputStream(localPath+path+"/"+filename);
-        byte[] buffer =new byte[1024*1024];
-        int bytesum = 0;
-        int byteread = 0; 
-        while ((byteread=stream.read(buffer))!=-1)
-        {
-           bytesum =byteread;
-           fs.write(buffer,0,byteread);
-           fs.flush();
-        } 
-        fs.close();
-        stream.close();      
+        FileOutputStream fs=null;
+		try {
+			fs = new FileOutputStream(localPath+path+"/"+filename);
+			byte[] buffer =new byte[1024*1024];
+	        int byteread = 0; 
+	        while ((byteread=stream.read(buffer))!=-1)
+	        {
+	           fs.write(buffer,0,byteread);
+	           fs.flush();
+	        } 
+		} catch (FileNotFoundException e) {
+			logger.warn(e.getMessage());
+		} catch (IOException e) {
+			logger.warn(e.getMessage());
+		}finally {
+			try {
+				fs.close();
+				stream.close(); 
+			} catch (IOException e) {
+				logger.warn(e.getMessage());
+			}
+			
+		}
+        
+             
     }
 	
-	public void deleteRealFile(String path,String filename) throws IOException{  
-		File directory = new File(localPath+path+"/"+filename).getCanonicalFile();
-		
-		directory.delete();
-    }
+//	public void deleteRealFile(String path,String filename) throws IOException{  
+//		File directory = new File(localPath+path+File.separator+filename).getCanonicalFile();
+//		
+//		directory.delete();
+//    }
 	
 //	public void addAdvancedAgeApply(HttpServletRequest request, HttpServletResponse response
 //			,AdvancedAgeApply apply){ 
@@ -911,8 +1079,7 @@ public class AttachmentController {
 //		try {
 //			json = objectMapper.writeValueAsString(apply);
 //		} catch (JsonProcessingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
+//			logger.warn(e.getMessage());
 //		}
 //		String body = api.httpPost(ip+"addAdvancedAgeApply",json);
 //		JSONObject object = new JSONObject(body);
@@ -928,15 +1095,14 @@ public class AttachmentController {
 		try {
 			json = objectMapper.writeValueAsString(list);
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		api.httpPost(ip+"delAdvancedAgeEmploymentListbyId",json);
 		response.setContentType("text/html;charset=UTF-8");
 		try {
 			response.getWriter().print("success");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 	}
 	
@@ -948,15 +1114,14 @@ public class AttachmentController {
 		try {
 			json = objectMapper.writeValueAsString(listReceipt);
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		api.httpPost(ip+"delAdvancedAgeEmploymentListReceiptbyId",json);
 //		response.setContentType("text/html;charset=UTF-8");
 //		try {
 //			response.getWriter().print("success");
 //		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
+//			logger.warn(e.getMessage());
 //		}
 	}
 	
@@ -972,43 +1137,40 @@ public class AttachmentController {
 				try {
 					json = objectMapper.writeValueAsString(list[i]);
 				} catch (JsonProcessingException e) {
-					e.printStackTrace();
+					logger.warn(e.getMessage());
 				}
 				api.httpPost(ip+"addAdvancedAgeEmploymentList",json);
-				Thread.sleep(500);
 			}
 			response.setContentType("text/html;charset=UTF-8");
 		
 			response.getWriter().print("success");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (IOException e) {
+			logger.warn(e.getMessage());
+		} 
 	}
 	
 	public void addAdvancedAgeEmploymentListReceipt(HttpServletRequest request, HttpServletResponse response
-			,@RequestBody AdvancedAgeEmploymentListReceipt[] list,String sid){ 
+			,@RequestBody AdvancedAgeEmploymentListReceipt[] list){ 
 		session = request.getSession();
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
-		System.out.println("sid = "+sid);
 		try {
 			for(int i=0;i<list.length;i++)
 			{
-				list[i].setCompanyName(session.getAttribute(sid+"companyName").toString());
+				list[i].setCompanyName(session.getAttribute(session.getId()+"companyName").toString());
 				try {
 					json = objectMapper.writeValueAsString(list[i]);
 				} catch (JsonProcessingException e) {
-					e.printStackTrace();
+					logger.warn(e.getMessage());
 				}
 				api.httpPost(ip+"addAdvancedAgeEmploymentListReceipt",json);
-				Thread.sleep(200);
 			}
 			response.setContentType("text/html;charset=UTF-8");
 		
 			response.getWriter().print("success");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (IOException e) {
+			logger.warn(e.getMessage());
+		} 
 	}
 	
 	public AdvancedAgeBase selectATypeAdvancedAgeBase(AdvancedAgeBase base) {
@@ -1018,21 +1180,17 @@ public class AttachmentController {
 		try {
 			json = objectMapper.writeValueAsString(base);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip + "selectATypeAdvancedAgeBase", json);
-		JSONArray array = new JSONArray(jsondata);
+		JSONArray array = new JSONArray(api.httpPost(ip + "selectATypeAdvancedAgeBase", json));
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			if (array.length()>0) {
 				searchBase = mapper.readValue(array.getJSONObject(0).toString(), AdvancedAgeBase.class);}
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		return searchBase;
 	}
@@ -1047,6 +1205,14 @@ public class AttachmentController {
 		if(approvedFiles !=null) {
 			for(int i=0;i<approvedFiles.length;i++) {
 				try {
+					String extension = FilenameUtils.getExtension(approvedFiles[i].getOriginalFilename());
+					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
+							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+	                {
+						logger.warn("advancedAgeEmploymentListApprovedFileUplolad 檔案格式錯誤");
+	                    throw new Exception("請確認副檔名是否正確!");
+	                }
 					attach = new Attachment();
 					
 					attach.setFileBelong("BA");
@@ -1073,8 +1239,9 @@ public class AttachmentController {
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.warn(e.getMessage());
+				}catch (Exception e) {
+					logger.warn(e.getMessage());
 				}
 				api.httpPost(ip+"fileUplolad",json);
 			}
@@ -1091,6 +1258,14 @@ public class AttachmentController {
 		if(receiptFiles !=null) {
 			for(int i=0;i<receiptFiles.length;i++) {
 				try {
+					String extension = FilenameUtils.getExtension(receiptFiles[i].getOriginalFilename());
+					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
+							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+	                {
+						logger.warn("advancedAgeEmploymentListReceiptFileUplolad 檔案格式錯誤");
+	                    throw new Exception("請確認副檔名是否正確!");
+	                }
 					attach = new Attachment();
 					
 					attach.setFileBelong("BA");
@@ -1117,8 +1292,9 @@ public class AttachmentController {
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.warn(e.getMessage());
+				}catch (Exception e) {
+					logger.warn(e.getMessage());
 				}
 				api.httpPost(ip+"fileUplolad",json);
 			}
@@ -1135,6 +1311,14 @@ public class AttachmentController {
 		if(employmentFiles !=null) {
 			for(int i=0;i<employmentFiles.length;i++) {
 				try {
+					String extension = FilenameUtils.getExtension(employmentFiles[i].getOriginalFilename());
+					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
+							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+	                {
+						logger.warn("advancedAgeEmploymentListEmploymentFileUplolad 檔案格式錯誤");
+	                    throw new Exception("請確認副檔名是否正確!");
+	                }
 					attach = new Attachment();
 					
 					attach.setFileBelong("BA");
@@ -1161,8 +1345,9 @@ public class AttachmentController {
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.warn(e.getMessage());
+				}catch (Exception e) {
+					logger.warn(e.getMessage());
 				}
 				api.httpPost(ip+"fileUplolad",json);
 			}
@@ -1179,6 +1364,14 @@ public class AttachmentController {
 		if(salaryFiles !=null) {
 			for(int i=0;i<salaryFiles.length;i++) {
 				try {
+					String extension = FilenameUtils.getExtension(salaryFiles[i].getOriginalFilename());
+					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
+							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+	                {
+						logger.warn("advancedAgeEmploymentListSalaryFileUplolad 檔案格式錯誤");
+	                    throw new Exception("請確認副檔名是否正確!");
+	                }
 					attach = new Attachment();
 					
 					attach.setFileBelong("BA");
@@ -1205,8 +1398,9 @@ public class AttachmentController {
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.warn(e.getMessage());
+				}catch (Exception e) {
+					logger.warn(e.getMessage());
 				}
 				api.httpPost(ip+"fileUplolad",json);
 			}
@@ -1223,6 +1417,14 @@ public class AttachmentController {
 		if(attendanceFiles !=null) {
 			for(int i=0;i<attendanceFiles.length;i++) {
 				try {
+					String extension = FilenameUtils.getExtension(attendanceFiles[i].getOriginalFilename());
+					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
+							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+	                {
+						logger.warn("advancedAgeEmploymentListAttendanceFileUplolad 檔案格式錯誤");
+	                    throw new Exception("請確認副檔名是否正確!");
+	                }
 					attach = new Attachment();
 					
 					attach.setFileBelong("BA");
@@ -1249,8 +1451,9 @@ public class AttachmentController {
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.warn(e.getMessage());
+				}catch (Exception e) {
+					logger.warn(e.getMessage());
 				}
 				api.httpPost(ip+"fileUplolad",json);
 			}
@@ -1267,6 +1470,14 @@ public class AttachmentController {
 		if(necessaryFiles !=null) {
 			for(int i=0;i<necessaryFiles.length;i++) {
 				try {
+					String extension = FilenameUtils.getExtension(necessaryFiles[i].getOriginalFilename());
+					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
+							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+	                {
+						logger.warn("advancedAgeEmploymentListNecessaryFileUplolad 檔案格式錯誤");
+	                    throw new Exception("請確認副檔名是否正確!");
+	                }
 					attach = new Attachment();
 					
 					attach.setFileBelong("BA");
@@ -1293,8 +1504,9 @@ public class AttachmentController {
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.warn(e.getMessage());
+				}catch (Exception e) {
+					logger.warn(e.getMessage());
 				}
 				api.httpPost(ip+"fileUplolad",json);
 			}
@@ -1308,8 +1520,7 @@ public class AttachmentController {
 		try {
 			json = objectMapper.writeValueAsString(base);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		String jsondata = api.httpPost(ip + "selectAdvancedAgeBaseById", json);
 		ObjectMapper mapper = new ObjectMapper();
@@ -1318,11 +1529,9 @@ public class AttachmentController {
 			if (!jsondata.equals(""))
 				searchBase = mapper.readValue(jsondata, AdvancedAgeBase.class);
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		return searchBase;
 	}

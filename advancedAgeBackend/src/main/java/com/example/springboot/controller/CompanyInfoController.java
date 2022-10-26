@@ -1,21 +1,14 @@
 package com.example.springboot.controller;
 
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
+import java.security.SecureRandom;
 import java.util.Date;
-import java.util.Random;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -23,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.springboot.entity.CompanyInfo;
+import com.example.springboot.util.AesUtil;
 import com.example.springboot.util.CallApi;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller
 public class CompanyInfoController {
 
+	Logger logger = LogManager.getLogger(CompanyInfoController.class);
 	@Autowired
 	CallApi api;
 
@@ -51,16 +46,17 @@ public class CompanyInfoController {
 		String json = "";
 		info.setVerifyTime(new Date());
 		try {
-			info.setPassword(encryptPassword(randomPassword(),key));
+			info.setPassword(AesUtil.encrypt(randomPassword()));
 			json = objectMapper.writeValueAsString(info);
+		} catch (JsonProcessingException e) {
+			logger.warn(e.getMessage());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		api.httpPost(ip + "editCompanyInfo", json);
+			logger.warn(e.getMessage());
+		} 
+//		api.httpPost(ip + "editCompanyInfo", json);
 	}
 	
-	private static char nextChar(Random rnd) {
+	private static char nextChar(SecureRandom rnd) {
 		switch (rnd.nextInt(4)) {
 		case 0:
 			return (char) ('a' + rnd.nextInt(26));
@@ -73,28 +69,14 @@ public class CompanyInfoController {
 		}
 	}
 
-	public static String randomPassword() throws Exception {
+	public static String randomPassword(){
 		char[] chars = new char[12];
-		Random rnd = new Random();
+		SecureRandom rnd = new SecureRandom();
+		rnd.setSeed((new Date()).getTime());
 		for (int i = 0; i < 12; i++) {
 			chars[i] = nextChar(rnd);
 		}
 		String password=new String(chars);
-        
 		return password;
-	}
-
-	public String encryptPassword(String data, String key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-	    Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-	    cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key.getBytes(), "AES"));
-	    byte[] result = cipher.doFinal(data.getBytes());
-	    return Base64.getEncoder().encodeToString(result);
-	}
-
-	public String decryptPassword(String data, String key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-	    Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-	    cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(key.getBytes(), "AES"));
-	    byte[] result = cipher.doFinal(Base64.getDecoder().decode(data));
-	    return new String(result);
 	}
 }

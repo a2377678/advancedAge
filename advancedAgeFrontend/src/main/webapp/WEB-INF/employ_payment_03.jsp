@@ -78,80 +78,6 @@
   
   <!--- header --->
   <%@ include file="header.jsp" %>
-<!--   <header> -->
-
-<!--     ---------- nav ---------- -->
-<!--     <nav class="navbar navbar-expand-lg bg-gray navbar-dark fixed-top p-0"> -->
-        
-<!--           <div class="navigation w-100"> -->
-<!--             <a class="navbar-brand" href="#"><img src="images/top_logo.png"></a> -->
-<!--             <a class="sitemap text-light float-end p-3" href="sitemap" title="網站導覽">網站導覽</a> -->
-          
-<!--             <button class="navbar-toggler" type="button" data-toggle="collapse"  -->
-<!--               data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"  -->
-<!--               aria-expanded="false" aria-label="Toggle navigation"> -->
-<!--               <span class="navbar-toggler-icon"></span> -->
-<!--             </button> -->
-
-<!--             <div class="collapse navbar-collapse main_menu" id="navbarSupportedContent"> -->
-              
-<!--               <ul class="navbar-nav mr-auto"> -->
-              
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="index" title="首頁" class="m1">首頁</a> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="#" title="補助計畫" class="navbar-dark nav-link dropdown-toggle m2" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">補助計畫</a> -->
-<!--                   <ul class="dropdown-menu rounded" aria-labelledby="navbarDropdownMenuLink"> -->
-<!--                     <li><a class="dropdown-item text-light" href="require" title="繼續僱用高齡者補助計畫說明">繼續僱用高齡者補助計畫說明</a></li> -->
-<!--                   </ul> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="employ" title="線上申辦" class="navbar-dark nav-link dropdown-toggle m3-in in" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">線上申辦</a> -->
-<!--                   <ul class="dropdown-menu rounded" aria-labelledby="navbarDropdownMenuLink"> -->
-<!--                     <li><a class="dropdown-item text-light" href="employ" title="繼續雇用高齡者補助 - 申請作業">繼續僱用高齡者補助 - 申請作業</a></li> -->
-<!--                     <li><a class="dropdown-item text-light" href="employ_payment" title="繼續雇用高齡者補助 - 請領作業">繼續僱用高齡者補助 - 請領作業</a></li> -->
-<!--                     -
-<!--                     <li><hr class="dropdown-divider"></li> -->
-<!--                     <li><a class="dropdown-item text-white-50" href="#">退休者傳承專業技術 - 尚未開放</a></li> -->
-<!--                     <li><hr class="dropdown-divider"></li> -->
-<!--                     <li><a class="dropdown-item text-white-50" href="#">退休後再就業準備 - 尚未開放</a></li> -->
-<!--                     ---> -->
-<!--                   </ul> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item text-dark"> -->
-<!--                   <a href="schedule" title="案件查詢" class="navbar-dark nav-link dropdown-toggle m4" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">案件查詢</a> -->
-<!--                   <ul class="dropdown-menu rounded" aria-labelledby="navbarDropdownMenuLink"> -->
-<!--                     <li><a class="dropdown-item text-light" href="schedule" title="繼續僱用高齡者補助 - 申請進度">繼續僱用高齡者補助 - 申請進度</a></li> -->
-<!--                     <li><a class="dropdown-item text-light" href="schedule_pass" title="繼續僱用高齡者補助 - 請領進度">繼續僱用高齡者補助 - 請領進度</a></li> -->
-<!--                   </ul> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="teaching" title="申請教學" class="m5">申請教學</a> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="download" title="資料下載" class="m6">資料下載</a> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="service" title="諮詢服務" class="m7">諮詢服務</a> -->
-<!--                 </li>  -->
-                
-<!--               </ul> -->
-            
-<!--             </div> -->
-          
-<!--           </div> -->
-          
-<!--     </nav> -->
-<!--     ---------- nav end ----------  -->
-    
-<!--   </header> -->
   <!--- header end ---> 
   
   
@@ -167,17 +93,11 @@
     <h3>
     上傳之檔案格式請符合以下規定，其他格式則不受理：<br>
     jpg、png、pdf、rar、zip、7z，檔案大小以 5mb 為限。<br>
-<!--     jpg、png、pdf 等單一檔，檔案大小以 5mb 為限，<br> -->
-<!--     rar、zip、7z 等壓縮檔，檔案大小以 50mb 為限。<br> -->
     </h3>
     
- 
- 
- 
     <!-------------原核定函影本------------>
     <div class="form">
-    	<input type="hidden" id="sid" value="${sid }">
-    	<input type="hidden" id="baseId" value="${baseId }">
+    	<input type="text" id="baseId" value="${baseId }" style="display:none">
       <div class="title_main">
         <span>原核定函影本</span>
       </div>
@@ -201,7 +121,6 @@
         <div class="full">
 	        <label for="approvedProof<c:out value="${approvedProofNumber}"/>">文件(<c:out value="${approvedProofNumber}"/>)</label>
 	        <input type="file" id="approvedProof<c:out value="${approvedProofNumber}"/>" name="approvedProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z">
-<%-- 	        <button class="add" onclick="delApprovedProof(<c:out value="${approvedProofNumber}"/>)">－</button> --%>
 	        <button class="add" onclick="addApprovedProof(<c:out value="${approvedProofNumber}"/>)" style>＋</button>
         </div>
         </c:when>
@@ -209,7 +128,6 @@
         <div class="full">
 	        <label for="approvedProof1">文件(1)</label>
 	        <input type="file" id="approvedProof1" name="approvedProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z">
-<!-- 	        <button class="add" onclick="delRegisterProof(1)">－</button> -->
 	        <button class="add" onclick="addApprovedProof(1)" style>＋</button>
         </div>
         </c:otherwise></c:choose>
@@ -250,7 +168,6 @@
         <div class="full">
 	        <label for="receiptProof<c:out value="${receiptProofNumber}"/>">文件(<c:out value="${receiptProofNumber}"/>)</label>
 	        <input type="file" id="receiptProof<c:out value="${receiptProofNumber}"/>" name="receiptProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z">
-<%-- 	        <button class="add" onclick="delReceiptProof(<c:out value="${receiptProofNumber}"/>)">－</button> --%>
 	        <button class="add" onclick="addReceiptProof(<c:out value="${receiptProofNumber}"/>)" style>＋</button>
         </div>
         </c:when>
@@ -302,7 +219,6 @@
         <div class="full">
 	        <label for="employmentProof<c:out value="${employmentProofNumber}"/>">文件(<c:out value="${employmentProofNumber}"/>)</label>
 	        <input type="file" id="employmentProof<c:out value="${employmentProofNumber}"/>" name="employmentProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z">
-<%-- 	        <button class="add" onclick="delEmploymentProof(<c:out value="${employmentProofNumber+1}"/>)">－</button> --%>
 	        <button class="add" onclick="addEmploymentProof(<c:out value="${employmentProofNumber}"/>)" style>＋</button>
         </div>
         </c:when>
@@ -356,7 +272,6 @@
         <div class="full">
 	        <label for="salaryProof<c:out value="${salaryProofNumber}"/>">文件(<c:out value="${salaryProofNumber}"/>)</label>
 	        <input type="file" id="salaryProof<c:out value="${salaryProofNumber}"/>" name="salaryProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z">
-<%-- 	        <button class="add" onclick="delSalaryProof(<c:out value="${salaryProofNumber+1}"/>)">－</button> --%>
 	        <button class="add" onclick="addSalaryProof(<c:out value="${salaryProofNumber}"/>)" style>＋</button>
         </div>
         </c:when>
@@ -409,7 +324,6 @@
         <div class="full">
 	        <label for="attendanceProof<c:out value="${attendanceProofNumber}"/>">文件(<c:out value="${attendanceProofNumber}"/>)</label>
 	        <input type="file" id="attendanceProof<c:out value="${attendanceProofNumber}"/>" name="attendanceProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z">
-<%-- 	        <button class="add" onclick="delAttendanceProof(<c:out value="${attendanceProofNumber+1}"/>)">－</button> --%>
 	        <button class="add" onclick="addAttendanceProof(<c:out value="${attendanceProofNumber}"/>)" style>＋</button>
         </div>
         </c:when>
@@ -457,7 +371,6 @@
         <div class="full">
 	        <label for="necessaryProof<c:out value="${necessaryProofNumber}"/>">文件(<c:out value="${necessaryProofNumber}"/>)</label>
 	        <input type="file" id="necessaryProof<c:out value="${necessaryProofNumber}"/>" name="necessaryProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z">
-<%-- 	        <button class="add" onclick="delNecessaryProof(<c:out value="${necessaryProofNumber+1}"/>)">－</button> --%>
 	        <button class="add" onclick="addNecessaryProof(<c:out value="${necessaryProofNumber}"/>)" style>＋</button>
         </div>
         </c:when>
@@ -482,8 +395,8 @@
     </div>
     
     <div class="page">
-      <button onclick="javascript:location.href='employ_payment_02?sid=${sid}'">回上頁</button>
-      <button onclick="javascript:location.href='employ_payment_04?sid=${sid}'">下一步</button>
+      <button onclick="javascript:location.href='employ_payment_02'">回上頁</button>
+      <button onclick="javascript:location.href='employ_payment_04'">下一步</button>
     </div>
     
   </div>

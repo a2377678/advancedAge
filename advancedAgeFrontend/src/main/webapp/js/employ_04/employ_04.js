@@ -272,31 +272,26 @@ function upload(){
 		$('input[name^="registerProof"]').each(function(){
 			registerFiles.append('registerFiles',$(this)[0].files[0]);
 		});
-		registerFiles.append('sid',$('#sid').val());
 		
 		let insureFiles = new FormData();
 		$('input[name^="insureProof"]').each(function(){
 			insureFiles.append('insureFiles',$(this)[0].files[0]);
 		});
-		insureFiles.append('sid',$('#sid').val());
 		
 		let salaryFiles = new FormData();
 		$('input[name^="salaryProof"]').each(function(){
 			salaryFiles.append('salaryFiles',$(this)[0].files[0]);
 		});
-		salaryFiles.append('sid',$('#sid').val());
 		
 		let attendanceFiles = new FormData();
 		$('input[name^="attendanceProof"]').each(function(){
 			attendanceFiles.append('attendanceFiles',$(this)[0].files[0]);
 		});
-		attendanceFiles.append('sid',$('#sid').val());
 		
 		let necessaryFiles = new FormData();
 		$('input[name^="necessaryProof"]').each(function(){
 			necessaryFiles.append('necessaryFiles',$(this)[0].files[0]);
 		});
-		necessaryFiles.append('sid',$('#sid').val());
 		
 		if(registerFiles.get('registerFiles') != 'undefined' || insureFiles.get('insureFiles') != 'undefined'  || salaryFiles.get('salaryFiles') != 'undefined' || attendanceFiles.get('attendanceFiles') != 'undefined' || necessaryFiles.get('necessaryFiles') != 'undefined' ){
 			$('#loader-container').show();

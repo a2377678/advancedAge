@@ -44,7 +44,6 @@
       
       <div class="print_info">
         <div class="p-date"><span>列印日期：</span>${time}</div>
-<!--         <div class="p-page"><span>列印頁次：</span>第1/1頁</div> -->
         <div class="p-user"><span>製表人員：</span>${unitName }&nbsp;${name }</div>
       </div>
       
@@ -123,45 +122,6 @@
 		          	</tr>
 		      	</c:forEach>
 		   	</c:when></c:choose>
-<!--           <tr> -->
-<!--             <td>1</td> -->
-<!--             <td>王先生</td> -->
-<!--             <td>A123456789</td> -->
-<!--             <td>勞工保險</td> -->
-<!--             <td>101/01/01</td> -->
-<!--             <td>主管</td> -->
-<!--             <td>三等親內</td> -->
-<!--             <td>部分工時</td> -->
-<!--             <td>150000</td> -->
-<!--             <td>0</td> -->
-<!--             <td>&nbsp;</td> -->
-<!--           </tr> -->
-<!--           <tr> -->
-<!--             <td>2</td> -->
-<!--             <td>陳先生</td> -->
-<!--             <td>A198765432</td> -->
-<!--             <td>勞工保險</td> -->
-<!--             <td>102/02/01</td> -->
-<!--             <td>非主管</td> -->
-<!--             <td>非三等親</td> -->
-<!--             <td>部分工時</td> -->
-<!--             <td>150000</td> -->
-<!--             <td>0</td> -->
-<!--             <td>&nbsp;</td> -->
-<!--           </tr> -->
-<!--           <tr> -->
-<!--             <td>3</td> -->
-<!--             <td>廖先生</td> -->
-<!--             <td>B123456789</td> -->
-<!--             <td>職災保險</td> -->
-<!--             <td>105/03/05</td> -->
-<!--             <td>非主管</td> -->
-<!--             <td>非三等親</td> -->
-<!--             <td>全時</td> -->
-<!--             <td>135000</td> -->
-<!--             <td>0</td> -->
-<!--             <td>&nbsp;</td> -->
-<!--           </tr> -->
         </tbody>
       </table>
       
@@ -174,7 +134,6 @@
   <div class="p_btn_box-3">
       <button type="button" class="p_btn_03" onclick="doPrint()">列印清冊</button>
       <button type="button" class="p_btn_03" id="gpdf">另存PDF</button>
-      <!---<button type="button" class="p_btn_02">取消修改</button>--->
       </div>
   
   <script src="js/b02/employmentList.js"></script>

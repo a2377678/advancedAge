@@ -16,80 +16,6 @@
   
   <!--- header --->
   <%@ include file="header.jsp" %>
-<!--   <header> -->
-    
-<!--     ---------- nav ---------- -->
-<!--     <nav class="navbar navbar-expand-lg bg-gray navbar-dark fixed-top p-0"> -->
-        
-<!--       <div class="navigation w-100"> -->
-<!--         <a class="navbar-brand" href="#"><img src="images/top_logo.png"></a> -->
-<!--         <a class="sitemap text-light float-end p-3" href="sitemap" title="網站導覽">網站導覽</a> -->
-      
-<!--         <button class="navbar-toggler" type="button" data-toggle="collapse"  -->
-<!--           data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"  -->
-<!--           aria-expanded="false" aria-label="Toggle navigation"> -->
-<!--           <span class="navbar-toggler-icon"></span> -->
-<!--         </button> -->
-
-<!--         <div class="collapse navbar-collapse main_menu" id="navbarSupportedContent"> -->
-          
-<!--           <ul class="navbar-nav mr-auto"> -->
-          
-<!--             <li class="nav-item"> -->
-<!--               <a href="index" title="首頁" class="m1">首頁</a> -->
-<!--             </li> -->
-            
-<!--             <li class="nav-item"> -->
-<!--               <a href="#" title="補助計畫" class="navbar-dark nav-link dropdown-toggle m2" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">補助計畫</a> -->
-<!--               <ul class="dropdown-menu rounded" aria-labelledby="navbarDropdownMenuLink"> -->
-<!--                 <li><a class="dropdown-item text-light" href="require" title="繼續僱用高齡者補助計畫說明">繼續僱用高齡者補助計畫說明</a></li> -->
-<!--               </ul> -->
-<!--             </li> -->
-            
-<!--             <li class="nav-item"> -->
-<!--               <a href="employ" title="線上申辦" class="navbar-dark nav-link dropdown-toggle m3-in in" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">線上申辦</a> -->
-<!--               <ul class="dropdown-menu rounded" aria-labelledby="navbarDropdownMenuLink"> -->
-<!--                 <li><a class="dropdown-item text-light" href="employ" title="繼續雇用高齡者補助 - 申請作業">繼續僱用高齡者補助 - 申請作業</a></li> -->
-<!--                 <li><a class="dropdown-item text-light" href="employ_payment" title="繼續雇用高齡者補助 - 請領作業">繼續僱用高齡者補助 - 請領作業</a></li> -->
-<!--                 -
-<!--                 <li><hr class="dropdown-divider"></li> -->
-<!--                 <li><a class="dropdown-item text-white-50" href="#">退休者傳承專業技術 - 尚未開放</a></li> -->
-<!--                 <li><hr class="dropdown-divider"></li> -->
-<!--                 <li><a class="dropdown-item text-white-50" href="#">退休後再就業準備 - 尚未開放</a></li> -->
-<!--                 ---> -->
-<!--               </ul> -->
-<!--             </li> -->
-            
-<!--             <li class="nav-item text-dark"> -->
-<!--               <a href="schedule" title="案件查詢" class="navbar-dark nav-link dropdown-toggle m4" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">案件查詢</a> -->
-<!--               <ul class="dropdown-menu rounded" aria-labelledby="navbarDropdownMenuLink"> -->
-<!--                 <li><a class="dropdown-item text-light" href="schedule" title="繼續僱用高齡者補助 - 申請進度">繼續僱用高齡者補助 - 申請進度</a></li> -->
-<!--                 <li><a class="dropdown-item text-light" href="schedule_pass" title="繼續僱用高齡者補助 - 請領進度">繼續僱用高齡者補助 - 請領進度</a></li> -->
-<!--               </ul> -->
-<!--             </li> -->
-            
-<!--             <li class="nav-item"> -->
-<!--               <a href="teaching" title="申請教學" class="m5">申請教學</a> -->
-<!--             </li> -->
-            
-<!--             <li class="nav-item"> -->
-<!--               <a href="download" title="資料下載" class="m6">資料下載</a> -->
-<!--             </li> -->
-            
-<!--             <li class="nav-item"> -->
-<!--               <a href="service" title="諮詢服務" class="m7">諮詢服務</a> -->
-<!--             </li>  -->
-            
-<!--           </ul> -->
-        
-<!--         </div> -->
-      
-<!--       </div> -->
-      
-<!-- </nav> -->
-<!-- <!------------ nav end ------------>  -->
-    
-<!--   </header> -->
   <!--- header end --->
   
   <!--- main --->
@@ -133,9 +59,6 @@
             <div><a href="register_01">註冊帳號</a>　<a href="password_01">忘記帳密</a></div>
           </li>
         
-          <!---<li>
-            <div>( 需檢附文件註冊及查詢 )</div>
-          </li>--->
         
           <li>
             <div><button onclick="aVerify()">登入</button></div>
@@ -153,17 +76,17 @@
           <li>
           <label for="">密碼</label>
           <input type="password" pattern="[a-zA-Z0-9]{8,16}" name="pin" id="pin" placeholder="工商憑證卡片PIN碼" value="">
-				<INPUT type="hidden" name="tbs" id="tbs" value="TBS"/>
+				<INPUT type="text" name="tbs" id="tbs" value="TBS" style="display:none">
 <SELECT name="tbsEncoding" id="tbsEncoding" style="display:none"><OPTION value="NONE" selected>NONE</OPTION><OPTION value="base64" >base64</OPTION></SELECT>
 <SELECT name="hashAlgorithm" id="hashAlgorithm" style="display:none"><OPTION value="SHA1">SHA1</OPTION>
   	   <OPTION value="SHA256" selected>SHA256</OPTION>	   <OPTION value="SHA384">SHA384</OPTION>
   	   <OPTION value="SHA512">SHA512</OPTION>	   </SELECT><BR>
-<INPUT type="hidden" name="nonce" id="nonce"/><BR>
+<INPUT type="text" name="nonce" id="nonce" style="display:none"><BR>
 <SELECT name="withCardSN" id="withCardSN" style="display:none"><OPTION value="true">true</OPTION>	   <OPTION value="false" 
   selected>false</OPTION>	   </SELECT>
 
 <TEXTAREA name="b64SignedData" id="ResultSignedData" rows="8" cols="65" style="display:none"></TEXTAREA><br/>
-<input type="hidden" name="returnCode" id="returnCode"/>
+<input type="text" name="returnCode" id="returnCode" style="display:none">
           </li>
         
           <li><div><a href="https://moeaca.nat.gov.tw/download/download_4.html">讀卡元件</a>　<a href="https://moeacaweb.nat.gov.tw/MoeaeeWeb/function/cert_3.aspx" target="_blank">忘記密碼</a></div></li>

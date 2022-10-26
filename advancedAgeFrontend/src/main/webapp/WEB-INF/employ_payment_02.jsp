@@ -53,80 +53,6 @@ $(function(){
   
   <!--- header --->
   <%@ include file="header.jsp" %>
-<!--   <header> -->
-
-<!--     ---------- nav ---------- -->
-<!--     <nav class="navbar navbar-expand-lg bg-gray navbar-dark fixed-top p-0"> -->
-        
-<!--       <div class="navigation w-100"> -->
-<!--         <a class="navbar-brand" href="#"><img src="images/top_logo.png"></a> -->
-<!--         <a class="sitemap text-light float-end p-3" href="sitemap" title="網站導覽">網站導覽</a> -->
-      
-<!--         <button class="navbar-toggler" type="button" data-toggle="collapse"  -->
-<!--           data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"  -->
-<!--           aria-expanded="false" aria-label="Toggle navigation"> -->
-<!--           <span class="navbar-toggler-icon"></span> -->
-<!--         </button> -->
-
-<!--         <div class="collapse navbar-collapse main_menu" id="navbarSupportedContent"> -->
-          
-<!--           <ul class="navbar-nav mr-auto"> -->
-          
-<!--             <li class="nav-item"> -->
-<!--               <a href="index" title="首頁" class="m1">首頁</a> -->
-<!--             </li> -->
-            
-<!--             <li class="nav-item"> -->
-<!--               <a href="#" title="補助計畫" class="navbar-dark nav-link dropdown-toggle m2" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">補助計畫</a> -->
-<!--               <ul class="dropdown-menu rounded" aria-labelledby="navbarDropdownMenuLink"> -->
-<!--                 <li><a class="dropdown-item text-light" href="require" title="繼續僱用高齡者補助計畫說明">繼續僱用高齡者補助計畫說明</a></li> -->
-<!--               </ul> -->
-<!--             </li> -->
-            
-<!--             <li class="nav-item"> -->
-<!--               <a href="employ" title="線上申辦" class="navbar-dark nav-link dropdown-toggle m3-in in" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">線上申辦</a> -->
-<!--               <ul class="dropdown-menu rounded" aria-labelledby="navbarDropdownMenuLink"> -->
-<!--                 <li><a class="dropdown-item text-light" href="employ" title="繼續雇用高齡者補助 - 申請作業">繼續僱用高齡者補助 - 申請作業</a></li> -->
-<!--                 <li><a class="dropdown-item text-light" href="employ_patmant" title="繼續雇用高齡者補助 - 請領作業">繼續僱用高齡者補助 - 請領作業</a></li> -->
-<!--                 -
-<!--                 <li><hr class="dropdown-divider"></li> -->
-<!--                 <li><a class="dropdown-item text-white-50" href="#">退休者傳承專業技術 - 尚未開放</a></li> -->
-<!--                 <li><hr class="dropdown-divider"></li> -->
-<!--                 <li><a class="dropdown-item text-white-50" href="#">退休後再就業準備 - 尚未開放</a></li> -->
-<!--                 ---> -->
-<!--               </ul> -->
-<!--             </li> -->
-            
-<!--             <li class="nav-item text-dark"> -->
-<!--               <a href="schedule" title="案件查詢" class="navbar-dark nav-link dropdown-toggle m4" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">案件查詢</a> -->
-<!--               <ul class="dropdown-menu rounded" aria-labelledby="navbarDropdownMenuLink"> -->
-<!--                 <li><a class="dropdown-item text-light" href="schedule" title="繼續僱用高齡者補助 - 申請進度">繼續僱用高齡者補助 - 申請進度</a></li> -->
-<!--                 <li><a class="dropdown-item text-light" href="schedule_pass" title="繼續僱用高齡者補助 - 請領進度">繼續僱用高齡者補助 - 請領進度</a></li> -->
-<!--               </ul> -->
-<!--             </li> -->
-            
-<!--             <li class="nav-item"> -->
-<!--               <a href="teaching" title="申請教學" class="m5">申請教學</a> -->
-<!--             </li> -->
-            
-<!--             <li class="nav-item"> -->
-<!--               <a href="download" title="資料下載" class="m6">資料下載</a> -->
-<!--             </li> -->
-            
-<!--             <li class="nav-item"> -->
-<!--               <a href="service" title="諮詢服務" class="m7">諮詢服務</a> -->
-<!--             </li>  -->
-            
-<!--           </ul> -->
-        
-<!--         </div> -->
-      
-<!--       </div> -->
-      
-<!-- </nav> -->
-<!-- <!------------ nav end ------------>  -->
-    
-<!--   </header> -->
   <!--- header end ---> 
   
   <!--- main --->
@@ -155,9 +81,8 @@ $(function(){
       填寫後上傳</em>
       </div>
       
-      <input type="hidden" id="sid" name="sid" value="${sid}">
-      <input type="hidden" id="seq" name="seq" value="${seq}">
-      <input type="hidden" id="baseId" name="baseId" value="${baseId}">
+      <input type="text" id="seq" name="seq" value="${seq}" style="display:none">
+      <input type="text" id="baseId" name="baseId" value="${baseId}" style="display:none">
       <div id="page_tab">
         <div class="tab-1" id="employed"><a class="in color-2">線上填寫資料</a></div>
         <div class="tab-1" id="list"><a>上傳專用表格</a></div>
@@ -314,39 +239,8 @@ $(function(){
 		       		</c:if>
 		          </div>
 		         </c:if>
-		<!--           <div class="m w-100 point-2" style="display:none"> -->
-		<!--             <label for="salaryType12">請領補助</label> -->
-		<!--             <select> -->
-		<!--               <option>請選擇</option> -->
-		<!--               <option value="M">按月計</option> -->
-		<!--               <option value="H">按時計</option> -->
-		<!--             </select> -->
-		<!--             <img src="images/icon_qu.png" class="icon_qu" title=" -->
-		<!-- 【按月計酬】 -->
-		<!--  第1-6個月每人每月補助 13,000 元。 -->
-		<!--  第7-18個月每人每月補助 15,000 元。 -->
-		
-		<!-- 【非按月計酬】 -->
-		<!--  第1-6個月每人每小時補助 70 元， -->
-		<!--  每月最高補助 13,000 元。 -->
-		<!--  第7-18個月每人每小時補助 80 元， -->
-		<!--  每月最高補有 15,000 元。"> -->
-		
-		<!--             <label for="">申請期間</label> -->
-		<!--             <input type="text" class="short-2" id="employment_start_time12" name="employment_start_time12" placeholder="yyymmdd"> 至 -->
-		<!--             <input type="text" class="short-2" id="employment_end_time12" name="employment_end_time12" placeholder="yyymmdd"> -->
-		
-		<!--             <label for="">月數 / 時數</label> -->
-		<!--             <input type="number" class="short" step="1" min="0" id="count12" name="count12"> -->
-		<!--             <label for="">請領金額</label> -->
-		<!--             <input type="text" id="amounts12" name="amounts12" class="readonly" placeholder="自動計算" readonly> -->
-		<!--             <button class="add">－</button> -->
-		       
-		<!--           </div> -->
-		          
 		          
 		          <div class="px-4">（請領若有2種計薪方式，請按右方+按鈕增加欄位）</div>   
-		
 		
 		          <div class="close"><button class="close" title="移除此筆資料">X</button></div>
 	          
@@ -449,37 +343,6 @@ $(function(){
 	            <button type="button" class="add" onclick="showNewSalaryType('1')">＋</button>
 	       
 	          </div>
-	          
-	          
-	<!--           <div class="m w-100 point-2" style="display:none"> -->
-	<!--             <label for="salaryType12">請領補助</label> -->
-	<!--             <select> -->
-	<!--               <option>請選擇</option> -->
-	<!--               <option value="M">按月計</option> -->
-	<!--               <option value="H">按時計</option> -->
-	<!--             </select> -->
-	<!--             <img src="images/icon_qu.png" class="icon_qu" title=" -->
-	<!-- 【按月計酬】 -->
-	<!--  第1-6個月每人每月補助 13,000 元。 -->
-	<!--  第7-18個月每人每月補助 15,000 元。 -->
-	
-	<!-- 【非按月計酬】 -->
-	<!--  第1-6個月每人每小時補助 70 元， -->
-	<!--  每月最高補助 13,000 元。 -->
-	<!--  第7-18個月每人每小時補助 80 元， -->
-	<!--  每月最高補有 15,000 元。"> -->
-	
-	<!--             <label for="">申請期間</label> -->
-	<!--             <input type="text" class="short-2" id="employment_start_time12" name="employment_start_time12" placeholder="yyymmdd"> 至 -->
-	<!--             <input type="text" class="short-2" id="employment_end_time12" name="employment_end_time12" placeholder="yyymmdd"> -->
-	
-	<!--             <label for="">月數 / 時數</label> -->
-	<!--             <input type="number" class="short" step="1" min="0" id="count12" name="count12"> -->
-	<!--             <label for="">請領金額</label> -->
-	<!--             <input type="text" id="amounts12" name="amounts12" class="readonly" placeholder="自動計算" readonly> -->
-	<!--             <button class="add">－</button> -->
-	       
-	<!--           </div> -->
 	          
 	          
 	          <div class="px-4">（請領若有2種計薪方式，請按右方+按鈕增加欄位）</div>   

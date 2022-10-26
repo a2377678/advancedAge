@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,10 +41,17 @@ public class AdvancedAgeEmploymentListReceiptApiController {
 	
 	@Autowired
 	AdvancedAgeEmploymentListReceiptService advancedAgeEmploymentListReceiptService;
+
+	@Value("${api_token}")
+	private String apiToken;
 	
 	@ApiOperation(value = "查詢繼續僱用補助名單")
 	@RequestMapping(value = "/selectAdvancedAgeEmploymentListReceipts", method = RequestMethod.POST)
-	public List<AdvancedAgeEmploymentListReceipt> selectAdvancedAgeEmploymentListReceipts(AdvancedAgeEmploymentListReceipt advancedAgeEmploymentListReceipt) {
+	public List<AdvancedAgeEmploymentListReceipt> selectAdvancedAgeEmploymentListReceipts(AdvancedAgeEmploymentListReceipt advancedAgeEmploymentListReceipt,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		AdvancedAgeEmploymentListReceiptExample example = new AdvancedAgeEmploymentListReceiptExample();
 		example.createCriteria().andAdvancedAgeBaseIdEqualTo(advancedAgeEmploymentListReceipt.getAdvancedAgeBaseId());
 		example.setOrderByClause("id asc");
@@ -52,7 +60,11 @@ public class AdvancedAgeEmploymentListReceiptApiController {
 	
 	@ApiOperation(value = "查詢繼續僱用補助名單 by base請領次數")
 	@RequestMapping(value = "/selectAdvancedAgeEmploymentListReceiptsByFrequency", method = RequestMethod.POST)
-	public List<AdvancedAgeEmploymentListReceipt> selectAdvancedAgeEmploymentListReceiptsByFrequency(AdvancedAgeEmploymentListReceipt advancedAgeEmploymentListReceipt) {
+	public List<AdvancedAgeEmploymentListReceipt> selectAdvancedAgeEmploymentListReceiptsByFrequency(AdvancedAgeEmploymentListReceipt advancedAgeEmploymentListReceipt,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		AdvancedAgeEmploymentListReceiptExample example = new AdvancedAgeEmploymentListReceiptExample();
 		example.createCriteria().andAdvancedAgeBaseIdEqualTo(advancedAgeEmploymentListReceipt.getAdvancedAgeBaseId()).andBaseAllowanceFrequencyEqualTo(advancedAgeEmploymentListReceipt.getBaseAllowanceFrequency());
 		example.setOrderByClause("id asc");
@@ -61,7 +73,11 @@ public class AdvancedAgeEmploymentListReceiptApiController {
 	
 	@ApiOperation(value = "編輯繼續僱用補助名單")
 	@RequestMapping(value = "/editAdvancedAgeEmploymentListReceipt", method = RequestMethod.POST)
-	public int editAdvancedAgeEmploymentListReceipt(AdvancedAgeEmploymentListReceipt advancedAgeEmploymentListReceipt) {
+	public int editAdvancedAgeEmploymentListReceipt(AdvancedAgeEmploymentListReceipt advancedAgeEmploymentListReceipt,String token) {
+		if(!token.equals(apiToken))
+		{
+			return 0;
+		}
 		return advancedAgeEmploymentListReceiptService.updateByPrimaryKeySelective(advancedAgeEmploymentListReceipt);
 	}
 }

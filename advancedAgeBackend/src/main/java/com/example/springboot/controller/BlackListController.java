@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -19,7 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller 
 public class BlackListController { 
-	
+
+	Logger logger = LogManager.getLogger(BlackListController.class);
 	@Autowired
 	CallApi api;
 	
@@ -33,7 +36,7 @@ public class BlackListController {
 		try {
 			json = objectMapper.writeValueAsString(blackList);
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		String jsondata = api.httpPost(ip+"addBlackList",json);
 		
@@ -42,7 +45,7 @@ public class BlackListController {
 			blackList = objectMapper.readValue(jsondata, BlackList.class);
 			response.getWriter().print("{\"status\":\"success\",\"id\":"+StringEscapeUtils.escapeHtml(blackList.getId().toString())+"}");
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 	}
 	
@@ -53,7 +56,7 @@ public class BlackListController {
 		try {
 			json = objectMapper.writeValueAsString(blackList);
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		String jsondata = api.httpPost(ip+"editBlackListData",json);
 		
@@ -62,7 +65,7 @@ public class BlackListController {
 			blackList = objectMapper.readValue(jsondata, BlackList.class);
 			response.getWriter().print("{\"status\":\"success\",\"id\":"+StringEscapeUtils.escapeHtml(blackList.getId().toString())+"}");
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 	}
 	

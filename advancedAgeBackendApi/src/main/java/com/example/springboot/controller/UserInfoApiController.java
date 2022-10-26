@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,17 +24,28 @@ public class UserInfoApiController {
 	UserInfo userInfo;
 	
 	UserInfoExample userInfoExample;
+
+	@Value("${api_token}")
+	private String apiToken;
 	
 	@ApiOperation(value = "新增使用者")
 	@RequestMapping(value = "/addUserInfo", method = RequestMethod.POST)
-	public int addUserInfo(UserInfo userInfo) {
+	public int addUserInfo(UserInfo userInfo,String token) {
+		if(!token.equals(apiToken))
+		{
+			return 0;
+		}
 		
 		return userInfoService.insertSelective(userInfo);
 	}
 	
 	@ApiOperation(value = "查詢使用者名單")
 	@RequestMapping(value = "/selectUserInfo", method = RequestMethod.POST)
-	public List<UserInfo> selectUserInfo(UserInfo userInfo) {
+	public List<UserInfo> selectUserInfo(UserInfo userInfo,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		userInfoExample = new UserInfoExample();
 		UserInfoExample.Criteria c= userInfoExample.createCriteria();
 		if(userInfo.getUnit() != null && !userInfo.getUnit().equals("")) 
@@ -55,13 +67,21 @@ public class UserInfoApiController {
 	
 	@ApiOperation(value = "查詢使用者資料")
 	@RequestMapping(value = "/selectUserInfoData", method = RequestMethod.POST)
-	public UserInfo selectUserInfoData(UserInfo userInfo) {
+	public UserInfo selectUserInfoData(UserInfo userInfo,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		return userInfoService.selectByPrimaryKey(userInfo.getAccount());
 	}
 	
 	@ApiOperation(value = "使用者登入")
 	@RequestMapping(value = "/selectUserInfoLogin", method = RequestMethod.POST)
-	public UserInfo selectUserInfoLogin(UserInfo userInfo) {
+	public UserInfo selectUserInfoLogin(UserInfo userInfo,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		userInfoExample = new UserInfoExample();
 		UserInfoExample.Criteria c= userInfoExample.createCriteria();
 		c.andAccountEqualTo(userInfo.getAccount()).andPasswordEqualTo(userInfo.getPassword());
@@ -76,7 +96,11 @@ public class UserInfoApiController {
 	
 	@ApiOperation(value = "編輯使用者資料")
 	@RequestMapping(value = "/editUserInfoData", method = RequestMethod.POST)
-	public int editUserInfoData(UserInfo userInfo) {
+	public int editUserInfoData(UserInfo userInfo,String token) {
+		if(!token.equals(apiToken))
+		{
+			return 0;
+		}
 		userInfo.setUpdateTime(new Date());
 		return userInfoService.updateByPrimaryKeySelective(userInfo);
 	}

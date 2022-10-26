@@ -12,86 +12,17 @@
 <link rel="stylesheet" href="css/template.css" type="text/css">
 <link rel="stylesheet" href="css/main.css" type="text/css">
 </head>
-
+<style type="text/css">
+	@page {
+     size: A4 landscape; /*直式portrait 橫式landscape*/
+     margin: 1cm;  /*print邊界*/
+	}
+</style>
 <body>
 <div class=""> 
   
   <!--- header --->
   <%@ include file="header.jsp" %>
-<!--   <header> -->
-
-<!--     ---------- nav ---------- -->
-<!--     <nav class="navbar navbar-expand-lg bg-gray navbar-dark fixed-top p-0"> -->
-        
-<!--           <div class="navigation w-100"> -->
-<!--             <a class="navbar-brand" href="#"><img src="images/top_logo.png"></a> -->
-<!--             <a class="sitemap text-light float-end p-3" href="sitemap.html" title="網站導覽">網站導覽</a> -->
-          
-<!--             <button class="navbar-toggler" type="button" data-toggle="collapse"  -->
-<!--               data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"  -->
-<!--               aria-expanded="false" aria-label="Toggle navigation"> -->
-<!--               <span class="navbar-toggler-icon"></span> -->
-<!--             </button> -->
-
-<!--             <div class="collapse navbar-collapse main_menu" id="navbarSupportedContent"> -->
-              
-<!--               <ul class="navbar-nav mr-auto"> -->
-              
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="index.html" title="首頁" class="m1">首頁</a> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="#" title="補助計畫" class="navbar-dark nav-link dropdown-toggle m2" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">補助計畫</a> -->
-<!--                   <ul class="dropdown-menu rounded" aria-labelledby="navbarDropdownMenuLink"> -->
-<!--                     <li><a class="dropdown-item text-light" href="require.html" title="繼續僱用高齡者補助計畫說明">繼續僱用高齡者補助計畫說明</a></li> -->
-<!--                   </ul> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="employ.html" title="線上申辦" class="navbar-dark nav-link dropdown-toggle m3" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">線上申辦</a> -->
-<!--                   <ul class="dropdown-menu rounded" aria-labelledby="navbarDropdownMenuLink"> -->
-<!--                     <li><a class="dropdown-item text-light" href="employ.html" title="繼續雇用高齡者補助 - 申請作業">繼續僱用高齡者補助 - 申請作業</a></li> -->
-<!--                     <li><a class="dropdown-item text-light" href="employ_patmant.html" title="繼續雇用高齡者補助 - 請領作業">繼續僱用高齡者補助 - 請領作業</a></li> -->
-<!--                     -
-<!--                     <li><hr class="dropdown-divider"></li> -->
-<!--                     <li><a class="dropdown-item text-white-50" href="#">退休者傳承專業技術 - 尚未開放</a></li> -->
-<!--                     <li><hr class="dropdown-divider"></li> -->
-<!--                     <li><a class="dropdown-item text-white-50" href="#">退休後再就業準備 - 尚未開放</a></li> -->
-<!--                     ---> -->
-<!--                   </ul> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item text-dark"> -->
-<!--                   <a href="schedule.html" title="案件查詢" class="navbar-dark nav-link dropdown-toggle m4-in in" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">案件查詢</a> -->
-<!--                   <ul class="dropdown-menu rounded" aria-labelledby="navbarDropdownMenuLink"> -->
-<!--                     <li><a class="dropdown-item text-light" href="schedule.html" title="繼續僱用高齡者補助 - 申請進度">繼續僱用高齡者補助 - 申請進度</a></li> -->
-<!--                     <li><a class="dropdown-item text-light" href="schedule_pass.html" title="繼續僱用高齡者補助 - 請領進度">繼續僱用高齡者補助 - 請領進度</a></li> -->
-<!--                   </ul> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="teaching.html" title="申請教學" class="m5">申請教學</a> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="download.html" title="資料下載" class="m6">資料下載</a> -->
-<!--                 </li> -->
-                
-<!--                 <li class="nav-item"> -->
-<!--                   <a href="service.html" title="諮詢服務" class="m7">諮詢服務</a> -->
-<!--                 </li>  -->
-                
-<!--               </ul> -->
-            
-<!--             </div> -->
-          
-<!--           </div> -->
-          
-<!--     </nav> -->
-<!--     ---------- nav end ----------  -->
-    
-<!--   </header> -->
   <!--- header end ---> 
   
   <!--- main --->
@@ -112,7 +43,7 @@
         <div class="fs-5 fw-bolder pt-2">請繼續完成「<a href="employ_patmant.html" class="text-info">請領作業</a>」</div>
       </div>
       
-      
+      <!--startprint-->
       <div class="form">
         <div class="title_main"><span>申請書</span></div>
         <div>單位名稱：${apply.companyName}</div>
@@ -121,7 +52,7 @@
         <div>勞保投保證號：${apply.guaranteeNumber.replace(";","、")}</div>
         <div class="full">聯絡地址：
         	<c:forEach items="${cityList}" var="item"><c:if test="${item.code==apply.contactCity}">${item.name}</c:if></c:forEach><c:forEach items="${areaList}" var="item"><c:if test="${item.code==apply.contactArea}">${item.name}</c:if></c:forEach>${apply.contactAddress}
-      		<input type="hidden" id="city" value="${apply.contactCity}">
+      		<input type="text" id="city" value="${apply.contactCity}" style="display:none">
 		</div>
         <div>聯絡人：${apply.contactName}</div>
         <div>聯絡人職稱：${apply.contactJobtitle}</div>
@@ -304,8 +235,9 @@ C=(B)/(A) x 100%">---> </div>
 		      </c:choose>
 	      </div>
       </div>
+      <!--endprint-->
       <div class="page">
-        <button>列印資料</button>
+        <button type="button" onclick="doPrint()">列印資料</button>
       </div>
     </div>
     <!------------ 申請流程 END ------------> 
@@ -328,5 +260,6 @@ C=(B)/(A) x 100%">---> </div>
 <script src="js/jquery-3.6.0.min.js"></script> 
 <script src="js/popper.min.js"></script> 
 <script src="js/bootstrap.min.js"></script>
+<script src="js/schedule_pass/schedule_pass.js"></script>
 </body>
 </html>

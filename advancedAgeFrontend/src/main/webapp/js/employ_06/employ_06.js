@@ -1,10 +1,7 @@
-function downloadPdf(sid){
+function downloadPdf(){
 	$.ajax({
 	    type: "POST",
 	    url: 'pdf',
-	    data: {
-			sid : sid
-	    },
 	    dataType:"text", //ajax返回值text（json格式也可用這返回，也可設成json）
 	    success: function(text){
 			let json=jQuery.parseJSON(text);

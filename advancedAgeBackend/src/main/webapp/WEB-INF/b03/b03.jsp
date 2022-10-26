@@ -28,9 +28,6 @@
 
 
   <!---------------------- top ---------------------->
-<!--   <div id="top"> -->
-<!--     <div id="top_logo"><a href="index.html"><img src="images/logo.png" /></a></div> -->
-<!--   </div> -->
   <%@ include file="../header.jsp" %>
   <!---------------------- top end ---------------------->
 
@@ -39,119 +36,12 @@
     <div><a href="#" class="menu-1 in">繼續僱用高齡者</a></div>
     <div><a href="#" class="menu-2">傳承專業技術與經驗</a></div>
     <div><a href="#" class="menu-3">退休後再就業準備協助措施</a></div>
-    <div><a href="account01?account=${account }" class="account">申請帳號審核管理</a></div>
+    <div><a href="account01" class="account">申請帳號審核管理</a></div>
   </div>
 
   <!---------------------- left menu ---------------------->
   <%@ include file="../leftMenu.jsp" %>
-<!--   <div id="left_menu"> -->
-<!--     <div class="panel-group" id="accordion"> -->
-    
-<!--     -------- collapse1 -------- -->
-<!-- 	<div class="panel panel-default"> -->
-<!-- 		<div class="panel-heading"> -->
-<!-- 			<h4 class="panel-title"> -->
-<!-- 			  <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">收件與補件</a> -->
-<!-- 			</h4> -->
-<!-- 		</div> -->
-<!-- 		<div id="collapse1" class="panel-collapse collapse in"> -->
-<!-- 			<div class="panel-body"> -->
-<!-- 				<ul> -->
-<!--                   <li><a href="a01/a01.html">附件檢查與通知</a></li> -->
-<!--                   <li><a href="a02/a02.html">補件回傳案件</a></li> -->
-<!--                 </ul> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-    
-<!--     -------- collapse2 -------- -->
-<!-- 	<div class="panel panel-default"> -->
-<!-- 		<div class="panel-heading-in"> -->
-<!-- 			<h4 class="panel-title"> -->
-<!-- 			  <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">案件審查</a> -->
-<!-- 			</h4> -->
-<!-- 		</div> -->
-<!-- 		<div id="collapse2" class="panel-collapse collapse in"> -->
-<!-- 			<div class="panel-body"> -->
-<!-- 				<ul> -->
-<!--                   <li><a href="b01/b01.html">申請案件查詢</a></li> -->
-<!--                   <li><a href="b02/b02.html">案件審核</a></li> -->
-<!--                   <li><a href="b03/b03.html" class="in">停止補助名單管理</a></li> -->
-<!--                   <li><a href="b04/b04.html">實地查核登錄</a></li> -->
-<!--                 </ul> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-    
-<!--     -------- collapse3 -------- -->
-<!-- 	<div class="panel panel-default"> -->
-<!-- 		<div class="panel-heading"> -->
-<!-- 			<h4 class="panel-title"> -->
-<!-- 			  <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">請款與核銷</a> -->
-<!-- 			</h4> -->
-<!-- 		</div> -->
-<!-- 		<div id="collapse3" class="panel-collapse collapse in"> -->
-<!-- 			<div class="panel-body"> -->
-<!-- 				<ul> -->
-<!--                   <li><a href="c01/c01.html">請款審核</a></li> -->
-<!--                   <li><a href="c02/c02.html">案件核銷</a></li> -->
-<!--                 </ul> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-
-    
-    
-<!--     -------- collapse8 -------- -->
-<!--     <div class="panel panel-default"> -->
-<!-- 		<div class="panel-heading"> -->
-<!-- 			<h4 class="panel-title"> -->
-<!-- 				<a data-toggle="collapse" data-parent="#accordion" href="#collapse8">彙整與統計</a> -->
-<!-- 			</h4> -->
-<!-- 		</div> -->
-<!-- 		<div id="collapse8" class="panel-collapse collapse"> -->
-<!-- 			<div class="panel-body"> -->
-<!-- 				<ul> -->
-<!--                   <li><a href="index.html" class="in">統計概況 (儀錶板)</a></li> -->
-<!--                   <li><a href="#">繼續僱用申請人數</a></li> -->
-<!--                   <li><a href="#">繼續僱用補助金額</a></li> -->
-<!--                   <li><a href="#">原有薪資級距</a></li> -->
-<!--                   <li><a href="#">申請單位行業別</a></li> -->
-<!--                   <li><a href="#">申請單位補助金額</a></li> -->
-<!--                   <li><a href="#">申請單位申請情形</a></li> -->
-<!--                 </ul> -->
-<!-- 		  </div> -->
-<!-- 		</div> -->
-<!-- 	</div>     -->
-
-
-    
-    
-<!--     -------- collapse10 -------- -->
-<!--     <div class="panel panel-default"> -->
-<!-- 		<div class="panel-heading"> -->
-<!-- 			<h4 class="panel-title"> -->
-<!-- 				<a data-toggle="collapse" data-parent="#accordion" href="#collapse10">權限與系統管理</a> -->
-<!-- 			</h4> -->
-<!-- 		</div> -->
-<!-- 		<div id="collapse10" class="panel-collapse collapse"> -->
-<!-- 			<div class="panel-body"> -->
-<!-- 				<ul> -->
-<!--                   <li><a href="j01/j01.html">使用者資料維護</a></li> -->
-<!--                   <li><a href="j02/j02.html">使用者帳號與權限</a></li> -->
-<!--                   <li><a href="j03/j03.html">群組權限管理</a></li> -->
-<!--                   <li><a href="j04/j04.html">系統登入紀錄</a></li> -->
-<!--                 </ul> -->
-<!-- 		  </div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-    
-    
-<!--   </div> -->
-<!--   </div> -->
   <!---------------------- left menu end ---------------------->
-
-
 
 
   <!---------------------- main ---------------------->
@@ -166,21 +56,19 @@
       <div id="account">
         <a>登入單位：
         	${unitName }&nbsp;${name }</a>
-        <a href="logout?account=${account }">登出</a>
+        <a href="logout">登出</a>
       </div>
       
 	  <c:if test="${functionPermission.indexOf('B03')!=-1 }">
-<%--       <%if(String.valueOf(session.getAttribute("functionPermission")).indexOf("B03")!=-1){ %> --%>
       <!------------------- table 1 ------------------->
         <div id="page_tab">
-          <div class="tab-1"><a href="b03?account=${account }" class="in">查詢 / 修改紀錄</a></div>
-          <div class="tab-1"><a href="b03_02?account=${account }">停止補助名單登錄</a></div>
+          <div class="tab-1"><a href="b03" class="in">查詢 / 修改紀錄</a></div>
+          <div class="tab-1"><a href="b03_02">停止補助名單登錄</a></div>
         </div>
       
       
       <!------------------- search ------------------->
       <form action="b03" method="post" id="searchForm">
-      <input type="hidden" name="account" value="${account }"/>
       <div id="search_bar">
         <table class="table_01">
           <tr>
@@ -207,10 +95,10 @@
           </tr>
         </table>
       </div>
-      <input type="hidden" name="numbersOfPage" value="${pagination.numbersOfPage}"/>
-      <input type="hidden" name="page" id="page" value="${pagination.page}"/>
-      <input type="hidden" name="totalNumbers" value="${pagination.totalNumbers}"/>
-      <input type="hidden" name="totalPages" value="${pagination.totalPages}"/>
+      <input type="text" name="numbersOfPage" value="${pagination.numbersOfPage}" style="display:none">
+      <input type="text" name="page" id="page" value="${pagination.page}" style="display:none">
+      <input type="text" name="totalNumbers" value="${pagination.totalNumbers}" style="display:none">
+      <input type="text" name="totalPages" value="${pagination.totalPages}" style="display:none">
       </form>
       
       
@@ -229,17 +117,6 @@
        </div>
       
       <ol>
-<!--         <li> -->
-<!--           <a href="b03-1.html" target="blank"> -->
-<!--           <span class="no">1</span> -->
-<!--           <span class="update_time">112-09-01</span> -->
-<!--           <span class="update_time">114-08-31</span> -->
-<!--           <span class="tax_id_number">85561470</span> -->
-<!--           <span class="company_name">資訊科技股份有限公司</span> -->
-<!--           <span class="update_type">禁止申請</span> -->
-<!--           <span class="district">勞動力發展署</span> -->
-<!--           </a> -->
-<!--         </li> -->
         <c:choose><c:when test="${not empty blackListData}">
       	<c:forEach items="${blackListData}" var="item" varStatus="status">
 	      	<li>
@@ -295,22 +172,17 @@
       </div>
       
       <form action="b03_1" method="post" id="dataForm">
-      	<input type="hidden" id="id" name="id">
-      	<input type="hidden" id="searchSeq" name="searchSeq">
-      	<input type="hidden" id="searchUnit" name="searchUnit">
-      	<input type="hidden" id="searchBanStartDate" name="searchBanStartDate">
-      	<input type="hidden" id="searchBanEndDate" name="searchBanEndDate">
-      	<input type="hidden" name="account" value="${account }"/>
+      	<input type="text" id="id" name="id" style="display:none">
+      	<input type="text" id="searchSeq" name="searchSeq" style="display:none">
+      	<input type="text" id="searchUnit" name="searchUnit" style="display:none">
+      	<input type="text" id="searchBanStartDate" name="searchBanStartDate" style="display:none">
+      	<input type="text" id="searchBanEndDate" name="searchBanEndDate" style="display:none">
       </form>
       
       
     </div>
     </c:if>
       <c:if test="${functionPermission.indexOf('B03')==-1 }"><p>無此權限</p></c:if>
-<%--       <%}else{ %> --%>
-<!--   		<p>無此權限</p> -->
-<%--   	<%} %> --%>
-      
 
     </div>
     

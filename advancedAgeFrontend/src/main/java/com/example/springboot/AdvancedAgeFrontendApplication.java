@@ -7,8 +7,8 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 @SpringBootApplication
 public class AdvancedAgeFrontendApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(AdvancedAgeFrontendApplication.class, args);
-	}
+//	public static void main(String[] args) {
+//		SpringApplication.run(AdvancedAgeFrontendApplication.class, args);
+//	}
 
 }

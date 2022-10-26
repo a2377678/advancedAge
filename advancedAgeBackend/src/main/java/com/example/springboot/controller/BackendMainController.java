@@ -1,33 +1,16 @@
 package com.example.springboot.controller;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Base64;
+
 import java.util.Date;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.servlet.ServletOutputStream;
@@ -35,29 +18,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.BorderStyle;
-import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
-import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.owasp.esapi.ESAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.springboot.entity.Pagination;
 import com.example.springboot.entity.SiteInspection;
@@ -72,9 +52,9 @@ import com.example.springboot.entity.AdvancedAgePlan;
 import com.example.springboot.entity.Attachment;
 import com.example.springboot.entity.BlackList;
 import com.example.springboot.entity.CompanyInfo;
-import com.example.springboot.entity.FunctionList;
 import com.example.springboot.entity.FunctionPermission;
 import com.example.springboot.entity.MailRecord;
+import com.example.springboot.util.AesUtil;
 import com.example.springboot.util.CallApi;
 import com.example.springboot.util.SendEmail;
 import com.example.springboot.util.Zip;
@@ -85,6 +65,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller 
 public class BackendMainController { 
+
+	Logger logger = LogManager.getLogger(BackendMainController.class);
 	
 	@Autowired
 	public CallApi api;
@@ -98,9 +80,6 @@ public class BackendMainController {
 	
 	@Value("${file_path}")
 	private String filePath;
-	
-	@Value("${encrypt_key}")
-	private String key;
 	
 	@Value("${mail_domain}")
 	private String mailDomain;
@@ -127,13 +106,7 @@ public class BackendMainController {
 	public String login(HttpServletRequest request,UserInfo userInfo){ 
 		session = request.getSession();
 		if(userInfo.getAccount()!=null) {
-			
-			try {
-				userInfo.setPassword(encryptPassword(userInfo.getPassword(),key));
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
+			userInfo.setPassword(AesUtil.encrypt(userInfo.getPassword()).toString());
 			UserInfo loginUser=selectUserInfoLogin(userInfo);
 			
 			if(loginUser.getAccount()!=null)
@@ -143,13 +116,13 @@ public class BackendMainController {
 					FunctionPermission functionPermission= new FunctionPermission();
 					functionPermission.setJurisdiction(loginUser.getJurisdiction());
 					session.removeAttribute("message");
-					session.setAttribute(loginUser.getAccount()+"id",loginUser.getId());
-					session.setAttribute(loginUser.getAccount()+"account",loginUser.getAccount());
-					session.setAttribute(loginUser.getAccount()+"name",loginUser.getName());
-					session.setAttribute(loginUser.getAccount()+"unitName",getUnitName(loginUser.getUnit()));
-					session.setAttribute(loginUser.getAccount()+"unit",loginUser.getUnit());
-					session.setAttribute(loginUser.getAccount()+"jurisdiction",loginUser.getJurisdiction());
-					session.setAttribute(loginUser.getAccount()+"functionPermission",selectFunctionPermission(functionPermission));
+					session.setAttribute(session.getId()+"id",loginUser.getId());
+					session.setAttribute(session.getId()+"account",loginUser.getAccount());
+					session.setAttribute(session.getId()+"name",loginUser.getName());
+					session.setAttribute(session.getId()+"unitName",getUnitName(loginUser.getUnit()));
+					session.setAttribute(session.getId()+"unit",loginUser.getUnit());
+					session.setAttribute(session.getId()+"jurisdiction",loginUser.getJurisdiction());
+					session.setAttribute(session.getId()+"functionPermission",selectFunctionPermission(functionPermission));
 					UserLoginRecord loginRecord = new UserLoginRecord();
 					loginRecord.setLoginId(loginUser.getId());
 					loginRecord.setAccount(loginUser.getAccount());
@@ -157,7 +130,7 @@ public class BackendMainController {
 					loginRecord.setUnit(loginUser.getUnit());
 					loginRecord.setUsername(loginUser.getName());
 					addUserLoginRecord(loginRecord);
-					return "redirect:/a01?account="+loginUser.getAccount();
+					return "redirect:/a01";
 				}
 				else
 				{
@@ -174,15 +147,16 @@ public class BackendMainController {
 	}
 	
 	@RequestMapping(value = "/logout")
-	public String logout(HttpServletRequest request,String account){ 
+	public String logout(HttpServletRequest request){ 
 		session= request.getSession();
-		session.removeAttribute(account+"message");
-		session.removeAttribute(account+"id");
-		session.removeAttribute(account+"account");
-		session.removeAttribute(account+"unitName");
-		session.removeAttribute(account+"unit");
-		session.removeAttribute(account+"jurisdiction");
-		session.removeAttribute(account+"functionPermission");
+		session.removeAttribute(session.getId()+"message");
+		session.removeAttribute(session.getId()+"id");
+		session.removeAttribute(session.getId()+"account");
+		session.removeAttribute(session.getId()+"unitName");
+		session.removeAttribute(session.getId()+"unit");
+		session.removeAttribute(session.getId()+"jurisdiction");
+		session.removeAttribute(session.getId()+"functionPermission");
+		session.invalidate();
 		return "redirect:/login";
 	}
 	
@@ -207,8 +181,8 @@ public class BackendMainController {
 		try {
 			zip.ZipDirs(filePath+"/A/"+attachment.getFileBelongId(), date+".rar", true, f -> true,filePath+"/A/"+attachment.getFileBelongId()+"/register/"+attachment.getFileFrequency(),filePath+"/A/"+attachment.getFileBelongId()+"/salary/"+attachment.getFileFrequency(),filePath+"/A/"+attachment.getFileBelongId()+"/insure/"+attachment.getFileFrequency(),filePath+"/A/"+attachment.getFileBelongId()+"/attendance/"+attachment.getFileFrequency(),filePath+"/A/"+attachment.getFileBelongId()+"/necessary/"+attachment.getFileFrequency());
 			
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (IOException e) {
+			logger.warn(e.getMessage());
 		}
 	}
 	
@@ -217,26 +191,33 @@ public class BackendMainController {
 		path=filePath+path;
 //    下載的檔名是啥
       String fileName = path.substring(path.lastIndexOf("/") + 1);
+      FileInputStream in = null;
+      ServletOutputStream out = null;
       try{
 //    設定瀏覽器能夠支援下載的東西，中文檔名需要指定編碼方式，否則可能會亂碼
       response.setHeader("Content-Disposition","attachment;filename="+ URLEncoder.encode(fileName,"utf-8"));//分號改成冒號會展示圖片而不會下載
 //    獲取下載檔案的輸入流
-      FileInputStream in=new FileInputStream(path);
+      in=new FileInputStream(path);
 //    建立緩衝區
       int len=0;
       byte[] buffer=new byte[1024];
 //    獲取outputStream物件
-      ServletOutputStream out= response.getOutputStream();
+      out= response.getOutputStream();
 //    將FileOutputStream流寫入buffer,使用outputStream將緩衝區資料輸出到客戶端
       while((len=in.read(buffer))>0)
       {
           out.write(buffer,0,len);
       }
-
-      in.close();
-      out.close();
-      }catch(Exception e) {
-    	  e.getStackTrace();
+      }catch(IOException e) {
+    	  logger.warn(e.getMessage());
+      }finally {
+    	  try {
+			in.close();
+			out.close();
+		} catch (IOException e) {
+			logger.warn(e.getMessage());
+		}
+          
       }
 	 }
 
@@ -245,19 +226,18 @@ public class BackendMainController {
 		try {
 			zip.ZipDirs(filePath+"/A/"+attachment.getFileBelongId(), "allFile.rar", true, f -> true,filePath+"/A/"+attachment.getFileBelongId()+"/register",filePath+"/A/"+attachment.getFileBelongId()+"/salary",filePath+"/A/"+attachment.getFileBelongId()+"/insure",filePath+"/A/"+attachment.getFileBelongId()+"/attendance",filePath+"/A/"+attachment.getFileBelongId()+"/necessary");
 			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (IOException e) {
+			logger.warn(e.getMessage());
 		}
 	}
 	
 	@RequestMapping(value = "/a01")
-	public String a01(HttpServletRequest request,Model model,AdvancedAgeBase base,Pagination pagination,UserInfo userInfo,String account){ 
+	public String a01(HttpServletRequest request,Model model,AdvancedAgeBase base,Pagination pagination,UserInfo userInfo){ 
 		session=request.getSession();
-		if (!request.isRequestedSessionIdValid() || session == null || session.getAttribute(account+"account") == null) {
+		if (!request.isRequestedSessionIdValid() || session == null || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		model.addAttribute("year", applyYear);
 		model.addAttribute("base", base);
 		model.addAttribute("unitList", getUnit().toList());
@@ -288,8 +268,9 @@ public class BackendMainController {
 	}
 	
 	@RequestMapping(value = "/file")
-	public String file(Model model,AdvancedAgeApply apply,String account){ 
-		setModel(account,model);
+	public String file(HttpServletRequest request,Model model,AdvancedAgeApply apply){ 
+		session=request.getSession();
+		setModel(session.getId(),model);
 		AdvancedAgeBase base = new AdvancedAgeBase();
 		base.setYear(apply.getApplyYear());
 		base.setSeq(apply.getSeq());
@@ -303,8 +284,7 @@ public class BackendMainController {
 		model.addAttribute("userList", selectUserInfo(userInfo).toList());
 		model.addAttribute("unitList", getUnit().toList());
 		// ------行業別列表 start----
-		String result = api.httpGet(ip + "getIndustryList");
-		jsonArray = new JSONArray(result);
+		jsonArray = new JSONArray(api.httpPost(ip + "getIndustryList",""));
 		List<Object> list = jsonArray.toList();
 		model.addAttribute("industryList", list);
 		// ------行業別列表 end------
@@ -349,12 +329,12 @@ public class BackendMainController {
 	}
 	
 	@RequestMapping(value = "/a02")
-	public String a02(HttpServletRequest request,Model model,AdvancedAgeBase base,Pagination pagination,UserInfo userInfo,String account){ 
+	public String a02(HttpServletRequest request,Model model,AdvancedAgeBase base,Pagination pagination,UserInfo userInfo){ 
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		model.addAttribute("year", applyYear);
 		model.addAttribute("base", base);
 		model.addAttribute("unitList", getUnit().toList());
@@ -386,12 +366,12 @@ public class BackendMainController {
 	}
 	
 	@RequestMapping(value = "/account01")
-	public String account01(HttpServletRequest request,Model model,CompanyInfo info,Pagination pagination,String account){ 
+	public String account01(HttpServletRequest request,Model model,CompanyInfo info,Pagination pagination){ 
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		model.addAttribute("companyInfo", info);
 		info.setAccountStatus("1");
 		//所有資料
@@ -420,24 +400,22 @@ public class BackendMainController {
 	}
 	
 	@RequestMapping(value = "/account01_1")
-	public String account01_1(HttpServletRequest request,Model model,CompanyInfo info,Pagination pagination,String searchSeq,String searchCompanyName,String account){ 
+	public String account01_1(HttpServletRequest request,Model model,CompanyInfo info,Pagination pagination,String searchSeq,String searchCompanyName){ 
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		model.addAttribute("searchSeq", searchSeq);
 		model.addAttribute("searchCompanyName", searchCompanyName);
 		// ------行業別列表 start----
-		String result = api.httpGet(ip + "getIndustryList");
-		jsonArray = new JSONArray(result);
+		jsonArray = new JSONArray(api.httpPost(ip + "getIndustryList",""));
 		List<Object> list = jsonArray.toList();
 		model.addAttribute("industryList", list);
 		// ------行業別列表 end------
 				
 		//------ 縣市列表 start----
-		result = api.httpGet(ip + "getCityList");
-		jsonArray = new JSONArray(result);
+		jsonArray = new JSONArray(api.httpPost(ip + "getCityList",""));
 		list = jsonArray.toList();
 		model.addAttribute("cityList", list);
 		//------ 縣市列表 end----
@@ -447,13 +425,11 @@ public class BackendMainController {
 		model.addAttribute("companyInfoData",companyInfo );
 		model.addAttribute("searchInfo",info );
 		
-		String registerArea = api.httpGet(ip + "getAreaList?cityCode=" + companyInfo.getString("registerCity"));
-		jsonArray = new JSONArray(registerArea);
+		jsonArray = new JSONArray(api.httpPost(ip + "getAreaList?cityCode=" + companyInfo.getString("registerCity"),""));
 		list = jsonArray.toList();
 		model.addAttribute("registerAreaList", list);
 		
-		String contactArea = api.httpGet(ip + "getAreaList?cityCode=" + companyInfo.getString("registerCity"));
-		jsonArray = new JSONArray(contactArea);
+		jsonArray = new JSONArray(api.httpPost(ip + "getAreaList?cityCode=" + companyInfo.getString("registerCity"),""));
 		list = jsonArray.toList();
 		model.addAttribute("contactAreaList", list);
 		//------ 公司資訊 end-----
@@ -477,12 +453,12 @@ public class BackendMainController {
 	}
 	
 	@RequestMapping(value = "/account02")
-	public String account02(HttpServletRequest request,Model model,AdvancedAgeBase base,Pagination pagination,String account){ 
+	public String account02(HttpServletRequest request,Model model,AdvancedAgeBase base,Pagination pagination){ 
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		//所有資料
 		CompanyInfo info = new CompanyInfo();
 		info.setAccountStatus("3");
@@ -510,12 +486,12 @@ public class BackendMainController {
 	}
 	
 	@RequestMapping(value = "/account02_1")
-	public String account02_1(HttpServletRequest request,Model model,CompanyInfo info,Pagination pagination,String account){ 
+	public String account02_1(HttpServletRequest request,Model model,CompanyInfo info,Pagination pagination){ 
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		//------ 公司資訊 start----
 		JSONObject companyInfo = selectCompanyInfoData(info);
 		model.addAttribute("companyInfoData",companyInfo );
@@ -523,33 +499,22 @@ public class BackendMainController {
 		
 		attachment = new Attachment();
 		//------ 設立登記證明文件 start----
-		attachment.setFileBelong("E");
+		attachment.setFileBelong("FG");
 		attachment.setFileBelongId(Integer.valueOf(info.getId()));
 		attachment.setFileType("register");
 		model.addAttribute("registerAttachment", selectFiles(attachment).toList());
 		//------ 設立登記證明文件 end----
 		
-		//------ 設立登記證明文件 start----
-		attachment.setFileBelong("E");
-		attachment.setFileBelongId(Integer.valueOf(info.getId()));
-		attachment.setFileType("authorize");
-		model.addAttribute("authorizeAttachment", selectFiles(attachment).toList());
-		//------ 設立登記證明文件 end----
-		return "account/account02";
+		return "account/account02_1";
 	}
 	
-//	@RequestMapping(value = "/file_2")
-//	public String file_2(){ 
-//		return "a02/file_2";
-//	}
-	
 	@RequestMapping(value = "/b01")
-	public String b01(HttpServletRequest request,Model model,AdvancedAgeBase base,Pagination pagination,String account){ 
+	public String b01(HttpServletRequest request,Model model,AdvancedAgeBase base,Pagination pagination){ 
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		model.addAttribute("base", base);
 		// ------單位列表 start------
 		model.addAttribute("unitList", getUnit().toList());
@@ -592,12 +557,12 @@ public class BackendMainController {
 	}
 	
 	@RequestMapping(value = "/b02")
-	public String b02(HttpServletRequest request,Model model,AdvancedAgeBase base,Pagination pagination,String account){ 
+	public String b02(HttpServletRequest request,Model model,AdvancedAgeBase base,Pagination pagination){ 
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		model.addAttribute("base", base);
 		// ------單位列表 start------
 		model.addAttribute("unitList", getUnit().toList());
@@ -635,12 +600,12 @@ public class BackendMainController {
 	}
 	
 	@RequestMapping(value = "/b02_1")
-	public String b02_1(HttpServletRequest request,Model model,AdvancedAgeBase base,AdvancedAgeApply apply,String account){ 
+	public String b02_1(HttpServletRequest request,Model model,AdvancedAgeBase base,AdvancedAgeApply apply){ 
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		model.addAttribute("base", base);
 		if(apply.getApplyYear() != null) {
 			// ------基礎表 start------
@@ -664,22 +629,19 @@ public class BackendMainController {
 			// ------申請表 end--------
 			
 			// ------行業別列表 start----
-			String result = api.httpGet(ip + "getIndustryList");
-			jsonArray = new JSONArray(result);
+			jsonArray = new JSONArray(api.httpPost(ip + "getIndustryList",""));
 			List<Object> list = jsonArray.toList();
 			model.addAttribute("industryList", list);
 			// ------行業別列表 end------
 			
 			// ------縣市列表 start----
-			result = api.httpGet(ip + "getCityList");
-			jsonArray = new JSONArray(result);
+			jsonArray = new JSONArray(api.httpPost(ip + "getCityList",""));
 			list = jsonArray.toList();
 			model.addAttribute("cityList", list);
 			// ------縣市列表 end----
 			
 			// ------鄉鎮市區 start----
-			result = api.httpGet(ip + "getAreaList?cityCode=" + apply.getContactCity());
-			jsonArray = new JSONArray(result);
+			jsonArray = new JSONArray(api.httpPost(ip + "getAreaList?cityCode=" + apply.getContactCity(),""));
 			list = jsonArray.toList();
 			model.addAttribute("areaList", list);
 			// ------鄉鎮市區 end----
@@ -726,8 +688,8 @@ public class BackendMainController {
 	
 
 	@RequestMapping(value = "/employmentList")
-	public String employmentList(Model model,AdvancedAgeBase base,AdvancedAgeApply apply,String account){
-		setModel(account,model);
+	public String employmentList(Model model,AdvancedAgeBase base,AdvancedAgeApply apply){
+		setModel(session.getId(),model);
 		if(apply.getApplyYear() != null) {
 			// ------基礎表 start------
 			base.setYear(apply.getApplyYear());
@@ -979,16 +941,16 @@ public class BackendMainController {
 
 		toClient.flush();
 		toClient.close();
-
+		wb.close();
 	}
 	
 	@RequestMapping(value = "/b03")
-	public String b03(HttpServletRequest request,Model model,BlackList blackList,Pagination pagination,String account){
+	public String b03(HttpServletRequest request,Model model,BlackList blackList,Pagination pagination){
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		model.addAttribute("blackList", blackList);
 		model.addAttribute("unitList", getUnit().toList());
 		if(blackList.getSeq() != null) {
@@ -1018,12 +980,12 @@ public class BackendMainController {
 	
 	@RequestMapping(value = "/b03_1")
 	public String b03_1(HttpServletRequest request,Model model,BlackList blackList,String searchSeq,String searchUnit,
-			String searchBanStartDate,String searchBanEndDate,String account){ 
+			String searchBanStartDate,String searchBanEndDate){ 
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		//userinfo
 		UserInfo userInfo = new UserInfo();
 //		userInfo.setUnit(selectBlackListData(blackList).get("unit").toString());
@@ -1047,12 +1009,12 @@ public class BackendMainController {
 	}
 	
 	@RequestMapping(value = "/b03_02")
-	public String b03_02(HttpServletRequest request,Model model,AdvancedAgeBase base,String account){
+	public String b03_02(HttpServletRequest request,Model model,AdvancedAgeBase base){
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		if(base.getSeq()!=null && !base.getSeq().equals(""))
 		{
 			base.setYear(String.valueOf(applyYear));
@@ -1063,12 +1025,12 @@ public class BackendMainController {
 	}
 	
 	@RequestMapping(value = "/b04")
-	public String b04(HttpServletRequest request,Model model,SiteInspection siteInspection,Pagination pagination,String account){ 
+	public String b04(HttpServletRequest request,Model model,SiteInspection siteInspection,Pagination pagination){ 
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		model.addAttribute("siteInspection", siteInspection);
 		model.addAttribute("unitList", getUnit().toList());
 		if(siteInspection.getSeq() != null) {
@@ -1097,12 +1059,12 @@ public class BackendMainController {
 	}
 	
 	@RequestMapping(value = "/b04_1")
-	public String b04_1(HttpServletRequest request,Model model,SiteInspection siteInspection,String searchSeq,String searchUnit,String searchResult,String account){
+	public String b04_1(HttpServletRequest request,Model model,SiteInspection siteInspection,String searchSeq,String searchUnit,String searchResult){
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		UserInfo userInfo = new UserInfo();
 		model.addAttribute("userList", selectUserInfo(userInfo).toList());
 		
@@ -1127,12 +1089,12 @@ public class BackendMainController {
 	}
 	
 	@RequestMapping(value = "/b04_02")
-	public String b04_02(HttpServletRequest request,Model model,AdvancedAgeBase base,String account){
+	public String b04_02(HttpServletRequest request,Model model,AdvancedAgeBase base){
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		if(base.getSeq()!=null && !base.getSeq().equals(""))
 		{
 			base.setYear(String.valueOf(applyYear));
@@ -1143,12 +1105,12 @@ public class BackendMainController {
 	}
 	
 	@RequestMapping(value = "/b05")
-	public String b05(HttpServletRequest request,Model model,AdvancedAgeBase base,Pagination pagination,String account){ 
+	public String b05(HttpServletRequest request,Model model,AdvancedAgeBase base,Pagination pagination){ 
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		model.addAttribute("base", base);
 		// ------單位列表 start------
 		model.addAttribute("unitList", getUnit().toList());
@@ -1185,12 +1147,12 @@ public class BackendMainController {
 	}
 	
 	@RequestMapping(value = "/b05_1")
-	public String b05_1(HttpServletRequest request,Model model,AdvancedAgeBase base,AdvancedAgeApply apply,String account){ 
+	public String b05_1(HttpServletRequest request,Model model,AdvancedAgeBase base,AdvancedAgeApply apply){ 
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		model.addAttribute("base", base);
 		if(apply.getApplyYear() != null) {
 			// ------基礎表 start------
@@ -1214,22 +1176,19 @@ public class BackendMainController {
 			// ------申請表 end--------
 			
 			// ------行業別列表 start----
-			String result = api.httpGet(ip + "getIndustryList");
-			jsonArray = new JSONArray(result);
+			jsonArray = new JSONArray(api.httpPost(ip + "getIndustryList",""));
 			List<Object> list = jsonArray.toList();
 			model.addAttribute("industryList", list);
 			// ------行業別列表 end------
 			
 			// ------縣市列表 start----
-			result = api.httpGet(ip + "getCityList");
-			jsonArray = new JSONArray(result);
+			jsonArray = new JSONArray(api.httpPost(ip + "getCityList",""));
 			list = jsonArray.toList();
 			model.addAttribute("cityList", list);
 			// ------縣市列表 end----
 			
 			// ------鄉鎮市區 start----
-			result = api.httpGet(ip + "getAreaList?cityCode=" + apply.getContactCity());
-			jsonArray = new JSONArray(result);
+			jsonArray = new JSONArray(api.httpPost(ip + "getAreaList?cityCode=" + apply.getContactCity(),""));
 			list = jsonArray.toList();
 			model.addAttribute("areaList", list);
 			// ------鄉鎮市區 end----
@@ -1275,12 +1234,12 @@ public class BackendMainController {
 	}
 	
 	@RequestMapping(value = "/c01")
-	public String c01(HttpServletRequest request,Model model,Pagination pagination,AdvancedAgeBase base,String account){
+	public String c01(HttpServletRequest request,Model model,Pagination pagination,AdvancedAgeBase base){
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		model.addAttribute("base", base);
 		// ------單位列表 start------
 		model.addAttribute("unitList", getUnit().toList());
@@ -1317,12 +1276,12 @@ public class BackendMainController {
 	}
 	
 	@RequestMapping(value = "/c01_1")
-	public String c01_1(HttpServletRequest request,Model model,AdvancedAgeBase base,AdvancedAgeApply apply,String account){ 
+	public String c01_1(HttpServletRequest request,Model model,AdvancedAgeBase base,AdvancedAgeApply apply){ 
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		model.addAttribute("base", base);
 		if(apply.getApplyYear() != null) {
 			// ------基礎表 start------
@@ -1373,12 +1332,12 @@ public class BackendMainController {
 	}
 	
 	@RequestMapping(value = "/c01_list")
-	public String c01_list(HttpServletRequest request,Model model,AdvancedAgeEmploymentListReceipt listReceipt,String account,String year){ 
+	public String c01_list(HttpServletRequest request,Model model,AdvancedAgeEmploymentListReceipt listReceipt,String year){ 
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		AdvancedAgeBase base = new AdvancedAgeBase();
 		
 		model.addAttribute("base", base);
@@ -1430,12 +1389,12 @@ public class BackendMainController {
 	}
 	
 	@RequestMapping(value = "/c01_result")
-	public String c01_result(HttpServletRequest request,Model model,AdvancedAgeEmploymentListReceipt listReceipt,String account,String year){ 
+	public String c01_result(HttpServletRequest request,Model model,AdvancedAgeEmploymentListReceipt listReceipt,String year){ 
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		AdvancedAgeBase base = new AdvancedAgeBase();
 		
 		model.addAttribute("base", base);
@@ -1487,25 +1446,25 @@ public class BackendMainController {
 	}
 	
 	@RequestMapping(value = "/j01")
-	public String j01(HttpServletRequest request,Model model,UserInfo userInfo,String account){
+	public String j01(HttpServletRequest request,Model model,UserInfo userInfo){
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
-		userInfo.setAccount(session.getAttribute(account+"account").toString());
+		setModel(session.getId(),model);
+		userInfo.setAccount(session.getAttribute(session.getId()+"account").toString());
 		model.addAttribute("userInfoData", selectUserInfoData(userInfo));
 		model.addAttribute("unitList", getUnit().toList());
 		return "j01/j01";
 	}
 	
 	@RequestMapping(value = "/j02")
-	public String j02(HttpServletRequest request,Model model,UserInfo userInfo,String userAccount,Pagination pagination,String account){
+	public String j02(HttpServletRequest request,Model model,UserInfo userInfo,String userAccount,Pagination pagination){
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		if(userInfo.getUnit()!=null) {
 			
 			userInfo.setAccount(userAccount);
@@ -1541,24 +1500,27 @@ public class BackendMainController {
 	}
 	
 	@RequestMapping(value = "/j02_1")
-	public String j02_1(HttpServletRequest request,Model model,UserInfo userInfo,String account,String editAccount){
+	public String j02_1(HttpServletRequest request,Model model,UserInfo userInfo,String editAccount){
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		ObjectMapper objectMapper = new ObjectMapper();
 		if(userInfo.getUnit() == null) {
 			userInfo.setAccount(editAccount);
 			JSONObject jsondata = selectUserInfoData(userInfo);
 			
+			
 			try {
 				userInfo = objectMapper.readValue(jsondata.toString(), UserInfo.class);
-				userInfo.setPassword(decryptPassword(userInfo.getPassword(),key));
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
+			} catch (JsonMappingException e) {
+				logger.warn(e.getMessage());
+			} catch (JsonProcessingException e) {
+				logger.warn(e.getMessage());
+			}
+			userInfo.setPassword(AesUtil.decrypt(userInfo.getPassword().replaceAll(" ","+").getBytes()));
+			
 			model.addAttribute("unitList", getUnit().toList());
 			model.addAttribute("userInfoData",userInfo);
 			return "j02/j02_1";
@@ -1566,26 +1528,27 @@ public class BackendMainController {
 		else{
 			
 			String json="";
+			
+			userInfo.setAccount(editAccount);
+			userInfo.setPassword(AesUtil.encrypt(userInfo.getPassword()));
 			try {
-				userInfo.setAccount(editAccount);
-				userInfo.setPassword(encryptPassword(userInfo.getPassword(),key));
 				json = objectMapper.writeValueAsString(userInfo);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (JsonProcessingException e) {
+				logger.warn(e.getMessage());
 			}
+			
 			api.httpPost(ip+"editUserInfoData",json);
 			return "j02/j02";
 		}
 	}
 	
 	@RequestMapping(value = "/j02_02")
-	public String j02_02(HttpServletRequest request,Model model,UserInfo userInfo,String userAccount,String account){
+	public String j02_02(HttpServletRequest request,Model model,UserInfo userInfo,String userAccount){
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		model.addAttribute("unitList", getUnit().toList());
 		if(userInfo.getUnit() != null) {
 			userInfo.setAccount(userAccount);
@@ -1594,8 +1557,7 @@ public class BackendMainController {
 			try {
 				json = objectMapper.writeValueAsString(userInfo);
 			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.warn(e.getMessage());
 			}
 			api.httpPost(ip+"addUserInfo",json);
 			return "j02/j02";
@@ -1606,24 +1568,24 @@ public class BackendMainController {
 	}
 
 	@RequestMapping(value = "/j03")
-	public String j03(HttpServletRequest request,Model model,UserInfo userInfo,String account){
+	public String j03(HttpServletRequest request,Model model,UserInfo userInfo){
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		model.addAttribute("functionList", selectFunctionList().toList());
 		return "j03/j03";
 	}
 	
 
 	@RequestMapping(value = "/j04")
-	public String j04(HttpServletRequest request,Model model,UserLoginRecord userLoginRecord,String loginStartDate,String loginEndDate,Pagination pagination,String account){
+	public String j04(HttpServletRequest request,Model model,UserLoginRecord userLoginRecord,String loginStartDate,String loginEndDate,Pagination pagination){
 		session=request.getSession();
-		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(account+"account") == null) {
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
 			return "redirect:/login";
 		}
-		setModel(account,model);
+		setModel(session.getId(),model);
 		if(userLoginRecord.getUnit() != null)
 		{
 			
@@ -1655,14 +1617,14 @@ public class BackendMainController {
 		model.addAttribute("unitList", getUnit().toList());
 		return "j04/j04";
 	}
-	public void setModel(String account,Model model) {
-		model.addAttribute("id", session.getAttribute(account+"id"));
-		model.addAttribute("account", session.getAttribute(account+"account"));
-		model.addAttribute("name", session.getAttribute(account+"name"));
-		model.addAttribute("unitName", session.getAttribute(account+"unitName"));
-		model.addAttribute("unit", session.getAttribute(account+"unit"));
-		model.addAttribute("jurisdiction", session.getAttribute(account+"jurisdiction"));
-		model.addAttribute("functionPermission", session.getAttribute(account+"functionPermission"));
+	public void setModel(String sid,Model model) {
+		model.addAttribute("id", session.getAttribute(sid+"id"));
+		model.addAttribute("account", session.getAttribute(sid+"account"));
+		model.addAttribute("name", session.getAttribute(sid+"name"));
+		model.addAttribute("unitName", session.getAttribute(sid+"unitName"));
+		model.addAttribute("unit", session.getAttribute(sid+"unit"));
+		model.addAttribute("jurisdiction", session.getAttribute(sid+"jurisdiction"));
+		model.addAttribute("functionPermission", session.getAttribute(sid+"functionPermission"));
 	}
 	public String selectFunctionPermission(FunctionPermission functionPermission) {
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -1670,34 +1632,14 @@ public class BackendMainController {
 		try {
 			json = objectMapper.writeValueAsString(functionPermission);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip+"selectFunctionPermission",json);
-		JSONObject object = new JSONObject(jsondata);
+		JSONObject object = new JSONObject(api.httpPost(ip+"selectFunctionPermission",json));
 		return object.get("functionCode").toString();
 	}
 	
-	public String getRandomPassword() {
-	    int z;
-	    StringBuilder sb = new StringBuilder();
-	    int i;
-	    for (i = 0; i < 8; i++) {
-	      z = (int) ((Math.random() * 7) % 3);
-	 
-	      if (z == 1) { // 放數字
-	        sb.append((char) ((Math.random() * 10) + 48));
-	      } else if (z == 2) { // 放大寫英文
-	        sb.append((char) (((Math.random() * 26) + 65)));
-	      } else {// 放小寫英文
-	        sb.append(((char) ((Math.random() * 26) + 97)));
-	      }
-	    }
-	    return sb.toString();
-	}
 	public String getUnitName(String unitCode) {
 		JSONArray unitArray = getUnit();
-		JSONObject object = new JSONObject();
 		for(int i=0;i<unitArray.length();i++)
 		{
 			if(unitArray.getJSONObject(i).get("code").equals(unitCode))
@@ -1712,30 +1654,38 @@ public class BackendMainController {
 		try {
 			sendEmail.sendMail(mailRecord.getEmail(), mailRecord.getMailContent());
 		} catch (AddressException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			logger.warn(e1.getMessage());
 		} catch (MessagingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			logger.warn(e1.getMessage());
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			logger.warn(e1.getMessage());
 		}
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
 		try {
 			json = objectMapper.writeValueAsString(mailRecord);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		api.httpPost(ip+"addMailRecord",json);
 		response.setContentType("text/html;charset=UTF-8");
 		try {
 			response.getWriter().print("success");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
+		}
+	}
+	
+	@RequestMapping(value = "/sendCompanyInfoMail", method = RequestMethod.POST)
+	public void sendCompanyInfoMail(HttpServletRequest request, HttpServletResponse response,MailRecord mailRecord){
+		try {
+			sendEmail.sendMail(mailRecord.getEmail(), mailRecord.getMailContent());
+		} catch (AddressException e1) {
+			logger.warn(e1.getMessage());
+		} catch (MessagingException e1) {
+			logger.warn(e1.getMessage());
+		} catch (Exception e1) {
+			logger.warn(e1.getMessage());
 		}
 	}
 	
@@ -1745,11 +1695,9 @@ public class BackendMainController {
 		try {
 			json = objectMapper.writeValueAsString(mailRecord);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip+"selectMailRecord",json);
-		JSONArray array = new JSONArray(jsondata);
+		JSONArray array = new JSONArray(api.httpPost(ip+"selectMailRecord",json));
 		return array;
 	}
 	
@@ -1759,11 +1707,9 @@ public class BackendMainController {
 		try {
 			json = objectMapper.writeValueAsString(advancedAgeBase);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip+"selectATypeAdvancedAgeBase",json);
-		JSONArray array = new JSONArray(jsondata);
+		JSONArray array = new JSONArray(api.httpPost(ip+"selectATypeAdvancedAgeBase",json));
 		return array;
 	}
 	
@@ -1774,8 +1720,7 @@ public class BackendMainController {
 		try {
 			json = objectMapper.writeValueAsString(base);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		String jsondata = api.httpPost(ip + "selectATypeAdvancedAgeBaseData", json);
 		ObjectMapper mapper = new ObjectMapper();
@@ -1783,11 +1728,9 @@ public class BackendMainController {
 			if (!jsondata.equals(""))
 				searchBase = mapper.readValue(jsondata, AdvancedAgeBase.class);
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		return searchBase;
 	}
@@ -1799,8 +1742,7 @@ public class BackendMainController {
 			
 			json = objectMapper.writeValueAsString(userLoginRecord);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		api.httpPost(ip+"addUserLoginRecord",json);
 	}
@@ -1812,12 +1754,10 @@ public class BackendMainController {
 			
 			json = objectMapper.writeValueAsString(userLoginRecord);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		json = json.substring(0,json.length()-1)+",\"loginStartDate\":"+(loginStartDate==""?"":"\""+loginStartDate+"\"")+",\"loginEndDate\":"+(loginEndDate==""?"":"\""+loginEndDate+"\"")+"}";
-		String jsondata = api.httpPost(ip+"selectUserLoginRecord",json);
-		JSONArray array = new JSONArray(jsondata);
+		json = json.substring(0,json.length()-1)+",\"loginStartDate\":"+(loginStartDate.equals("")?"":"\""+loginStartDate+"\"")+",\"loginEndDate\":"+(loginEndDate.equals("")?"":"\""+loginEndDate+"\"")+"}";
+		JSONArray array = new JSONArray(api.httpPost(ip+"selectUserLoginRecord",json));
 		return array;
 	}
 	
@@ -1827,11 +1767,9 @@ public class BackendMainController {
 		try {
 			json = objectMapper.writeValueAsString(blackList);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip+"selectBlackList",json);
-		JSONArray array = new JSONArray(jsondata);
+		JSONArray array = new JSONArray(api.httpPost(ip+"selectBlackList",json));
 		return array;
 	}
 	
@@ -1841,11 +1779,9 @@ public class BackendMainController {
 		try {
 			json = objectMapper.writeValueAsString(blackList);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip+"selectBlackListData",json);
-		JSONObject object = new JSONObject(jsondata);
+		JSONObject object = new JSONObject(api.httpPost(ip+"selectBlackListData",json));
 		return object;
 	}
 	
@@ -1855,11 +1791,9 @@ public class BackendMainController {
 		try {
 			json = objectMapper.writeValueAsString(siteInspection);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip+"selectSiteInspection",json);
-		JSONArray array = new JSONArray(jsondata);
+		JSONArray array = new JSONArray(api.httpPost(ip+"selectSiteInspection",json));
 		return array;
 	}
 	
@@ -1869,11 +1803,9 @@ public class BackendMainController {
 		try {
 			json = objectMapper.writeValueAsString(siteInspection);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip+"selectSiteInspectionData",json);
-		JSONObject object = new JSONObject(jsondata);
+		JSONObject object = new JSONObject(api.httpPost(ip+"selectSiteInspectionData",json));
 		return object;
 	}
 	
@@ -1883,11 +1815,9 @@ public class BackendMainController {
 		try {
 			json = objectMapper.writeValueAsString(info);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip+"selectCompanyInfo",json);
-		JSONArray array = new JSONArray(jsondata);
+		JSONArray array = new JSONArray(api.httpPost(ip+"selectCompanyInfo",json));
 		return array;
 	}
 	
@@ -1897,11 +1827,9 @@ public class BackendMainController {
 		try {
 			json = objectMapper.writeValueAsString(info);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip+"selectCompanyInfoData",json);
-		JSONObject object = new JSONObject(jsondata);
+		JSONObject object = new JSONObject(api.httpPost(ip+"selectCompanyInfoData",json));
 		return object;
 	}
 	
@@ -1911,11 +1839,9 @@ public class BackendMainController {
 		try {
 			json = objectMapper.writeValueAsString(userInfo);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip+"selectUserInfo",json);
-		JSONArray array = new JSONArray(jsondata);
+		JSONArray array = new JSONArray(api.httpPost(ip+"selectUserInfo",json));
 		return array;
 	}
 	
@@ -1925,11 +1851,9 @@ public class BackendMainController {
 		try {
 			json = objectMapper.writeValueAsString(userInfo);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip+"selectUserInfoData",json);
-		JSONObject object = new JSONObject(jsondata);
+		JSONObject object = new JSONObject(api.httpPost(ip+"selectUserInfoData",json));
 		return object;
 	}
 	
@@ -1939,8 +1863,7 @@ public class BackendMainController {
 		try {
 			json = objectMapper.writeValueAsString(userInfo);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		String jsondata = api.httpPost(ip+"selectUserInfoLogin",json);
 		UserInfo searchUser = new UserInfo();
@@ -1948,18 +1871,15 @@ public class BackendMainController {
 			if (!jsondata.equals(""))
 				searchUser = objectMapper.readValue(jsondata, UserInfo.class);
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		return searchUser;
 	}
 	
 	public JSONArray selectFunctionList(){ 
-		String jsondata = api.httpPost(ip+"selectFunctionList","");
-		JSONArray array = new JSONArray(jsondata);
+		JSONArray array = new JSONArray(api.httpPost(ip+"selectFunctionList",""));
 		return array;
 	}
 	
@@ -1969,11 +1889,9 @@ public class BackendMainController {
 		try {
 			json = objectMapper.writeValueAsString(advancedAgeBase);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip+"selectATypeAdvancedAgeBaseFileStatus",json);
-		JSONArray array = new JSONArray(jsondata);
+		JSONArray array = new JSONArray(api.httpPost(ip+"selectATypeAdvancedAgeBaseFileStatus",json));
 		return array;
 	}
 	
@@ -1983,8 +1901,7 @@ public class BackendMainController {
 		try {
 			json = objectMapper.writeValueAsString(advancedAgeBase);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		String jsondata = api.httpPost(ip+"selectATypeAdvancedAgeBaseFileStatusRecord",json);
 		JSONArray array = new JSONArray(jsondata);
@@ -1992,11 +1909,9 @@ public class BackendMainController {
 			if (!jsondata.equals(""))
 				advancedAgeBase = objectMapper.readValue(array.getJSONObject(0).toString(), AdvancedAgeBase.class);
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		return advancedAgeBase;
 	}
@@ -2008,8 +1923,7 @@ public class BackendMainController {
 		try {
 			json = objectMapper.writeValueAsString(apply);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		String jsondata = api.httpPost(ip + "selectAdvancedAgeApply", json);
 		ObjectMapper mapper = new ObjectMapper();
@@ -2017,11 +1931,9 @@ public class BackendMainController {
 			if (!jsondata.equals(""))
 				searchApply = mapper.readValue(jsondata, AdvancedAgeApply.class);
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		return searchApply;
 	}
@@ -2033,8 +1945,7 @@ public class BackendMainController {
 		try {
 			json = objectMapper.writeValueAsString(plan);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		String jsondata = api.httpPost(ip + "selectAdvancedAgePlan", json);
 		ObjectMapper mapper = new ObjectMapper();
@@ -2042,11 +1953,9 @@ public class BackendMainController {
 			if (!jsondata.equals(""))
 				searchPlan = mapper.readValue(jsondata, AdvancedAgePlan.class);
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
 		return searchPlan;
 	}
@@ -2057,11 +1966,9 @@ public class BackendMainController {
 		try {
 			json = objectMapper.writeValueAsString(employmentList);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip + "selectAdvancedAgeEmploymentLists", json);
-		JSONArray array = new JSONArray(jsondata);
+		JSONArray array = new JSONArray(api.httpPost(ip + "selectAdvancedAgeEmploymentLists", json));
 		return array;
 	}
 	
@@ -2071,11 +1978,9 @@ public class BackendMainController {
 		try {
 			json = objectMapper.writeValueAsString(employmentListReceipt);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip + "selectAdvancedAgeEmploymentListReceipts", json);
-		JSONArray array = new JSONArray(jsondata);
+		JSONArray array = new JSONArray(api.httpPost(ip + "selectAdvancedAgeEmploymentListReceipts", json));
 		return array;
 	}
 	
@@ -2085,11 +1990,9 @@ public class BackendMainController {
 		try {
 			json = objectMapper.writeValueAsString(employmentListReceipt);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip + "selectAdvancedAgeEmploymentListReceiptsByFrequency", json);
-		JSONArray array = new JSONArray(jsondata);
+		JSONArray array = new JSONArray(api.httpPost(ip + "selectAdvancedAgeEmploymentListReceiptsByFrequency", json));
 		return array;
 	}
 	
@@ -2099,32 +2002,13 @@ public class BackendMainController {
 		try {
 			json = objectMapper.writeValueAsString(attachment);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip + "selectFiles", json);
-		JSONArray array = new JSONArray(jsondata);
+		JSONArray array = new JSONArray(api.httpPost(ip + "selectFiles", json));
 		return array;
 	}
 	
 	public JSONArray getUnit() {
-		String jsondata = api.httpPost(ip + "getUnit", "");
-		JSONArray array = new JSONArray(jsondata);
-		return array;
+		return new JSONArray(api.httpPost(ip + "getUnit", ""));
 	}
-	
-	public String encryptPassword(String data, String key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-	    Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-	    cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key.getBytes(), "AES"));
-	    byte[] result = cipher.doFinal(data.getBytes());
-	    return Base64.getEncoder().encodeToString(result);
-	}
-
-	public String decryptPassword(String data, String key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-	    Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-	    cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(key.getBytes(), "AES"));
-	    byte[] result = cipher.doFinal(Base64.getDecoder().decode(data));
-	    return new String(result);
-	}
-	
 }

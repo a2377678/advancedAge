@@ -1,24 +1,14 @@
 package com.example.springboot.controller;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.Base64;
-import java.util.Date;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,8 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.example.springboot.entity.SiteInspection;
 import com.example.springboot.entity.UserInfo;
+import com.example.springboot.util.AesUtil;
 import com.example.springboot.util.CallApi;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,6 +26,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller
 public class UserInfoController {
 
+	Logger logger = LogManager.getLogger(UserInfoController.class);
+	
 	@Autowired
 	CallApi api;
 
@@ -54,23 +46,20 @@ public class UserInfoController {
 		String json = "";
 		try {
 			json = objectMapper.writeValueAsString(info);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			logger.warn(e.getMessage());
 		}
-		String jsondata = api.httpPost(ip + "selectUserInfoData", json);
-		JSONObject object = new JSONObject(jsondata);
+		JSONObject object = new JSONObject(api.httpPost(ip + "selectUserInfoData", json));
 		try {
-			if(decryptPassword(object.get("password").toString(),key).equals(info.getPassword()))
+			if(AesUtil.decrypt(object.get("password").toString().replaceAll(" ","+").getBytes()).equals(info.getPassword()))
 			{
-				info.setPassword(encryptPassword(newPassword,key));
+				info.setPassword(AesUtil.encrypt(newPassword));
 				try {
 					json = objectMapper.writeValueAsString(info);
 				} catch (JsonProcessingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.warn(e.getMessage());
 				}
-				jsondata = api.httpPost(ip + "editUserInfoData", json);
+				api.httpPost(ip + "editUserInfoData", json);
 				response.getWriter().print("success");
 			}
 			else
@@ -80,23 +69,10 @@ public class UserInfoController {
 			response.setContentType("text/html;charset=UTF-8");
 		
 			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (IOException e) {
+			logger.warn(e.getMessage());
+		} catch (JSONException e) {
+			logger.warn(e.getMessage());
 		}
-	}
-
-	public String encryptPassword(String data, String key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-	    Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-	    cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key.getBytes(), "AES"));
-	    byte[] result = cipher.doFinal(data.getBytes());
-	    return Base64.getEncoder().encodeToString(result);
-	}
-
-	public String decryptPassword(String data, String key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-	    Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-	    cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(key.getBytes(), "AES"));
-	    byte[] result = cipher.doFinal(Base64.getDecoder().decode(data.replace(" ","+")));
-	    return new String(result);
 	}
 }

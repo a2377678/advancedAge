@@ -4,6 +4,7 @@ package com.example.springboot.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,17 +22,28 @@ public class MailRecordApiController {
 	MailRecordService mailRecordService;
 	
 	MailRecordExample mailRecordExample;
+
+	@Value("${api_token}")
+	private String apiToken;
 	
 	@ApiOperation(value = "新增信件紀錄")
 	@RequestMapping(value = "/addMailRecord", method = RequestMethod.POST)
-	public MailRecord addMailRecord(MailRecord mailRecord) {
+	public MailRecord addMailRecord(MailRecord mailRecord,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		mailRecordService.insertSelective(mailRecord);
 		return mailRecord;
 	}
 	
 	@ApiOperation(value = "查詢信件紀錄")
 	@RequestMapping(value = "/selectMailRecord", method = RequestMethod.POST)
-	public List<MailRecord> selectMailRecord(MailRecord mailRecord) {
+	public List<MailRecord> selectMailRecord(MailRecord mailRecord,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
 		mailRecordExample = new MailRecordExample();
 		mailRecordExample.createCriteria().andAdvancedAgeBaseIdEqualTo(mailRecord.getAdvancedAgeBaseId());
 		mailRecordExample.setOrderByClause("id asc");

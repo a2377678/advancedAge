@@ -12,11 +12,15 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 
 @Component
 public class CallApi { 
+	
+	Logger logger = LogManager.getLogger(CallApi.class);
 	
 	HttpClient client;
 	HttpRequest request;
@@ -28,26 +32,26 @@ public class CallApi {
 //	String requestBody;
 	HttpURLConnection con;
 	
-	public String httpGet(String ip){
-		client = HttpClient.newHttpClient();
-//		client = HttpClient.newBuilder().build();
-        request = HttpRequest.newBuilder()
-                .uri(URI.create(ip))
-                .build();
-        
-		
-		try {
-			response = client.send(request,
-			        HttpResponse.BodyHandlers.ofString());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return response.body();
-	}
+//	public String httpGet(String ip){
+//		client = HttpClient.newHttpClient();
+////		client = HttpClient.newBuilder().build();
+//        request = HttpRequest.newBuilder()
+//                .uri(URI.create(ip))
+//                .build();
+//        
+//		
+//		try {
+//			response = client.send(request,
+//			        HttpResponse.BodyHandlers.ofString());
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return response.body();
+//	}
 	
 	public String httpPost(String ip,String json){
 		String urlParameters = convertToString(json);//"seq=12313321&companyName=test";
@@ -76,19 +80,24 @@ public class CallApi {
                 content = new StringBuilder();
 
                 while ((line = br.readLine()) != null) {
-                    content.append(line);
-                    content.append(System.lineSeparator());
+                    content.append(line).append(System.lineSeparator());
                 }
             }
 
 
-        }catch(Exception e) {
+        }catch(IOException e) {
+        	logger.warn(e.getMessage());
         }
         finally {
             con.disconnect();
         }
-		
-		return content.toString();
+        
+        if(content==null)
+		{
+			return "";
+		}else {
+			return content.toString();
+		}
 	}
 	
 	public String convertToString(String json) {
@@ -108,6 +117,6 @@ public class CallApi {
 				}
 			}
 		}
-		return result;
+		return result+"&token="+SystemConfig.getProperty("api_token");
 	}
 }
