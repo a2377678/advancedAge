@@ -100,20 +100,35 @@ function receiveMessage(event)
 function getData(){
 	$.ajax({  
         type: "POST",  
-        url: 'checkCA',   
+        url: 'employCheckCA',   
         dataType: "text",
         data: {
             base64: $('#ResultSignedData').val()
         },
-        success: function(msg){ 
-			if(msg=='success'){
-        		location.href='schedule';
+        success: function(result){ 
+			let result_spl=result.split(";");
+			if(result_spl[0]=='success'){
+				var redirectUrl = result_spl[1];
+	            if (isValidRedirectUrl(redirectUrl)) {
+	                location.href = encodeURIComponent(redirectUrl);
+	            } else {
+	                alert("無效的重定向 URL");
+	            }
 			}else{
 				alert('讀卡失敗');
 			}
         }  
    });
 }
+
+function isValidRedirectUrl(url) {
+  	var pattern = /^[a-zA-Z]+_\d+$/;
+  	var pattern2 = /^[a-zA-Z]+$/;
+	var pattern3 = /^[a-zA-Z]+_[a-zA-Z]+$/;
+	var pattern4 = /^http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+  	return pattern.test(url) || pattern2.test(url) || pattern3.test(url) || pattern4.test(url);
+}
+
 if (window.addEventListener) {
 	window.addEventListener("message", receiveMessage, false);
 	}else {

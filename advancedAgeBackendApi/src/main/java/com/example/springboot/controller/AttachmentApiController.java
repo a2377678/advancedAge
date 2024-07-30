@@ -83,4 +83,17 @@ public class AttachmentApiController {
 		attachmentExample.setOrderByClause("id asc");
 		return attachmentService.selectByExample(attachmentExample);
 	}
+	
+	@ApiOperation(value = "查詢檔案(多筆，畫面顯示)")
+	@RequestMapping(value = "/selectApprovedFiles", method = RequestMethod.POST)
+	public List<Attachment> selectApprovedFiles(Attachment attachment,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
+		attachmentExample = new AttachmentExample();
+		attachmentExample.createCriteria().andFileBelongEqualTo(attachment.getFileBelong()).andFileBelongIdEqualTo(attachment.getFileBelongId()).andFileTypeEqualTo(attachment.getFileType()).andFileFrequencyEqualTo(attachment.getFileFrequency());
+		attachmentExample.setOrderByClause("id asc");
+		return attachmentService.selectByExample(attachmentExample);
+	}
 }

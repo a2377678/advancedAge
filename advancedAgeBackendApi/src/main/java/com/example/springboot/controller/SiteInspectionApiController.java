@@ -52,15 +52,16 @@ public class SiteInspectionApiController {
 		}
 		siteInspectionExample = new SiteInspectionExample();
 		SiteInspectionExample.Criteria c= siteInspectionExample.createCriteria();
-		if(!siteInspection.getSeq().equals("")) 
+		if(siteInspection.getSeq() != null && !siteInspection.getSeq().equals("")) 
 			c.andSeqEqualTo(siteInspection.getSeq());
-		if(!siteInspection.getUnit().equals(""))
+		if(siteInspection.getUnit() != null && !siteInspection.getUnit().equals(""))
 			c.andUnitEqualTo(siteInspection.getUnit());
-		if(!siteInspection.getResult().equals(""))
+		if(siteInspection.getResult() != null && !siteInspection.getResult().equals(""))
 			if(siteInspection.getResult().equals("1"))
 				c.andResultBetween("1", "2");
 			else
 				c.andResultEqualTo(siteInspection.getResult());
+		c.andCaseTypeEqualTo(siteInspection.getCaseType());
 		List<SiteInspection> list = siteInspectionService.selectByExample(siteInspectionExample);
 		return list;
 	}

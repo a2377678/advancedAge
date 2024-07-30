@@ -40,25 +40,33 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <!--生成對應表及類名-->
-<!--         <table tableName="companyInfo" domainObjectName="CompanyInfo"></table> -->
+        <table tableName="companyInfo" domainObjectName="CompanyInfo"></table>
+<!--         <table tableName="userLoginRecord" domainObjectName="UserLoginRecord"></table> -->
+<!--         <table tableName="userInfo" domainObjectName="UserInfo"></table> -->
+<!--         <table tableName="functionList" domainObjectName="FunctionList"></table> -->
+<!--         <table tableName="functionPermission" domainObjectName="FunctionPermission"></table> -->
 <!--         <table tableName="advancedAgeBase" domainObjectName="AdvancedAgeBase"></table> -->
 <!--         <table tableName="advancedAgeApply" domainObjectName="AdvancedAgeApply"></table> -->
 <!--         <table tableName="advancedAgePlan" domainObjectName="AdvancedAgePlan"></table> -->
 <!--         <table tableName="advancedAgeEmploymentList" domainObjectName="AdvancedAgeEmploymentList"></table> -->
 <!--         <table tableName="advancedAgeApplyEmployedSituation" domainObjectName="AdvancedAgeApplyEmployedSituation"></table> -->
 <!--         <table tableName="advancedAgeApplyEmployedReceipt" domainObjectName="AdvancedAgeApplyEmployedReceipt"></table> -->
-        <table tableName="advancedAgeEmploymentListReceipt" domainObjectName="AdvancedAgeEmploymentListReceipt"></table>
+<!--         <table tableName="advancedAgeEmploymentListReceipt" domainObjectName="AdvancedAgeEmploymentListReceipt"></table> -->
+<!--         <table tableName="mailRecord" domainObjectName="MailRecord"></table> -->
 <!-- 		<table tableName="parameter" domainObjectName="Parameter"></table> -->
 <!-- 		<table tableName="attachment" domainObjectName="Attachment"></table> -->
 <!-- 		<table tableName="unit" domainObjectName="Unit"></table> -->
+<!-- 		<table tableName="blackList" domainObjectName="BlackList"></table> -->
+<!-- 		<table tableName="siteInspection" domainObjectName="SiteInspection"></table> -->
 
 <!-- 		<table tableName="retirementAdvancedAgeExperienceInheritanceApply" domainObjectName="RetirementAdvancedAgeExperienceInheritanceApply"></table> -->
-<!-- 		<table tableName="retirementAdvancedAgeExperienceInheritancePlan" domainObjectName="RretirementAdvancedAgeExperienceInheritancePlan"></table> -->
-<!-- 		<table tableName="experienceInheritanceSpeakerList" domainObjectName="EexperienceInheritanceSpeakerList"></table> -->
-<!-- 		<table tableName="experienceInheritanceSpeakerSituation" domainObjectName="EexperienceInheritanceSpeakerSituation"></table> -->
-<!-- 		<table tableName="retirementAdvancedAgeExperienceInheritanceSchedule" domainObjectName="RretirementAdvancedAgeExperienceInheritanceSchedule"></table> -->
-<!-- 		<table tableName="retirementAdvancedAgeExperienceInheritanceExpenditure" domainObjectName="RretirementAdvancedAgeExperienceInheritanceExpenditure"></table> -->
-<!-- 		<table tableName="retirementAdvancedAgeExperienceInheritanceResult" domainObjectName="RretirementAdvancedAgeExperienceInheritanceResult"></table> -->
+<!-- 		<table tableName="retirementAdvancedAgeExperienceInheritancePlan" domainObjectName="RetirementAdvancedAgeExperienceInheritancePlan"></table> -->
+<!-- 		<table tableName="experienceInheritanceSpeakerList" domainObjectName="ExperienceInheritanceSpeakerList"></table> -->
+<!-- 		<table tableName="experienceInheritanceSpeakerSituation" domainObjectName="ExperienceInheritanceSpeakerSituation"></table> -->
+<!-- 		<table tableName="retirementAdvancedAgeExperienceInheritanceSchedule" domainObjectName="RetirementAdvancedAgeExperienceInheritanceSchedule"></table> -->
+<!-- 		<table tableName="retirementAdvancedAgeParticipateStudent" domainObjectName="RetirementAdvancedAgeParticipateStudent"></table> -->
+<!-- 		<table tableName="retirementAdvancedAgeExperienceInheritanceExpenditure" domainObjectName="RetirementAdvancedAgeExperienceInheritanceExpenditure"></table> -->
+<!-- 		<table tableName="retirementAdvancedAgeExperienceInheritanceResult" domainObjectName="RetirementAdvancedAgeExperienceInheritanceResult"></table> -->
 <!-- 		<table tableName="retirementAdvancedAgeExperienceInheritanceReceipt" domainObjectName="RretirementAdvancedAgeExperienceInheritanceReceipt"></table> -->
 <!-- 		<table tableName="retirementAdvancedAgeExperienceInheritanceSpeakerFeeList" domainObjectName="RetirementAdvancedAgeExperienceInheritanceSpeakerFeeList"></table> -->
 <!-- 		<table tableName="retirementAdvancedAgeExperienceInheritanceExpenditureDetails" domainObjectName="RetirementAdvancedAgeExperienceInheritanceExpenditureDetails"></table> -->

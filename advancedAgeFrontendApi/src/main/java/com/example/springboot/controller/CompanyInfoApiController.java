@@ -14,6 +14,7 @@ import com.example.springboot.entity.AdvancedAgeApplyKey;
 import com.example.springboot.entity.CompanyInfo;
 import com.example.springboot.entity.CompanyInfoExample;
 import com.example.springboot.service.CompanyInfoService;
+import com.example.springboot.util.DateFormatUtil;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -23,7 +24,6 @@ public class CompanyInfoApiController {
 	@Autowired
 	CompanyInfoService companyInfoService;
 	
-	Date date = new Date();
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	
 	CompanyInfoExample companyInfoExample;
@@ -42,17 +42,22 @@ public class CompanyInfoApiController {
 		{
 			companyInfoService.insertSelective(info);
 		}
-		else
-		{
-			info.setUpdateTime(date);
-			companyInfoService.updateByPrimaryKeySelective(info);
-		}
 		return selectCompanyInfo(info,token) == null?info:selectCompanyInfo(info,token);
 	}
 	
 	@ApiOperation(value = "查詢公司資訊")
 	@RequestMapping(value = "/selectCompanyInfo", method = RequestMethod.POST)
 	public CompanyInfo selectCompanyInfo(CompanyInfo info,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
+		return companyInfoService.selectByPrimaryKey(info.getSeq());
+	}
+	
+	@ApiOperation(value = "查詢申請公司資料")
+	@RequestMapping(value = "/selectCompanyInfoData", method = RequestMethod.POST)
+	public CompanyInfo selectCompanyInfoData(CompanyInfo info,String token) {
 		if(!token.equals(apiToken))
 		{
 			return null;
@@ -74,9 +79,11 @@ public class CompanyInfoApiController {
 		.andContactWorkPhoneExtensionEqualTo(info.getContactWorkPhoneExtension()).andContactPhoneEqualTo(info.getContactPhone())
 		.andEmailEqualTo(info.getEmail());
 		info.setUpdateTime(new Date());
-		companyInfoService.updateByExampleSelective(info, companyInfoExample);
-		
-		return companyInfoService.selectByPrimaryKey(info.getSeq());
+		CompanyInfo updateinfo=new CompanyInfo();
+		updateinfo.setUpdateTime(new Date());
+		updateinfo.setPassword(info.getPassword());
+		int a = companyInfoService.updateByExampleSelective(updateinfo, companyInfoExample);
+		return a>0?companyInfoService.selectByPrimaryKey(info.getSeq()):null;
 	}
 	
 	@ApiOperation(value = "查詢公司資訊(登入、改密碼)")
@@ -99,5 +106,34 @@ public class CompanyInfoApiController {
 			return 0;
 		}
 		return companyInfoService.updateByPrimaryKeySelective(info);
+	}
+	
+	@ApiOperation(value = "Sso新增帳號")
+	@RequestMapping(value = "/ssoAddCompanyInfo", method = RequestMethod.POST)
+	public CompanyInfo ssoAddCompanyInfo(CompanyInfo info,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
+		if(selectCompanyInfo(info,token) == null)
+		{
+			companyInfoService.insertSelective(info);
+		}else {
+			companyInfoService.updateByPrimaryKeySelective(info);
+		}
+		return selectCompanyInfo(info,token) == null?info:selectCompanyInfo(info,token);
+	}
+	
+	@ApiOperation(value = "Sso登入")
+	@RequestMapping(value = "/ssoCompanyInfo", method = RequestMethod.POST)
+	public CompanyInfo ssoCompanyInfo(CompanyInfo info,String token) {
+		if(!token.equals(apiToken))
+		{
+			return null;
+		}
+		companyInfoExample = new CompanyInfoExample();
+		companyInfoExample.createCriteria().andSsoMidEqualTo(info.getSsoMid());
+		
+		return companyInfoService.selectByExample(companyInfoExample).size()>0?companyInfoService.selectByExample(companyInfoExample).get(0):new CompanyInfo();
 	}
 }

@@ -3,12 +3,40 @@ header  {
 	position: fixed;
 	background-image: url(../images/shadow_02.png);
 	background-repeat: repeat-x;
-	height: 200px;
 	display: block;
 	background-position: center bottom;
 	z-index: 99;
+	height: 200px;
+	margin: 0px;
+	padding: 0px;
+}
+#AU {
+	color: #CCC;
+	text-decoration: none;
+	float: right;
+	padding-right: 5px;
+	font-size: 0.9em;
 }
 
+#AC {
+	float: left;
+	color: #CCC;
+	text-decoration: none;
+	padding-left: 5px;
+	font-size: 0.9em;
+	padding-right: 10px;
+}
+#AZ {
+	color: #CCC;
+	text-decoration: none;
+	float: left;
+	padding-left: 5px;
+	font-size: 0.9em;
+}
+.breadcrumb {
+	margin: 0px !important;
+	padding-bottom: 30px !important;
+}
 
 .navigation {
 	background-color: #888;
@@ -22,6 +50,20 @@ header  {
 .navigation .top_logo{
 	float: left;
 }
+.navbar-brand {
+	width: 450px;
+	height: 65px;
+	display: block;
+	background-image: url(../images/top_logo.png);
+	background-repeat: no-repeat;
+	float: left;
+}
+a.navbar-brand {
+	font-size: 0.1em !important;
+	color: rgba(140,140,140,0.1)!important;
+	line-height: 0px !important;
+}
+
 .navigation nav {
 	float: right;
 }
@@ -52,7 +94,7 @@ header  {
 }
 .main_menu ul{
 	margin: auto;
-	width: 1078px;
+	width: 1024px;
 	height: 125px;
 	background-color: #FFF;
 	list-style-type: none;
@@ -167,7 +209,7 @@ header  {
 }
 ul.dropdown-menu li {
 	background-color: #036 !important;
-	max-width: 255px !important;
+	max-width: 285px !important;
 	float: none !important;
 	padding-top: 0px !important;
 }
@@ -308,7 +350,7 @@ hr.dropdown-divider{
 	background-color: rgba(20,57,79,0.3);
 	margin-left: 7%;
 }
-.plan-2_content h1 {
+.plan-2_content h2 {
 	color: #FFFFFF;
 	font-weight: bold;
 	font-size: 2.25em;
@@ -395,7 +437,7 @@ hr.dropdown-divider{
 	background-color: rgba(185,221,177,0.4);
 	margin-right: 7%;
 }
-.plan-3_content h1 {
+.plan-3_content h3 {
 	color: #14394f;
 	font-weight: bold;
 	font-size: 2.25em;
@@ -476,4 +518,265 @@ hr.dropdown-divider{
 	font-size: 0.9em;
 	line-height: 1.8em;
 	letter-spacing: 0.05em;
+}
+.gotop {
+	position: fixed;
+	border-radius: 50px;
+	right: 15px;
+	bottom: 15px;
+	font-size: 2em;
+	background: rgba(200, 200, 200, 0.4);
+	color: #FFFFFF;
+	cursor: pointer;
+	z-index: 1000;
+	height: 50px;
+	width: 50px;
+	line-height: 1em;
+	text-decoration: none;
+	padding: 13px;
+}
+.gotop:hover,
+.gotop:focus {
+	color: #FFF;	
+}
+
+
+
+@media(max-width:1024px){
+header  {
+	width: 100%;
+	position: fixed;
+	background-image: none;
+	display: block;
+	z-index: 99;
+	background-color: #999;
+	height: auto;
+}
+.navigation {
+	color: #FFF;
+	height: 75px;
+	background-image: url(../images/shadow_03.png);
+	z-index: 9999;
+	width: 80px;
+	background-repeat: repeat-x;
+	background-color: transparent;
+}
+
+.navigation .top_logo{
+	float: left;
+}
+.navbar-brand {
+	width: 290px;
+	display: block;
+	background-size: cover;
+	height: 60px;
+	background-image: url(../images/top_logo_s.png);
+	background-repeat: no-repeat;
+	margin-top: 1px;
+	margin-right: auto;
+	margin-left: auto;
+	padding: 0px;
+}
+.navbar-toggler {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+}
+.navbar-collapse {
+	margin-top: 65px;
+}
+.sitemap {
+	position: absolute;
+	top: 3px;
+	right: 80px;
+	font-size: 1em;
+	visibility: hidden;
+}
+.navigation nav {
+	float: right;
+}
+.navigation nav ul {
+	list-style-type: none;
+	padding: 0px;
+	margin-top: 65px;
+}
+.navigation nav ul li {
+	float: left;
+	margin-right: 15px;
+	padding-right: 15px;
+}
+.navigation nav ul li a{
+	color: #FFF;
+	font-size: 1.1em;
+	letter-spacing: 0.1em;
+	width: 100%;
+}
+.navigation nav ul li a:hover{
+	color: #FCE177;
+}
+.main_menu  {
+	width: 100%;
+	height: auto;
+	display: block;	/*opacity: .95;*/
+	background-color: transparent;
+	background-image: url(../images/shadow_02.png);
+	background-repeat: repeat-x;
+}
+.main_menu ul{
+	margin: auto;
+	width: 100%;
+	height: auto;
+	background-color: #036;
+	list-style-type: none;
+	padding: 0px;
+}
+.main_menu ul li {
+	float: none;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #033;
+}
+.main_menu ul li a {
+	display: block;
+	padding-top: 12px;
+	padding-bottom: 14px;
+	text-decoration: none;
+	color: #FFF;
+	font-size: 1.4em;
+	background-image: none;
+	width: 100%;
+	font-weight: bold;
+}
+
+.main_menu ul li a:hover {
+	color: #FFF;
+	background-color: #007A89;
+}
+.main_menu ul li .in {
+	color: #FFF !important;
+	background-color: #00C0DD;
+}
+.navbar-nav .dropdown-menu {
+	background-color: #00606A !important;
+	padding: 10px !important;
+	margin: 0px !important;
+}
+ul.dropdown-menu li {
+	background-color: #00606A !important;
+	max-width: 100% !important;
+	padding: 5px !important;
+	border: none;
+	font-size: 1.25em;
+}
+.main_menu .m1,
+.main_menu .m2,
+.main_menu .m3,
+.main_menu .m4,
+.main_menu .m5,
+.main_menu .m6,
+.main_menu .m7 {
+	background-image: none;
+}
+
+.main_menu .m1:hover,
+.main_menu .m2:hover,
+.main_menu .m3:hover,
+.main_menu .m4:hover,
+.main_menu .m5:hover,
+.main_menu .m6:hover,
+.main_menu .m7:hover {
+	background-image: none;
+}
+
+.main_menu ul li .m1-in,
+.main_menu ul li .m2-in,
+.main_menu ul li .m3-in,
+.main_menu ul li .m4-in,
+.main_menu ul li .m5-in,
+.main_menu ul li .m6-in,
+.main_menu ul li .m7-in {
+	background-image: none;
+}
+
+.navbar-dark .nav-link,
+.navbar-dark .nav-link:hover, 
+.navbar-dark .navbar-nav {
+    color: rgba(255, 255, 255, 1.0)!important;
+}
+
+.dropdown-toggle {
+	color: #FFF;
+}
+.nav-item ul {
+	height: auto !important;
+}
+
+.main {
+	margin-top: 25px!important;
+	padding-top: 20px!important;
+	width: auto;
+}
+
+.plan_01 {
+	background-size: cover;
+	height: auto;
+	padding: 35px;
+}
+.plan_02 {
+	background-size: cover;
+	height: auto;
+	padding: 35px;
+}
+.plan_03 {
+	background-size: cover;
+	height: auto;
+	padding: 35px;
+}
+
+.plan_content  {
+	width: 100%;
+	min-width: 250px;
+	height: auto;
+	float: none;
+	margin: auto;
+	padding: 30px; 
+}
+.plan-2_content  {
+	width: 100%;
+	min-width: 250px;
+	height: auto;
+	float: none;
+	margin: auto;
+	padding: 30px; 
+}
+.plan-3_content  {
+	width: 100%;
+	min-width: 250px;
+	height: auto;
+	float: none;
+	margin: auto;
+	padding: 30px; 
+}
+.info_text{
+	margin-bottom: 25px !important;
+}
+.go{
+	float: none!important;
+	clear: both;
+	width: 100%;
+	text-align: center;
+	margin-top: 25px !important;
+	display: block;
+	padding-top: 9px!important;
+	padding-bottom: 10px!important;
+	border-radius: 50px!important;
+	font-size: 1.5em !important;
+}
+
+
+
+
+}
+.staff li .ss label {
+	text-align: right;
 }

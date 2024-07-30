@@ -3,8 +3,6 @@ package com.example.springboot.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 public class AdvancedAgeRetirementReemploymentResult extends AdvancedAgeRetirementReemploymentResultKey implements Serializable {
     private Integer id;
 
@@ -17,6 +15,16 @@ public class AdvancedAgeRetirementReemploymentResult extends AdvancedAgeRetireme
     private String contactJobtitle;
 
     private String contactPhone;
+
+    private String contactWorkPhoneAreaCode;
+
+    private String contactWorkPhone;
+
+    private String contactWorkPhoneExtension;
+
+    private String faxAreaCode;
+
+    private String fax;
 
     private String email;
 
@@ -48,7 +56,6 @@ public class AdvancedAgeRetirementReemploymentResult extends AdvancedAgeRetireme
 
     private String applicant;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
 
     private static final long serialVersionUID = 1L;
@@ -99,6 +106,46 @@ public class AdvancedAgeRetirementReemploymentResult extends AdvancedAgeRetireme
 
     public void setContactPhone(String contactPhone) {
         this.contactPhone = contactPhone == null ? null : contactPhone.trim();
+    }
+
+    public String getContactWorkPhoneAreaCode() {
+        return contactWorkPhoneAreaCode;
+    }
+
+    public void setContactWorkPhoneAreaCode(String contactWorkPhoneAreaCode) {
+        this.contactWorkPhoneAreaCode = contactWorkPhoneAreaCode == null ? null : contactWorkPhoneAreaCode.trim();
+    }
+
+    public String getContactWorkPhone() {
+        return contactWorkPhone;
+    }
+
+    public void setContactWorkPhone(String contactWorkPhone) {
+        this.contactWorkPhone = contactWorkPhone == null ? null : contactWorkPhone.trim();
+    }
+
+    public String getContactWorkPhoneExtension() {
+        return contactWorkPhoneExtension;
+    }
+
+    public void setContactWorkPhoneExtension(String contactWorkPhoneExtension) {
+        this.contactWorkPhoneExtension = contactWorkPhoneExtension == null ? null : contactWorkPhoneExtension.trim();
+    }
+
+    public String getFaxAreaCode() {
+        return faxAreaCode;
+    }
+
+    public void setFaxAreaCode(String faxAreaCode) {
+        this.faxAreaCode = faxAreaCode == null ? null : faxAreaCode.trim();
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax == null ? null : fax.trim();
     }
 
     public String getEmail() {

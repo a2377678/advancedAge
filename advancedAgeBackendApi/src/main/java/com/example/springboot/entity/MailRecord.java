@@ -12,6 +12,8 @@ public class MailRecord implements Serializable {
 
     private String mailContent;
 
+    private String mailType;
+
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
 
@@ -45,6 +47,14 @@ public class MailRecord implements Serializable {
 
     public void setMailContent(String mailContent) {
         this.mailContent = mailContent == null ? null : mailContent.trim();
+    }
+
+    public String getMailType() {
+        return mailType;
+    }
+
+    public void setMailType(String mailType) {
+        this.mailType = mailType == null ? null : mailType.trim();
     }
 
     public Date getCreateTime() {

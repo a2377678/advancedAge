@@ -52,14 +52,14 @@ public class BlackListApiController {
 		}
 		blackListExample = new BlackListExample();
 		BlackListExample.Criteria c= blackListExample.createCriteria();
-		if(!blackList.getSeq().equals("")) 
+		if(blackList.getSeq() != null && !blackList.getSeq().equals("")) 
 			c.andSeqEqualTo(blackList.getSeq());
-		if(!blackList.getUnit().equals(""))
+		if(blackList.getUnit() != null && !blackList.getUnit().equals(""))
 			c.andUnitEqualTo(blackList.getUnit());
-		if(!blackList.getBanStartDate().equals("")) {
+		if(blackList.getBanStartDate() != null && !blackList.getBanStartDate().equals("")) {
 			c.andBanEndDateGreaterThanOrEqualTo(blackList.getBanStartDate());
 		}
-		if(!blackList.getBanEndDate().equals("")) {
+		if(blackList.getBanEndDate() != null && !blackList.getBanEndDate().equals("")) {
 			c.andBanStartDateLessThanOrEqualTo(blackList.getBanEndDate());
 		}
 		List<BlackList> list = blackListService.selectByExample(blackListExample);

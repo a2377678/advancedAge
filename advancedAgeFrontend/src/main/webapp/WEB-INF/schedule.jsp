@@ -27,24 +27,51 @@
   
   <!--- main --->
   <div class="main"> 
-    
+    <a href="#C" title="中央內容區塊" id="AC" accesskey="C" name="C">:::</a> <!---無障礙--->
     <!------------ 申請流程 ------------>
     <div class="apply_main">
-      <h1>繼續僱用高齡者補助計畫</h1>
+      <!---無障礙/麵包屑--->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index" title="首頁">首頁</a></li>
+          <li class="breadcrumb-item active" aria-current="page">案件查詢</li>
+          <li class="breadcrumb-item active" aria-current="page">繼續僱用高齡者補助 - 申請進度</li>
+        </ol>
+      </nav>
+      <h1>繼續僱用高齡者補助 - 申請進度</h1>
       <h2>申請流程：案件查詢</h2>
       
-      <!---申辦前準備--->
+      <!---說明文字--->
       <h3>案件已送出且資料無法修改，僅供查詢您填寫的申請資料，<br>
-      若有補件需求，請等待補件通知，或洽詢<a href="service">各縣市受理單位</a>。
+      若有補件需求，請等待補件通知，或洽詢<a href="https://job.taiwanjobs.gov.tw/internet/index/service_location.aspx" target="_blank">受理單位</a>
       </h3>
       
       <div>
-        <div class="fs-4 fw-bolder py-3">案件申請查詢：<div class="text-danger"><c:if test="${base.caseStatus<3 }">申請案件審核中</c:if><c:if test="${base.caseStatus==3 }">審核通過</c:if></div></div>
-        <div class="fs-6 lh-base">9月1日 至 10月31日為申辦期間，<br>
-        審核結果將陸續公布</div>
-        <div class="fs-6 fw-bolder py-3">審核通過方可申請「請領作業」。</div>
+      	<c:if test="${not empty base.createTime}">
+	      	<fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${base.createTime}" var="createTime" />
+	        <div class="fs-5 fw-bolder">申請日期：${createTime.substring(0,4)-1911}/${createTime.substring(5,7)}/${createTime.substring(8,createTime.length())}</div>
+	        <div class="fs-5 fw-bolder py-2 mb-3">進度查詢：<span class="text-danger"><c:if test="${base.caseStatus==1 }">申請案件審核中</c:if><c:if test="${base.caseStatus==2 }">審核不通過</c:if><c:if test="${base.caseStatus>=3 }">審核通過</c:if></span></div>
+        </c:if>
+	    
+	    <c:if test="${empty base.createTime}">
+        	<div class="fs-5 fw-bolder py-2 mb-3">進度查詢：<span class="text-danger">查無資料</span></div>
+        </c:if>
+        <div class="fs-6 lh-base">9月1日 至 10月31日為申辦期間，審核結果將陸續公布。</div>
+        <c:if test="${base.caseStatus<3 }">
+        	<div class="fs-6 fw-bolder py-3">審核通過方可繼續「請領作業」。</div>
+	    </c:if>
+        <c:if test="${base.caseStatus>=3 }">
+        	<div class="fs-6 fw-bolder py-3">審核已通過，請繼續完成「<a href="${mailDomain}/advancedAgeFrontend/employ_payment">請領作業</a>」。</div>
+	    </c:if>
       </div>
+<!--       <div> -->
+<%--         <div class="fs-4 fw-bolder py-3">案件申請查詢：<div class="text-danger"><c:if test="${base.caseStatus==1 }">申請案件審核中</c:if><c:if test="${base.caseStatus==2 }">審核不通過</c:if><c:if test="${base.caseStatus>=3 }">審核通過</c:if></div></div> --%>
+<!--         <div class="fs-6 lh-base">9月1日 至 10月31日為申辦期間，<br> -->
+<!--         審核結果將陸續公布</div> -->
+<!--         <div class="fs-6 fw-bolder py-3">審核通過方可申請「請領作業」。</div> -->
+<!--       </div> -->
       
+      <div style="display:none">
       <!--startprint-->
       <div class="form">
         <div class="title_main"><span>申請書</span></div>
@@ -108,8 +135,8 @@ C=(B)/(A) x 100%">---> </div>
               <span>職務類型</span>
               <span>親等關係</span>
               <span>工時類型</span>
-              <span>經常性薪資</span>
-              <span>非經常薪資</span>
+              <span>申請前3個月經常性薪資總和</span>
+              <span>申請前3個月非經常性薪資總和</span>
             </li>
           </ul>
         </div>
@@ -240,8 +267,9 @@ C=(B)/(A) x 100%">---> </div>
       
       </div>
       <!--endprint-->
+      </div>
       <div class="page">
-      	<button type="button" onclick="doPrint()">列印資料</button>
+      	<button type="button" onclick="doPrint()">申請資料PDF</button>
       </div>
     </div>
     <!------------ 申請流程 END ------------> 
@@ -250,14 +278,7 @@ C=(B)/(A) x 100%">---> </div>
   <!--- main end ---> 
   
   <!--- footer --->
-  <footer class="copyright">
-    <section>
-      <div>勞動力發展署：24219新北市新莊區中平路439號南棟4樓　電話代表號：(02)8995-6000　客服專線：0800-777-888</div>
-      <div>本署服務時間：週一至週五　上午8時30分至12時30分，下午13時30分至17時30分</div>
-      <div>最佳解析度1024x768 ，建議更新瀏覽器至以下版本：最新版本Chrome、最新版本Firefox</div>
-      <div>中華民國勞動部勞動力發展署版權所有 © 2021 All rights reserved. </div>
-    </section>
-  </footer>
+  <%@ include file="footer.jsp" %>
   <!--- footer end ---> 
   
 </div>

@@ -25,13 +25,7 @@
   <%@ include file="../header.jsp" %>
   <!---------------------- top end ---------------------->
 
-    
-  <div id="main_menu">
-    <div><a href="#" class="menu-1 in">繼續僱用高齡者</a></div>
-    <div><a href="#" class="menu-2">傳承專業技術與經驗</a></div>
-    <div><a href="#" class="menu-3">退休後再就業準備協助措施</a></div>
-    <div><a href="account01" class="account">申請帳號審核管理</a></div>
-  </div>
+  <%@ include file="../mainMenu.jsp" %>
 
   <!---------------------- left menu ---------------------->
   <%@ include file="../leftMenu.jsp" %>
@@ -61,7 +55,7 @@
         <div id="page_tab">
           <div class="tab-1"><a href="b04" class="in">查詢 / 修改紀錄</a></div>
           <div class="tab-1"><a href="b04_02">實地查核登錄</a></div>
-          <div class="tab-1"><a href="/file/SAMPLE/訪查表1108-核定.docx">訪視表單下載</a></div>
+          <div class="tab-1"><a href="/file/SAMPLE/繼續僱用_查核計畫.docx">訪視表單下載</a></div>
         </div>
       
       
@@ -87,10 +81,21 @@
           <tr>
             <th>承辦單位 / 行政區：</th>
             <td><select name="unit" id="unit">
-                <option value>不限</option>
-                <c:forEach  items="${unitList}"  var="item"  varStatus="userStatus">
-		      		<option value="${item.code}" <c:if test="${siteInspection.unit==item.code}">selected</c:if> >${item.name}</option>
-		      	</c:forEach>
+                <c:if test="${unit=='F' }">
+					<option value>不限</option>                
+	                <c:forEach  items="${unitList}"  var="item"  varStatus="userStatus">
+	                	<c:if test="${item.code!='F' }">
+			      			<option value="${item.code}" <c:if test="${siteInspection.unit==item.code}">selected</c:if> >${item.name}</option>
+			      		</c:if>
+			      	</c:forEach>
+		      	</c:if>
+		      	<c:if test="${unit!='F' }">
+		      		<c:forEach  items="${unitList}"  var="item"  varStatus="userStatus">
+		      			<c:if test="${unit==item.code}">
+		      				<option value="${item.code}" selected>${item.name}</option>
+		      			</c:if>
+		      		</c:forEach>
+		      	</c:if>
             </select></td>
             <th>&nbsp;</th>
             <td>&nbsp;</td>
@@ -127,8 +132,15 @@
 		          <span class="update_time">${item.inspectDate}</span>
 		          <span class="tax_id_number">${item.seq }</span>
 		          <span class="company_name">${item.companyName }</span>
-		          <span class="update_type">${item.result==3?'未符合':'符合'}</span>
-		          <span class="district"></span>
+		          <span class="update_type">
+			          <c:if test="${not empty item.result}">${item.result==3?'未符合':'符合'}</c:if>
+			          <c:if test="${empty item.result}"></c:if>
+		          </span>
+		          <span class="district">
+		          	<c:forEach  items="${unitList}"  var="unitItem"  varStatus="userStatus">
+			      		<c:if test="${item.unit==unitItem.code}">${unitItem.name}</c:if> 
+			      	</c:forEach>
+		          </span>
 		          </a>
 		        </li>
 				        

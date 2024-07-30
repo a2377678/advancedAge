@@ -504,6 +504,286 @@ public class AdvancedAgeRetirementReemploymentBenefitListExample {
             return (Criteria) this;
         }
 
+        public Criteria andInsuranceTypeIsNull() {
+            addCriterion("insurance_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTypeIsNotNull() {
+            addCriterion("insurance_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTypeEqualTo(String value) {
+            addCriterion("insurance_type =", value, "insuranceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTypeNotEqualTo(String value) {
+            addCriterion("insurance_type <>", value, "insuranceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTypeGreaterThan(String value) {
+            addCriterion("insurance_type >", value, "insuranceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("insurance_type >=", value, "insuranceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTypeLessThan(String value) {
+            addCriterion("insurance_type <", value, "insuranceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTypeLessThanOrEqualTo(String value) {
+            addCriterion("insurance_type <=", value, "insuranceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTypeLike(String value) {
+            addCriterion("insurance_type like", value, "insuranceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTypeNotLike(String value) {
+            addCriterion("insurance_type not like", value, "insuranceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTypeIn(List<String> values) {
+            addCriterion("insurance_type in", values, "insuranceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTypeNotIn(List<String> values) {
+            addCriterion("insurance_type not in", values, "insuranceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTypeBetween(String value1, String value2) {
+            addCriterion("insurance_type between", value1, value2, "insuranceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTypeNotBetween(String value1, String value2) {
+            addCriterion("insurance_type not between", value1, value2, "insuranceType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTimeIsNull() {
+            addCriterion("insurance_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTimeIsNotNull() {
+            addCriterion("insurance_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTimeEqualTo(String value) {
+            addCriterion("insurance_time =", value, "insuranceTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTimeNotEqualTo(String value) {
+            addCriterion("insurance_time <>", value, "insuranceTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTimeGreaterThan(String value) {
+            addCriterion("insurance_time >", value, "insuranceTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTimeGreaterThanOrEqualTo(String value) {
+            addCriterion("insurance_time >=", value, "insuranceTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTimeLessThan(String value) {
+            addCriterion("insurance_time <", value, "insuranceTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTimeLessThanOrEqualTo(String value) {
+            addCriterion("insurance_time <=", value, "insuranceTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTimeLike(String value) {
+            addCriterion("insurance_time like", value, "insuranceTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTimeNotLike(String value) {
+            addCriterion("insurance_time not like", value, "insuranceTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTimeIn(List<String> values) {
+            addCriterion("insurance_time in", values, "insuranceTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTimeNotIn(List<String> values) {
+            addCriterion("insurance_time not in", values, "insuranceTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTimeBetween(String value1, String value2) {
+            addCriterion("insurance_time between", value1, value2, "insuranceTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andInsuranceTimeNotBetween(String value1, String value2) {
+            addCriterion("insurance_time not between", value1, value2, "insuranceTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andManagerIsNull() {
+            addCriterion("manager is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andManagerIsNotNull() {
+            addCriterion("manager is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andManagerEqualTo(String value) {
+            addCriterion("manager =", value, "manager");
+            return (Criteria) this;
+        }
+
+        public Criteria andManagerNotEqualTo(String value) {
+            addCriterion("manager <>", value, "manager");
+            return (Criteria) this;
+        }
+
+        public Criteria andManagerGreaterThan(String value) {
+            addCriterion("manager >", value, "manager");
+            return (Criteria) this;
+        }
+
+        public Criteria andManagerGreaterThanOrEqualTo(String value) {
+            addCriterion("manager >=", value, "manager");
+            return (Criteria) this;
+        }
+
+        public Criteria andManagerLessThan(String value) {
+            addCriterion("manager <", value, "manager");
+            return (Criteria) this;
+        }
+
+        public Criteria andManagerLessThanOrEqualTo(String value) {
+            addCriterion("manager <=", value, "manager");
+            return (Criteria) this;
+        }
+
+        public Criteria andManagerLike(String value) {
+            addCriterion("manager like", value, "manager");
+            return (Criteria) this;
+        }
+
+        public Criteria andManagerNotLike(String value) {
+            addCriterion("manager not like", value, "manager");
+            return (Criteria) this;
+        }
+
+        public Criteria andManagerIn(List<String> values) {
+            addCriterion("manager in", values, "manager");
+            return (Criteria) this;
+        }
+
+        public Criteria andManagerNotIn(List<String> values) {
+            addCriterion("manager not in", values, "manager");
+            return (Criteria) this;
+        }
+
+        public Criteria andManagerBetween(String value1, String value2) {
+            addCriterion("manager between", value1, value2, "manager");
+            return (Criteria) this;
+        }
+
+        public Criteria andManagerNotBetween(String value1, String value2) {
+            addCriterion("manager not between", value1, value2, "manager");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkingHoursIsNull() {
+            addCriterion("working_hours is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkingHoursIsNotNull() {
+            addCriterion("working_hours is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkingHoursEqualTo(String value) {
+            addCriterion("working_hours =", value, "workingHours");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkingHoursNotEqualTo(String value) {
+            addCriterion("working_hours <>", value, "workingHours");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkingHoursGreaterThan(String value) {
+            addCriterion("working_hours >", value, "workingHours");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkingHoursGreaterThanOrEqualTo(String value) {
+            addCriterion("working_hours >=", value, "workingHours");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkingHoursLessThan(String value) {
+            addCriterion("working_hours <", value, "workingHours");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkingHoursLessThanOrEqualTo(String value) {
+            addCriterion("working_hours <=", value, "workingHours");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkingHoursLike(String value) {
+            addCriterion("working_hours like", value, "workingHours");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkingHoursNotLike(String value) {
+            addCriterion("working_hours not like", value, "workingHours");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkingHoursIn(List<String> values) {
+            addCriterion("working_hours in", values, "workingHours");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkingHoursNotIn(List<String> values) {
+            addCriterion("working_hours not in", values, "workingHours");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkingHoursBetween(String value1, String value2) {
+            addCriterion("working_hours between", value1, value2, "workingHours");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkingHoursNotBetween(String value1, String value2) {
+            addCriterion("working_hours not between", value1, value2, "workingHours");
+            return (Criteria) this;
+        }
+
         public Criteria andLaborProtectionTimeIsNull() {
             addCriterion("labor_protection_time is null");
             return (Criteria) this;

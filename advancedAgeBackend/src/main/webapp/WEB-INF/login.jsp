@@ -17,11 +17,11 @@
     <table width="100%" border="0" cellspacing="0" class="login_tb">
       <tr>
         <th nowrap>帳　號：</th>
-        <td><input type="text" size="20" name="account"></td>
+        <td><input type="text" size="20" name="account" style="width:190px"></td>
       </tr>
       <tr>
         <th nowrap>密　碼：</th>
-        <td><input type="password" size="18" name="password"></td>
+        <td><input type="password" size="18" name="password" autocomplete="off" style="width:190px"></td>
       </tr>
       <tr>
         <th>&nbsp;</th>
@@ -30,6 +30,22 @@
       <tr>
         <th>&nbsp;</th>
         <td><input type="submit" class="btn" value="登入"></td>
+      </tr>
+      <tr>
+        <th>&nbsp;</th>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <th nowrap>諮詢專線：</th>
+        <td>( 02 ) 2731 - 6520</td>
+      </tr>
+      <tr>
+        <th>&nbsp;</th>
+        <td>( 上班日9:00~12:00，13:00~17:00 )</td>
+      </tr>
+      <tr>
+        <th>諮詢信箱：</th>
+        <td><a href="mailto:service@heroic.com.tw"><u>service@heroic.com.tw</u></a></td>
       </tr>
     </table>
 

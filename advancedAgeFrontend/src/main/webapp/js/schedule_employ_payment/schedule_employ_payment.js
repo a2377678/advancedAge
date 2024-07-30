@@ -1,0 +1,17 @@
+$(function(){
+	$('#baseId').change(function(){
+		$('#baseAllowanceFrequencyTime').val(1);
+		$('#searchForm').submit();
+	})
+})
+
+function doPrint() {
+bdhtml=window.document.body.innerHTML;
+sprnstr="<!--startprint-->";
+eprnstr="<!--endprint-->";
+prnhtml=bdhtml.substr(bdhtml.indexOf(sprnstr)+17);
+prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr));
+window.document.body.innerHTML=prnhtml;
+window.print();
+window.document.body.innerHTML=bdhtml
+}

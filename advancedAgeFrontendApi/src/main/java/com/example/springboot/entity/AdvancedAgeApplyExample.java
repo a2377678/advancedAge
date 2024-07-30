@@ -515,6 +515,76 @@ public class AdvancedAgeApplyExample {
             return (Criteria) this;
         }
 
+        public Criteria andRegisterPostalCodeIsNull() {
+            addCriterion("register_postal_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterPostalCodeIsNotNull() {
+            addCriterion("register_postal_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterPostalCodeEqualTo(String value) {
+            addCriterion("register_postal_code =", value, "registerPostalCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterPostalCodeNotEqualTo(String value) {
+            addCriterion("register_postal_code <>", value, "registerPostalCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterPostalCodeGreaterThan(String value) {
+            addCriterion("register_postal_code >", value, "registerPostalCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterPostalCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("register_postal_code >=", value, "registerPostalCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterPostalCodeLessThan(String value) {
+            addCriterion("register_postal_code <", value, "registerPostalCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterPostalCodeLessThanOrEqualTo(String value) {
+            addCriterion("register_postal_code <=", value, "registerPostalCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterPostalCodeLike(String value) {
+            addCriterion("register_postal_code like", value, "registerPostalCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterPostalCodeNotLike(String value) {
+            addCriterion("register_postal_code not like", value, "registerPostalCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterPostalCodeIn(List<String> values) {
+            addCriterion("register_postal_code in", values, "registerPostalCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterPostalCodeNotIn(List<String> values) {
+            addCriterion("register_postal_code not in", values, "registerPostalCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterPostalCodeBetween(String value1, String value2) {
+            addCriterion("register_postal_code between", value1, value2, "registerPostalCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegisterPostalCodeNotBetween(String value1, String value2) {
+            addCriterion("register_postal_code not between", value1, value2, "registerPostalCode");
+            return (Criteria) this;
+        }
+
         public Criteria andRegisterCityIsNull() {
             addCriterion("register_city is null");
             return (Criteria) this;

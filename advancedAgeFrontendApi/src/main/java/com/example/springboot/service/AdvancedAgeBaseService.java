@@ -28,6 +28,10 @@ public class AdvancedAgeBaseService{
 		return advancedAgeBaseMapper.selectByExample(example);
 	}
 
+	public AdvancedAgeBase selectByPrimaryKey(String aaid) {
+		return advancedAgeBaseMapper.selectByPrimaryKey(aaid);
+	}
+	
 	public int updateByPrimaryKeySelective(AdvancedAgeBase record) {
 		return advancedAgeBaseMapper.updateByPrimaryKeySelective(record);
 	}

@@ -1,6 +1,7 @@
 package com.example.springboot.controller;
 
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -31,6 +32,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,10 +54,12 @@ import com.example.springboot.entity.AdvancedAgePlan;
 import com.example.springboot.entity.Attachment;
 import com.example.springboot.entity.BlackList;
 import com.example.springboot.entity.CompanyInfo;
+import com.example.springboot.entity.FunctionList;
 import com.example.springboot.entity.FunctionPermission;
 import com.example.springboot.entity.MailRecord;
 import com.example.springboot.util.AesUtil;
 import com.example.springboot.util.CallApi;
+import com.example.springboot.util.DateFormatUtil;
 import com.example.springboot.util.SendEmail;
 import com.example.springboot.util.Zip;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -71,7 +75,8 @@ public class BackendMainController {
 	@Autowired
 	public CallApi api;
 	
-	SendEmail sendEmail = new SendEmail();
+	@Autowired
+	SendEmail sendEmail;
 	
 	Zip zip = new Zip();
 	
@@ -83,6 +88,9 @@ public class BackendMainController {
 	
 	@Value("${mail_domain}")
 	private String mailDomain;
+
+	@Value("${applyYear}")
+	private String applyYear;
 	
 	HttpServletRequest request;
 	
@@ -98,9 +106,9 @@ public class BackendMainController {
 	
 	Unit unit;
 	
-	Date date = new Date();
+	DateFormatUtil dateFormatUtil;
+	
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	int applyYear=Integer.valueOf(sdf.format(date).substring(0,4))-1911;
 	
 	@RequestMapping(value = "/login")
 	public String login(HttpServletRequest request,UserInfo userInfo){ 
@@ -122,7 +130,9 @@ public class BackendMainController {
 					session.setAttribute(session.getId()+"unitName",getUnitName(loginUser.getUnit()));
 					session.setAttribute(session.getId()+"unit",loginUser.getUnit());
 					session.setAttribute(session.getId()+"jurisdiction",loginUser.getJurisdiction());
-					session.setAttribute(session.getId()+"functionPermission",selectFunctionPermission(functionPermission));
+					session.setAttribute(session.getId()+"functionPermission",selectFunctionPermission(functionPermission,1));
+					session.setAttribute(session.getId()+"functionPermission2",selectFunctionPermission(functionPermission,2));
+					session.setAttribute(session.getId()+"functionPermission3",selectFunctionPermission(functionPermission,3));
 					UserLoginRecord loginRecord = new UserLoginRecord();
 					loginRecord.setLoginId(loginUser.getId());
 					loginRecord.setAccount(loginUser.getAccount());
@@ -180,9 +190,33 @@ public class BackendMainController {
 	public void saveRar(HttpServletResponse response,Attachment attachment,String date){ 
 		try {
 			zip.ZipDirs(filePath+"/A/"+attachment.getFileBelongId(), date+".rar", true, f -> true,filePath+"/A/"+attachment.getFileBelongId()+"/register/"+attachment.getFileFrequency(),filePath+"/A/"+attachment.getFileBelongId()+"/salary/"+attachment.getFileFrequency(),filePath+"/A/"+attachment.getFileBelongId()+"/insure/"+attachment.getFileFrequency(),filePath+"/A/"+attachment.getFileBelongId()+"/attendance/"+attachment.getFileFrequency(),filePath+"/A/"+attachment.getFileBelongId()+"/necessary/"+attachment.getFileFrequency());
-			
+			response.setContentType("text/html;charset=UTF-8");
+			response.getWriter().print("success;"+"downloadRar?path=/A/"+attachment.getFileBelongId()+"/"+date+".rar");
 		} catch (IOException e) {
 			logger.warn(e.getMessage());
+			response.setContentType("text/html;charset=UTF-8");
+			try {
+				response.getWriter().print("fail");
+			} catch (IOException e1) {
+				logger.warn(e1.getMessage());
+			}
+		}
+	}
+	
+	@RequestMapping(value = "/saveReceiptRar", method = RequestMethod.POST)
+	public void saveReceiptRar(HttpServletResponse response,Attachment attachment){
+		try {
+			zip.ZipDirs(filePath+File.separator+"BA"+File.separator+attachment.getFileBelongId(), "receiptFiles.rar", true, f -> true,filePath+File.separator+"BA"+File.separator+attachment.getFileBelongId()+File.separator+"approved"+File.separator+attachment.getFileFrequency(),filePath+File.separator+"BA"+File.separator+attachment.getFileBelongId()+File.separator+"receipt"+File.separator+attachment.getFileFrequency(),filePath+File.separator+"BA"+File.separator+attachment.getFileBelongId()+File.separator+"employment"+File.separator+attachment.getFileFrequency(),filePath+File.separator+"BA"+File.separator+attachment.getFileBelongId()+File.separator+"salary"+File.separator+attachment.getFileFrequency(),filePath+File.separator+"BA"+File.separator+attachment.getFileBelongId()+File.separator+"attendance"+File.separator+attachment.getFileFrequency(),filePath+File.separator+"BA"+File.separator+attachment.getFileBelongId()+File.separator+"necessary"+File.separator+attachment.getFileFrequency());
+			response.setContentType("text/html;charset=UTF-8");
+			response.getWriter().print("success;"+"downloadRar?path=/BA/"+attachment.getFileBelongId()+"/receiptFiles.rar");
+		} catch (IOException e) {
+			logger.warn(e.getMessage());
+			response.setContentType("text/html;charset=UTF-8");
+			try {
+				response.getWriter().print("fail");
+			} catch (IOException e1) {
+				logger.warn(e1.getMessage());
+			}
 		}
 	}
 	
@@ -212,8 +246,12 @@ public class BackendMainController {
     	  logger.warn(e.getMessage());
       }finally {
     	  try {
-			in.close();
-			out.close();
+    		  if(in != null) {
+    			  in.close();
+    		  }
+    		  if(out != null) {
+    			  out.close();
+    		  }
 		} catch (IOException e) {
 			logger.warn(e.getMessage());
 		}
@@ -238,32 +276,34 @@ public class BackendMainController {
 			return "redirect:/login";
 		}
 		setModel(session.getId(),model);
+		dateFormatUtil = new DateFormatUtil(new Date());
 		model.addAttribute("year", applyYear);
 		model.addAttribute("base", base);
 		model.addAttribute("unitList", getUnit().toList());
-		
-		if(base.getFileStatus() != null) {
-			//所有資料
-			jsonArray = selectATypeAdvancedAgeBaseFileStatus(base);
-			JSONArray pageArray = new JSONArray();
-			//分頁
-			if(pagination.getNumbersOfPage()==null)
-			{
-				pagination = new Pagination("1","10");
-			}
-			pagination.setNums(jsonArray.length());
-//			List<JSONObject> list = new ArrayList<JSONObject>();
-			for (int i=0;i<pagination.getNumbersOfPage();i++) {
-				int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
-				if(index<jsonArray.length()) {
-					pageArray.put(jsonArray.get(index));
-				}
-			}
-			model.addAttribute("userList", selectUserInfo(userInfo).toList());
-			//分頁資料
-			model.addAttribute("pagination", pagination);
-			model.addAttribute("baseList", pageArray.toList());
+		//初始狀態查詢
+		if(pagination.getNumbersOfPage()==null)
+		{
+			base.setFileStatus("1、2、3");
+			base.setYear(applyYear);
+			if(!session.getAttribute(session.getId()+"unit").toString().equals("F"))
+				base.setUnit(session.getAttribute(session.getId()+"unit").toString());
+			pagination = new Pagination("1","10");
 		}
+		//所有資料
+		jsonArray = selectATypeAdvancedAgeBaseFileStatus(base);
+		JSONArray pageArray = new JSONArray();
+		
+		pagination.setNums(jsonArray.length());
+		for (int i=0;i<pagination.getNumbersOfPage();i++) {
+			int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
+			if(index<jsonArray.length()) {
+				pageArray.put(jsonArray.get(index));
+			}
+		}
+		model.addAttribute("userList", selectUserInfo(userInfo).toList());
+		//分頁資料
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("baseList", pageArray.toList());
 		return "a01/a01";
 	}
 	
@@ -292,8 +332,16 @@ public class BackendMainController {
 		// ------申請表 start------
 		AdvancedAgeApply searchApply = selectAdvancedAgeApply(apply);
 		model.addAttribute("apply", searchApply);
-
 		// ------申請表 end--------
+		
+		//負責人
+		CompanyInfo cinfo = new CompanyInfo();
+		cinfo.setSeq(base.getSeq());
+		try {
+			model.addAttribute("companyInfoData", selectCompanyInfoData(cinfo));
+		}catch(JSONException e) {
+			logger.warn(e.getMessage());
+		}
 		
 		//文件
 		attachment = new Attachment();
@@ -324,7 +372,10 @@ public class BackendMainController {
 		//信件歷史紀錄
 		MailRecord mailRecord = new MailRecord();
 		mailRecord.setAdvancedAgeBaseId(nbase.getId());
+		mailRecord.setMailType("A");
 		model.addAttribute("mailRecord", selectMailRecord(mailRecord).toList());
+		sdf = new SimpleDateFormat("yyyyMMdd");
+		model.addAttribute("today", sdf.format(new Date()));
 		return "a01/file";
 	}
 	
@@ -335,34 +386,49 @@ public class BackendMainController {
 			return "redirect:/login";
 		}
 		setModel(session.getId(),model);
+		dateFormatUtil = new DateFormatUtil(new Date());
 		model.addAttribute("year", applyYear);
 		model.addAttribute("base", base);
 		model.addAttribute("unitList", getUnit().toList());
 		base.setFileStatus("3");
-		if(base.getUnit() != null) {
-			//所有資料
-			jsonArray = selectATypeAdvancedAgeBaseFileStatus(base);
-			JSONArray pageArray = new JSONArray();
-			//分頁
-			if(pagination.getNumbersOfPage()==null)
-			{
-				pagination = new Pagination("1","10");
-			}
-			pagination.setNums(jsonArray.length());
-	//			List<JSONObject> list = new ArrayList<JSONObject>();
-			for (int i=0;i<pagination.getNumbersOfPage();i++) {
-				int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
-				if(index<jsonArray.length()) {
-					pageArray.put(jsonArray.get(index));
-				}
-			}
-			model.addAttribute("userList", selectUserInfo(userInfo).toList());
-			//分頁資料
-			
-			model.addAttribute("pagination", pagination);
-			model.addAttribute("baseList", pageArray.toList());
+		
+		//初始狀態查詢
+		if(pagination.getNumbersOfPage()==null)
+		{
+			base.setYear(applyYear);
+			if(!session.getAttribute(session.getId()+"unit").toString().equals("F"))
+				base.setUnit(session.getAttribute(session.getId()+"unit").toString());
+			pagination = new Pagination("1","10");
 		}
+		//所有資料
+		jsonArray = selectATypeAdvancedAgeBaseFileStatus(base);
+		JSONArray pageArray = new JSONArray();
+		pagination.setNums(jsonArray.length());
+		for (int i=0;i<pagination.getNumbersOfPage();i++) {
+			int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
+			if(index<jsonArray.length()) {
+				pageArray.put(jsonArray.get(index));
+			}
+		}
+		model.addAttribute("userList", selectUserInfo(userInfo).toList());
+		//分頁資料
+		
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("baseList", pageArray.toList());
 		return "a02/a02";
+	}
+	
+	@RequestMapping(value = "/testMail", method = RequestMethod.GET)
+	public void testMail(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			sendEmail.sendMail("a2377678@gmail.com","backend 測試通知", "backend test");
+		} catch (AddressException e1) {
+			logger.warn(e1.getMessage());
+		} catch (MessagingException e1) {
+			logger.warn(e1.getMessage());
+		} catch (Exception e1) {
+			logger.warn(e1.getMessage());
+		}
 	}
 	
 	@RequestMapping(value = "/account01")
@@ -515,45 +581,100 @@ public class BackendMainController {
 			return "redirect:/login";
 		}
 		setModel(session.getId(),model);
+		dateFormatUtil = new DateFormatUtil(new Date());
 		model.addAttribute("base", base);
 		// ------單位列表 start------
 		model.addAttribute("unitList", getUnit().toList());
 		// ------單位列表 end------
+		// ------縣市列表 start------
+		jsonArray = new JSONArray(api.httpPost(ip + "getCityList", ""));
+		model.addAttribute("cityList", jsonArray.toList());
+		// ------縣市列表 end------
 		//所有資料
 		AdvancedAgeBase totalBase = new AdvancedAgeBase();
-		totalBase.setFileStatus("4");
-		totalBase.setYear(String.valueOf(applyYear));
+		totalBase.setYear(applyYear);
 		model.addAttribute("totalBaseList", selectATypeAdvancedAgeBase(totalBase).toList());
 		model.addAttribute("year", applyYear);
-		if(base.getYear() != null) {
-			//查詢資料
-			base.setFileStatus("4");//附件通過
-			jsonArray = selectATypeAdvancedAgeBase(base);
-			JSONArray pageArray = new JSONArray();
-			//分頁
-			if(pagination.getNumbersOfPage()==null)
-			{
-				pagination = new Pagination("1","10");
-			}
-			pagination.setNums(jsonArray.length());
-//			List<JSONObject> list = new ArrayList<JSONObject>();
-			for (int i=0;i<pagination.getNumbersOfPage();i++) {
-				int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
-				if(index<jsonArray.length()) {
-					pageArray.put(jsonArray.get(index));
-				}
-			}
-			
-			//分頁資料
-			model.addAttribute("pagination", pagination);
-			model.addAttribute("baseList", pageArray.toList());
+		
+		//初始狀態查詢
+		if(pagination.getNumbersOfPage()==null)
+		{
+			if(!session.getAttribute(session.getId()+"unit").toString().equals("F"))
+				base.setUnit(session.getAttribute(session.getId()+"unit").toString());
+			pagination = new Pagination("1","10");
 		}
+		//查詢資料
+		base.setFileStatus("4");//附件通過
+		jsonArray = selectATypeAdvancedAgeBase(base);
+		JSONArray pageArray = new JSONArray();
+		pagination.setNums(jsonArray.length());
+		for (int i=0;i<pagination.getNumbersOfPage();i++) {
+			int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
+			if(index<jsonArray.length()) {
+				pageArray.put(jsonArray.get(index));
+			}
+		}
+		
+		//分頁資料
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("baseList", pageArray.toList());
 		
 		// ------人員列表 start------
 		UserInfo userInfo = new UserInfo();
 		model.addAttribute("userList", selectUserInfo(userInfo).toList());
 		// ------人員列表 end------
 		return "b01/b01";
+	}
+	
+	@RequestMapping(value = "/b01_division")
+	public String b01_division(HttpServletRequest request,Model model,AdvancedAgeBase base,Pagination pagination){ 
+		session=request.getSession();
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
+			return "redirect:/login";
+		}
+		setModel(session.getId(),model);
+		dateFormatUtil = new DateFormatUtil(new Date());
+		model.addAttribute("base", base);
+		// ------單位列表 start------
+		model.addAttribute("unitList", getUnit().toList());
+		// ------單位列表 end------
+		// ------縣市列表 start------
+		jsonArray = new JSONArray(api.httpPost(ip + "getCityList", ""));
+		model.addAttribute("cityList", jsonArray.toList());
+		// ------縣市列表 end------
+		//所有資料
+		AdvancedAgeBase totalBase = new AdvancedAgeBase();
+		totalBase.setYear(applyYear);
+		model.addAttribute("totalBaseList", selectATypeAdvancedAgeBase(totalBase).toList());
+		model.addAttribute("year", applyYear);
+		
+		//初始狀態查詢
+		if(pagination.getNumbersOfPage()==null)
+		{
+			if(!session.getAttribute(session.getId()+"unit").toString().equals("F"))
+				base.setUnit(session.getAttribute(session.getId()+"unit").toString());
+			pagination = new Pagination("1","10");
+		}
+		//查詢資料
+		jsonArray = selectATypeAdvancedAgeBase(base);
+		JSONArray pageArray = new JSONArray();
+		pagination.setNums(jsonArray.length());
+		for (int i=0;i<pagination.getNumbersOfPage();i++) {
+			int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
+			if(index<jsonArray.length()) {
+				pageArray.put(jsonArray.get(index));
+			}
+		}
+		
+		//分頁資料
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("baseList", pageArray.toList());
+		
+		// ------人員列表 start------
+		UserInfo userInfo = new UserInfo();
+		model.addAttribute("userList", selectUserInfo(userInfo).toList());
+		// ------人員列表 end------
+		return "b01/b01_division";
 	}
 	
 	@RequestMapping(value = "/b02")
@@ -563,6 +684,7 @@ public class BackendMainController {
 			return "redirect:/login";
 		}
 		setModel(session.getId(),model);
+		dateFormatUtil = new DateFormatUtil(new Date());
 		model.addAttribute("base", base);
 		// ------單位列表 start------
 		model.addAttribute("unitList", getUnit().toList());
@@ -572,30 +694,30 @@ public class BackendMainController {
 		model.addAttribute("userList", selectUserInfo(userInfo).toList());
 		// ------人員列表 end------
 		
-		base.setYear(String.valueOf(applyYear));
-		if(base.getSeq() != null) {
-			//所有資料
-			base.setFileStatus("4"); //附件通過
-			jsonArray = selectATypeAdvancedAgeBase(base);
-			JSONArray pageArray = new JSONArray();
-			//分頁
-			if(pagination.getNumbersOfPage()==null)
-			{
-				pagination = new Pagination("1","10");
-			}
-			pagination.setNums(jsonArray.length());
-//			List<JSONObject> list = new ArrayList<JSONObject>();
-			for (int i=0;i<pagination.getNumbersOfPage();i++) {
-				int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
-				if(index<jsonArray.length()) {
-					pageArray.put(jsonArray.get(index));
-				}
-			}
-			
-			//分頁資料
-			model.addAttribute("pagination", pagination);
-			model.addAttribute("baseList", pageArray.toList());
+		base.setYear(applyYear);
+		//初始狀態查詢
+		if(pagination.getNumbersOfPage()==null)
+		{
+			base.setCaseStatus("1、2、3");
+			if(!session.getAttribute(session.getId()+"unit").toString().equals("F"))
+				base.setUnit(session.getAttribute(session.getId()+"unit").toString());
+			pagination = new Pagination("1","10");
 		}
+		//所有資料
+		base.setFileStatus("4"); //附件通過
+		jsonArray = selectATypeAdvancedAgeBase(base);
+		JSONArray pageArray = new JSONArray();
+		pagination.setNums(jsonArray.length());
+		for (int i=0;i<pagination.getNumbersOfPage();i++) {
+			int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
+			if(index<jsonArray.length()) {
+				pageArray.put(jsonArray.get(index));
+			}
+		}
+		
+		//分頁資料
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("baseList", pageArray.toList());
 		return "b02/b02";
 	}
 	
@@ -628,6 +750,15 @@ public class BackendMainController {
 			model.addAttribute("apply", apply);
 			// ------申請表 end--------
 			
+			
+			//負責人
+			try {
+			CompanyInfo cinfo = new CompanyInfo();
+			cinfo.setSeq(base.getSeq());
+			model.addAttribute("companyInfoData", selectCompanyInfoData(cinfo));
+			}catch(JSONException e) {
+				logger.warn(e.getMessage());
+			}
 			// ------行業別列表 start----
 			jsonArray = new JSONArray(api.httpPost(ip + "getIndustryList",""));
 			List<Object> list = jsonArray.toList();
@@ -665,7 +796,7 @@ public class BackendMainController {
 			// ------停止補助名單 start------
 			BlackList blackList = new BlackList();
 			sdf = new SimpleDateFormat("yyyy-MM-dd");
-			String todayDate=sdf.format(date);
+			String todayDate=sdf.format(new Date());
 			blackList.setSeq(base.getSeq());
 			blackList.setUnit("");
 			blackList.setBanStartDate(Integer.valueOf(todayDate.substring(0, 4))-1911+todayDate.substring(4));
@@ -679,6 +810,7 @@ public class BackendMainController {
 			siteInspection.setSeq(base.getSeq());
 			siteInspection.setResult("3");
 			siteInspection.setUnit("");
+			siteInspection.setCaseType("A");
 			jsonArray = selectSiteInspection(siteInspection);
 			model.addAttribute("siteInspection", jsonArray.toList());
 			// ------實地查核 end------
@@ -686,9 +818,118 @@ public class BackendMainController {
 		return "b02/b02_1";
 	}
 	
+	@RequestMapping(value = "/b02_1_print")
+	public String b02_1_print(HttpServletRequest request,Model model,AdvancedAgeBase base,AdvancedAgeApply apply){ 
+		session=request.getSession();
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
+			return "redirect:/login";
+		}
+		setModel(session.getId(),model);
+		if(apply.getApplyYear() != null) {
+			// ------基礎表 start------
+			base.setYear(apply.getApplyYear());
+			model.addAttribute("base", selectATypeAdvancedAgeBase(base).toList());
+			// ------基礎表 end------
+			
+			// ------人員列表 start------
+			UserInfo userInfo = new UserInfo();
+//			userInfo.setUnit(nbase.getVerifyUnit());
+			model.addAttribute("userList", selectUserInfo(userInfo).toList());
+			// ------人員列表 end------
+			
+			// ------單位列表 start------
+			model.addAttribute("unitList", getUnit().toList());
+			// ------單位列表 end------
+			
+			// ------申請表 start------
+			apply = selectAdvancedAgeApply(apply);
+			model.addAttribute("apply", apply);
+			// ------申請表 end--------
+			
+			//負責人
+			try {
+			CompanyInfo cinfo = new CompanyInfo();
+			cinfo.setSeq(base.getSeq());
+			model.addAttribute("companyInfoData", selectCompanyInfoData(cinfo));
+			}catch(JSONException e) {
+				logger.warn(e.getMessage());
+			}
+			// ------行業別列表 start----
+			jsonArray = new JSONArray(api.httpPost(ip + "getIndustryList",""));
+			List<Object> list = jsonArray.toList();
+			model.addAttribute("industryList", list);
+			// ------行業別列表 end------
+			
+			// ------縣市列表 start----
+			jsonArray = new JSONArray(api.httpPost(ip + "getCityList",""));
+			list = jsonArray.toList();
+			model.addAttribute("cityList", list);
+			// ------縣市列表 end----
+			
+			// ------鄉鎮市區 start----
+			jsonArray = new JSONArray(api.httpPost(ip + "getAreaList?cityCode=" + apply.getContactCity(),""));
+			list = jsonArray.toList();
+			model.addAttribute("areaList", list);
+			// ------鄉鎮市區 end----
+			
+			// ------鄉鎮市區 start----
+			jsonArray = new JSONArray(api.httpPost(ip + "getAreaList?cityCode=" + apply.getRegisterCity(),""));
+			list = jsonArray.toList();
+			model.addAttribute("registerAreaList", list);
+			// ------鄉鎮市區 end----
+						
+			// ------計畫表 start------
+			AdvancedAgePlan plan = new AdvancedAgePlan();
+			if(apply.getId()!=null) {
+				plan.setAdvancedAgeApplyId(apply.getId());
+				plan = selectAdvancedAgePlan(plan);
+				model.addAttribute("plan", plan);
+			}
+			// ------計畫表 end--------
+			// ------繼續僱用名單 start------
+			AdvancedAgeEmploymentList employmenyList = new AdvancedAgeEmploymentList();
+			if(plan.getId()!=null) {
+				employmenyList.setAdvancedAgePlanId(plan.getId());
+				model.addAttribute("employmenyListSize", selectAdvancedAgeEmploymentLists(employmenyList).toList().size());
+			}
+			// ------繼續僱用名單 end--------
+			
+			// ------停止補助名單 start------
+			BlackList blackList = new BlackList();
+			sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String todayDate=sdf.format(new Date());
+			blackList.setSeq(base.getSeq());
+			blackList.setUnit("");
+			blackList.setBanStartDate(Integer.valueOf(todayDate.substring(0, 4))-1911+todayDate.substring(4));
+			blackList.setBanEndDate(Integer.valueOf(todayDate.substring(0, 4))-1911+todayDate.substring(4));
+			jsonArray = selectBlackList(blackList);
+			model.addAttribute("blackList", jsonArray.toList());
+			// ------停止補助名單 end--------
+			
+			// ------實地查核 start------
+			SiteInspection siteInspection = new SiteInspection();
+			siteInspection.setSeq(base.getSeq());
+			siteInspection.setResult("3");
+			siteInspection.setUnit("");
+			siteInspection.setCaseType("A");
+			jsonArray = selectSiteInspection(siteInspection);
+			model.addAttribute("siteInspection", jsonArray.toList());
+			// ------實地查核 end------
+		}
+		// ------單位列表 start------
+		model.addAttribute("unitList", getUnit().toList());
+		// ------單位列表 end------
+		// ------人員列表 start------
+		UserInfo userInfo = new UserInfo();
+		model.addAttribute("userList", selectUserInfo(userInfo).toList());
+		// ------人員列表 end------
+		
+		return "b02/b02_1_print";
+	}
 
 	@RequestMapping(value = "/employmentList")
-	public String employmentList(Model model,AdvancedAgeBase base,AdvancedAgeApply apply){
+	public String employmentList(HttpServletRequest request,Model model,AdvancedAgeBase base,AdvancedAgeApply apply){
+		session=request.getSession();
 		setModel(session.getId(),model);
 		if(apply.getApplyYear() != null) {
 			// ------基礎表 start------
@@ -720,6 +961,9 @@ public class BackendMainController {
 			// ------繼續僱用名單 end--------
 			sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 			model.addAttribute("time", (Integer.valueOf((String) sdf.format(new Date()).substring(0,4))-1911)+sdf.format(new Date()).substring(4));
+			model.addAttribute("year", (Integer.valueOf((String) sdf.format(new Date()).substring(0,4))-1911));
+			model.addAttribute("month", sdf.format(new Date()).substring(5,7));
+			model.addAttribute("day", sdf.format(new Date()).substring(8,10));
 		}
 		return "b02/employmentList";
 	}
@@ -733,14 +977,15 @@ public class BackendMainController {
 		XSSFRow row = sheet.createRow(0);
 		sheet.setColumnWidth(0, 6*256);
 		sheet.setColumnWidth(1, 13*256);
-		sheet.setColumnWidth(2, 16*256);
-		sheet.setColumnWidth(3, 13*256);
-		sheet.setColumnWidth(4, 14*256);
-		sheet.setColumnWidth(5, 13*256);
-		sheet.setColumnWidth(6, 15*256);
-		sheet.setColumnWidth(7, 13*256);
-		sheet.setColumnWidth(8, 17*256);
+		sheet.setColumnWidth(2, 14*256);
+		sheet.setColumnWidth(3, 16*256);
+		sheet.setColumnWidth(4, 13*256);
+		sheet.setColumnWidth(5, 14*256);
+		sheet.setColumnWidth(6, 13*256);
+		sheet.setColumnWidth(7, 15*256);
+		sheet.setColumnWidth(8, 13*256);
 		sheet.setColumnWidth(9, 17*256);
+		sheet.setColumnWidth(10, 17*256);
 		row.setHeightInPoints(30);//設置行高
 
 		 // 字體格式
@@ -785,48 +1030,57 @@ public class BackendMainController {
 		cell.setCellStyle(style);
 		
 		cell = row.createCell(2);
-		cell.setCellValue("身分證字號");
+		cell.setCellValue("出生年月日");
 		cell.setCellStyle(style);
 		
 		cell = row.createCell(3);
-		cell.setCellValue("保險類型");
+		cell.setCellValue("身分證字號");
 		cell.setCellStyle(style);
 		
 		cell = row.createCell(4);
-		cell.setCellValue("加保日期");
+		cell.setCellValue("保險類型");
 		cell.setCellStyle(style);
 		
 		cell = row.createCell(5);
-		cell.setCellValue("職務類型");
+		cell.setCellValue("加保日期");
 		cell.setCellStyle(style);
 		
 		cell = row.createCell(6);
-		cell.setCellValue("親等關係");
+		cell.setCellValue("職務類型");
 		cell.setCellStyle(style);
 		
 		cell = row.createCell(7);
-		cell.setCellValue("工時類型");
+		cell.setCellValue("親等關係");
 		cell.setCellStyle(style);
 		
 		cell = row.createCell(8);
-		cell.setCellValue("經常性薪資");
+		cell.setCellValue("工時類型");
 		cell.setCellStyle(style);
 		
 		cell = row.createCell(9);
+		cell.setCellValue("經常性薪資");
+		cell.setCellStyle(style);
+		
+		cell = row.createCell(10);
 		cell.setCellValue("非經常性薪資");
 		cell.setCellStyle(style);
 		
 		row = sheet.createRow(1);
 		row.setHeightInPoints(20);//設置行高
-		cell = row.createCell(4);
+		
+		cell = row.createCell(2);
 		cell.setCellValue("yyy/mm/dd");
 		cell.setCellStyle(style1);
 		
-		cell = row.createCell(8);
-		cell.setCellValue("前3個月總和");
+		cell = row.createCell(5);
+		cell.setCellValue("yyy/mm/dd");
 		cell.setCellStyle(style1);
 		
 		cell = row.createCell(9);
+		cell.setCellValue("前3個月總和");
+		cell.setCellStyle(style1);
+		
+		cell = row.createCell(10);
 		cell.setCellValue("前3個月總和");
 		cell.setCellStyle(style1);
 		
@@ -865,10 +1119,20 @@ public class BackendMainController {
 			cell.setCellStyle(style2);
 			
 			cell = row.createCell(2);
+			if(employmanetList.getJSONObject(i).get("birthday").toString().length()==7){
+				date=employmanetList.getJSONObject(i).get("birthday").toString();
+				cell.setCellValue(date.substring(0, 3)+"/"+date.substring(3, 5)+"/"+date.substring(5));
+			}else if(employmanetList.getJSONObject(i).get("birthday").toString().length()==7) {
+				date=employmanetList.getJSONObject(i).get("birthday").toString();
+				cell.setCellValue(date.substring(0, 3)+"/"+date.substring(3, 5)+"/"+date.substring(5));
+			}
+			cell.setCellStyle(style2);
+			
+			cell = row.createCell(3);
 			cell.setCellValue(employmanetList.getJSONObject(i).get("identification").toString());
 			cell.setCellStyle(style2);
 
-			cell = row.createCell(3);
+			cell = row.createCell(4);
 			if(employmanetList.getJSONObject(i).get("laborProtectionTime").toString().length()==7){
 				cell.setCellValue("勞工保險");
 			}else if(employmanetList.getJSONObject(i).get("occupationalAccidentProtectionTime").toString().length()==7) {
@@ -876,7 +1140,7 @@ public class BackendMainController {
 			}
 			cell.setCellStyle(style2);
 
-			cell = row.createCell(4);
+			cell = row.createCell(5);
 			if(employmanetList.getJSONObject(i).get("laborProtectionTime").toString().length()==7){
 				date=employmanetList.getJSONObject(i).get("laborProtectionTime").toString();
 				cell.setCellValue(date.substring(0, 3)+"/"+date.substring(3, 5)+"/"+date.substring(5));
@@ -886,7 +1150,7 @@ public class BackendMainController {
 			}
 			cell.setCellStyle(style2);
 
-			cell = row.createCell(5);
+			cell = row.createCell(6);
 			if(employmanetList.getJSONObject(i).get("manager").equals("Y")){
 				cell.setCellValue("主管");
 			}else if(employmanetList.getJSONObject(i).get("manager").equals("N")) {
@@ -894,7 +1158,7 @@ public class BackendMainController {
 			}
 			cell.setCellStyle(style2);
 
-			cell = row.createCell(6);
+			cell = row.createCell(7);
 			if(employmanetList.getJSONObject(i).get("relatives").equals("Y")){
 				cell.setCellValue("三等親內");
 			}else if(employmanetList.getJSONObject(i).get("relatives").equals("N")) {
@@ -902,7 +1166,7 @@ public class BackendMainController {
 			}
 			cell.setCellStyle(style2);
 
-			cell = row.createCell(7);
+			cell = row.createCell(8);
 			if(employmanetList.getJSONObject(i).get("workingHours").equals("A")){
 				cell.setCellValue("全時");
 			}else if(employmanetList.getJSONObject(i).get("workingHours").equals("P")) {
@@ -910,11 +1174,11 @@ public class BackendMainController {
 			}
 			cell.setCellStyle(style2);
 
-			cell = row.createCell(8);
+			cell = row.createCell(9);
 			cell.setCellValue(employmanetList.getJSONObject(i).get("recurringSalary").toString());
 			cell.setCellStyle(style2);
 
-			cell = row.createCell(9);
+			cell = row.createCell(10);
 			cell.setCellValue(employmanetList.getJSONObject(i).get("notRecurringSalary").toString());
 			cell.setCellStyle(style2);
 			
@@ -944,6 +1208,54 @@ public class BackendMainController {
 		wb.close();
 	}
 	
+	@RequestMapping(value = "/b02_file_text")
+	public String b02_file_text(HttpServletRequest request,Model model,AdvancedAgeApply apply){ 
+		session=request.getSession();
+		setModel(session.getId(),model);
+		AdvancedAgeBase base = new AdvancedAgeBase();
+		base.setYear(apply.getApplyYear());
+		base.setSeq(apply.getSeq());
+		base.setId(apply.getId());
+		AdvancedAgeBase nbase = selectATypeAdvancedAgeBaseFileStatusRecord(base);
+		model.addAttribute("base", nbase);
+		
+		//userinfo
+		UserInfo userInfo = new UserInfo();
+//		userInfo.setUnit(nbase.getVerifyUnit());
+		model.addAttribute("userList", selectUserInfo(userInfo).toList());
+		model.addAttribute("unitList", getUnit().toList());
+		// ------行業別列表 start----
+		jsonArray = new JSONArray(api.httpPost(ip + "getIndustryList",""));
+		List<Object> list = jsonArray.toList();
+		model.addAttribute("industryList", list);
+		// ------行業別列表 end------
+		
+		// ------申請表 start------
+		AdvancedAgeApply searchApply = selectAdvancedAgeApply(apply);
+		model.addAttribute("apply", searchApply);
+		// ------申請表 end--------
+		
+		//負責人
+		CompanyInfo cinfo = new CompanyInfo();
+		cinfo.setSeq(base.getSeq());
+		try {
+			model.addAttribute("companyInfoData", selectCompanyInfoData(cinfo));
+		}catch(JSONException e) {
+			logger.warn(e.getMessage());
+		}
+		
+		model.addAttribute("mailDomain", mailDomain);
+		
+		//信件歷史紀錄
+		MailRecord mailRecord = new MailRecord();
+		mailRecord.setAdvancedAgeBaseId(nbase.getId());
+		mailRecord.setMailType("C");
+		model.addAttribute("mailRecord", selectMailRecord(mailRecord).toList());
+		sdf = new SimpleDateFormat("yyyyMMdd");
+		model.addAttribute("today", sdf.format(new Date()));
+		return "b02/file_text";
+	}
+	
 	@RequestMapping(value = "/b03")
 	public String b03(HttpServletRequest request,Model model,BlackList blackList,Pagination pagination){
 		session=request.getSession();
@@ -953,28 +1265,29 @@ public class BackendMainController {
 		setModel(session.getId(),model);
 		model.addAttribute("blackList", blackList);
 		model.addAttribute("unitList", getUnit().toList());
-		if(blackList.getSeq() != null) {
-			//所有資料
-			jsonArray = selectBlackList(blackList);
-			JSONArray pageArray = new JSONArray();
-			//分頁
-			if(pagination.getNumbersOfPage()==null)
-			{
-				pagination = new Pagination("1","10");
-			}
-			pagination.setNums(jsonArray.length());
-//			List<JSONObject> list = new ArrayList<JSONObject>();
-			for (int i=0;i<pagination.getNumbersOfPage();i++) {
-				int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
-				if(index<jsonArray.length()) {
-					pageArray.put(jsonArray.get(index));
-				}
-			}
-			
-			//分頁資料
-			model.addAttribute("pagination", pagination);
-			model.addAttribute("blackListData", pageArray.toList());
+		//初始狀態查詢
+		if(pagination.getNumbersOfPage()==null)
+		{
+			if(!session.getAttribute(session.getId()+"unit").toString().equals("F"))
+				blackList.setUnit(session.getAttribute(session.getId()+"unit").toString());
+			pagination = new Pagination("1","10");
 		}
+		//所有資料
+		jsonArray = selectBlackList(blackList);
+		JSONArray pageArray = new JSONArray();
+		
+		pagination.setNums(jsonArray.length());
+		for (int i=0;i<pagination.getNumbersOfPage();i++) {
+			int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
+			if(index<jsonArray.length()) {
+				pageArray.put(jsonArray.get(index));
+			}
+		}
+		
+		//分頁資料
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("blackListData", pageArray.toList());
+		
 		return "b03/b03";
 	}
 	
@@ -1015,9 +1328,10 @@ public class BackendMainController {
 			return "redirect:/login";
 		}
 		setModel(session.getId(),model);
+		dateFormatUtil = new DateFormatUtil(new Date());
 		if(base.getSeq()!=null && !base.getSeq().equals(""))
 		{
-			base.setYear(String.valueOf(applyYear));
+			base.setYear(applyYear);
 			model.addAttribute("searchBase", selectATypeAdvancedAgeBaseData(base));
 		}
 		model.addAttribute("base", base);
@@ -1033,28 +1347,29 @@ public class BackendMainController {
 		setModel(session.getId(),model);
 		model.addAttribute("siteInspection", siteInspection);
 		model.addAttribute("unitList", getUnit().toList());
-		if(siteInspection.getSeq() != null) {
-			//所有資料
-			jsonArray = selectSiteInspection(siteInspection);
-			JSONArray pageArray = new JSONArray();
-			//分頁
-			if(pagination.getNumbersOfPage()==null)
-			{
-				pagination = new Pagination("1","10");
-			}
-			pagination.setNums(jsonArray.length());
-//			List<JSONObject> list = new ArrayList<JSONObject>();
-			for (int i=0;i<pagination.getNumbersOfPage();i++) {
-				int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
-				if(index<jsonArray.length()) {
-					pageArray.put(jsonArray.get(index));
-				}
-			}
-			
-			//分頁資料
-			model.addAttribute("pagination", pagination);
-			model.addAttribute("siteInspectionData", pageArray.toList());
+		//初始狀態查詢
+		if(pagination.getNumbersOfPage()==null)
+		{
+			if(!session.getAttribute(session.getId()+"unit").toString().equals("F"))
+				siteInspection.setUnit(session.getAttribute(session.getId()+"unit").toString());
+			pagination = new Pagination("1","10");
 		}
+		//所有資料
+		siteInspection.setCaseType("A");
+		jsonArray = selectSiteInspection(siteInspection);
+		JSONArray pageArray = new JSONArray();
+		pagination.setNums(jsonArray.length());
+		for (int i=0;i<pagination.getNumbersOfPage();i++) {
+			int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
+			if(index<jsonArray.length()) {
+				pageArray.put(jsonArray.get(index));
+			}
+		}
+		
+		//分頁資料
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("siteInspectionData", pageArray.toList());
+		
 		return "b04/b04";
 	}
 	
@@ -1095,9 +1410,10 @@ public class BackendMainController {
 			return "redirect:/login";
 		}
 		setModel(session.getId(),model);
+		dateFormatUtil = new DateFormatUtil(new Date());
 		if(base.getSeq()!=null && !base.getSeq().equals(""))
 		{
-			base.setYear(String.valueOf(applyYear));
+			base.setYear(applyYear);
 			model.addAttribute("searchBase", selectATypeAdvancedAgeBaseData(base));
 		}
 		model.addAttribute("base", base);
@@ -1111,6 +1427,7 @@ public class BackendMainController {
 			return "redirect:/login";
 		}
 		setModel(session.getId(),model);
+		dateFormatUtil = new DateFormatUtil(new Date());
 		model.addAttribute("base", base);
 		// ------單位列表 start------
 		model.addAttribute("unitList", getUnit().toList());
@@ -1120,29 +1437,29 @@ public class BackendMainController {
 		model.addAttribute("userList", selectUserInfo(userInfo).toList());
 		// ------人員列表 end------
 		
-		base.setYear(String.valueOf(applyYear));
-		if(base.getSeq() != null) {
-			//所有資料
-			jsonArray = selectATypeAdvancedAgeBase(base);
-			JSONArray pageArray = new JSONArray();
-			//分頁
-			if(pagination.getNumbersOfPage()==null)
-			{
-				pagination = new Pagination("1","10");
-			}
-			pagination.setNums(jsonArray.length());
-//			List<JSONObject> list = new ArrayList<JSONObject>();
-			for (int i=0;i<pagination.getNumbersOfPage();i++) {
-				int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
-				if(index<jsonArray.length()) {
-					pageArray.put(jsonArray.get(index));
-				}
-			}
-			
-			//分頁資料
-			model.addAttribute("pagination", pagination);
-			model.addAttribute("baseList", pageArray.toList());
+		base.setYear(applyYear);
+		//初始狀態查詢
+		if(pagination.getNumbersOfPage()==null)
+		{
+			base.setCaseStatus("3、4、8");
+			if(!session.getAttribute(session.getId()+"unit").toString().equals("F"))
+				base.setUnit(session.getAttribute(session.getId()+"unit").toString());
+			pagination = new Pagination("1","10");
 		}
+		//所有資料
+		jsonArray = selectATypeAdvancedAgeBase(base);
+		JSONArray pageArray = new JSONArray();
+		pagination.setNums(jsonArray.length());
+		for (int i=0;i<pagination.getNumbersOfPage();i++) {
+			int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
+			if(index<jsonArray.length()) {
+				pageArray.put(jsonArray.get(index));
+			}
+		}
+		
+		//分頁資料
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("baseList", pageArray.toList());
 		return "b05/b05";
 	}
 	
@@ -1175,6 +1492,14 @@ public class BackendMainController {
 			model.addAttribute("apply", apply);
 			// ------申請表 end--------
 			
+			//負責人
+			try {
+				CompanyInfo cinfo = new CompanyInfo();
+				cinfo.setSeq(base.getSeq());
+				model.addAttribute("companyInfoData", selectCompanyInfoData(cinfo));
+			}catch(JSONException e) {
+				logger.warn(e.getMessage());
+			}
 			// ------行業別列表 start----
 			jsonArray = new JSONArray(api.httpPost(ip + "getIndustryList",""));
 			List<Object> list = jsonArray.toList();
@@ -1212,7 +1537,7 @@ public class BackendMainController {
 			// ------停止補助名單 start------
 			BlackList blackList = new BlackList();
 			sdf = new SimpleDateFormat("yyyy-MM-dd");
-			String todayDate=sdf.format(date);
+			String todayDate=sdf.format(new Date());
 			blackList.setSeq(base.getSeq());
 			blackList.setUnit("");
 			blackList.setBanStartDate(Integer.valueOf(todayDate.substring(0, 4))-1911+todayDate.substring(4));
@@ -1226,6 +1551,7 @@ public class BackendMainController {
 			siteInspection.setSeq(base.getSeq());
 			siteInspection.setResult("3");
 			siteInspection.setUnit("");
+			siteInspection.setCaseType("A");
 			jsonArray = selectSiteInspection(siteInspection);
 			model.addAttribute("siteInspection", jsonArray.toList());
 			// ------實地查核 end------
@@ -1240,6 +1566,7 @@ public class BackendMainController {
 			return "redirect:/login";
 		}
 		setModel(session.getId(),model);
+		dateFormatUtil = new DateFormatUtil(new Date());
 		model.addAttribute("base", base);
 		// ------單位列表 start------
 		model.addAttribute("unitList", getUnit().toList());
@@ -1249,29 +1576,34 @@ public class BackendMainController {
 		model.addAttribute("userList", selectUserInfo(userInfo).toList());
 		// ------人員列表 end------
 		
-		base.setYear(String.valueOf(applyYear));
-		if(base.getSeq() != null) {
-			//所有資料
-			jsonArray = selectATypeAdvancedAgeBase(base);
-			JSONArray pageArray = new JSONArray();
-			//分頁
-			if(pagination.getNumbersOfPage()==null)
-			{
-				pagination = new Pagination("1","10");
-			}
-			pagination.setNums(jsonArray.length());
-//			List<JSONObject> list = new ArrayList<JSONObject>();
-			for (int i=0;i<pagination.getNumbersOfPage();i++) {
-				int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
-				if(index<jsonArray.length()) {
-					pageArray.put(jsonArray.get(index));
-				}
-			}
-			
-			//分頁資料
-			model.addAttribute("pagination", pagination);
-			model.addAttribute("baseList", pageArray.toList());
+//		base.setYear(applyYear);
+		//初始狀態查詢
+		if(pagination.getNumbersOfPage()==null)
+		{
+			base.setCaseStatus("5、6、7");
+			if(!session.getAttribute(session.getId()+"unit").toString().equals("F"))
+				base.setUnit(session.getAttribute(session.getId()+"unit").toString());
+			pagination = new Pagination("1","10");
 		}
+		//所有資料
+		jsonArray = selectATypeAdvancedAgeBase(base);
+		JSONArray pageArray = new JSONArray();
+		if(pagination.getNumbersOfPage()==null)
+		{
+			pagination = new Pagination("1","10");
+		}
+		pagination.setNums(jsonArray.length());
+		for (int i=0;i<pagination.getNumbersOfPage();i++) {
+			int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
+			if(index<jsonArray.length()) {
+				pageArray.put(jsonArray.get(index));
+			}
+		}
+		
+		//分頁資料
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("baseList", pageArray.toList());
+		
 		return "c01/c01";
 	}
 	
@@ -1304,6 +1636,15 @@ public class BackendMainController {
 			model.addAttribute("apply", apply);
 			// ------申請表 end--------
 			
+			//負責人
+			try {
+				CompanyInfo cinfo = new CompanyInfo();
+				cinfo.setSeq(base.getSeq());
+				model.addAttribute("companyInfoData", selectCompanyInfoData(cinfo));
+			}catch(JSONException e) {
+				logger.warn(e.getMessage());
+			}
+			
 			// ------計畫表 start------
 			AdvancedAgePlan plan = new AdvancedAgePlan();
 			if(apply.getId()!=null) {
@@ -1326,9 +1667,119 @@ public class BackendMainController {
 				model.addAttribute("employmenyListReceipt", selectAdvancedAgeEmploymentListReceipts(employmenyListReceipt).toList());
 			}
 			// ------繼續僱用名單_請領 end--------
+			// ------停止補助名單 start------
+			BlackList blackList = new BlackList();
+			sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String todayDate=sdf.format(new Date());
+			blackList.setSeq(base.getSeq());
+			blackList.setUnit("");
+			blackList.setBanStartDate(Integer.valueOf(todayDate.substring(0, 4))-1911+todayDate.substring(4));
+			blackList.setBanEndDate(Integer.valueOf(todayDate.substring(0, 4))-1911+todayDate.substring(4));
+			jsonArray = selectBlackList(blackList);
+			model.addAttribute("blackList", jsonArray.toList());
+			// ------停止補助名單 end--------
 			
+			// ------實地查核 start------
+			SiteInspection siteInspection = new SiteInspection();
+			siteInspection.setSeq(base.getSeq());
+			siteInspection.setResult("3");
+			siteInspection.setUnit("");
+			siteInspection.setCaseType("A");
+			jsonArray = selectSiteInspection(siteInspection);
+			model.addAttribute("siteInspection", jsonArray.toList());
+			// ------實地查核 end------
 		}
 		return "c01/c01_1";
+	}
+	
+	@RequestMapping(value = "/c01_file")
+	public String c01_file(HttpServletRequest request,Model model,AdvancedAgeEmploymentListReceipt listReceipt,String year){ 
+		session=request.getSession();
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
+			return "redirect:/login";
+		}
+		setModel(session.getId(),model);
+		AdvancedAgeBase base = new AdvancedAgeBase();
+		// ------基礎表 start------
+		base.setYear(year);
+		base.setSeq(listReceipt.getSeq());
+		AdvancedAgeBase searchBase = selectATypeAdvancedAgeBaseData(base);
+		model.addAttribute("base", searchBase);
+		model.addAttribute("frequency", listReceipt.getBaseAllowanceFrequency());
+		// ------基礎表 end------
+		
+		// ------人員列表 start------
+		UserInfo userInfo = new UserInfo();
+//			userInfo.setUnit(nbase.getVerifyUnit());
+		model.addAttribute("userList", selectUserInfo(userInfo).toList());
+		// ------人員列表 end------
+		
+		// ------單位列表 start------
+		model.addAttribute("unitList", getUnit().toList());
+		// ------單位列表 end------
+		
+		// ------行業別列表 start----
+		jsonArray = new JSONArray(api.httpPost(ip + "getIndustryList",""));
+		List<Object> list = jsonArray.toList();
+		model.addAttribute("industryList", list);
+		// ------行業別列表 end------
+				
+		// ------申請表 start------
+		AdvancedAgeApply apply= new AdvancedAgeApply();
+		apply.setSeq(listReceipt.getSeq());
+		apply.setApplyYear(year);
+		apply = selectAdvancedAgeApply(apply);
+		model.addAttribute("apply", apply);
+		// ------申請表 end--------
+		
+		//負責人
+		CompanyInfo cinfo = new CompanyInfo();
+		cinfo.setSeq(base.getSeq());
+		try {
+			model.addAttribute("companyInfoData", selectCompanyInfoData(cinfo));
+		}catch(JSONException e) {
+			logger.warn(e.getMessage());
+		}
+		
+		//文件
+		attachment = new Attachment();
+		// 原核定函文件
+		attachment.setFileBelong("BA");
+		attachment.setFileBelongId(listReceipt.getAdvancedAgeBaseId());
+		attachment.setFileFrequency(listReceipt.getBaseAllowanceFrequency());
+		attachment.setFileType("approved");
+		model.addAttribute("approvedAttachment", selectApprovedFiles(attachment).toList());
+
+		// 領據證明文件
+		attachment.setFileType("receipt");
+		model.addAttribute("receiptAttachment", selectApprovedFiles(attachment).toList());
+
+		// 雇用證明文件
+		attachment.setFileType("employment");
+		model.addAttribute("employmentAttachment", selectApprovedFiles(attachment).toList());
+		
+		// 薪資證明文件
+		attachment.setFileType("salary");
+		model.addAttribute("salaryAttachment", selectApprovedFiles(attachment).toList());
+		
+		// 出勤證明文件
+		attachment.setFileType("attendance");
+		model.addAttribute("attendanceAttachment", selectApprovedFiles(attachment).toList());
+		
+		// 其他證明文件
+		attachment.setFileType("necessary");
+		model.addAttribute("necessaryAttachment", selectApprovedFiles(attachment).toList());
+		
+		model.addAttribute("mailDomain", mailDomain);
+		
+		//信件歷史紀錄
+		MailRecord mailRecord = new MailRecord();
+		mailRecord.setAdvancedAgeBaseId(searchBase.getId());
+		mailRecord.setMailType("B");
+		model.addAttribute("mailRecord", selectMailRecord(mailRecord).toList());
+		sdf = new SimpleDateFormat("yyyyMMdd");
+		model.addAttribute("today", sdf.format(new Date()));
+		return "c01/c01_file";
 	}
 	
 	@RequestMapping(value = "/c01_list")
@@ -1385,7 +1836,44 @@ public class BackendMainController {
 		// ------繼續僱用名單_請領 end--------
 		sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm");
 		model.addAttribute("time", (Integer.valueOf((String) sdf.format(new Date()).substring(0,4))-1911)+sdf.format(new Date()).substring(4));
+		model.addAttribute("year", (Integer.valueOf((String) sdf.format(new Date()).substring(0,4))-1911));
+		model.addAttribute("month", sdf.format(new Date()).substring(5,7));
+		model.addAttribute("day", sdf.format(new Date()).substring(8,10));
 		return "c01/c01_list";
+	}
+	
+	@RequestMapping(value = "/c01_file_content")
+	public String c01_file_content(HttpServletRequest request,Model model,AdvancedAgeBase base){ 
+		session=request.getSession();
+		if (session == null || !request.isRequestedSessionIdValid() || session.getAttribute(session.getId()+"account") == null) {
+			return "redirect:/login";
+		}
+		setModel(session.getId(),model);
+		// ------基礎表 start------
+		AdvancedAgeBase searchBase = selectATypeAdvancedAgeBaseData(base);
+		model.addAttribute("base", searchBase);
+		// ------基礎表 end------
+		
+		// ------人員列表 start------
+		UserInfo userInfo = new UserInfo();
+		model.addAttribute("userList", selectUserInfo(userInfo).toList());
+		// ------人員列表 end------
+		
+		// ------單位列表 start------
+		model.addAttribute("unitList", getUnit().toList());
+		// ------單位列表 end------
+		
+		model.addAttribute("mailDomain", mailDomain);
+		
+		//信件歷史紀錄
+		MailRecord mailRecord = new MailRecord();
+		mailRecord.setAdvancedAgeBaseId(searchBase.getId());
+		mailRecord.setMailType("B");
+		model.addAttribute("mailRecord", selectMailRecord(mailRecord).toList());
+		sdf = new SimpleDateFormat("yyyyMMdd");
+		model.addAttribute("today", sdf.format(new Date()));
+		
+		return "c01/c01_file_content";
 	}
 	
 	@RequestMapping(value = "/c01_result")
@@ -1442,7 +1930,139 @@ public class BackendMainController {
 		// ------繼續僱用名單_請領 end--------
 		sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm");
 		model.addAttribute("time", (Integer.valueOf((String) sdf.format(new Date()).substring(0,4))-1911)+sdf.format(new Date()).substring(4));
+		model.addAttribute("year", (Integer.valueOf((String) sdf.format(new Date()).substring(0,4))-1911));
+		model.addAttribute("month", sdf.format(new Date()).substring(5,7));
+		model.addAttribute("day", sdf.format(new Date()).substring(8,10));
 		return "c01/c01_result";
+	}
+	
+	@RequestMapping(value = "/i01")
+	public String i01(HttpServletRequest request,String account){ 
+		return "i01/i01";
+	}
+	
+	@RequestMapping(value = "/i02")
+	public String i02(HttpServletRequest request,Model model,AdvancedAgeBase base,Pagination pagination){ 
+		session=request.getSession();
+		setModel(session.getId(),model);
+		dateFormatUtil = new DateFormatUtil(new Date());
+		// ------行業別列表 start----
+		jsonArray = new JSONArray(api.httpPost(ip + "getIndustryList",""));
+		List<Object> list = jsonArray.toList();
+		model.addAttribute("industryList", list);
+		// ------行業別列表 end------
+		// ------單位列表 start------
+		model.addAttribute("unitList", getUnit().toList());
+		// ------單位列表 end------
+		base.setCaseType("A");
+		
+		if(pagination.getNumbersOfPage()==null)
+		{
+			base.setYear(applyYear);
+			pagination = new Pagination("1","10");
+		}
+		jsonArray = selectCaseStatistics(base);
+		JSONArray pageArray = new JSONArray();
+		pagination.setNums(jsonArray.length());
+		for (int i=0;i<pagination.getNumbersOfPage();i++) {
+			int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
+			if(index<jsonArray.length()) {
+				pageArray.put(jsonArray.get(index));
+			}
+		}
+		
+		//分頁資料
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("base", base);
+		model.addAttribute("caseStatisticsList", pageArray.toList());
+		return "i02/i02";
+	}
+	
+	@RequestMapping(value = "/i03")
+	public String i03(HttpServletRequest request,Model model,AdvancedAgeBase base,Pagination pagination){ 
+		session=request.getSession();
+		setModel(session.getId(),model);
+		// ------單位列表 start------
+		model.addAttribute("unitList", getUnit().toList());
+		// ------單位列表 end------
+		base.setCaseType("A");
+		if(pagination.getNumbersOfPage()==null)
+		{
+			base.setUnit("A");
+			pagination = new Pagination("1","10");
+		}
+		jsonArray = selectApplicationSituation(base);
+		JSONArray pageArray = new JSONArray();
+		pagination.setNums(jsonArray.length());
+		for (int i=0;i<pagination.getNumbersOfPage();i++) {
+			int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
+			if(index<jsonArray.length()) {
+				pageArray.put(jsonArray.get(index));
+			}
+		}
+		
+		//分頁資料
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("base", base);
+		model.addAttribute("applicationSituationList", pageArray.toList());
+		return "i03/i03";
+	}
+	
+	@RequestMapping(value = "/i04")
+	public String i04(HttpServletRequest request,Model model,AdvancedAgeBase base,Pagination pagination){ 
+		session=request.getSession();
+		setModel(session.getId(),model);
+		base.setCaseType("A");
+		if(pagination.getNumbersOfPage()==null)
+		{
+			pagination = new Pagination("1","10");
+		}
+		jsonArray = selectIndustryAmountsStatistics(base);
+		JSONArray pageArray = new JSONArray();
+		pagination.setNums(jsonArray.length());
+		for (int i=0;i<pagination.getNumbersOfPage();i++) {
+			int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
+			if(index<jsonArray.length()) {
+				pageArray.put(jsonArray.get(index));
+			}
+		}
+		
+		//分頁資料
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("base", base);
+		model.addAttribute("industryAmountsStatisticsList", pageArray.toList());
+		return "i04/i04";
+	}
+	
+	@RequestMapping(value = "/i05")
+	public String i05(HttpServletRequest request,Model model,AdvancedAgeBase base,Pagination pagination){ 
+		session=request.getSession();
+		setModel(session.getId(),model);
+		dateFormatUtil = new DateFormatUtil(new Date());
+		// ------單位列表 start------
+		model.addAttribute("unitList", getUnit().toList());
+		// ------單位列表 end------
+		base.setCaseType("A");
+		if(pagination.getNumbersOfPage()==null)
+		{
+			base.setYear(applyYear);
+			pagination = new Pagination("1","10");
+		}
+		jsonArray = selectYearAmountsStatistics(base);
+		JSONArray pageArray = new JSONArray();
+		pagination.setNums(jsonArray.length());
+		for (int i=0;i<pagination.getNumbersOfPage();i++) {
+			int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
+			if(index<jsonArray.length()) {
+				pageArray.put(jsonArray.get(index));
+			}
+		}
+		
+		//分頁資料
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("base", base);
+		model.addAttribute("yearAmountsStatisticsList", pageArray.toList());
+		return "i05/i05";
 	}
 	
 	@RequestMapping(value = "/j01")
@@ -1465,34 +2085,28 @@ public class BackendMainController {
 			return "redirect:/login";
 		}
 		setModel(session.getId(),model);
-		if(userInfo.getUnit()!=null) {
 			
-			userInfo.setAccount(userAccount);
-			//所有資料
-			jsonArray = selectUserInfo(userInfo);
-			JSONArray pageArray = new JSONArray();
-			//分頁
-			if(pagination.getNumbersOfPage()==null)
-			{
-				pagination = new Pagination("1","10");
-			}
-			pagination.setNums(jsonArray.length());
-	//		List<JSONObject> list = new ArrayList<JSONObject>();
-			for (int i=0;i<pagination.getNumbersOfPage();i++) {
-				int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
-				if(index<jsonArray.length()) {
-					pageArray.put(jsonArray.get(index));
-				}
-			}
-			
-			//分頁資料
-			model.addAttribute("pagination", pagination);
-			model.addAttribute("userInfoData", pageArray.toList());
-		}
-		else
+		userInfo.setAccount(userAccount);
+		//初始狀態查詢
+		if(pagination.getNumbersOfPage()==null)
 		{
-			userInfo = new UserInfo();
+			pagination = new Pagination("1","10");
 		}
+		//所有資料
+		jsonArray = selectUserInfo(userInfo);
+		JSONArray pageArray = new JSONArray();
+		pagination.setNums(jsonArray.length());
+		for (int i=0;i<pagination.getNumbersOfPage();i++) {
+			int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
+			if(index<jsonArray.length()) {
+				pageArray.put(jsonArray.get(index));
+			}
+		}
+		
+		//分頁資料
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("userInfoData", pageArray.toList());
+		
 		model.addAttribute("searchUserInfo", userInfo);
 		
 		model.addAttribute("unitList", getUnit().toList());
@@ -1510,8 +2124,6 @@ public class BackendMainController {
 		if(userInfo.getUnit() == null) {
 			userInfo.setAccount(editAccount);
 			JSONObject jsondata = selectUserInfoData(userInfo);
-			
-			
 			try {
 				userInfo = objectMapper.readValue(jsondata.toString(), UserInfo.class);
 			} catch (JsonMappingException e) {
@@ -1530,7 +2142,11 @@ public class BackendMainController {
 			String json="";
 			
 			userInfo.setAccount(editAccount);
-			userInfo.setPassword(AesUtil.encrypt(userInfo.getPassword()));
+			if(!userInfo.getPassword().equals("")) {
+				userInfo.setPassword(AesUtil.encrypt(userInfo.getPassword()));
+			}else {
+				userInfo.setPassword(null);
+			}
 			try {
 				json = objectMapper.writeValueAsString(userInfo);
 			} catch (JsonProcessingException e) {
@@ -1552,6 +2168,7 @@ public class BackendMainController {
 		model.addAttribute("unitList", getUnit().toList());
 		if(userInfo.getUnit() != null) {
 			userInfo.setAccount(userAccount);
+			userInfo.setPassword(AesUtil.encrypt(userInfo.getPassword()));
 			ObjectMapper objectMapper = new ObjectMapper();
 			String json="";
 			try {
@@ -1574,7 +2191,9 @@ public class BackendMainController {
 			return "redirect:/login";
 		}
 		setModel(session.getId(),model);
-		model.addAttribute("functionList", selectFunctionList().toList());
+		FunctionList functionList = new FunctionList();
+		functionList.setCaseType("A");
+		model.addAttribute("functionList", selectFunctionList(functionList).toList());
 		return "j03/j03";
 	}
 	
@@ -1586,30 +2205,26 @@ public class BackendMainController {
 			return "redirect:/login";
 		}
 		setModel(session.getId(),model);
-		if(userLoginRecord.getUnit() != null)
+			
+		//初始狀態查詢
+		if(pagination.getNumbersOfPage()==null)
 		{
-			
-			//所有資料
-			jsonArray = selectUserLoginRecord(userLoginRecord,loginStartDate,loginEndDate);
-			JSONArray pageArray = new JSONArray();
-			//分頁
-			if(pagination.getNumbersOfPage()==null)
-			{
-				pagination = new Pagination("1","10");
-			}
-			pagination.setNums(jsonArray.length());
-//			List<JSONObject> list = new ArrayList<JSONObject>();
-			for (int i=0;i<pagination.getNumbersOfPage();i++) {
-				int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
-				if(index<jsonArray.length()) {
-					pageArray.put(jsonArray.get(index));
-				}
-			}
-			
-			//分頁資料
-			model.addAttribute("pagination", pagination);
-			model.addAttribute("userLoginRecordDate", pageArray.toList());
+			pagination = new Pagination("1","10");
 		}
+		//所有資料
+		jsonArray = selectUserLoginRecord(userLoginRecord,loginStartDate,loginEndDate);
+		JSONArray pageArray = new JSONArray();
+		pagination.setNums(jsonArray.length());
+		for (int i=0;i<pagination.getNumbersOfPage();i++) {
+			int index=pagination.getNumbersOfPage()*(pagination.getPage()-1)+i;
+			if(index<jsonArray.length()) {
+				pageArray.put(jsonArray.get(index));
+			}
+		}
+		
+		//分頁資料
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("userLoginRecordDate", pageArray.toList());
 		
 		model.addAttribute("userLoginRecord", userLoginRecord);
 		model.addAttribute("loginStartDate", loginStartDate);
@@ -1625,8 +2240,10 @@ public class BackendMainController {
 		model.addAttribute("unit", session.getAttribute(sid+"unit"));
 		model.addAttribute("jurisdiction", session.getAttribute(sid+"jurisdiction"));
 		model.addAttribute("functionPermission", session.getAttribute(sid+"functionPermission"));
+		model.addAttribute("functionPermission2", session.getAttribute(sid+"functionPermission2"));
+		model.addAttribute("functionPermission3", session.getAttribute(sid+"functionPermission3"));
 	}
-	public String selectFunctionPermission(FunctionPermission functionPermission) {
+	public String selectFunctionPermission(FunctionPermission functionPermission,int type) {
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
 		try {
@@ -1635,7 +2252,11 @@ public class BackendMainController {
 			logger.warn(e.getMessage());
 		}
 		JSONObject object = new JSONObject(api.httpPost(ip+"selectFunctionPermission",json));
-		return object.get("functionCode").toString();
+		if(type>1) {
+			return object.get("functionCode"+type).toString();
+		}else {
+			return object.get("functionCode").toString();
+		}
 	}
 	
 	public String getUnitName(String unitCode) {
@@ -1652,7 +2273,7 @@ public class BackendMainController {
 	@RequestMapping(value = "/sendMail", method = RequestMethod.POST)
 	public void sendMail(HttpServletRequest request, HttpServletResponse response,MailRecord mailRecord){
 		try {
-			sendEmail.sendMail(mailRecord.getEmail(), mailRecord.getMailContent());
+			sendEmail.sendMail(mailRecord.getEmail(),"補件通知", mailRecord.getMailContent());
 		} catch (AddressException e1) {
 			logger.warn(e1.getMessage());
 		} catch (MessagingException e1) {
@@ -1677,9 +2298,16 @@ public class BackendMainController {
 	}
 	
 	@RequestMapping(value = "/sendCompanyInfoMail", method = RequestMethod.POST)
-	public void sendCompanyInfoMail(HttpServletRequest request, HttpServletResponse response,MailRecord mailRecord){
+	public void sendCompanyInfoMail(HttpServletRequest request, HttpServletResponse response,MailRecord mailRecord,String companyName,String seq,String pwd){
+		mailRecord.setMailContent("您好\r\n"
+				+ "貴公司 "+companyName+" 於勞動力發展署-促進中高齡及高齡者就業相關補助計畫系統註冊帳號  "+seq+"\r\n"
+				+ "\r\n"
+				+ "您的預設密碼為："+pwd+"\r\n"
+				+ "\r\n"
+				+ "請於以下網址前往修改密碼：\r\n"
+				+ mailDomain+"/advancedAgeFrontend/change_password");
 		try {
-			sendEmail.sendMail(mailRecord.getEmail(), mailRecord.getMailContent());
+			sendEmail.sendMail(mailRecord.getEmail(),"<密碼通知信> 勞動力發展署-促進中高齡及高齡者就業相關補助計畫系統",mailRecord.getMailContent());
 		} catch (AddressException e1) {
 			logger.warn(e1.getMessage());
 		} catch (MessagingException e1) {
@@ -1756,7 +2384,7 @@ public class BackendMainController {
 		} catch (JsonProcessingException e) {
 			logger.warn(e.getMessage());
 		}
-		json = json.substring(0,json.length()-1)+",\"loginStartDate\":"+(loginStartDate.equals("")?"":"\""+loginStartDate+"\"")+",\"loginEndDate\":"+(loginEndDate.equals("")?"":"\""+loginEndDate+"\"")+"}";
+		json = json.substring(0,json.length()-1)+",\"loginStartDate\":"+(loginStartDate == null || loginStartDate.equals("")?"":"\""+loginStartDate+"\"")+",\"loginEndDate\":"+(loginEndDate==null || loginEndDate.equals("")?"":"\""+loginEndDate+"\"")+"}";
 		JSONArray array = new JSONArray(api.httpPost(ip+"selectUserLoginRecord",json));
 		return array;
 	}
@@ -1878,8 +2506,15 @@ public class BackendMainController {
 		return searchUser;
 	}
 	
-	public JSONArray selectFunctionList(){ 
-		JSONArray array = new JSONArray(api.httpPost(ip+"selectFunctionList",""));
+	public JSONArray selectFunctionList(FunctionList functionList){ 
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json="";
+		try {
+			json = objectMapper.writeValueAsString(functionList);
+		} catch (JsonProcessingException e) {
+			logger.warn(e.getMessage());
+		}
+		JSONArray array = new JSONArray(api.httpPost(ip+"selectFunctionList",json));
 		return array;
 	}
 	
@@ -2005,6 +2640,66 @@ public class BackendMainController {
 			logger.warn(e.getMessage());
 		}
 		JSONArray array = new JSONArray(api.httpPost(ip + "selectFiles", json));
+		return array;
+	}
+	
+	public JSONArray selectApprovedFiles(Attachment attachment) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json = "";
+		try {
+			json = objectMapper.writeValueAsString(attachment);
+		} catch (JsonProcessingException e) {
+			logger.warn(e.getMessage());
+		}
+		JSONArray array = new JSONArray(api.httpPost(ip + "selectApprovedFiles", json));
+		return array;
+	}
+	
+	public JSONArray selectCaseStatistics(AdvancedAgeBase advancedAgeBase) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json = "";
+		try {
+			json = objectMapper.writeValueAsString(advancedAgeBase);
+		} catch (JsonProcessingException e) {
+			logger.warn(e.getMessage());
+		}
+		JSONArray array = new JSONArray(api.httpPost(ip + "selectCaseStatistics", json));
+		return array;
+	}
+	
+	public JSONArray selectApplicationSituation(AdvancedAgeBase advancedAgeBase) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json = "";
+		try {
+			json = objectMapper.writeValueAsString(advancedAgeBase);
+		} catch (JsonProcessingException e) {
+			logger.warn(e.getMessage());
+		}
+		JSONArray array = new JSONArray(api.httpPost(ip + "selectApplicationSituation", json));
+		return array;
+	}
+	
+	public JSONArray selectIndustryAmountsStatistics(AdvancedAgeBase advancedAgeBase) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json = "";
+		try {
+			json = objectMapper.writeValueAsString(advancedAgeBase);
+		} catch (JsonProcessingException e) {
+			logger.warn(e.getMessage());
+		}
+		JSONArray array = new JSONArray(api.httpPost(ip + "selectIndustryAmountsStatistics", json));
+		return array;
+	}
+	
+	public JSONArray selectYearAmountsStatistics(AdvancedAgeBase advancedAgeBase) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json = "";
+		try {
+			json = objectMapper.writeValueAsString(advancedAgeBase);
+		} catch (JsonProcessingException e) {
+			logger.warn(e.getMessage());
+		}
+		JSONArray array = new JSONArray(api.httpPost(ip + "selectYearAmountsStatistics", json));
 		return array;
 	}
 	

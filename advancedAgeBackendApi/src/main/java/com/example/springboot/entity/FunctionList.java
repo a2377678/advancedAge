@@ -3,8 +3,6 @@ package com.example.springboot.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 public class FunctionList implements Serializable {
     private String functionCode;
 
@@ -12,10 +10,10 @@ public class FunctionList implements Serializable {
 
     private String functionName;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private String caseType;
+
     private Date createTime;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date updateTime;
 
     private static final long serialVersionUID = 1L;
@@ -42,6 +40,14 @@ public class FunctionList implements Serializable {
 
     public void setFunctionName(String functionName) {
         this.functionName = functionName == null ? null : functionName.trim();
+    }
+
+    public String getCaseType() {
+        return caseType;
+    }
+
+    public void setCaseType(String caseType) {
+        this.caseType = caseType == null ? null : caseType.trim();
     }
 
     public Date getCreateTime() {

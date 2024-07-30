@@ -11,6 +11,14 @@ public class AdvancedAgeRetirementReemploymentBenefitList extends AdvancedAgeRet
 
     private String birthday;
 
+    private String insuranceType;
+
+    private String insuranceTime;
+
+    private String manager;
+
+    private String workingHours;
+
     private String laborProtectionTime;
 
     private String occupationalAccidentProtectionTime;
@@ -47,6 +55,38 @@ public class AdvancedAgeRetirementReemploymentBenefitList extends AdvancedAgeRet
 
     public void setBirthday(String birthday) {
         this.birthday = birthday == null ? null : birthday.trim();
+    }
+
+    public String getInsuranceType() {
+        return insuranceType;
+    }
+
+    public void setInsuranceType(String insuranceType) {
+        this.insuranceType = insuranceType == null ? null : insuranceType.trim();
+    }
+
+    public String getInsuranceTime() {
+        return insuranceTime;
+    }
+
+    public void setInsuranceTime(String insuranceTime) {
+        this.insuranceTime = insuranceTime == null ? null : insuranceTime.trim();
+    }
+
+    public String getManager() {
+        return manager;
+    }
+
+    public void setManager(String manager) {
+        this.manager = manager == null ? null : manager.trim();
+    }
+
+    public String getWorkingHours() {
+        return workingHours;
+    }
+
+    public void setWorkingHours(String workingHours) {
+        this.workingHours = workingHours == null ? null : workingHours.trim();
     }
 
     public String getLaborProtectionTime() {

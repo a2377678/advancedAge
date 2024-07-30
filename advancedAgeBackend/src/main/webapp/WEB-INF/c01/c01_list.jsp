@@ -8,8 +8,8 @@
 <title>繼續僱用高齡者補助計畫 - 請領補助清冊</title>
 <link href="css/print.css" rel="stylesheet" type="text/css">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script> 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script type="text/javascript" src="js/jspdf.min.js"></script>
+<script type="text/javascript" src="js/html2canvas.min.js"></script>
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/c01/c01_list.js"></script>
@@ -27,8 +27,8 @@
       <div class="t-mane">請領補助清冊</div>
       
       <div class="t-date">中華民國
-        <span class="year">111</span>年
-        <span class="month">12</span>月
+        <span class="year">${year}</span>年
+        <span class="month">${month}</span>月
       </div>
       
       <div class="print_info">
@@ -68,7 +68,12 @@
         	<c:when test="${not empty employmenyListReceipt}">
         	<c:set var="employmenyListReceiptAmounts" value="0"/>
 	      	<c:forEach items="${employmenyListReceipt}" var="item" varStatus="status">
-	      	  <c:set var="employmenyListReceiptAmounts" value="${employmenyListReceiptAmounts+item.amounts}"/>
+		      <c:if test="${empty item.adjustAmounts && item.approveStatus!='3'}">
+		      	  <c:set var="employmenyListReceiptAmounts" value="${employmenyListReceiptAmounts+item.amounts}"/>
+	      	  </c:if>
+	      	  <c:if test="${not empty item.adjustAmounts && item.approveStatus!='3'}">
+	      	      <c:set var="employmenyListReceiptAmounts" value="${employmenyListReceiptAmounts+item.adjustAmounts}"/>
+	      	  </c:if>
 	      	</c:forEach>
 	        </c:when>
         </c:choose>
@@ -97,6 +102,7 @@
           <tr>
             <th rowspan="2" style="width: 5%;">編號</th>
             <th rowspan="2" style="width: 8%;">勞工姓名</th>
+            <th rowspan="2" style="width: 9%;">出生日期</th>
             <th rowspan="2" style="width: 9%;">身分證字號</th>
             <th rowspan="2" style="width: 7%;">退保日期</th>
             <th rowspan="2" style="width: 5%;">類型</th>
@@ -109,10 +115,9 @@
             合計<br>
             請領</th>
             <th rowspan="2" style="width: 10%;">審核結果</th>
-            <th rowspan="2">修正金額</th>
           </tr>
           <tr>
-            <th style="width: 8%;">平均薪資</th>
+            <th style="width: 8%;">平均經常性薪資</th>
             <th style="width: 8%;">方式</th>
             <th colspan="2" style="width: 8%;">本次請領期間</th>
             <th>月數</th>
@@ -127,6 +132,7 @@
 	      	  <tr>
 	            <td rowspan="2">${status.count }</td>
 	            <td>${item.name }</td>
+	            <td>${item.birthday.substring(0,3)}/${item.birthday.substring(3,5)}/${item.birthday.substring(5,7)}</td>
 	            <td name="identification" id="identification${status.count }">${item.identification }</td>
 	            <td><c:if test="${item.laborProtectionExpiredTime.length()==7}">${item.laborProtectionExpiredTime.substring(0,3)}/${item.laborProtectionExpiredTime.substring(3,5)}/${item.laborProtectionExpiredTime.substring(5)}</c:if>
 	            <c:if test="${item.occupationalAccidentProtectionExpiredTime.length()==7}">${item.occupationalAccidentProtectionExpiredTime.substring(0,3)}/${item.occupationalAccidentProtectionExpiredTime.substring(3,5)}/${item.occupationalAccidentProtectionExpiredTime.substring(5,7)}</c:if>
@@ -188,11 +194,13 @@
 	              <option value="2" <c:if test="${item.approveStatus==2 }">selected</c:if>>部分符合</option>
 	              <option value="3" <c:if test="${item.approveStatus==3 }">selected</c:if>>不符合</option>
 	            </select></td>
-	            <td><input type="text" size="3" id="adjustAmounts${status.count}" name="adjustAmounts" value="${item.adjustAmounts }"></td>
+	            
 	          </tr> 
 	          <tr>
 	            <th>計薪備註：</th>
-	            <td colspan="15" style=" text-align:left;"><c:if test="${item.salaryMethod!='M'}">${item.salaryMethodRemark}</c:if></td>
+	            <td colspan="12" style=" text-align:left;"><c:if test="${item.salaryMethod!='M'}">${item.salaryMethodRemark}</c:if></td>
+	            <th colspan="2">核撥金額：</th>
+	            <td><input type="text" size="5" id="adjustAmounts${status.count}" name="adjustAmounts" value="${item.adjustAmounts }"></td>
 	          </tr>
 	      	</c:forEach>
 	        </c:when>
@@ -215,11 +223,16 @@
   </div>
   <div class="p_btn_box-3">
       <button type="button" class="p_btn_03" onclick="doPrint()">列印清冊</button>
-      <button type="button" class="p_btn_03" id="gpdf">另存PDF</button>
+      <button type="button" class="p_btn_03" id="gpdf" onclick="pdf()">另存PDF</button>
       <button type="button" class="p_btn_02" onclick="window.close();">取消修改</button>
-      <button type="button" class="p_btn_01" onclick="save()">儲存修改</button>
-      </div>
+      <button type="button" class="p_btn_04" onclick="save()">儲存修改</button>
+      <button type="button" class="p_btn_01" onclick="openData()">補件通知</button>
+  </div>
   
+  <form action="c01_file_content" method="post" id="dataForm" target="_blank">
+      	<input type="text" name="seq" value="${base[0].seq }" style="display:none">
+      	<input type="text" name="year" value="${base[0].year }" style="display:none">
+  </form>
   
   
 </body>

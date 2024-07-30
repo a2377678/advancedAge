@@ -8,6 +8,7 @@
     <result column="company_name" property="companyName" jdbcType="VARCHAR" />
     <result column="guarantee_number" property="guaranteeNumber" jdbcType="VARCHAR" />
     <result column="principal" property="principal" jdbcType="VARCHAR" />
+    <result column="register_postal_code" property="registerPostalCode" jdbcType="VARCHAR" />
     <result column="register_city" property="registerCity" jdbcType="VARCHAR" />
     <result column="register_area" property="registerArea" jdbcType="VARCHAR" />
     <result column="register_address" property="registerAddress" jdbcType="VARCHAR" />
@@ -108,16 +109,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    seq, apply_year, id, company_name, guarantee_number, principal, register_city, register_area, 
-    register_address, contact_name, contact_jobtitle, contact_work_phone_area_code, contact_work_phone, 
-    contact_work_phone_extension, contact_phone, fax_area_code, fax, email, contact_city, 
-    contact_area, contact_address, multiple_company, workers_employment, relatives, related_amounts, 
-    not_mandatory, industry, attach_documents_apply, attach_documents_plan, attach_documents_register_proof, 
-    attach_documents_insure_proof, old_employment_percentage, old_employment_number, 
-    continus_old_employment_number, continus_old_employment_percentage, attach_documents_salary_proof, 
-    attach_documents_other_proof, attach_documents_other_proof_document, create_time, 
-    accept_unit, accept_time, verify_person, business_manager, updator, update_time, 
-    remark
+    seq, apply_year, id, company_name, guarantee_number, principal, register_postal_code, 
+    register_city, register_area, register_address, contact_name, contact_jobtitle, contact_work_phone_area_code, 
+    contact_work_phone, contact_work_phone_extension, contact_phone, fax_area_code, fax, 
+    email, contact_city, contact_area, contact_address, multiple_company, workers_employment, 
+    relatives, related_amounts, not_mandatory, industry, attach_documents_apply, attach_documents_plan, 
+    attach_documents_register_proof, attach_documents_insure_proof, old_employment_percentage, 
+    old_employment_number, continus_old_employment_number, continus_old_employment_percentage, 
+    attach_documents_salary_proof, attach_documents_other_proof, attach_documents_other_proof_document, 
+    create_time, accept_unit, accept_time, verify_person, business_manager, updator, 
+    update_time, remark
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.AdvancedAgeApplyExample" >
     select
@@ -154,40 +155,40 @@
   <insert id="insert" parameterType="com.example.springboot.entity.AdvancedAgeApply" >
     insert into advancedAgeApply (seq, apply_year, id, 
       company_name, guarantee_number, principal, 
-      register_city, register_area, register_address, 
-      contact_name, contact_jobtitle, contact_work_phone_area_code, 
-      contact_work_phone, contact_work_phone_extension, 
-      contact_phone, fax_area_code, fax, 
-      email, contact_city, contact_area, 
-      contact_address, multiple_company, workers_employment, 
-      relatives, related_amounts, not_mandatory, 
-      industry, attach_documents_apply, attach_documents_plan, 
-      attach_documents_register_proof, attach_documents_insure_proof, 
-      old_employment_percentage, old_employment_number, 
-      continus_old_employment_number, continus_old_employment_percentage, 
-      attach_documents_salary_proof, attach_documents_other_proof, 
-      attach_documents_other_proof_document, create_time, 
-      accept_unit, accept_time, verify_person, 
-      business_manager, updator, update_time, 
-      remark)
+      register_postal_code, register_city, register_area, 
+      register_address, contact_name, contact_jobtitle, 
+      contact_work_phone_area_code, contact_work_phone, 
+      contact_work_phone_extension, contact_phone, 
+      fax_area_code, fax, email, 
+      contact_city, contact_area, contact_address, 
+      multiple_company, workers_employment, relatives, 
+      related_amounts, not_mandatory, industry, 
+      attach_documents_apply, attach_documents_plan, attach_documents_register_proof, 
+      attach_documents_insure_proof, old_employment_percentage, 
+      old_employment_number, continus_old_employment_number, 
+      continus_old_employment_percentage, attach_documents_salary_proof, 
+      attach_documents_other_proof, attach_documents_other_proof_document, 
+      create_time, accept_unit, accept_time, 
+      verify_person, business_manager, updator, 
+      update_time, remark)
     values (#{seq,jdbcType=VARCHAR}, #{applyYear,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}, 
       #{companyName,jdbcType=VARCHAR}, #{guaranteeNumber,jdbcType=VARCHAR}, #{principal,jdbcType=VARCHAR}, 
-      #{registerCity,jdbcType=VARCHAR}, #{registerArea,jdbcType=VARCHAR}, #{registerAddress,jdbcType=VARCHAR}, 
-      #{contactName,jdbcType=VARCHAR}, #{contactJobtitle,jdbcType=VARCHAR}, #{contactWorkPhoneAreaCode,jdbcType=VARCHAR}, 
-      #{contactWorkPhone,jdbcType=VARCHAR}, #{contactWorkPhoneExtension,jdbcType=VARCHAR}, 
-      #{contactPhone,jdbcType=VARCHAR}, #{faxAreaCode,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{contactCity,jdbcType=VARCHAR}, #{contactArea,jdbcType=VARCHAR}, 
-      #{contactAddress,jdbcType=VARCHAR}, #{multipleCompany,jdbcType=CHAR}, #{workersEmployment,jdbcType=CHAR}, 
-      #{relatives,jdbcType=CHAR}, #{relatedAmounts,jdbcType=CHAR}, #{notMandatory,jdbcType=CHAR}, 
-      #{industry,jdbcType=CHAR}, #{attachDocumentsApply,jdbcType=CHAR}, #{attachDocumentsPlan,jdbcType=CHAR}, 
-      #{attachDocumentsRegisterProof,jdbcType=CHAR}, #{attachDocumentsInsureProof,jdbcType=CHAR}, 
-      #{oldEmploymentPercentage,jdbcType=CHAR}, #{oldEmploymentNumber,jdbcType=INTEGER}, 
-      #{continusOldEmploymentNumber,jdbcType=INTEGER}, #{continusOldEmploymentPercentage,jdbcType=DOUBLE}, 
-      #{attachDocumentsSalaryProof,jdbcType=CHAR}, #{attachDocumentsOtherProof,jdbcType=CHAR}, 
-      #{attachDocumentsOtherProofDocument,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{acceptUnit,jdbcType=VARCHAR}, #{acceptTime,jdbcType=TIMESTAMP}, #{verifyPerson,jdbcType=VARCHAR}, 
-      #{businessManager,jdbcType=VARCHAR}, #{updator,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{remark,jdbcType=VARCHAR})
+      #{registerPostalCode,jdbcType=VARCHAR}, #{registerCity,jdbcType=VARCHAR}, #{registerArea,jdbcType=VARCHAR}, 
+      #{registerAddress,jdbcType=VARCHAR}, #{contactName,jdbcType=VARCHAR}, #{contactJobtitle,jdbcType=VARCHAR}, 
+      #{contactWorkPhoneAreaCode,jdbcType=VARCHAR}, #{contactWorkPhone,jdbcType=VARCHAR}, 
+      #{contactWorkPhoneExtension,jdbcType=VARCHAR}, #{contactPhone,jdbcType=VARCHAR}, 
+      #{faxAreaCode,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{contactCity,jdbcType=VARCHAR}, #{contactArea,jdbcType=VARCHAR}, #{contactAddress,jdbcType=VARCHAR}, 
+      #{multipleCompany,jdbcType=CHAR}, #{workersEmployment,jdbcType=CHAR}, #{relatives,jdbcType=CHAR}, 
+      #{relatedAmounts,jdbcType=CHAR}, #{notMandatory,jdbcType=CHAR}, #{industry,jdbcType=CHAR}, 
+      #{attachDocumentsApply,jdbcType=CHAR}, #{attachDocumentsPlan,jdbcType=CHAR}, #{attachDocumentsRegisterProof,jdbcType=CHAR}, 
+      #{attachDocumentsInsureProof,jdbcType=CHAR}, #{oldEmploymentPercentage,jdbcType=CHAR}, 
+      #{oldEmploymentNumber,jdbcType=INTEGER}, #{continusOldEmploymentNumber,jdbcType=INTEGER}, 
+      #{continusOldEmploymentPercentage,jdbcType=DOUBLE}, #{attachDocumentsSalaryProof,jdbcType=CHAR}, 
+      #{attachDocumentsOtherProof,jdbcType=CHAR}, #{attachDocumentsOtherProofDocument,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{acceptUnit,jdbcType=VARCHAR}, #{acceptTime,jdbcType=TIMESTAMP}, 
+      #{verifyPerson,jdbcType=VARCHAR}, #{businessManager,jdbcType=VARCHAR}, #{updator,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.springboot.entity.AdvancedAgeApply" >
     insert into advancedAgeApply
@@ -209,6 +210,9 @@
       </if>
       <if test="principal != null" >
         principal,
+      </if>
+      <if test="registerPostalCode != null" >
+        register_postal_code,
       </if>
       <if test="registerCity != null" >
         register_city,
@@ -349,6 +353,9 @@
       </if>
       <if test="principal != null" >
         #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="registerPostalCode != null" >
+        #{registerPostalCode,jdbcType=VARCHAR},
       </if>
       <if test="registerCity != null" >
         #{registerCity,jdbcType=VARCHAR},
@@ -499,6 +506,9 @@
       <if test="record.principal != null" >
         principal = #{record.principal,jdbcType=VARCHAR},
       </if>
+      <if test="record.registerPostalCode != null" >
+        register_postal_code = #{record.registerPostalCode,jdbcType=VARCHAR},
+      </if>
       <if test="record.registerCity != null" >
         register_city = #{record.registerCity,jdbcType=VARCHAR},
       </if>
@@ -632,6 +642,7 @@
       company_name = #{record.companyName,jdbcType=VARCHAR},
       guarantee_number = #{record.guaranteeNumber,jdbcType=VARCHAR},
       principal = #{record.principal,jdbcType=VARCHAR},
+      register_postal_code = #{record.registerPostalCode,jdbcType=VARCHAR},
       register_city = #{record.registerCity,jdbcType=VARCHAR},
       register_area = #{record.registerArea,jdbcType=VARCHAR},
       register_address = #{record.registerAddress,jdbcType=VARCHAR},
@@ -690,6 +701,9 @@
       </if>
       <if test="principal != null" >
         principal = #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="registerPostalCode != null" >
+        register_postal_code = #{registerPostalCode,jdbcType=VARCHAR},
       </if>
       <if test="registerCity != null" >
         register_city = #{registerCity,jdbcType=VARCHAR},
@@ -821,6 +835,7 @@
       company_name = #{companyName,jdbcType=VARCHAR},
       guarantee_number = #{guaranteeNumber,jdbcType=VARCHAR},
       principal = #{principal,jdbcType=VARCHAR},
+      register_postal_code = #{registerPostalCode,jdbcType=VARCHAR},
       register_city = #{registerCity,jdbcType=VARCHAR},
       register_area = #{registerArea,jdbcType=VARCHAR},
       register_address = #{registerAddress,jdbcType=VARCHAR},

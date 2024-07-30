@@ -25,13 +25,7 @@
   <%@ include file="../header.jsp" %>
   <!---------------------- top end ---------------------->
 
-    
-  <div id="main_menu">
-    <div><a href="#" class="menu-1 in">繼續僱用高齡者</a></div>
-    <div><a href="#" class="menu-2">傳承專業技術與經驗</a></div>
-    <div><a href="#" class="menu-3">退休後再就業準備協助措施</a></div>
-    <div><a href="account01" class="account">申請帳號審核管理</a></div>
-  </div>
+   <%@ include file="../mainMenu.jsp" %>
 
   <!---------------------- left menu ---------------------->
   <%@ include file="../leftMenu.jsp" %>
@@ -66,28 +60,42 @@
               <th width="20%">統一編號 / 扣繳編號：</th>
               <td width="20%"><input type="text" size="11" id="seq" name="seq" value="${base.seq}"></td>
               <th width="10%">附件狀態：</th>
-              <td><label>
-                <input name="fileStatus" type="radio" id="fileStatus_1" class="radio" <c:if test="${base.fileStatus==1 || base.fileStatus==null}">checked="checked"</c:if> value="1">
+              <td colspan="2">
+              <label>
+                <input name="fileStatus" type="radio" id="fileStatus" class="radio" <c:if test="${base.fileStatus=='1、2、3' || base.fileStatus==null}">checked="checked"</c:if> value="1、2、3">
+                不限</label>
+              <label>
+                <input name="fileStatus" type="radio" id="fileStatus_1" class="radio" <c:if test="${base.fileStatus=='1' || base.fileStatus==null}">checked="checked"</c:if> value="1">
                 待審</label>
                 <label>
-                  <input name="fileStatus" type="radio" id="fileStatus_2" class="radio" <c:if test="${base.fileStatus==2}">checked="checked"</c:if> value="2">
+                  <input name="fileStatus" type="radio" id="fileStatus_2" class="radio" <c:if test="${base.fileStatus=='2'}">checked="checked"</c:if> value="2">
                   須補件</label>
                 <label>
-                  <input name="fileStatus" type="radio" id="fileStatus_3" class="radio" <c:if test="${base.fileStatus==3}">checked="checked"</c:if> value="3">
+                  <input name="fileStatus" type="radio" id="fileStatus_3" class="radio" <c:if test="${base.fileStatus=='3'}">checked="checked"</c:if> value="3">
                   已補件</label></td>
-              <td width="22%">&nbsp;</td>
           </tr>
             <tr>
               <th>承辦單位 / 行政區：</th>
               <td><select name="unit" id="unit">
-                <option value>不限</option>
-                <c:forEach  items="${unitList}"  var="item"  varStatus="userStatus">
-		      		<option value="${item.code}" <c:if test="${base.unit==item.code}">selected</c:if> >${item.name}</option>
-		      	</c:forEach>
+                <c:if test="${unit=='F' }">
+					<option value>不限</option>                
+	                <c:forEach  items="${unitList}"  var="item"  varStatus="userStatus">
+	                	<c:if test="${item.code!='F' }">
+			      			<option value="${item.code}" <c:if test="${base.unit==item.code}">selected</c:if> >${item.name}</option>
+			      		</c:if>
+			      	</c:forEach>
+		      	</c:if>
+		      	<c:if test="${unit!='F' }">
+		      		<c:forEach  items="${unitList}"  var="item"  varStatus="userStatus">
+		      			<c:if test="${unit==item.code}">
+		      				<option value="${item.code}" selected>${item.name}</option>
+		      			</c:if>
+		      		</c:forEach>
+		      	</c:if>
               </select></td>
               <th>&nbsp;</th>
               <td>&nbsp;</td>
-              <td>
+              <td width="22%">
               <div class="btn_box-td">
                 <button type="submit" class="btn_01" value="開始查詢">開始查詢</button>
                 <button type="reset" class="btn_02" value="清除">清除</button>
@@ -124,7 +132,7 @@
 		      	<li>
 		          <a href="#" onclick="openData('${item.seq }','${item.year }','${item.id}')">
 		          <span class="no">${status.count}</span>
-		          <span class="update_time">${item.updateTime.substring(0,4)-1911}${item.updateTime.substring(4,10)}</span>
+		          <span class="update_time">${item.createTime.substring(0,4)-1911}${item.createTime.substring(4,10)}</span>
 		          <span class="tax_id_number">${item.seq }</span>
 		          <span class="company_name">${item.companyName }</span>
 		          <span class="update_type"><c:choose><c:when test="${item.fileStatus==1}">附件待審</c:when><c:when test="${item.fileStatus==2}">須補件</c:when><c:when test="${item.fileStatus==3}">已補件</c:when></c:choose></span>

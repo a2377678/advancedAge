@@ -305,6 +305,76 @@ public class SiteInspectionExample {
             return (Criteria) this;
         }
 
+        public Criteria andCaseTypeIsNull() {
+            addCriterion("case_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaseTypeIsNotNull() {
+            addCriterion("case_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaseTypeEqualTo(String value) {
+            addCriterion("case_type =", value, "caseType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaseTypeNotEqualTo(String value) {
+            addCriterion("case_type <>", value, "caseType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaseTypeGreaterThan(String value) {
+            addCriterion("case_type >", value, "caseType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaseTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("case_type >=", value, "caseType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaseTypeLessThan(String value) {
+            addCriterion("case_type <", value, "caseType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaseTypeLessThanOrEqualTo(String value) {
+            addCriterion("case_type <=", value, "caseType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaseTypeLike(String value) {
+            addCriterion("case_type like", value, "caseType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaseTypeNotLike(String value) {
+            addCriterion("case_type not like", value, "caseType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaseTypeIn(List<String> values) {
+            addCriterion("case_type in", values, "caseType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaseTypeNotIn(List<String> values) {
+            addCriterion("case_type not in", values, "caseType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaseTypeBetween(String value1, String value2) {
+            addCriterion("case_type between", value1, value2, "caseType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCaseTypeNotBetween(String value1, String value2) {
+            addCriterion("case_type not between", value1, value2, "caseType");
+            return (Criteria) this;
+        }
+
         public Criteria andUnitIsNull() {
             addCriterion("unit is null");
             return (Criteria) this;

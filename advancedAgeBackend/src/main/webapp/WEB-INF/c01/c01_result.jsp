@@ -32,8 +32,8 @@
       <div class="t-mane">請領補助清冊</div>
       
       <div class="t-date">中華民國
-        <span class="year">111</span>年
-        <span class="month">12</span>月
+        <span class="year">${year}</span>年
+        <span class="month">${month}</span>月
       </div>
       
       <div class="print_info">
@@ -69,7 +69,12 @@
         	<c:when test="${not empty employmenyListReceipt}">
         	<c:set var="employmenyListReceiptAmounts" value="0"/>
 	      	<c:forEach items="${employmenyListReceipt}" var="item" varStatus="status">
-	      	  <c:set var="employmenyListReceiptAmounts" value="${employmenyListReceiptAmounts+item.amounts}"/>
+<%-- 	      	  <c:if test="${empty item.adjustAmounts && item.approveStatus!=3}"> --%>
+<%-- 		      	  <c:set var="employmenyListReceiptAmounts" value="${employmenyListReceiptAmounts+item.amounts}"/> --%>
+<%-- 	      	  </c:if> --%>
+	      	  <c:if test="${not empty item.adjustAmounts && item.approveStatus!=3}">
+	      	      <c:set var="employmenyListReceiptAmounts" value="${employmenyListReceiptAmounts+item.adjustAmounts}"/>
+	      	  </c:if>
 	      	</c:forEach>
 	        </c:when>
         </c:choose>
@@ -78,7 +83,8 @@
             <td>${base[0].get('aaid') }</td>
             <td>${base[0].get('companyName') }</td>
             <td id="seq">${base[0].get('seq') }</td>
-            <td>${base[0].get('allowanceFrequencyRecord').split(';')[employmenyListReceipt[0].baseAllowanceFrequency].split('、')[1].substring(0,4)-1911}${base[0].get('allowanceFrequencyRecord').split(';')[employmenyListReceipt[0].baseAllowanceFrequency].split('、')[1].substring(4,10).replaceAll('-','/')}</td>
+            <td>${base[0].get('allowanceFrequencyRecord').split(';')[employmenyListReceipt[0].baseAllowanceFrequency-1].split('、')[1].substring(0,4)-1911}${base[0].get('allowanceFrequencyRecord').split(';')[employmenyListReceipt[0].baseAllowanceFrequency-1].split('、')[1].substring(4,10).replaceAll('-','/')}</td>
+<%--             <td>${base[0].get('allowanceFrequencyRecord').split(';')[employmenyListReceipt[0].baseAllowanceFrequency].split('、')[1].substring(0,4)-1911}${base[0].get('allowanceFrequencyRecord').split(';')[employmenyListReceipt[0].baseAllowanceFrequency].split('、')[1].substring(4,10).replaceAll('-','/')}</td> --%>
             <td id="nearHighEmploymentNumber">${plan.nearHighEmploymentNumber } 人</td>
             <td id="employmenyListReceiptNumber">${employmenyListReceipt.size()} 人</td>
             <td id="checkEmploymentPerson"></td>
@@ -94,6 +100,7 @@
           <tr>
             <th rowspan="2" style="width: 5%;">編號</th>
             <th rowspan="2" style="width: 8%;">勞工姓名</th>
+            <th rowspan="2" style="width: 9%;">出生日期</th>
             <th rowspan="2" style="width: 9%;">身分證字號</th>
             <th rowspan="2" style="width: 7%;">退保日期</th>
             <th rowspan="2" style="width: 5%;">類型</th>
@@ -106,7 +113,6 @@
               合計<br>
               請領</th>
             <th rowspan="2" style="width: 10%;">審核結果</th>
-            <th rowspan="2">修正金額</th>
           </tr>
           <tr>
             <th style="width: 8%;">平均薪資</th>
@@ -124,6 +130,7 @@
 	      	  <tr>
 	            <td rowspan="2">${status.count }</td>
 	            <td>${item.name }</td>
+	            <td>${item.birthday.substring(0,3)}/${item.birthday.substring(3,5)}/${item.birthday.substring(5,7)}</td>
 	            <td name="identification" id="identification${status.count }">${item.identification }</td>
 	            <td><c:if test="${item.laborProtectionExpiredTime.length()==7}">${item.laborProtectionExpiredTime.substring(0,3)}/${item.laborProtectionExpiredTime.substring(3,5)}/${item.laborProtectionExpiredTime.substring(5)}</c:if>
 	            <c:if test="${item.occupationalAccidentProtectionExpiredTime.length()==7}">${item.occupationalAccidentProtectionExpiredTime.substring(0,3)}/${item.occupationalAccidentProtectionExpiredTime.substring(3,5)}/${item.occupationalAccidentProtectionExpiredTime.substring(5,7)}</c:if>
@@ -183,11 +190,13 @@
 	            	<c:if test="${item.approveStatus==2 }">部分符合</c:if>
 	            	<c:if test="${item.approveStatus==3 }">不符合</c:if>
 	            </td>
-	            <td><fmt:formatNumber type = "number" value = "${item.adjustAmounts }" /></td>
+	            
 	          </tr> 
 	          <tr>
 	            <th>計薪備註：</th>
-	            <td colspan="15" style=" text-align:left;"><c:if test="${item.salaryMethod!='M'}">${item.salaryMethodRemark}</c:if></td>
+	            <td colspan="12" style=" text-align:left;"><c:if test="${item.salaryMethod!='M'}">${item.salaryMethodRemark}</c:if></td>
+	            <th colspan="2">修正金額：</th>
+	            <td><fmt:formatNumber type = "number" value = "${item.adjustAmounts }" /></td>
 	          </tr>
 	      	</c:forEach>
 	        </c:when>
@@ -208,10 +217,10 @@
 	      			<c:set var="employmenyListReceiptFail" value="${employmenyListReceiptFail+1 }"/>
 	      		</c:if>
 	      		
-	      		<c:if test="${not empty item.approveStatus && item.approveStatus==1}">
-	      			<c:set var="employmenyListReceiptAmounts" value="${employmenyListReceiptAmounts+item.amounts }"/>
-	      		</c:if>
-	      		<c:if test="${not empty item.approveStatus && item.approveStatus==2}">
+<%-- 	      		<c:if test="${not empty item.approveStatus && item.approveStatus!=3}"> --%>
+<%-- 	      			<c:set var="employmenyListReceiptAmounts" value="${employmenyListReceiptAmounts+item.amounts }"/> --%>
+<%-- 	      		</c:if> --%>
+	      		<c:if test="${not empty item.approveStatus && item.approveStatus!=3}">
 	      			<c:set var="employmenyListReceiptAmounts" value="${employmenyListReceiptAmounts+item.adjustAmounts }"/>
 	      		</c:if>
 	      	</c:forEach>
@@ -252,7 +261,7 @@
       <div class="signature-3">
         <table>
           <tr>
-            <td style="text-align:center">本署審核日期：中 華 民 國　111　年　12　月　6　日</td>
+            <td style="text-align:center">本署審核日期：中 華 民 國　${year}　年　${month}　月　${day}　日</td>
           </tr>
         </table>
       </div> 

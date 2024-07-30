@@ -36,9 +36,6 @@ public class UserInfoController {
 
 	HttpSession session;
 	
-	@Value("${encrypt_key}")
-	private String key;
-	
 	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
 	public void changePassword(HttpServletRequest request, HttpServletResponse response, UserInfo info,String newPassword) {
 		session = request.getSession();

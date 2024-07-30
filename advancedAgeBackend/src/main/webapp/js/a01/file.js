@@ -1,4 +1,13 @@
 $(function(){
+	$('input[name*="FileStatus"]').click(function(){
+		if($(this).val()==4){
+			$(this).parent().parent().find('input[name*="FileStatus1"]').prop('checked',false);
+			$(this).parent().parent().find('input[name*="FileStatus2"]').prop('checked',false);
+			$(this).parent().parent().find('input[name*="FileStatus3"]').prop('checked',false);
+		}else{
+			$(this).parent().parent().find('input[name*="FileStatus4"]').prop('checked',false);
+		}
+	})
 	$('.btn_a2s').click(function(){
 		let date=$(this).parent().parent().find('span.date').text();
 		$.ajax({
@@ -10,7 +19,23 @@ $(function(){
 				fileFrequency : $(this).val()
 		    },
 			success: function(json){  
-				window.open('downloadRar?path=/A/'+$('#applyId').val()+'/'+date+'.rar');
+				if(json.split(";")[0]=='success')
+				{
+					var url = json.split(";")[1];
+					if (url !== '') {
+		                var path = url.split('?path=')[1];
+						if (/\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+\.rar$/.test(path)) {  // 使用正則表達式進行驗證
+		                    var encodedPath = encodeURIComponent(path);
+		                    var downloadUrl = 'downloadRar?path=' + encodedPath;
+		                    window.open(downloadUrl);
+		                } else {
+		                    alert('無效的路徑');
+		                }
+		            }
+				}
+				else{
+					alert('下載檔案中檔案重複');
+				}
 		    },
 		    error: function(json){
 			    alert(json);
@@ -205,13 +230,14 @@ function sendMail(){
 	    type: "POST",
 	    url: 'sendMail',
 	    data: {
-			mailContent : $('#mailHeader').text()+$('#mailContent').val()+$('#mailFooter').html().replaceAll('<br>',''),
+			mailContent : $('#mailHeader').text()+$('#mailContent').val()+$('#mailFooter').text(),
 			email : $('#email').val(),
 			aaid : $('#baseAaid').val(),
 			fileRemark : $('#otherRemark').val(),
 			advancedAgeBaseId : $('#baseId').val(),
 			verifyUnit : $('#verifyUnit').val(),
-			verifyPerson : $('#verifyPerson').val()
+			verifyPerson : $('#verifyPerson').val(),
+			mailType : 'A'
 	    },
 	    dataType:"text", //ajax返回值text（json格式也可用這返回，也可設成json）
 	    success: function(json){  

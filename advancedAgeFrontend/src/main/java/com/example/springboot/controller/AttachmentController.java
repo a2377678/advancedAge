@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,6 +64,8 @@ public class AttachmentController {
 	
 	AdvancedAgeBase base;
 	
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+	
 	@RequestMapping(value = "/companyInfoRegisterFileUplolad", method = RequestMethod.POST)
 	public void companyInfoRegisterFileUplolad(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value="registerFiles", required=false) MultipartFile[] registerFiles,
@@ -70,13 +74,16 @@ public class AttachmentController {
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
+		boolean checkFile=true;
 		if(registerFiles !=null) {
 			for(int i=0;i<registerFiles.length;i++) {
 				try {
 					String extension = FilenameUtils.getExtension(registerFiles[i].getOriginalFilename());
 					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
 							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
-							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z")
+							&& !extension.toLowerCase().trim().equals("doc") && !extension.toLowerCase().trim().equals("docx")
+							&& !extension.toLowerCase().trim().equals("odt"))
 	                {
 						logger.warn("companyInfoRegisterFileUplolad 檔案格式錯誤");
 	                    throw new Exception("請確認副檔名是否正確!");
@@ -96,10 +103,25 @@ public class AttachmentController {
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}catch (Exception e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}
 				api.httpPost(ip+"fileUplolad",json);
+			}
+			response.setContentType("text/html;charset=UTF-8");
+			try {
+				if(checkFile){
+					response.getWriter().print("success");
+				}
+				else {
+					response.getWriter().print("fail");
+				}
+			} catch (IOException e) {
+				logger.warn(e.getMessage());
 			}
 		}
 	}
@@ -112,13 +134,16 @@ public class AttachmentController {
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
+		boolean checkFile=true;
 		if(authorizeFiles !=null) {
 			for(int i=0;i<authorizeFiles.length;i++) {
 				try {
 					String extension = FilenameUtils.getExtension(authorizeFiles[i].getOriginalFilename());
 					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
 							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
-							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z")
+							&& !extension.toLowerCase().trim().equals("doc") && !extension.toLowerCase().trim().equals("docx")
+							&& !extension.toLowerCase().trim().equals("odt"))
 	                {
 						logger.warn("companyInfoAuFileUplolad 檔案格式錯誤");
 	                    throw new Exception("請確認副檔名是否正確!");
@@ -138,10 +163,25 @@ public class AttachmentController {
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}catch (Exception e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}
 				api.httpPost(ip+"fileUplolad",json);
+			}
+			response.setContentType("text/html;charset=UTF-8");
+			try {
+				if(checkFile){
+					response.getWriter().print("success");
+				}
+				else {
+					response.getWriter().print("fail");
+				}
+			} catch (IOException e) {
+				logger.warn(e.getMessage());
 			}
 		}
 	}
@@ -154,13 +194,16 @@ public class AttachmentController {
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
+		boolean checkFile=true;
 		if(registerFiles !=null) {
 			for(int i=0;i<registerFiles.length;i++) {
 				try {
 					String extension = FilenameUtils.getExtension(registerFiles[i].getOriginalFilename());
 					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
 							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
-							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z")
+							&& !extension.toLowerCase().trim().equals("doc") && !extension.toLowerCase().trim().equals("docx")
+							&& !extension.toLowerCase().trim().equals("odt"))
 	                {
 						logger.warn("forgetCompanyInfoRegisterFileUplolad 檔案格式錯誤");
 	                    throw new Exception("請確認副檔名是否正確!");
@@ -180,10 +223,25 @@ public class AttachmentController {
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}catch (Exception e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}
 				api.httpPost(ip+"fileUplolad",json);
+			}
+			response.setContentType("text/html;charset=UTF-8");
+			try {
+				if(checkFile){
+					response.getWriter().print("success");
+				}
+				else {
+					response.getWriter().print("fail");
+				}
+			} catch (IOException e) {
+				logger.warn(e.getMessage());
 			}
 		}
 	}
@@ -195,13 +253,16 @@ public class AttachmentController {
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
+		boolean checkFile=true;
 		if(registerFiles !=null) {
 			for(int i=0;i<registerFiles.length;i++) {
 				try {
 					String extension = FilenameUtils.getExtension(registerFiles[i].getOriginalFilename());
 					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
 							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
-							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z")
+							&& !extension.toLowerCase().trim().equals("doc") && !extension.toLowerCase().trim().equals("docx")
+							&& !extension.toLowerCase().trim().equals("odt"))
 	                {
 						logger.warn("advancedAgeApplyRegisterFileUplolad 檔案格式錯誤");
 	                    throw new Exception("請確認副檔名是否正確!");
@@ -235,14 +296,23 @@ public class AttachmentController {
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}catch (Exception e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}
 				api.httpPost(ip+"fileUplolad",json);
 			}
 			response.setContentType("text/html;charset=UTF-8");
 			try {
-				response.getWriter().print("success");
+				if(checkFile){
+					response.getWriter().print("success");
+				}
+				else {
+					response.getWriter().print("fail");
+				}
 			} catch (IOException e) {
 				logger.warn(e.getMessage());
 			}
@@ -261,13 +331,16 @@ public class AttachmentController {
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
+		boolean checkFile=true;
 		if(insureFiles !=null) {
 			for(int i=0;i<insureFiles.length;i++) {
 				try {
 					String extension = FilenameUtils.getExtension(insureFiles[i].getOriginalFilename());
 					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
 							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
-							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z")
+							&& !extension.toLowerCase().trim().equals("doc") && !extension.toLowerCase().trim().equals("docx")
+							&& !extension.toLowerCase().trim().equals("odt"))
 	                {
 						logger.warn("advancedAgeApplyInsureFileUplolad 檔案格式錯誤");
 	                    throw new Exception("請確認副檔名是否正確!");
@@ -300,14 +373,23 @@ public class AttachmentController {
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}catch (Exception e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}
 				api.httpPost(ip+"fileUplolad",json);
 			}
 			response.setContentType("text/html;charset=UTF-8");
 			try {
-				response.getWriter().print("success");
+				if(checkFile){
+					response.getWriter().print("success");
+				}
+				else {
+					response.getWriter().print("fail");
+				}
 			} catch (IOException e) {
 				logger.warn(e.getMessage());
 			}
@@ -326,13 +408,16 @@ public class AttachmentController {
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
+		boolean checkFile=true;
 		if(salaryFiles !=null) {
 			for(int i=0;i<salaryFiles.length;i++) {
 				try {
 					String extension = FilenameUtils.getExtension(salaryFiles[i].getOriginalFilename());
 					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
 							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
-							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z")
+							&& !extension.toLowerCase().trim().equals("doc") && !extension.toLowerCase().trim().equals("docx")
+							&& !extension.toLowerCase().trim().equals("odt"))
 	                {
 						logger.warn("advancedAgeApplySalaryFileUplolad 檔案格式錯誤");
 	                    throw new Exception("請確認副檔名是否正確!");
@@ -365,14 +450,23 @@ public class AttachmentController {
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}catch (Exception e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}
 				api.httpPost(ip+"fileUplolad",json);
 			}
 			response.setContentType("text/html;charset=UTF-8");
 			try {
-				response.getWriter().print("success");
+				if(checkFile){
+					response.getWriter().print("success");
+				}
+				else {
+					response.getWriter().print("fail");
+				}
 			} catch (IOException e) {
 				logger.warn(e.getMessage());
 			}
@@ -391,13 +485,16 @@ public class AttachmentController {
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
+		boolean checkFile=true;
 		if(attendanceFiles !=null) {
 			for(int i=0;i<attendanceFiles.length;i++) {
 				try {
 					String extension = FilenameUtils.getExtension(attendanceFiles[i].getOriginalFilename());
 					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
 							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
-							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z")
+							&& !extension.toLowerCase().trim().equals("doc") && !extension.toLowerCase().trim().equals("docx")
+							&& !extension.toLowerCase().trim().equals("odt"))
 	                {
 						logger.warn("advancedAgeApplyAttendanceFileUplolad 檔案格式錯誤");
 	                    throw new Exception("請確認副檔名是否正確!");
@@ -430,14 +527,23 @@ public class AttachmentController {
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}catch (Exception e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}
 				api.httpPost(ip+"fileUplolad",json);
 			}
 			response.setContentType("text/html;charset=UTF-8");
 			try {
-				response.getWriter().print("success");
+				if(checkFile){
+					response.getWriter().print("success");
+				}
+				else {
+					response.getWriter().print("fail");
+				}
 			} catch (IOException e) {
 				logger.warn(e.getMessage());
 			}
@@ -458,13 +564,16 @@ public class AttachmentController {
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
+		boolean checkFile=true;
 		if(necessaryFiles !=null) {
 			for(int i=0;i<necessaryFiles.length;i++) {
 				try {
 					String extension = FilenameUtils.getExtension(necessaryFiles[i].getOriginalFilename());
 					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
 							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
-							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z")
+							&& !extension.toLowerCase().trim().equals("doc") && !extension.toLowerCase().trim().equals("docx")
+							&& !extension.toLowerCase().trim().equals("odt"))
 	                {
 						logger.warn("advancedAgeApplyNecessaryFileUplolad 檔案格式錯誤");
 	                    throw new Exception("請確認副檔名是否正確!");
@@ -497,14 +606,23 @@ public class AttachmentController {
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}catch (Exception e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}
 				api.httpPost(ip+"fileUplolad",json);
 			}
 			response.setContentType("text/html;charset=UTF-8");
 			try {
-				response.getWriter().print("success");
+				if(checkFile){
+					response.getWriter().print("success");
+				}
+				else {
+					response.getWriter().print("fail");
+				}
 			} catch (IOException e) {
 				logger.warn(e.getMessage());
 			}
@@ -619,6 +737,7 @@ public class AttachmentController {
 		session = request.getSession();
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
+		boolean checkFile=true;
 		String applyId=session.getAttribute(session.getId()+"advancedAgeApplyId").toString();
 		String planId=session.getAttribute(session.getId()+"advancedAgePlanId").toString();
 		
@@ -626,324 +745,412 @@ public class AttachmentController {
 		if (!extension.toLowerCase().trim().equals("xlsx") && !extension.toLowerCase().trim().equals("xls"))
         {
 			logger.warn("addAdvancedAgeEmploymentListFromFile 檔案格式錯誤");
+			checkFile=false;
         }
-		
-		Attachment attach = new Attachment();
-		attach.setFileBelong("A");
-		attach.setFileBelongId(Integer.valueOf(applyId));
-		attach.setFileName(uploadFile.getOriginalFilename());
-		attach.setFileFrequency(1);
-		attach.setFileType("employmentList");
-		attach.setFilePath("/"+attach.getFileBelong()+"/"+attach.getFileBelongId()+"/"+attach.getFileType()+"/"+attach.getFileFrequency());
-		attach.setFileSize((int)uploadFile.getSize());
-		attach.setFileStatus(1);
-		
-		try {
-			json = objectMapper.writeValueAsString(attach);
-		} catch (JsonProcessingException e1) {
-			logger.warn(e1.getMessage());
-		}
-		//刪除舊檔
-		api.httpPost(ip+"deleteFile",json);
-		
-		//檔案上傳
-		try {
-			SaveFileFromInputStream(uploadFile.getInputStream(),attach.getFilePath(),uploadFile.getOriginalFilename());
-		} catch (IOException e1) {
-			logger.warn(e1.getMessage());
-		}
-		
-		//檔案儲存
-		api.httpPost(ip+"fileUplolad",json);
-		
-        String destFileName=localPath+attach.getFilePath()+"/"+uploadFile.getOriginalFilename();
-        
-        File destFile=null;
-		try {
-			destFile = new File(destFileName).getCanonicalFile();
-		} catch (IOException e1) {
-			logger.warn(e1.getMessage());
-		}
-        try {
-			uploadFile.transferTo(destFile);
-		} catch (IllegalStateException e) {
-			logger.warn(e.getMessage());
-		} catch (IOException e) {
-			logger.warn(e.getMessage());
-		}
-        logger.info("刪除舊檔案");
-        delAdvancedAgeEmploymentListbyId(request, response, new AdvancedAgeEmploymentList(),planId);
-        logger.info("刪除finish");
-        Sheet sheet;
- 
-        Workbook workbook = null;
-        FileInputStream inputStream = null;
-        try {
-            workbook= new XSSFWorkbook(destFile);
-        } catch (IOException ex) {
-        	try {
-				inputStream=new FileInputStream(destFileName);
-				workbook = new HSSFWorkbook(inputStream);
-			} catch (FileNotFoundException e) {
+		if(checkFile) {
+			Attachment attach = new Attachment();
+			attach.setFileBelong("A");
+			attach.setFileBelongId(Integer.valueOf(applyId));
+			attach.setFileName(uploadFile.getOriginalFilename());
+			attach.setFileFrequency(1);
+			attach.setFileType("employmentList");
+			attach.setFilePath("/"+attach.getFileBelong()+"/"+attach.getFileBelongId()+"/"+attach.getFileType()+"/"+attach.getFileFrequency());
+			attach.setFileSize((int)uploadFile.getSize());
+			attach.setFileStatus(1);
+			
+			try {
+				json = objectMapper.writeValueAsString(attach);
+			} catch (JsonProcessingException e1) {
+				logger.warn(e1.getMessage());
+			}
+			
+			//檔案上傳
+			try {
+				SaveFileFromInputStream(uploadFile.getInputStream(),attach.getFilePath(),uploadFile.getOriginalFilename());
+			} catch (IOException e1) {
+				logger.warn(e1.getMessage());
+			}
+			
+	        String destFileName=localPath+attach.getFilePath()+"/"+uploadFile.getOriginalFilename();
+	        
+	        File destFile=null;
+			try {
+				destFile = new File(destFileName).getCanonicalFile();
+			} catch (IOException e1) {
+				logger.warn(e1.getMessage());
+			}
+	        try {
+				uploadFile.transferTo(destFile);
+			} catch (IllegalStateException e) {
 				logger.warn(e.getMessage());
 			} catch (IOException e) {
 				logger.warn(e.getMessage());
 			}
-            
-        }catch (InvalidFormatException ex) {
-        	try {
-				inputStream=new FileInputStream(destFileName);
-				workbook = new HSSFWorkbook(inputStream);
-			} catch (FileNotFoundException e) {
-				logger.warn(e.getMessage());
+	        
+	        Sheet sheet;
+	 
+	        Workbook workbook = null;
+	        FileInputStream inputStream = null;
+	        try {
+	            workbook= new XSSFWorkbook(destFile);
+	        } catch (IOException ex) {
+	        	try {
+					inputStream=new FileInputStream(destFileName);
+					workbook = new HSSFWorkbook(inputStream);
+				} catch (FileNotFoundException e) {
+					logger.warn(e.getMessage());
+				} catch (IOException e) {
+					logger.warn(e.getMessage());
+				}
+	            
+	        }catch (InvalidFormatException ex) {
+	        	try {
+					inputStream=new FileInputStream(destFileName);
+					workbook = new HSSFWorkbook(inputStream);
+				} catch (FileNotFoundException e) {
+					logger.warn(e.getMessage());
+				} catch (IOException e) {
+					logger.warn(e.getMessage());
+				}
+	        }finally {
+	        	try {
+	        		if(inputStream != null) {
+	        			inputStream.close();
+	        		}
+				} catch (IOException e) {
+					logger.warn(e.getMessage());
+				}
+	        }
+	        
+	        sheet = workbook.getSheetAt(0);
+	 
+	        int totalRowNum = sheet.getLastRowNum();
+	 
+	        
+	        List<AdvancedAgeEmploymentList> list = new ArrayList<AdvancedAgeEmploymentList>();
+	        AdvancedAgeEmploymentList data;
+	        try {
+		        for(int i=2;i<=totalRowNum;i++){
+		        	data = new AdvancedAgeEmploymentList();
+		            Row row = sheet.getRow(i);
+		            if(row!=null && !getCellValue(row.getCell(1)).equals("")){
+		                
+		                data.setName(getCellValue(row.getCell(1)));
+		                if(getCellValue(row.getCell(2)).replace("/", "").length()!=7) {
+		                	throw new NumberFormatException();
+		                }
+		                data.setBirthday(getCellValue(row.getCell(2)).replace("/", ""));
+		                data.setIdentification(getCellValue(row.getCell(3)));
+		                if(getCellValue(row.getCell(5)).replace("/", "").length()!=7) {
+		                	throw new NumberFormatException();
+		                }
+		                if(getCellValue(row.getCell(4)).equals("勞工保險")){
+		                	data.setLaborProtectionTime(getCellValue(row.getCell(5)).replace("/", ""));
+		                }
+		                else if(getCellValue(row.getCell(4)).equals("職災保險")) {
+		                	data.setOccupationalAccidentProtectionTime(getCellValue(row.getCell(5)).replace("/", ""));
+		                }
+		                if(getCellValue(row.getCell(6)).equals("主管")) {
+		                	data.setManager("Y");
+		                }
+		                else if(getCellValue(row.getCell(6)).equals("非主管")) {
+		                	data.setManager("N");
+		                }
+		                if(getCellValue(row.getCell(7)).equals("三等親內")) {
+		                	data.setRelatives("Y");
+		                }
+		                else if(getCellValue(row.getCell(7)).equals("非三等親")) {
+		                	data.setRelatives("N");
+		                }
+		                if(getCellValue(row.getCell(8)).equals("全時")) {
+		                	data.setWorkingHours("A");
+		                }
+		                else if(getCellValue(row.getCell(8)).equals("部分工時")) {
+		                	data.setWorkingHours("P");
+		                }
+		                
+		                data.setRecurringSalary(Integer.valueOf(getCellValue(row.getCell(9))));
+		                data.setNotRecurringSalary(Integer.valueOf(getCellValue(row.getCell(10))));
+		                data.setAverageSalary((data.getRecurringSalary()+data.getNotRecurringSalary())/3);
+		                list.add(data);
+		            }
+		            else
+		            {
+		            	break;
+		            }
+		        }
+	        }catch(NumberFormatException e) {
+	        	checkFile=false;
+	        	response.setContentType("text/html;charset=UTF-8");
+	        	logger.warn(e.getMessage());
+				try {
+					response.resetBuffer();
+					response.getWriter().print("excel fail");
+				} catch (IOException e1) {
+					logger.warn(e1.getMessage());
+				}
+	        }
+	        if(checkFile)
+	        {
+	        	logger.info("刪除舊資料");
+		        delAdvancedAgeEmploymentListbyId(request, response, new AdvancedAgeEmploymentList(),planId);
+		        logger.info("刪除finish");
+		        
+		        AdvancedAgeEmploymentList[] dataList = list.toArray(new AdvancedAgeEmploymentList[list.size()]);
+		        addAdvancedAgeEmploymentList(request,response,dataList,planId);
+		        //刪除舊檔
+				api.httpPost(ip+"deleteFile",json);
+				//檔案儲存
+				api.httpPost(ip+"fileUplolad",json);
+		        try {
+					workbook.close();
+				} catch (IOException e1) {
+					logger.warn(e1.getMessage());
+				}
+				response.setContentType("text/html;charset=UTF-8");
+				try {
+					response.resetBuffer();
+					response.getWriter().print("success");
+				} catch (IOException e) {
+					logger.warn(e.getMessage());
+				}
+	        }
+		}else {
+			response.setContentType("text/html;charset=UTF-8");
+			try {
+				response.resetBuffer();
+				response.getWriter().print("fail");
 			} catch (IOException e) {
 				logger.warn(e.getMessage());
 			}
-        }finally {
-        	try {
-				inputStream.close();
-			} catch (IOException e) {
-				logger.warn(e.getMessage());
-			}
-        }
-        
-        sheet = workbook.getSheetAt(0);
- 
-        int totalRowNum = sheet.getLastRowNum();
- 
-        
-        List<AdvancedAgeEmploymentList> list = new ArrayList<AdvancedAgeEmploymentList>();
-        AdvancedAgeEmploymentList data;
-        for(int i=2;i<=totalRowNum;i++){
-        	data = new AdvancedAgeEmploymentList();
-            Row row = sheet.getRow(i);
-            if(row!=null && !getCellValue(row.getCell(1)).equals("")){
-                
-                data.setName(getCellValue(row.getCell(1)));
-                data.setIdentification(getCellValue(row.getCell(2)));
-                if(getCellValue(row.getCell(3)).equals("勞工保險")){
-                	data.setLaborProtectionTime(getCellValue(row.getCell(4)).replace("/", ""));
-                }
-                else if(getCellValue(row.getCell(3)).equals("職災保險")) {
-                	data.setOccupationalAccidentProtectionTime(getCellValue(row.getCell(4)).replace("/", ""));
-                }
-                if(getCellValue(row.getCell(5)).equals("主管")) {
-                	data.setManager("Y");
-                }
-                else if(getCellValue(row.getCell(5)).equals("非主管")) {
-                	data.setManager("N");
-                }
-                if(getCellValue(row.getCell(6)).equals("三等親內")) {
-                	data.setRelatives("Y");
-                }
-                else if(getCellValue(row.getCell(6)).equals("非三等親")) {
-                	data.setRelatives("N");
-                }
-                if(getCellValue(row.getCell(7)).equals("全時")) {
-                	data.setWorkingHours("A");
-                }
-                else if(getCellValue(row.getCell(7)).equals("部分工時")) {
-                	data.setWorkingHours("P");
-                }
-                
-                data.setRecurringSalary(Integer.valueOf(getCellValue(row.getCell(8))));
-                data.setNotRecurringSalary(Integer.valueOf(getCellValue(row.getCell(9))));
-                data.setAverageSalary((data.getRecurringSalary()+data.getNotRecurringSalary())/3);
-                list.add(data);
-            }
-            else
-            {
-            	break;
-            }
-        }
-        AdvancedAgeEmploymentList[] dataList = list.toArray(new AdvancedAgeEmploymentList[list.size()]);
-        addAdvancedAgeEmploymentList(request,response,dataList,planId);
-        try {
-			workbook.close();
-		} catch (IOException e1) {
-			logger.warn(e1.getMessage());
-		}
-		response.setContentType("text/html;charset=UTF-8");
-		try {
-			response.getWriter().print("success");
-		} catch (IOException e) {
-			logger.warn(e.getMessage());
 		}
 	}
 	
 	@RequestMapping(value = "/addAdvancedAgeEmploymentListReceiptFromFile", method = RequestMethod.POST)
 	public void addAdvancedAgeEmploymentListReceiptFromFile(HttpServletRequest request, HttpServletResponse response
 			,@RequestParam(value="uploadFile", required=true) MultipartFile uploadFile,
-			@RequestParam(value="baseId", required=true) String baseId){ 
+			@RequestParam(value="baseId", required=true) String baseId,
+			@RequestParam(value="baseAllowanceFrequencyTime", required=true) String baseAllowanceFrequencyTime){ 
 		session=request.getSession();
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
+		boolean checkFile=true;
 		String extension = FilenameUtils.getExtension(uploadFile.getOriginalFilename());
 		if(!extension.toLowerCase().trim().equals("xlsx") && !extension.toLowerCase().trim().equals("xls"))
         {
 			logger.warn("addAdvancedAgeEmploymentListReceiptFromFile 檔案格式錯誤");
+			checkFile=false;
         }
-		Attachment attach = new Attachment();
-		attach.setFileBelong("BA");
-		attach.setFileBelongId(Integer.valueOf(baseId));
-		attach.setFileName(uploadFile.getOriginalFilename());
-		AdvancedAgeBase base = new AdvancedAgeBase();
-		base.setId(Integer.valueOf(baseId));
-		AdvancedAgeBase searchBase = selectAdvancedAgeBaseById(base);
-		if(searchBase.getAllowanceFrequencyRecord()!=null)
-		{
-			attach.setFileFrequency(searchBase.getAllowanceFrequencyRecord().split(";").length+1);
-		}else
-		{
-			attach.setFileFrequency(1);
-		}
-		attach.setFileType("employmentList");
-		attach.setFilePath("/"+attach.getFileBelong()+"/"+attach.getFileBelongId()+"/"+attach.getFileType()+"/"+attach.getFileFrequency());
-		attach.setFileSize((int)uploadFile.getSize());
-		attach.setFileStatus(1);
 		
-		try {
-			json = objectMapper.writeValueAsString(attach);
-		} catch (JsonProcessingException e1) {
-			logger.warn(e1.getMessage());
-		}
-		//刪除舊檔
-		api.httpPost(ip+"deleteReceiptFile",json);
-		
-		//檔案上傳
-		try {
-			SaveFileFromInputStream(uploadFile.getInputStream(),attach.getFilePath(),uploadFile.getOriginalFilename());
-		} catch (IOException e1) {
-			logger.warn(e1.getMessage());
-		}
-		
-		//檔案儲存
-		api.httpPost(ip+"fileUplolad",json);
-		
-        String destFileName=localPath+attach.getFilePath()+"/"+uploadFile.getOriginalFilename();
-        
-        File destFile = null;
-		try {
-			destFile = new File(destFileName).getCanonicalFile();
-		} catch (IOException e1) {
-			logger.warn(e1.getMessage());
-		}
-        try {
-			uploadFile.transferTo(destFile);
-		} catch (IllegalStateException e) {
-			logger.warn(e.getMessage());
-		} catch (IOException e) {
-			logger.warn(e.getMessage());
-		}
- 
-        AdvancedAgeEmploymentListReceipt receipt = new AdvancedAgeEmploymentListReceipt();
-        receipt.setAdvancedAgeBaseId(Integer.valueOf(baseId));
-        delAdvancedAgeEmploymentListReceiptbyId(request, response, receipt);
-        
-        Sheet sheet;
- 
-        Workbook workbook = null;
-        
-        FileInputStream inputStream = null;
-        try {
-            workbook= new XSSFWorkbook(destFile);
-        } catch (IOException ex) {
-        	try {
-				inputStream=new FileInputStream(destFileName);
-				workbook = new HSSFWorkbook(inputStream);
-			} catch (FileNotFoundException e) {
+		if(checkFile) {
+			Attachment attach = new Attachment();
+			attach.setFileBelong("BA");
+			attach.setFileBelongId(Integer.valueOf(baseId));
+			attach.setFileName(uploadFile.getOriginalFilename());
+			AdvancedAgeBase base = new AdvancedAgeBase();
+			base.setId(Integer.valueOf(baseId));
+			AdvancedAgeBase searchBase = selectAdvancedAgeBaseById(base);
+			if(searchBase.getAllowanceFrequencyRecord()!=null)
+			{
+				attach.setFileFrequency(searchBase.getAllowanceFrequencyRecord().split(";").length+1);
+			}else
+			{
+				attach.setFileFrequency(1);
+			}
+			attach.setFileType("employmentList");
+			attach.setFilePath("/"+attach.getFileBelong()+"/"+attach.getFileBelongId()+"/"+attach.getFileType()+"/"+attach.getFileFrequency());
+			attach.setFileSize((int)uploadFile.getSize());
+			attach.setFileStatus(1);
+			
+			try {
+				json = objectMapper.writeValueAsString(attach);
+			} catch (JsonProcessingException e1) {
+				logger.warn(e1.getMessage());
+			}
+			
+			//檔案上傳
+			try {
+				SaveFileFromInputStream(uploadFile.getInputStream(),attach.getFilePath(),uploadFile.getOriginalFilename());
+			} catch (IOException e1) {
+				logger.warn(e1.getMessage());
+			}
+			
+	        String destFileName=localPath+attach.getFilePath()+"/"+uploadFile.getOriginalFilename();
+	        
+	        File destFile = null;
+			try {
+				destFile = new File(destFileName).getCanonicalFile();
+			} catch (IOException e1) {
+				logger.warn(e1.getMessage());
+			}
+	        try {
+				uploadFile.transferTo(destFile);
+			} catch (IllegalStateException e) {
 				logger.warn(e.getMessage());
 			} catch (IOException e) {
 				logger.warn(e.getMessage());
 			}
-        }catch (InvalidFormatException ex) {
-        	try {
-				inputStream=new FileInputStream(destFileName);
-				workbook = new HSSFWorkbook(inputStream);
-			} catch (FileNotFoundException e) {
-				logger.warn(e.getMessage());
+	        
+	        Sheet sheet;
+	 
+	        Workbook workbook = null;
+	        
+	        FileInputStream inputStream = null;
+	        try {
+	            workbook= new XSSFWorkbook(destFile);
+	        } catch (IOException ex) {
+	        	try {
+					inputStream=new FileInputStream(destFileName);
+					workbook = new HSSFWorkbook(inputStream);
+				} catch (FileNotFoundException e) {
+					logger.warn(e.getMessage());
+				} catch (IOException e) {
+					logger.warn(e.getMessage());
+				}
+	        }catch (InvalidFormatException ex) {
+	        	try {
+					inputStream=new FileInputStream(destFileName);
+					workbook = new HSSFWorkbook(inputStream);
+				} catch (FileNotFoundException e) {
+					logger.warn(e.getMessage());
+				} catch (IOException e) {
+					logger.warn(e.getMessage());
+				}
+	        }finally {
+	        	try {
+	        		if(inputStream != null) {
+	        			inputStream.close();
+	        		}
+				} catch (IOException e) {
+					logger.warn(e.getMessage());
+				}
+	        }
+	        sheet = workbook.getSheetAt(0);
+	 
+	        int totalRowNum = sheet.getLastRowNum();
+	 
+	        
+	        List<AdvancedAgeEmploymentListReceipt> list = new ArrayList<AdvancedAgeEmploymentListReceipt>();
+	        AdvancedAgeEmploymentListReceipt data;
+	        try {
+		        for(int i=2;i<=totalRowNum;i++){
+		        	data = new AdvancedAgeEmploymentListReceipt();
+		            Row row = sheet.getRow(i);
+		            if(row!=null && !getCellValue(row.getCell(1)).equals("")){
+		                data.setAdvancedAgeBaseId(Integer.valueOf(baseId));
+		                data.setBaseAllowanceFrequency(Integer.valueOf(baseAllowanceFrequencyTime));
+		                data.setSeq(session.getAttribute(session.getId()+"seq").toString());
+		                data.setName(getCellValue(row.getCell(1)));
+		                if(getCellValue(row.getCell(2)).replace("/", "").length()!=7) {
+		                	throw new NumberFormatException();
+		                }
+		                data.setBirthday(getCellValue(row.getCell(2)).replace("/", ""));
+		                data.setIdentification(getCellValue(row.getCell(3)));
+		                if(!getCellValue(row.getCell(5)).equals("") && getCellValue(row.getCell(5)).replace("/", "").length()!=7) {
+		                	throw new NumberFormatException();
+		                }
+		                if(getCellValue(row.getCell(4)).equals("勞工保險")){
+		                	data.setLaborProtectionExpiredTime(getCellValue(row.getCell(5)).replace("/", ""));
+		                }
+		                else if(getCellValue(row.getCell(4)).equals("職災保險")) {
+		                	data.setOccupationalAccidentProtectionExpiredTime(getCellValue(row.getCell(5)).replace("/", ""));
+		                }
+		                data.setFrequency(Integer.valueOf(getCellValue(row.getCell(6)).substring(1, 2)));
+		                if(!getCellValue(row.getCell(8)).equals("") && getCellValue(row.getCell(8)).replace("/", "").length()!=7) {
+		                	throw new NumberFormatException();
+		                }
+		                data.setEmploymentMonthStartTime(getCellValue(row.getCell(8)).replace("/", ""));
+		                if(!getCellValue(row.getCell(9)).equals("") && getCellValue(row.getCell(9)).replace("/", "").length()!=7) {
+		                	throw new NumberFormatException();
+		                }
+		                data.setEmploymentMonthEndTime(getCellValue(row.getCell(9)).replace("/", ""));
+		                if(data.getFrequency().equals(1)) {
+		                	if(!getCellValue(row.getCell(10)).toString().equals(""))
+		                		data.setLowMonthNumber(Integer.valueOf(getCellValue(row.getCell(10))));
+		                }else
+		                {
+		                	if(!getCellValue(row.getCell(10)).toString().equals(""))
+		                		data.setHighMonthNumber(Integer.valueOf(getCellValue(row.getCell(10))));
+		                }
+		                if(!getCellValue(row.getCell(12)).equals("") && getCellValue(row.getCell(12)).replace("/", "").length()!=7) {
+		                	throw new NumberFormatException();
+		                }
+		                data.setEmploymentHourStartTime(getCellValue(row.getCell(12)).replace("/", ""));
+		                if(!getCellValue(row.getCell(13)).equals("") && getCellValue(row.getCell(13)).replace("/", "").length()!=7) {
+		                	throw new NumberFormatException();
+		                }
+		                data.setEmploymentHourEndTime(getCellValue(row.getCell(13)).replace("/", ""));
+		                if(data.getFrequency().equals(1)) {
+		                	if(!getCellValue(row.getCell(14)).toString().equals(""))
+		                		data.setLowHoursNumber(Integer.valueOf(getCellValue(row.getCell(14))));
+		                }else
+		                {
+		                	if(!getCellValue(row.getCell(14)).toString().equals(""))
+		                		data.setHighHoursNumber(Integer.valueOf(getCellValue(row.getCell(14))));
+		                }
+		                data.setSalary(Integer.valueOf(getCellValue(row.getCell(15))));
+		                if(getCellValue(row.getCell(16)).equals("按月計")) {
+		                	data.setSalaryMethod("M");
+		                }else if(getCellValue(row.getCell(16)).equals("非按月")) {
+		                	data.setSalaryMethod("H");
+		                }else {
+		                	data.setSalaryMethod("MH");
+		                }
+		                data.setSalaryMethodRemark(getCellValue(row.getCell(17)).replace(",",";"));
+		                list.add(data);
+		            }
+		            else
+		            {
+		            	break;
+		            }
+		        }
+			}catch(NumberFormatException e) {
+	        	checkFile=false;
+	        	response.setContentType("text/html;charset=UTF-8");
+	        	logger.warn(e.getMessage());
+				try {
+					response.resetBuffer();
+					response.getWriter().print("excel fail");
+				} catch (IOException e1) {
+					logger.warn(e1.getMessage());
+				}
+	        }
+	        if(checkFile)
+	        {
+		        logger.info("刪除舊資料");
+		        AdvancedAgeEmploymentListReceipt receipt = new AdvancedAgeEmploymentListReceipt();
+		        receipt.setAdvancedAgeBaseId(Integer.valueOf(baseId));
+		        receipt.setBaseAllowanceFrequency(Integer.valueOf(baseAllowanceFrequencyTime));
+		        delAdvancedAgeEmploymentListReceiptbyId(request, response, receipt);
+		        logger.info("刪除finish");
+		        
+		        AdvancedAgeEmploymentListReceipt[] dataList = list.toArray(new AdvancedAgeEmploymentListReceipt[list.size()]);
+		        addAdvancedAgeEmploymentListReceipt(request,response,dataList);
+		        //刪除舊檔
+				api.httpPost(ip+"deleteReceiptFile",json);
+				//檔案儲存
+				api.httpPost(ip+"fileUplolad",json);
+		        try {
+					workbook.close();
+				} catch (IOException e1) {
+					logger.warn(e1.getMessage());
+				}
+				response.setContentType("text/html;charset=UTF-8");
+				try {
+					response.resetBuffer();
+					response.getWriter().print("success");
+				} catch (IOException e) {
+					logger.warn(e.getMessage());
+				}
+	        }
+		}else{
+			response.setContentType("text/html;charset=UTF-8");
+			try {
+				response.resetBuffer();
+				response.getWriter().print("fail");
 			} catch (IOException e) {
 				logger.warn(e.getMessage());
 			}
-        }finally {
-        	try {
-				inputStream.close();
-			} catch (IOException e) {
-				logger.warn(e.getMessage());
-			}
-        }
-        sheet = workbook.getSheetAt(0);
- 
-        int totalRowNum = sheet.getLastRowNum();
- 
-        
-        List<AdvancedAgeEmploymentListReceipt> list = new ArrayList<AdvancedAgeEmploymentListReceipt>();
-        AdvancedAgeEmploymentListReceipt data;
-        for(int i=2;i<=totalRowNum;i++){
-        	data = new AdvancedAgeEmploymentListReceipt();
-            Row row = sheet.getRow(i);
-            if(row!=null && !getCellValue(row.getCell(1)).equals("")){
-                data.setAdvancedAgeBaseId(Integer.valueOf(baseId));
-                data.setBaseAllowanceFrequency(0);
-                data.setSeq(session.getAttribute(session.getId()+"seq").toString());
-                data.setName(getCellValue(row.getCell(1)));
-                data.setIdentification(getCellValue(row.getCell(2)));
-                if(getCellValue(row.getCell(3)).equals("勞工保險")){
-                	data.setLaborProtectionExpiredTime(getCellValue(row.getCell(4)).replace("/", ""));
-                }
-                else if(getCellValue(row.getCell(3)).equals("職災保險")) {
-                	data.setOccupationalAccidentProtectionExpiredTime(getCellValue(row.getCell(4)).replace("/", ""));
-                }
-                data.setFrequency(Integer.valueOf(getCellValue(row.getCell(5)).substring(1, 2)));
-                data.setEmploymentMonthStartTime(getCellValue(row.getCell(7)).replace("/", ""));
-                data.setEmploymentMonthEndTime(getCellValue(row.getCell(8)).replace("/", ""));
-                if(data.getFrequency().equals(1)) {
-                	if(!getCellValue(row.getCell(9)).toString().equals(""))
-                		data.setLowMonthNumber(Integer.valueOf(getCellValue(row.getCell(9))));
-                }else
-                {
-                	if(!getCellValue(row.getCell(9)).toString().equals(""))
-                		data.setHighMonthNumber(Integer.valueOf(getCellValue(row.getCell(9))));
-                }
-                
-                data.setEmploymentHourStartTime(getCellValue(row.getCell(11)).replace("/", ""));
-                data.setEmploymentHourEndTime(getCellValue(row.getCell(12)).replace("/", ""));
-                if(data.getFrequency().equals(1)) {
-                	if(!getCellValue(row.getCell(13)).toString().equals(""))
-                		data.setLowHoursNumber(Integer.valueOf(getCellValue(row.getCell(13))));
-                }else
-                {
-                	if(!getCellValue(row.getCell(13)).toString().equals(""))
-                		data.setHighHoursNumber(Integer.valueOf(getCellValue(row.getCell(13))));
-                }
-                data.setSalary(Integer.valueOf(getCellValue(row.getCell(14))));
-                if(getCellValue(row.getCell(15)).equals("按月計")) {
-                	data.setSalaryMethod("M");
-                }else if(getCellValue(row.getCell(15)).equals("非按月")) {
-                	data.setSalaryMethod("H");
-                }else {
-                	data.setSalaryMethod("MH");
-                }
-                data.setSalaryMethodRemark(getCellValue(row.getCell(16)));
-                list.add(data);
-            }
-            else
-            {
-            	break;
-            }
-        }
-        AdvancedAgeEmploymentListReceipt[] dataList = list.toArray(new AdvancedAgeEmploymentListReceipt[list.size()]);
-        addAdvancedAgeEmploymentListReceipt(request,response,dataList);
-        try {
-			workbook.close();
-		} catch (IOException e1) {
-			logger.warn(e1.getMessage());
-		}
-		response.setContentType("text/html;charset=UTF-8");
-		try {
-			response.getWriter().print("success");
-		} catch (IOException e) {
-			logger.warn(e.getMessage());
 		}
 	}
 	
@@ -1001,19 +1208,26 @@ public class AttachmentController {
 	                os.flush();
 	            }
 	        } else {
-	            throw new RuntimeException("下載資源不存在");
+	            logger.warn("下載資源不存在");
 	        }
-	        }catch (IOException e){
-	        	logger.warn(e.getMessage());
-	        }finally {
-	        	 try {
-					os.close();
-					fis.close();
-				} catch (IOException e) {
-					logger.warn(e.getMessage());
-				}
-		         
-	        }
+        }catch (IOException e){
+        	logger.warn(e.getMessage());
+        }finally {
+        	try {
+        		 if(os != null) {
+        			 os.close();
+        		 }
+			} catch (IOException e) {
+				logger.warn(e.getMessage());
+			}
+        	try {
+	       		 if(fis != null) {
+	       			 fis.close();
+	       		 }
+    		} catch (IOException e) {
+    			logger.warn(e.getMessage());
+    		}
+        }
 		
 	}
 	
@@ -1054,8 +1268,12 @@ public class AttachmentController {
 			logger.warn(e.getMessage());
 		}finally {
 			try {
-				fs.close();
-				stream.close(); 
+				if(fs != null) {
+					fs.close();
+				}
+				if(stream != null) {
+					stream.close(); 
+				}
 			} catch (IOException e) {
 				logger.warn(e.getMessage());
 			}
@@ -1199,25 +1417,32 @@ public class AttachmentController {
 	public void advancedAgeEmploymentListApprovedFileUplolad(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value="approvedFiles", required=false) MultipartFile[] approvedFiles,
 			@RequestParam(value="baseId", required=false) String baseId){
+		session = request.getSession();
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
+		boolean checkFile=true;
 		if(approvedFiles !=null) {
 			for(int i=0;i<approvedFiles.length;i++) {
 				try {
 					String extension = FilenameUtils.getExtension(approvedFiles[i].getOriginalFilename());
 					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
 							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
-							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z")
+							&& !extension.toLowerCase().trim().equals("doc") && !extension.toLowerCase().trim().equals("docx")
+							&& !extension.toLowerCase().trim().equals("odt"))
 	                {
 						logger.warn("advancedAgeEmploymentListApprovedFileUplolad 檔案格式錯誤");
 	                    throw new Exception("請確認副檔名是否正確!");
 	                }
+					sdf = new SimpleDateFormat("yyyyMMdd");
+					String today=sdf.format(new Date()).toString();
+					String fileName=(Integer.valueOf(today.substring(0, 4))-1911)+today.substring(4)+"_"+approvedFiles[i].getOriginalFilename();
 					attach = new Attachment();
 					
 					attach.setFileBelong("BA");
 					attach.setFileBelongId(Integer.valueOf(baseId));
-					attach.setFileName(approvedFiles[i].getOriginalFilename());
+					attach.setFileName(fileName);
 					attach.setFileType("approved");
 					
 					AdvancedAgeBase base = new AdvancedAgeBase();
@@ -1225,7 +1450,11 @@ public class AttachmentController {
 					AdvancedAgeBase searchBase = selectAdvancedAgeBaseById(base);
 					if(searchBase.getAllowanceFrequencyRecord()!=null)
 					{
-						attach.setFileFrequency(searchBase.getAllowanceFrequencyRecord().split(";").length+1);
+						if(Integer.valueOf(session.getAttribute(session.getId()+"baseAllowanceFrequencyTime").toString())==0) {
+							attach.setFileFrequency(searchBase.getAllowanceFrequencyRecord().split(";").length+1);
+						}else {
+							attach.setFileFrequency(Integer.valueOf(session.getAttribute(session.getId()+"baseAllowanceFrequencyTime").toString()));
+						}
 					}else
 					{
 						attach.setFileFrequency(1);
@@ -1235,15 +1464,30 @@ public class AttachmentController {
 					attach.setFileStatus(1);
 					
 					//寫檔
-					SaveFileFromInputStream(approvedFiles[i].getInputStream(),attach.getFilePath(),approvedFiles[i].getOriginalFilename());
+					SaveFileFromInputStream(approvedFiles[i].getInputStream(),attach.getFilePath(),fileName);
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}catch (Exception e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}
 				api.httpPost(ip+"fileUplolad",json);
+			}
+			response.setContentType("text/html;charset=UTF-8");
+			try {
+				if(checkFile){
+					response.getWriter().print("success");
+				}
+				else {
+					response.getWriter().print("fail");
+				}
+			} catch (IOException e) {
+				logger.warn(e.getMessage());
 			}
 		}
 	}
@@ -1255,22 +1499,28 @@ public class AttachmentController {
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
+		boolean checkFile=true;
 		if(receiptFiles !=null) {
 			for(int i=0;i<receiptFiles.length;i++) {
 				try {
 					String extension = FilenameUtils.getExtension(receiptFiles[i].getOriginalFilename());
 					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
 							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
-							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z")
+							&& !extension.toLowerCase().trim().equals("doc") && !extension.toLowerCase().trim().equals("docx")
+							&& !extension.toLowerCase().trim().equals("odt"))
 	                {
 						logger.warn("advancedAgeEmploymentListReceiptFileUplolad 檔案格式錯誤");
 	                    throw new Exception("請確認副檔名是否正確!");
 	                }
+					sdf = new SimpleDateFormat("yyyyMMdd");
+					String today=sdf.format(new Date()).toString();
+					String fileName=(Integer.valueOf(today.substring(0, 4))-1911)+today.substring(4)+"_"+receiptFiles[i].getOriginalFilename();
 					attach = new Attachment();
 					
 					attach.setFileBelong("BA");
 					attach.setFileBelongId(Integer.valueOf(baseId));
-					attach.setFileName(receiptFiles[i].getOriginalFilename());
+					attach.setFileName(fileName);
 					attach.setFileType("receipt");
 
 					AdvancedAgeBase base = new AdvancedAgeBase();
@@ -1278,7 +1528,11 @@ public class AttachmentController {
 					AdvancedAgeBase searchBase = selectAdvancedAgeBaseById(base);
 					if(searchBase.getAllowanceFrequencyRecord()!=null)
 					{
-						attach.setFileFrequency(searchBase.getAllowanceFrequencyRecord().split(";").length+1);
+						if(Integer.valueOf(session.getAttribute(session.getId()+"baseAllowanceFrequencyTime").toString())==0) {
+							attach.setFileFrequency(searchBase.getAllowanceFrequencyRecord().split(";").length+1);
+						}else {
+							attach.setFileFrequency(Integer.valueOf(session.getAttribute(session.getId()+"baseAllowanceFrequencyTime").toString()));
+						}
 					}else
 					{
 						attach.setFileFrequency(1);
@@ -1288,15 +1542,30 @@ public class AttachmentController {
 					attach.setFileStatus(1);
 					
 					//寫檔
-					SaveFileFromInputStream(receiptFiles[i].getInputStream(),attach.getFilePath(),receiptFiles[i].getOriginalFilename());
+					SaveFileFromInputStream(receiptFiles[i].getInputStream(),attach.getFilePath(),fileName);
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}catch (Exception e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}
 				api.httpPost(ip+"fileUplolad",json);
+			}
+			response.setContentType("text/html;charset=UTF-8");
+			try {
+				if(checkFile){
+					response.getWriter().print("success");
+				}
+				else {
+					response.getWriter().print("fail");
+				}
+			} catch (IOException e) {
+				logger.warn(e.getMessage());
 			}
 		}
 	}
@@ -1308,22 +1577,28 @@ public class AttachmentController {
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
+		boolean checkFile=true;
 		if(employmentFiles !=null) {
 			for(int i=0;i<employmentFiles.length;i++) {
 				try {
 					String extension = FilenameUtils.getExtension(employmentFiles[i].getOriginalFilename());
 					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
 							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
-							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z")
+							&& !extension.toLowerCase().trim().equals("doc") && !extension.toLowerCase().trim().equals("docx")
+							&& !extension.toLowerCase().trim().equals("odt"))
 	                {
 						logger.warn("advancedAgeEmploymentListEmploymentFileUplolad 檔案格式錯誤");
 	                    throw new Exception("請確認副檔名是否正確!");
 	                }
+					sdf = new SimpleDateFormat("yyyyMMdd");
+					String today=sdf.format(new Date()).toString();
+					String fileName=(Integer.valueOf(today.substring(0, 4))-1911)+today.substring(4)+"_"+employmentFiles[i].getOriginalFilename();
 					attach = new Attachment();
 					
 					attach.setFileBelong("BA");
 					attach.setFileBelongId(Integer.valueOf(baseId));
-					attach.setFileName(employmentFiles[i].getOriginalFilename());
+					attach.setFileName(fileName);
 					attach.setFileType("employment");
 
 					AdvancedAgeBase base = new AdvancedAgeBase();
@@ -1331,7 +1606,11 @@ public class AttachmentController {
 					AdvancedAgeBase searchBase = selectAdvancedAgeBaseById(base);
 					if(searchBase.getAllowanceFrequencyRecord()!=null)
 					{
-						attach.setFileFrequency(searchBase.getAllowanceFrequencyRecord().split(";").length+1);
+						if(Integer.valueOf(session.getAttribute(session.getId()+"baseAllowanceFrequencyTime").toString())==0) {
+							attach.setFileFrequency(searchBase.getAllowanceFrequencyRecord().split(";").length+1);
+						}else {
+							attach.setFileFrequency(Integer.valueOf(session.getAttribute(session.getId()+"baseAllowanceFrequencyTime").toString()));
+						}
 					}else
 					{
 						attach.setFileFrequency(1);
@@ -1341,15 +1620,30 @@ public class AttachmentController {
 					attach.setFileStatus(1);
 					
 					//寫檔
-					SaveFileFromInputStream(employmentFiles[i].getInputStream(),attach.getFilePath(),employmentFiles[i].getOriginalFilename());
+					SaveFileFromInputStream(employmentFiles[i].getInputStream(),attach.getFilePath(),fileName);
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}catch (Exception e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}
 				api.httpPost(ip+"fileUplolad",json);
+			}
+			response.setContentType("text/html;charset=UTF-8");
+			try {
+				if(checkFile){
+					response.getWriter().print("success");
+				}
+				else {
+					response.getWriter().print("fail");
+				}
+			} catch (IOException e) {
+				logger.warn(e.getMessage());
 			}
 		}
 	}
@@ -1361,22 +1655,28 @@ public class AttachmentController {
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
+		boolean checkFile=true;
 		if(salaryFiles !=null) {
 			for(int i=0;i<salaryFiles.length;i++) {
 				try {
 					String extension = FilenameUtils.getExtension(salaryFiles[i].getOriginalFilename());
 					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
 							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
-							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z")
+							&& !extension.toLowerCase().trim().equals("doc") && !extension.toLowerCase().trim().equals("docx")
+							&& !extension.toLowerCase().trim().equals("odt"))
 	                {
 						logger.warn("advancedAgeEmploymentListSalaryFileUplolad 檔案格式錯誤");
 	                    throw new Exception("請確認副檔名是否正確!");
 	                }
+					sdf = new SimpleDateFormat("yyyyMMdd");
+					String today=sdf.format(new Date()).toString();
+					String fileName=(Integer.valueOf(today.substring(0, 4))-1911)+today.substring(4)+"_"+salaryFiles[i].getOriginalFilename();
 					attach = new Attachment();
 					
 					attach.setFileBelong("BA");
 					attach.setFileBelongId(Integer.valueOf(baseId));
-					attach.setFileName(salaryFiles[i].getOriginalFilename());
+					attach.setFileName(fileName);
 					attach.setFileType("salary");
 
 					AdvancedAgeBase base = new AdvancedAgeBase();
@@ -1384,7 +1684,11 @@ public class AttachmentController {
 					AdvancedAgeBase searchBase = selectAdvancedAgeBaseById(base);
 					if(searchBase.getAllowanceFrequencyRecord()!=null)
 					{
-						attach.setFileFrequency(searchBase.getAllowanceFrequencyRecord().split(";").length+1);
+						if(Integer.valueOf(session.getAttribute(session.getId()+"baseAllowanceFrequencyTime").toString())==0) {
+							attach.setFileFrequency(searchBase.getAllowanceFrequencyRecord().split(";").length+1);
+						}else {
+							attach.setFileFrequency(Integer.valueOf(session.getAttribute(session.getId()+"baseAllowanceFrequencyTime").toString()));
+						}
 					}else
 					{
 						attach.setFileFrequency(1);
@@ -1394,15 +1698,30 @@ public class AttachmentController {
 					attach.setFileStatus(1);
 					
 					//寫檔
-					SaveFileFromInputStream(salaryFiles[i].getInputStream(),attach.getFilePath(),salaryFiles[i].getOriginalFilename());
+					SaveFileFromInputStream(salaryFiles[i].getInputStream(),attach.getFilePath(),fileName);
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}catch (Exception e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}
 				api.httpPost(ip+"fileUplolad",json);
+			}
+			response.setContentType("text/html;charset=UTF-8");
+			try {
+				if(checkFile){
+					response.getWriter().print("success");
+				}
+				else {
+					response.getWriter().print("fail");
+				}
+			} catch (IOException e) {
+				logger.warn(e.getMessage());
 			}
 		}
 	}
@@ -1414,22 +1733,28 @@ public class AttachmentController {
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
+		boolean checkFile=true;
 		if(attendanceFiles !=null) {
 			for(int i=0;i<attendanceFiles.length;i++) {
 				try {
 					String extension = FilenameUtils.getExtension(attendanceFiles[i].getOriginalFilename());
 					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
 							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
-							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z")
+							&& !extension.toLowerCase().trim().equals("doc") && !extension.toLowerCase().trim().equals("docx")
+							&& !extension.toLowerCase().trim().equals("odt"))
 	                {
 						logger.warn("advancedAgeEmploymentListAttendanceFileUplolad 檔案格式錯誤");
 	                    throw new Exception("請確認副檔名是否正確!");
 	                }
+					sdf = new SimpleDateFormat("yyyyMMdd");
+					String today=sdf.format(new Date()).toString();
+					String fileName=(Integer.valueOf(today.substring(0, 4))-1911)+today.substring(4)+"_"+attendanceFiles[i].getOriginalFilename();
 					attach = new Attachment();
 					
 					attach.setFileBelong("BA");
 					attach.setFileBelongId(Integer.valueOf(baseId));
-					attach.setFileName(attendanceFiles[i].getOriginalFilename());
+					attach.setFileName(fileName);
 					attach.setFileType("attendance");
 
 					AdvancedAgeBase base = new AdvancedAgeBase();
@@ -1437,7 +1762,11 @@ public class AttachmentController {
 					AdvancedAgeBase searchBase = selectAdvancedAgeBaseById(base);
 					if(searchBase.getAllowanceFrequencyRecord()!=null)
 					{
-						attach.setFileFrequency(searchBase.getAllowanceFrequencyRecord().split(";").length+1);
+						if(Integer.valueOf(session.getAttribute(session.getId()+"baseAllowanceFrequencyTime").toString())==0) {
+							attach.setFileFrequency(searchBase.getAllowanceFrequencyRecord().split(";").length+1);
+						}else {
+							attach.setFileFrequency(Integer.valueOf(session.getAttribute(session.getId()+"baseAllowanceFrequencyTime").toString()));
+						}
 					}else
 					{
 						attach.setFileFrequency(1);
@@ -1447,15 +1776,30 @@ public class AttachmentController {
 					attach.setFileStatus(1);
 					
 					//寫檔
-					SaveFileFromInputStream(attendanceFiles[i].getInputStream(),attach.getFilePath(),attendanceFiles[i].getOriginalFilename());
+					SaveFileFromInputStream(attendanceFiles[i].getInputStream(),attach.getFilePath(),fileName);
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}catch (Exception e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}
 				api.httpPost(ip+"fileUplolad",json);
+			}
+			response.setContentType("text/html;charset=UTF-8");
+			try {
+				if(checkFile){
+					response.getWriter().print("success");
+				}
+				else {
+					response.getWriter().print("fail");
+				}
+			} catch (IOException e) {
+				logger.warn(e.getMessage());
 			}
 		}
 	}
@@ -1467,22 +1811,28 @@ public class AttachmentController {
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
+		boolean checkFile=true;
 		if(necessaryFiles !=null) {
 			for(int i=0;i<necessaryFiles.length;i++) {
 				try {
 					String extension = FilenameUtils.getExtension(necessaryFiles[i].getOriginalFilename());
 					if (!extension.toLowerCase().trim().equals("jpg") && !extension.toLowerCase().trim().equals("png") 
 							&& !extension.toLowerCase().trim().equals("pdf") && !extension.toLowerCase().trim().equals("rar")
-							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z"))
+							&& !extension.toLowerCase().trim().equals("zip") && !extension.toLowerCase().trim().equals("7z")
+							&& !extension.toLowerCase().trim().equals("doc") && !extension.toLowerCase().trim().equals("docx")
+							&& !extension.toLowerCase().trim().equals("odt"))
 	                {
 						logger.warn("advancedAgeEmploymentListNecessaryFileUplolad 檔案格式錯誤");
 	                    throw new Exception("請確認副檔名是否正確!");
 	                }
+					sdf = new SimpleDateFormat("yyyyMMdd");
+					String today=sdf.format(new Date()).toString();
+					String fileName=(Integer.valueOf(today.substring(0, 4))-1911)+today.substring(4)+"_"+necessaryFiles[i].getOriginalFilename();
 					attach = new Attachment();
 					
 					attach.setFileBelong("BA");
 					attach.setFileBelongId(Integer.valueOf(baseId));
-					attach.setFileName(necessaryFiles[i].getOriginalFilename());
+					attach.setFileName(fileName);
 					attach.setFileType("necessary");
 
 					AdvancedAgeBase base = new AdvancedAgeBase();
@@ -1490,7 +1840,11 @@ public class AttachmentController {
 					AdvancedAgeBase searchBase = selectAdvancedAgeBaseById(base);
 					if(searchBase.getAllowanceFrequencyRecord()!=null)
 					{
-						attach.setFileFrequency(searchBase.getAllowanceFrequencyRecord().split(";").length+1);
+						if(Integer.valueOf(session.getAttribute(session.getId()+"baseAllowanceFrequencyTime").toString())==0) {
+							attach.setFileFrequency(searchBase.getAllowanceFrequencyRecord().split(";").length+1);
+						}else {
+							attach.setFileFrequency(Integer.valueOf(session.getAttribute(session.getId()+"baseAllowanceFrequencyTime").toString()));
+						}
 					}else
 					{
 						attach.setFileFrequency(1);
@@ -1500,15 +1854,30 @@ public class AttachmentController {
 					attach.setFileStatus(1);
 					
 					//寫檔
-					SaveFileFromInputStream(necessaryFiles[i].getInputStream(),attach.getFilePath(),necessaryFiles[i].getOriginalFilename());
+					SaveFileFromInputStream(necessaryFiles[i].getInputStream(),attach.getFilePath(),fileName);
 					
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}catch (Exception e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}
 				api.httpPost(ip+"fileUplolad",json);
+			}
+			response.setContentType("text/html;charset=UTF-8");
+			try {
+				if(checkFile){
+					response.getWriter().print("success");
+				}
+				else {
+					response.getWriter().print("fail");
+				}
+			} catch (IOException e) {
+				logger.warn(e.getMessage());
 			}
 		}
 	}

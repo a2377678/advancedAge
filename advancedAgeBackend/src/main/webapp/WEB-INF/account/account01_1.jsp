@@ -25,13 +25,7 @@
   <%@ include file="../header.jsp" %>
   <!---------------------- top end ---------------------->
 
-    
-  <div id="main_menu">
-    <div><a href="a01" class="menu-1">繼續僱用高齡者</a></div>
-    <div><a href="#" class="menu-2">傳承專業技術與經驗</a></div>
-    <div><a href="#" class="menu-3">退休後再就業準備協助措施</a></div>
-    <div><a href="account01" class="account in">申請帳號審核管理</a></div>
-  </div>
+  <%@ include file="../mainMenu.jsp" %>
 
   <!---------------------- left menu ---------------------->
   <div id="left_menu">
@@ -104,7 +98,7 @@
         <table class="table_03">
           <tr>
             <th width="18%">事業單位名稱</th>
-            <td width="30%">${companyInfoData.get("companyName") }</td>
+            <td width="30%" id="enrollCompanyName">${companyInfoData.get("companyName") }</td>
             <th width="18%">負責人</th>
             <td>${companyInfoData.get("principal") }</td>
           </tr>
@@ -112,7 +106,7 @@
             <th>行業別</th>
             <td><c:forEach items="${industryList}" var="item"><c:if test='${item.code==companyInfoData.get("industry")}'>${item.name}</c:if></c:forEach></td>
             <th>統一編號 / 扣繳編號</th>
-            <td>${companyInfoData.get("seq") }</td>
+            <td id="enrollSeq">${companyInfoData.get("seq") }</td>
           </tr>
           
           <tr>

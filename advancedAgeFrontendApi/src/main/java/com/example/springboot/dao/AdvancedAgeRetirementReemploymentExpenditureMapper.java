@@ -13,7 +13,7 @@ public interface AdvancedAgeRetirementReemploymentExpenditureMapper {
 
     int deleteByExample(AdvancedAgeRetirementReemploymentExpenditureExample example);
 
-    int deleteByPrimaryKey(Integer advancedAgeRetirementReemploymentApplyId);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(AdvancedAgeRetirementReemploymentExpenditure record);
 
@@ -21,7 +21,7 @@ public interface AdvancedAgeRetirementReemploymentExpenditureMapper {
 
     List<AdvancedAgeRetirementReemploymentExpenditure> selectByExample(AdvancedAgeRetirementReemploymentExpenditureExample example);
 
-    AdvancedAgeRetirementReemploymentExpenditure selectByPrimaryKey(Integer advancedAgeRetirementReemploymentApplyId);
+    AdvancedAgeRetirementReemploymentExpenditure selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") AdvancedAgeRetirementReemploymentExpenditure record, @Param("example") AdvancedAgeRetirementReemploymentExpenditureExample example);
 

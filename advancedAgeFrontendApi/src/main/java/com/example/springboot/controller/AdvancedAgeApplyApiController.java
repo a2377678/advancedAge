@@ -35,6 +35,7 @@ import com.example.springboot.service.AdvancedAgeBaseService;
 import com.example.springboot.service.AdvancedAgeEmploymentListReceiptService;
 import com.example.springboot.service.AdvancedAgeEmploymentListService;
 import com.example.springboot.service.AdvancedAgePlanService;
+import com.example.springboot.util.DateFormatUtil;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -75,12 +76,15 @@ public class AdvancedAgeApplyApiController {
 	
 	AdvancedAgeEmploymentListReceiptExample advancedAgeEmploymentListReceiptExample;
 	
-	Date date = new Date();
+	DateFormatUtil dateFormatUtil;
+	
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	int applyYear=Integer.valueOf(sdf.format(date).substring(0,4))-1911;
 	
 	@Value("${api_token}")
 	private String apiToken;
+
+	@Value("${applyYear}")
+	private String applyYear;
 	
 	@ApiOperation(value = "新增繼續僱用高齡者補助申請書")
 	@RequestMapping(value = "/addAdvancedAgeApply", method = RequestMethod.POST)
@@ -89,14 +93,15 @@ public class AdvancedAgeApplyApiController {
 		{
 			return null;
 		}
-		apply.setApplyYear(String.valueOf(applyYear));
+		dateFormatUtil = new DateFormatUtil(new Date());
+		apply.setApplyYear(applyYear);
 		if(selectAdvancedAgeApply(apply,token) == null)
 		{
 			advancedAgeApplyService.insertSelective(apply);
 		}
 		else
 		{
-			apply.setUpdateTime(date);
+			apply.setUpdateTime(dateFormatUtil.getDate());
 			advancedAgeApplyService.updateByPrimaryKeySelective(apply);
 		}
 		return selectAdvancedAgeApply(apply,token) == null?apply:selectAdvancedAgeApply(apply,token);
@@ -109,11 +114,11 @@ public class AdvancedAgeApplyApiController {
 		{
 			return null;
 		}
-		
+		dateFormatUtil = new DateFormatUtil(new Date());
 		AdvancedAgeApplyKey key = new AdvancedAgeApplyKey();
 		if(apply.getApplyYear() == null || apply.getApplyYear().equals(""))
 		{
-			key.setApplyYear(String.valueOf(applyYear));
+			key.setApplyYear(applyYear);
 		}else {
 			key.setApplyYear(apply.getApplyYear());
 		}
@@ -245,7 +250,7 @@ public class AdvancedAgeApplyApiController {
 		}
 		if(selectAdvancedAgeEmploymentListReceipt(employmentListReceipt,token) == null)
 		{
-			employmentListReceipt.setBaseAllowanceFrequency(0);
+//			employmentListReceipt.setBaseAllowanceFrequency(0);
 			advancedAgeEmploymentListReceiptService.insertSelective(employmentListReceipt);
 		}
 		else
@@ -330,7 +335,7 @@ public class AdvancedAgeApplyApiController {
 		}
 		advancedAgeEmploymentListReceiptExample = new AdvancedAgeEmploymentListReceiptExample();
 		advancedAgeEmploymentListReceiptExample.setOrderByClause("id asc");
-		advancedAgeEmploymentListReceiptExample.createCriteria().andAdvancedAgeBaseIdEqualTo(employmentListReceipt.getAdvancedAgeBaseId()).andSeqEqualTo(employmentListReceipt.getSeq()).andBaseAllowanceFrequencyEqualTo(0);
+		advancedAgeEmploymentListReceiptExample.createCriteria().andAdvancedAgeBaseIdEqualTo(employmentListReceipt.getAdvancedAgeBaseId()).andSeqEqualTo(employmentListReceipt.getSeq()).andBaseAllowanceFrequencyEqualTo(employmentListReceipt.getBaseAllowanceFrequency());
 		
 		return advancedAgeEmploymentListReceiptService.selectByExample(advancedAgeEmploymentListReceiptExample);
 	}
@@ -354,7 +359,7 @@ public class AdvancedAgeApplyApiController {
 		if(token.equals(apiToken))
 		{
 			advancedAgeEmploymentListReceiptExample = new AdvancedAgeEmploymentListReceiptExample();
-			advancedAgeEmploymentListReceiptExample.createCriteria().andAdvancedAgeBaseIdEqualTo(employmentListReceipt.getAdvancedAgeBaseId()).andBaseAllowanceFrequencyEqualTo(0);
+			advancedAgeEmploymentListReceiptExample.createCriteria().andAdvancedAgeBaseIdEqualTo(employmentListReceipt.getAdvancedAgeBaseId()).andBaseAllowanceFrequencyEqualTo(employmentListReceipt.getBaseAllowanceFrequency());
 			advancedAgeEmploymentListReceiptService.deleteByExample(advancedAgeEmploymentListReceiptExample);
 		}
 	}

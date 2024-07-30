@@ -20,14 +20,20 @@
   
   <!--- main --->
   <div class="main"> 
-    
+    <a href="#C" title="中央內容區塊" id="AC" accesskey="C" name="C">:::</a> <!---無障礙--->
   <!------------ 申請流程 ------------>
   <div class="apply_main">
+    <!---無障礙/麵包屑--->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index" title="首頁">首頁</a></li>
+        <li class="breadcrumb-item active" aria-current="page">帳號註冊 ( 無卡申請 )</li>
+      </ol>
+    </nav>
     <h1>帳號註冊 ( 無卡申請 )</h1>
     <h2><span class="title">您已送出註冊帳號申請</span></h2>
 
-    <h3>請等候相關單位通知，將有專人與您聯繫及核對資料，<br>
-    通過申請後，系統會發送帳號密碼至您填寫的信箱。</h3>
+    <h3>通過申請後，系統會發送帳號密碼至您填寫的信箱。</h3>
 
     <div class="page">
       <button onclick="javascript:location.href='index'">回首頁</button>
@@ -40,14 +46,7 @@
   <!--- main end ---> 
   
   <!--- footer --->
-  <footer class="copyright">
-    <section>
-      <div>勞動力發展署：24219新北市新莊區中平路439號南棟4樓　電話代表號：(02)8995-6000　客服專線：0800-777-888</div>
-      <div>本署服務時間：週一至週五　上午8時30分至12時30分，下午13時30分至17時30分</div>
-      <div>最佳解析度1024x768 ，建議更新瀏覽器至以下版本：最新版本Chrome、最新版本Firefox</div>
-      <div>中華民國勞動部勞動力發展署版權所有 © 2021 All rights reserved. </div>
-    </section>
-  </footer>
+  <%@ include file="footer.jsp" %>
   <!--- footer end ---> 
   
 </div>

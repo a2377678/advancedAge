@@ -16,7 +16,10 @@ label.error {
 	left: 2px;
 	margin-left: 180px;
 }
-#contactCity-error {
+#contactAddress-error {
+	margin-left: 338px;
+}
+#registerAddress-error {
 	margin-left: 338px;
 }
 #listStaff label.error {
@@ -32,7 +35,15 @@ label.error {
 	margin-left: 100px;
 }
 
-
+label[id^="employmentStartTime"][id$="-error"] {
+	margin-left: 330px;
+}
+label[id^="employmentEndTime"][id$="-error"] {
+	margin-left: 442px;
+}
+label[id^="count"][id$="-error"] {
+	margin-left: 640px;
+}
 
 
 
@@ -90,3 +101,67 @@ input.error {
 	border: 1px dotted red;
 }
 form.cmxform .gray * { color: gray; }
+
+
+
+
+
+/**********************************
+
+RWD
+
+***********************************/
+
+@media(max-width:1024px){
+
+.form div {
+	padding-bottom: 15px;
+	width: 50%;
+	float: left;
+	position: relative;
+}
+label.error {
+	text-align: left !important;
+	top: 56px;
+	margin-left: 0px;
+	width: auto !important;
+}
+#contactCity-error {
+	margin-left: 0px !important;
+	margin-top: 45px;
+}
+#listStaff label.error {
+	text-align: left !important;
+	width: 100px !important;
+	display: block !important;
+	position: absolute;
+	height: 30px;
+	top: 31px;
+	font-size: 0.8em;
+	letter-spacing: 0.1em;
+	left: 1px;
+	margin-left: 103px;
+}
+#recurringSalary1-error {
+	padding-left: 4px !important;
+}
+#notRecurringSalary1-error {
+	padding-left: 4px !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

@@ -6,12 +6,8 @@
 <head>
 <meta charset="utf-8">
 <title>繼續僱用高齡者補助計畫 - 補助名單清冊</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>  
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"></script> -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.js"></script> -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/jspdf.min.js"></script>
+<script type="text/javascript" src="js/html2canvas.min.js"></script>
 <link href="css/print.css" rel="stylesheet" type="text/css">
 
 <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -38,8 +34,10 @@
       <div class="t-mane">補助名單清冊</div>
       
       <div class="t-date">中華民國
-        <span class="year">${base.get("createTime").substring(0,4)-1911}</span>年
-        <span class="month">${base.get("createTime").substring(5,7)}</span>月
+<%--         <span class="year">${base.get("createTime").substring(0,4)-1911}</span>年 --%>
+<%--         <span class="month">${base.get("createTime").substring(5,7)}</span>月 --%>
+        <span class="year">${year}</span>年
+        <span class="month">${month}</span>月
       </div>
       
       <div class="print_info">
@@ -88,14 +86,15 @@
           <tr>
             <th style="width: 5%;">編號</th>
             <th style="width: 8%;">勞工姓名</th>
+            <th style="width: 8%;">出生日期</th>
             <th style="width: 10%;">身分證字號</th>
             <th style="width: 8%;">保險類型</th>
             <th style="width: 8%;">加保日期</th>
             <th style="width: 8%;">職務類型</th>
             <th style="width: 8%;">親等關係</th>
             <th style="width: 8%;">工時類型</th>
-            <th style="width: 8%;">經常性薪資</th>
-            <th style="width: 10%;">非經常性薪資</th>
+            <th style="width: 8%;">申請前3個月經常性薪資總和</th>
+            <th style="width: 10%;">申請前3個月非經常性薪資總和</th>
             <th>&nbsp;</th>
           </tr>
         </thead>
@@ -105,6 +104,7 @@
 	      			<tr>
 			            <td>${status.count}</td>
 			            <td>${item.name }</td>
+			            <td><c:if test="${item.birthday.length()==7}">${item.birthday.substring(0,3)}/${item.birthday.substring(3,5)}/${item.birthday.substring(5)}</c:if></td>
 			            <td>${item.identification }</td>
 			            <td><c:if test="${item.laborProtectionTime.length()==7}">勞工保險</c:if>
 			            <c:if test="${item.occupationalAccidentProtectionTime.length()==7}">職災保險</c:if></td>
@@ -133,7 +133,7 @@
   </div>
   <div class="p_btn_box-3">
       <button type="button" class="p_btn_03" onclick="doPrint()">列印清冊</button>
-      <button type="button" class="p_btn_03" id="gpdf">另存PDF</button>
+      <button type="button" class="p_btn_03" id="gpdf" onclick="pdf()">另存PDF</button>
       </div>
   
   <script src="js/b02/employmentList.js"></script>

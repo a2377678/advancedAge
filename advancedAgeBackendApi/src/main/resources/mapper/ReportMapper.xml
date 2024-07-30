@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.dao.ReportMapper" >
+  <resultMap id="caseStatisticsResultMap" type="com.example.springboot.entity.CaseStatisticsResult" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="year" property="year" jdbcType="VARCHAR" />
+    <result column="near_high_employment_number" property="nearHighEmploymentNumber" jdbcType="INTEGER" />
+    <result column="continue_employment_percentage" property="continueEmploymentPercentage" jdbcType="DOUBLE" />
+    <result column="industry" property="industry" jdbcType="CHAR" />
+  </resultMap>
+  
+  <select id="caseStatistics" resultMap="caseStatisticsResultMap" parameterType="com.example.springboot.entity.AdvancedAgeBase">
+<!--     select ROW_NUMBER() OVER(ORDER BY aaa.company_name) AS id,aaa.company_name,aaa.industry,aap.near_high_employment_number,aap.continue_employment_percentage  -->
+<!-- 	from advancedAgeplan aap -->
+<!-- 	right join advancedAgeapply aaa on aap.advanced_age_apply_id=aaa.id -->
+<!-- 	inner join advancedAgebase aab on aaa.seq=aab.seq and aab.case_type=#{caseType} and aab.case_status>=3 -->
+<!-- 	order by aaa.industry -->
+	
+	select ROW_NUMBER() OVER(ORDER BY aaa.company_name) AS id,aaa.company_name,aaa.industry,aap.near_high_employment_number,aap.continue_employment_percentage,aab.year from advancedAgebase aab
+		inner join advancedAgeapply aaa on aab.seq=aaa.seq and aab.year=aaa.apply_year
+		inner join advancedAgeplan aap on aap.advanced_age_apply_id=aaa.id 
+	where aab.case_type=#{caseType} and aab.year=#{year} and aab.case_status>=3
+	<if test="unit != null &amp;&amp; unit != ''" >
+      and aab.unit=#{unit}
+    </if>
+  </select>
+  
+  <resultMap id="applicationSituationResultMap" type="com.example.springboot.entity.ApplicationSituationResult" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="near_high_employment_number" property="nearHighEmploymentNumber" jdbcType="INTEGER" />
+    <result column="continue_employment_percentage" property="continueEmploymentPercentage" jdbcType="DOUBLE" />
+    <result column="industry" property="industry" jdbcType="CHAR" />
+  </resultMap>
+  
+  <select id="applicationSituation" resultMap="applicationSituationResultMap" parameterType="com.example.springboot.entity.AdvancedAgeBase">
+    select ROW_NUMBER() OVER(ORDER BY year desc) AS id,year,count(*) as totalCase,
+	    (select count(*) from advancedagebase aab1 where aab1.case_status &gt;=3 and aab.year=aab1.year and aab1.case_type=#{caseType} 
+	    <if test="unit != null" >
+      and aab1.unit=#{unit}
+    	</if>) as successCase,
+	    (select count(*) from advancedagebase aab2 where aab2.case_status &lt;3 and aab.year=aab2.year and aab2.case_type=#{caseType}
+	    <if test="unit != null" >
+      and aab2.unit=#{unit}
+    	</if>) as failCase 
+    from advancedagebase aab where aab.year&gt;(YEAR(getdate())-1914) and aab.case_type=#{caseType} 
+    <if test="unit != null" >
+      and aab.unit=#{unit}
+    </if>
+    group by year　
+    order by year desc
+  </select>
+  
+  <resultMap id="industryAmountsStatisticsResultMap" type="com.example.springboot.entity.IndustryAmountsStatisticsResult" >
+    <result column="year" property="year" jdbcType="VARCHAR" />
+    <result column="companyName" property="companyName" jdbcType="VARCHAR" />
+    <result column="amounts" property="amounts" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <select id="industryAmountsStatistics" resultMap="industryAmountsStatisticsResultMap" parameterType="com.example.springboot.entity.AdvancedAgeBase">
+	select year,company_name companyName,ISNULL(allowance_amounts,0) amounts 
+	from advancedagebase aab  
+	where aab.case_type=#{caseType} 
+	<if test="seq != null &amp;&amp; seq !=''" >
+      and aab.seq=#{seq}
+    </if>
+	order by year　desc
+  </select>
+  
+  <resultMap id="yearAmountsStatisticsResultMap" type="com.example.springboot.entity.YearAmountsStatisticsResult" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="year" property="year" jdbcType="VARCHAR" />
+    <result column="amounts" property="amounts" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <select id="yearAmountsStatistics" resultMap="yearAmountsStatisticsResultMap" parameterType="com.example.springboot.entity.AdvancedAgeBase">
+	select ROW_NUMBER() OVER(ORDER BY year desc) AS id,
+		year,
+		sum(ISNULL(allowance_amounts,0)) amounts 
+	from advancedagebase 
+	where case_type=#{caseType}
+	<if test="unit != null &amp;&amp; unit != ''" >
+      and unit=#{unit}
+    </if>
+    <if test="year != null" >
+      and year=#{year}
+    </if>
+	group by year 
+	order by year desc
+  </select>
+  
+  <resultMap id="caseStatisticsResultMap2" type="com.example.springboot.entity.CaseStatisticsResult2" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="year" property="year" jdbcType="VARCHAR" />
+    <result column="speakers" property="speakers" jdbcType="INTEGER" />
+    <result column="industry" property="industry" jdbcType="CHAR" />
+  </resultMap>
+  
+  <select id="caseStatistics2" resultMap="caseStatisticsResultMap2" parameterType="com.example.springboot.entity.AdvancedAgeBase">
+  	select ROW_NUMBER() OVER(ORDER BY raa.company_name) AS id,aab.year,raa.company_name,raa.industry ,
+		(select count(*) from experienceInheritanceSpeakerList sl where sl.retirement_advanced_age_experience_inheritance_plan_id=rap.id) speakers
+	from advancedAgebase aab
+	inner join retirementAdvancedAgeExperienceInheritanceApply raa on aab.seq=raa.seq and aab.year=raa.apply_year
+	inner join retirementAdvancedAgeExperienceInheritancePlan rap on raa.id=rap.retirement_advanced_age_experience_inheritance_apply_id
+	where aab.case_type=#{caseType} and aab.year=#{year} and aab.case_status>=3
+	<if test="unit != null &amp;&amp; unit != ''" >
+      and aab.unit=#{unit}
+    </if>
+  </select>
+  
+  <select id="caseStatistics3" resultMap="caseStatisticsResultMap2" parameterType="com.example.springboot.entity.AdvancedAgeBase">
+  	select ROW_NUMBER() OVER(ORDER BY ara.company_name) AS id,aab.year,ara.company_name,ara.industry ,
+		(select count(*) from advancedAgeRetirementReemploymentBenefitList bl where bl.advanced_age_retirement_reemployment_plan_id=arp.id) speakers
+	from advancedAgebase aab
+	inner join advancedAgeRetirementReemploymentApply ara on aab.seq=ara.seq and aab.year=ara.apply_year
+	inner join advancedAgeRetirementReemploymentPlan arp on ara.id=arp.advanced_age_retirement_reemployment_apply_id
+	where aab.case_type=#{caseType} and aab.year=#{year} and aab.case_status>=3
+	<if test="unit != null &amp;&amp; unit != ''" >
+      and aab.unit=#{unit}
+    </if>
+  </select>
+</mapper>

@@ -116,6 +116,22 @@ function siteInspection(id){
 	$('#dataForm').submit();
 }
 
+function checkData(seq,year,dataId){
+	$('#dataForm').attr('action','b02_file_text');
+	$('#dataSeq').val(seq);
+	$('#applyYear').val(year);
+	$('#dataId').val(dataId);
+	$('#dataForm').submit();
+}
+
+function print(seq,year,dataId){
+	$('#dataForm').attr('action','b02_1_print');
+	$('#dataSeq').val(seq);
+	$('#applyYear').val(year);
+	$('#dataId').val(dataId);
+	$('#dataForm').submit();
+}
+
 function save(){
 	$.ajax({
 	    type: "POST",
@@ -154,7 +170,7 @@ function save(){
 	    dataType:"text", //ajax返回值text（json格式也可用這返回，也可設成json）
 	    success: function(json){  
 			if(json=='success'){
-				location.href='b02';
+				alert('暫存成功');
 			}
 	    },
 	    error: function(json){

@@ -104,66 +104,6 @@ public class AdvancedAgeRetirementReemploymentExpenditureExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andAdvancedAgeRetirementReemploymentApplyIdIsNull() {
-            addCriterion("advanced_age_retirement_reemployment_apply_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andAdvancedAgeRetirementReemploymentApplyIdIsNotNull() {
-            addCriterion("advanced_age_retirement_reemployment_apply_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andAdvancedAgeRetirementReemploymentApplyIdEqualTo(Integer value) {
-            addCriterion("advanced_age_retirement_reemployment_apply_id =", value, "advancedAgeRetirementReemploymentApplyId");
-            return (Criteria) this;
-        }
-
-        public Criteria andAdvancedAgeRetirementReemploymentApplyIdNotEqualTo(Integer value) {
-            addCriterion("advanced_age_retirement_reemployment_apply_id <>", value, "advancedAgeRetirementReemploymentApplyId");
-            return (Criteria) this;
-        }
-
-        public Criteria andAdvancedAgeRetirementReemploymentApplyIdGreaterThan(Integer value) {
-            addCriterion("advanced_age_retirement_reemployment_apply_id >", value, "advancedAgeRetirementReemploymentApplyId");
-            return (Criteria) this;
-        }
-
-        public Criteria andAdvancedAgeRetirementReemploymentApplyIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("advanced_age_retirement_reemployment_apply_id >=", value, "advancedAgeRetirementReemploymentApplyId");
-            return (Criteria) this;
-        }
-
-        public Criteria andAdvancedAgeRetirementReemploymentApplyIdLessThan(Integer value) {
-            addCriterion("advanced_age_retirement_reemployment_apply_id <", value, "advancedAgeRetirementReemploymentApplyId");
-            return (Criteria) this;
-        }
-
-        public Criteria andAdvancedAgeRetirementReemploymentApplyIdLessThanOrEqualTo(Integer value) {
-            addCriterion("advanced_age_retirement_reemployment_apply_id <=", value, "advancedAgeRetirementReemploymentApplyId");
-            return (Criteria) this;
-        }
-
-        public Criteria andAdvancedAgeRetirementReemploymentApplyIdIn(List<Integer> values) {
-            addCriterion("advanced_age_retirement_reemployment_apply_id in", values, "advancedAgeRetirementReemploymentApplyId");
-            return (Criteria) this;
-        }
-
-        public Criteria andAdvancedAgeRetirementReemploymentApplyIdNotIn(List<Integer> values) {
-            addCriterion("advanced_age_retirement_reemployment_apply_id not in", values, "advancedAgeRetirementReemploymentApplyId");
-            return (Criteria) this;
-        }
-
-        public Criteria andAdvancedAgeRetirementReemploymentApplyIdBetween(Integer value1, Integer value2) {
-            addCriterion("advanced_age_retirement_reemployment_apply_id between", value1, value2, "advancedAgeRetirementReemploymentApplyId");
-            return (Criteria) this;
-        }
-
-        public Criteria andAdvancedAgeRetirementReemploymentApplyIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("advanced_age_retirement_reemployment_apply_id not between", value1, value2, "advancedAgeRetirementReemploymentApplyId");
-            return (Criteria) this;
-        }
-
         public Criteria andIdIsNull() {
             addCriterion("id is null");
             return (Criteria) this;
@@ -881,6 +821,66 @@ public class AdvancedAgeRetirementReemploymentExpenditureExample {
 
         public Criteria andApplicantNotBetween(String value1, String value2) {
             addCriterion("applicant not between", value1, value2, "applicant");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdIsNull() {
+            addCriterion("advanced_age_retirement_reemployment_apply_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdIsNotNull() {
+            addCriterion("advanced_age_retirement_reemployment_apply_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdEqualTo(Integer value) {
+            addCriterion("advanced_age_retirement_reemployment_apply_id =", value, "advancedAgeRetirementReemploymentApplyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdNotEqualTo(Integer value) {
+            addCriterion("advanced_age_retirement_reemployment_apply_id <>", value, "advancedAgeRetirementReemploymentApplyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdGreaterThan(Integer value) {
+            addCriterion("advanced_age_retirement_reemployment_apply_id >", value, "advancedAgeRetirementReemploymentApplyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("advanced_age_retirement_reemployment_apply_id >=", value, "advancedAgeRetirementReemploymentApplyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdLessThan(Integer value) {
+            addCriterion("advanced_age_retirement_reemployment_apply_id <", value, "advancedAgeRetirementReemploymentApplyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdLessThanOrEqualTo(Integer value) {
+            addCriterion("advanced_age_retirement_reemployment_apply_id <=", value, "advancedAgeRetirementReemploymentApplyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdIn(List<Integer> values) {
+            addCriterion("advanced_age_retirement_reemployment_apply_id in", values, "advancedAgeRetirementReemploymentApplyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdNotIn(List<Integer> values) {
+            addCriterion("advanced_age_retirement_reemployment_apply_id not in", values, "advancedAgeRetirementReemploymentApplyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdBetween(Integer value1, Integer value2) {
+            addCriterion("advanced_age_retirement_reemployment_apply_id between", value1, value2, "advancedAgeRetirementReemploymentApplyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("advanced_age_retirement_reemployment_apply_id not between", value1, value2, "advancedAgeRetirementReemploymentApplyId");
             return (Criteria) this;
         }
     }

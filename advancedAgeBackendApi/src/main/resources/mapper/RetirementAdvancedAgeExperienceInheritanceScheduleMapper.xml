@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.dao.RetirementAdvancedAgeExperienceInheritanceScheduleMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceSchedule" >
+    <id column="execution_start_time" property="executionStartTime" jdbcType="VARCHAR" />
+    <id column="execution_end_time" property="executionEndTime" jdbcType="VARCHAR" />
+    <id column="execution_time" property="executionTime" jdbcType="VARCHAR" />
+    <id column="subject" property="subject" jdbcType="VARCHAR" />
+    <id column="retirement_advanced_age_experience_inheritance_apply_id" property="retirementAdvancedAgeExperienceInheritanceApplyId" jdbcType="INTEGER" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="execution_city" property="executionCity" jdbcType="VARCHAR" />
+    <result column="introduction" property="introduction" jdbcType="VARCHAR" />
+    <result column="speaker_name" property="speakerName" jdbcType="VARCHAR" />
+    <result column="teaching_hours" property="teachingHours" jdbcType="DOUBLE" />
+    <result column="participate_number" property="participateNumber" jdbcType="INTEGER" />
+    <result column="participate_people" property="participatePeople" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    execution_start_time, execution_end_time, execution_time, subject, retirement_advanced_age_experience_inheritance_apply_id, 
+    id, execution_city, introduction, speaker_name, teaching_hours, participate_number, 
+    participate_people, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceScheduleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from retirementAdvancedAgeExperienceInheritanceSchedule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceScheduleKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from retirementAdvancedAgeExperienceInheritanceSchedule
+    where execution_start_time = #{executionStartTime,jdbcType=VARCHAR}
+      and execution_end_time = #{executionEndTime,jdbcType=VARCHAR}
+      and execution_time = #{executionTime,jdbcType=VARCHAR}
+      and subject = #{subject,jdbcType=VARCHAR}
+      and retirement_advanced_age_experience_inheritance_apply_id = #{retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceScheduleKey" >
+    delete from retirementAdvancedAgeExperienceInheritanceSchedule
+    where execution_start_time = #{executionStartTime,jdbcType=VARCHAR}
+      and execution_end_time = #{executionEndTime,jdbcType=VARCHAR}
+      and execution_time = #{executionTime,jdbcType=VARCHAR}
+      and subject = #{subject,jdbcType=VARCHAR}
+      and retirement_advanced_age_experience_inheritance_apply_id = #{retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceScheduleExample" >
+    delete from retirementAdvancedAgeExperienceInheritanceSchedule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceSchedule" >
+    insert into retirementAdvancedAgeExperienceInheritanceSchedule (execution_start_time, execution_end_time, 
+      execution_time, subject, retirement_advanced_age_experience_inheritance_apply_id, 
+      id, execution_city, introduction, 
+      speaker_name, teaching_hours, participate_number, 
+      participate_people, remark)
+    values (#{executionStartTime,jdbcType=VARCHAR}, #{executionEndTime,jdbcType=VARCHAR}, 
+      #{executionTime,jdbcType=VARCHAR}, #{subject,jdbcType=VARCHAR}, #{retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER}, 
+      #{id,jdbcType=INTEGER}, #{executionCity,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR}, 
+      #{speakerName,jdbcType=VARCHAR}, #{teachingHours,jdbcType=DOUBLE}, #{participateNumber,jdbcType=INTEGER}, 
+      #{participatePeople,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceSchedule" >
+    insert into retirementAdvancedAgeExperienceInheritanceSchedule
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="executionStartTime != null" >
+        execution_start_time,
+      </if>
+      <if test="executionEndTime != null" >
+        execution_end_time,
+      </if>
+      <if test="executionTime != null" >
+        execution_time,
+      </if>
+      <if test="subject != null" >
+        subject,
+      </if>
+      <if test="retirementAdvancedAgeExperienceInheritanceApplyId != null" >
+        retirement_advanced_age_experience_inheritance_apply_id,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="executionCity != null" >
+        execution_city,
+      </if>
+      <if test="introduction != null" >
+        introduction,
+      </if>
+      <if test="speakerName != null" >
+        speaker_name,
+      </if>
+      <if test="teachingHours != null" >
+        teaching_hours,
+      </if>
+      <if test="participateNumber != null" >
+        participate_number,
+      </if>
+      <if test="participatePeople != null" >
+        participate_people,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="executionStartTime != null" >
+        #{executionStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="executionEndTime != null" >
+        #{executionEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="executionTime != null" >
+        #{executionTime,jdbcType=VARCHAR},
+      </if>
+      <if test="subject != null" >
+        #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="retirementAdvancedAgeExperienceInheritanceApplyId != null" >
+        #{retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="executionCity != null" >
+        #{executionCity,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null" >
+        #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="speakerName != null" >
+        #{speakerName,jdbcType=VARCHAR},
+      </if>
+      <if test="teachingHours != null" >
+        #{teachingHours,jdbcType=DOUBLE},
+      </if>
+      <if test="participateNumber != null" >
+        #{participateNumber,jdbcType=INTEGER},
+      </if>
+      <if test="participatePeople != null" >
+        #{participatePeople,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceScheduleExample" resultType="java.lang.Integer" >
+    select count(*) from retirementAdvancedAgeExperienceInheritanceSchedule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update retirementAdvancedAgeExperienceInheritanceSchedule
+    <set >
+      <if test="record.executionStartTime != null" >
+        execution_start_time = #{record.executionStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.executionEndTime != null" >
+        execution_end_time = #{record.executionEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.executionTime != null" >
+        execution_time = #{record.executionTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subject != null" >
+        subject = #{record.subject,jdbcType=VARCHAR},
+      </if>
+      <if test="record.retirementAdvancedAgeExperienceInheritanceApplyId != null" >
+        retirement_advanced_age_experience_inheritance_apply_id = #{record.retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.executionCity != null" >
+        execution_city = #{record.executionCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.introduction != null" >
+        introduction = #{record.introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speakerName != null" >
+        speaker_name = #{record.speakerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teachingHours != null" >
+        teaching_hours = #{record.teachingHours,jdbcType=DOUBLE},
+      </if>
+      <if test="record.participateNumber != null" >
+        participate_number = #{record.participateNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.participatePeople != null" >
+        participate_people = #{record.participatePeople,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update retirementAdvancedAgeExperienceInheritanceSchedule
+    set execution_start_time = #{record.executionStartTime,jdbcType=VARCHAR},
+      execution_end_time = #{record.executionEndTime,jdbcType=VARCHAR},
+      execution_time = #{record.executionTime,jdbcType=VARCHAR},
+      subject = #{record.subject,jdbcType=VARCHAR},
+      retirement_advanced_age_experience_inheritance_apply_id = #{record.retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER},
+      id = #{record.id,jdbcType=INTEGER},
+      execution_city = #{record.executionCity,jdbcType=VARCHAR},
+      introduction = #{record.introduction,jdbcType=VARCHAR},
+      speaker_name = #{record.speakerName,jdbcType=VARCHAR},
+      teaching_hours = #{record.teachingHours,jdbcType=DOUBLE},
+      participate_number = #{record.participateNumber,jdbcType=INTEGER},
+      participate_people = #{record.participatePeople,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceSchedule" >
+    update retirementAdvancedAgeExperienceInheritanceSchedule
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="executionCity != null" >
+        execution_city = #{executionCity,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null" >
+        introduction = #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="speakerName != null" >
+        speaker_name = #{speakerName,jdbcType=VARCHAR},
+      </if>
+      <if test="teachingHours != null" >
+        teaching_hours = #{teachingHours,jdbcType=DOUBLE},
+      </if>
+      <if test="participateNumber != null" >
+        participate_number = #{participateNumber,jdbcType=INTEGER},
+      </if>
+      <if test="participatePeople != null" >
+        participate_people = #{participatePeople,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where execution_start_time = #{executionStartTime,jdbcType=VARCHAR}
+      and execution_end_time = #{executionEndTime,jdbcType=VARCHAR}
+      and execution_time = #{executionTime,jdbcType=VARCHAR}
+      and subject = #{subject,jdbcType=VARCHAR}
+      and retirement_advanced_age_experience_inheritance_apply_id = #{retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceSchedule" >
+    update retirementAdvancedAgeExperienceInheritanceSchedule
+    set id = #{id,jdbcType=INTEGER},
+      execution_city = #{executionCity,jdbcType=VARCHAR},
+      introduction = #{introduction,jdbcType=VARCHAR},
+      speaker_name = #{speakerName,jdbcType=VARCHAR},
+      teaching_hours = #{teachingHours,jdbcType=DOUBLE},
+      participate_number = #{participateNumber,jdbcType=INTEGER},
+      participate_people = #{participatePeople,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where execution_start_time = #{executionStartTime,jdbcType=VARCHAR}
+      and execution_end_time = #{executionEndTime,jdbcType=VARCHAR}
+      and execution_time = #{executionTime,jdbcType=VARCHAR}
+      and subject = #{subject,jdbcType=VARCHAR}
+      and retirement_advanced_age_experience_inheritance_apply_id = #{retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER}
+  </update>
+</mapper>

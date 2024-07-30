@@ -15,13 +15,12 @@ function finish(){
 	    url: 'editAdvancedAgeBase',
 	    data: {
 			id : $('#baseId').val(),
-			caseStatus : 4
+			caseStatus : 5
 	    },
 	    dataType:"text", //ajax返回值text（json格式也可用這返回，也可設成json）
 	    success: function(json){
 			if(json=='success'){
 				location.href='employ_payment_05';
-				
 			}
 		}
 	})

@@ -1,29 +1,22 @@
 package com.example.springboot.controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.example.springboot.entity.AdvancedAgeApply;
 import com.example.springboot.entity.AdvancedAgeApplyEmployedSituation;
@@ -31,8 +24,9 @@ import com.example.springboot.entity.AdvancedAgeBase;
 import com.example.springboot.entity.AdvancedAgeEmploymentList;
 import com.example.springboot.entity.AdvancedAgeEmploymentListReceipt;
 import com.example.springboot.entity.AdvancedAgePlan;
-import com.example.springboot.entity.Attachment;
+import com.example.springboot.entity.MailRecord;
 import com.example.springboot.util.CallApi;
+import com.example.springboot.util.SendEmail;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -48,6 +42,8 @@ public class AdvancedAgeApplyController {
 	@Value("${api_ip}")
 	public String ip;
 	
+	@Autowired
+	SendEmail sendEmail;
 	
 	@RequestMapping(value = "/addAdvancedAgeApply", method = RequestMethod.POST)
 	public void addAdvancedAgeApply(HttpServletRequest request, HttpServletResponse response
@@ -123,13 +119,15 @@ public class AdvancedAgeApplyController {
 		session = request.getSession();
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
-		list.setAdvancedAgePlanId(Integer.valueOf(session.getAttribute(session.getId()+"advancedAgePlanId").toString()));
-		try {
-			json = objectMapper.writeValueAsString(list);
-		} catch (JsonProcessingException e) {
-			logger.warn(e.getMessage());
+		if(session.getAttribute(session.getId()+"advancedAgePlanId")!=null) {
+			list.setAdvancedAgePlanId(Integer.valueOf(session.getAttribute(session.getId()+"advancedAgePlanId").toString()));
+			try {
+				json = objectMapper.writeValueAsString(list);
+			} catch (JsonProcessingException e) {
+				logger.warn(e.getMessage());
+			}
+			api.httpPost(ip+"delAdvancedAgeEmploymentList",json);
 		}
-		api.httpPost(ip+"delAdvancedAgeEmploymentList",json);
 		response.setContentType("text/html;charset=UTF-8");
 		try {
 			response.getWriter().print("success");
@@ -209,7 +207,7 @@ public class AdvancedAgeApplyController {
 	
 	@RequestMapping(value = "/addATypeAdvancedAgeBase", method = RequestMethod.POST)
 	public void addATypeAdvancedAgeBase(HttpServletRequest request, HttpServletResponse response
-			,AdvancedAgeBase base){ 
+			,AdvancedAgeBase base,MailRecord mailRecord){ 
 		session = request.getSession();
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
@@ -220,6 +218,29 @@ public class AdvancedAgeApplyController {
 			logger.warn(e.getMessage());
 		}
 		api.httpPost(ip+"addATypeAdvancedAgeBase",json);
+		
+		mailRecord.setMailType("D");
+		mailRecord.setMailContent("已收到臺端申請 繼續僱用高齡者補助計畫，案件將進入審查狀態。如需補件，將會再發送電子郵件通知，請隨時注意郵件。\r\n"
+				+ "\r\n"
+				+ "此信為系統自動發送，無須回信。\r\n"
+				+ "相關問題請洽各受理單位\r\n"
+				+ "https://job.taiwanjobs.gov.tw/internet/index/service_location.aspx");
+		try {
+			sendEmail.sendMail(mailRecord.getEmail(),"繼續僱用高齡者補助計畫案件申請通知", mailRecord.getMailContent());
+		} catch (AddressException e1) {
+			logger.warn(e1.getMessage());
+		} catch (MessagingException e1) {
+			logger.warn(e1.getMessage());
+		} catch (Exception e1) {
+			logger.warn(e1.getMessage());
+		}
+		
+		try {
+			json = objectMapper.writeValueAsString(mailRecord);
+		} catch (JsonProcessingException e) {
+			logger.warn(e.getMessage());
+		}
+		api.httpPost(ip+"addMailRecord",json);
 		
 		response.setContentType("text/html;charset=UTF-8");
 		try {
@@ -233,27 +254,31 @@ public class AdvancedAgeApplyController {
 	@RequestMapping(value = "/editAdvancedAgeBase", method = RequestMethod.POST)
 	public void editAdvancedAgeBase(HttpServletRequest request, HttpServletResponse response
 			,AdvancedAgeBase base){ 
-		//修改案件狀態
-		ObjectMapper objectMapper = new ObjectMapper();
-		String json="";
-		try {
-			json = objectMapper.writeValueAsString(base);
-		} catch (JsonProcessingException e) {
-			logger.warn(e.getMessage());
+		session = request.getSession();
+		//新的請領才要新增資料
+		if(Integer.valueOf(session.getAttribute(session.getId()+"baseAllowanceFrequencyTime").toString())==0)
+		{
+			//修改案件狀態
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json="";
+			try {
+				json = objectMapper.writeValueAsString(base);
+			} catch (JsonProcessingException e) {
+				logger.warn(e.getMessage());
+			}
+			api.httpPost(ip+"editAdvancedAgeBase",json);
+			
+			//修改補助名單此次請領次數
+			json="";
+			AdvancedAgeEmploymentListReceipt receipt = new AdvancedAgeEmploymentListReceipt();
+			receipt.setAdvancedAgeBaseId(base.getId());
+			try {
+				json = objectMapper.writeValueAsString(receipt);
+			} catch (JsonProcessingException e) {
+				logger.warn(e.getMessage());
+			}
+			api.httpPost(ip+"editAdvancedAgeEmploymentListReceipt",json);
 		}
-		api.httpPost(ip+"editAdvancedAgeBase",json);
-		
-		//修改補助名單此次請領次數
-		json="";
-		AdvancedAgeEmploymentListReceipt receipt = new AdvancedAgeEmploymentListReceipt();
-		receipt.setAdvancedAgeBaseId(base.getId());
-		try {
-			json = objectMapper.writeValueAsString(receipt);
-		} catch (JsonProcessingException e) {
-			logger.warn(e.getMessage());
-		}
-		api.httpPost(ip+"editAdvancedAgeEmploymentListReceipt",json);
-		
 		response.setContentType("text/html;charset=UTF-8");
 		try {
 			response.getWriter().print("success");

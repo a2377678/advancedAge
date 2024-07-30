@@ -19,8 +19,10 @@ import javax.mail.internet.MimeMultipart;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -28,17 +30,19 @@ import org.springframework.stereotype.Component;
 
 import com.sun.mail.util.MailSSLSocketFactory;
 
+@Component
 public class SendEmail{
 
-	SystemConfig config;
+	@Autowired
+    private Environment env;
 	
-	public void sendMail(String toMail,String content) throws AddressException, MessagingException
+	public void sendMail(String toMail,String subject,String content) throws AddressException, MessagingException
 	   {    
 //			EDM ip: 172.21.210.30
 //			帳號：wmsedm@msa.wda.gov.tw
 //			密碼：Wms@123456789
-	        String user = SystemConfig.getProperty("spring.mail.username");//user
-	        String pwd = SystemConfig.getProperty("spring.mail.password");//password
+	        String user = env.getProperty("spring.mail.username");//user
+	        String pwd = env.getProperty("spring.mail.password");//password
 //	        String from = SystemConfig.getProperty("spring.mail.username");//寄件人的email
 	        /*
 	         * host
@@ -46,14 +50,12 @@ public class SendEmail{
 	         * outlook:"smtp-mail.outlook.com"
 	         */
 //	        String host ="smtp.gmail.com" ;
-	        String host =SystemConfig.getProperty("spring.mail.username") ;
-
-	        String subject = "中高齡密碼"; 
+	        String host =env.getProperty("spring.mail.host") ;
 
 	     // sets SMTP server properties
 	        Properties properties = new Properties();
 	        properties.put("mail.smtp.host", host);
-	        properties.put("mail.smtp.port", SystemConfig.getProperty("spring.mail.port"));
+	        properties.put("mail.smtp.port", env.getProperty("spring.mail.port"));
 //	        properties.put("mail.smtp.auth", "true");
 //	        properties.put("mail.smtp.starttls.enable", "true");
 //	        properties.put("mail.smtp.ssl.trust", "smtp.gmail.com");

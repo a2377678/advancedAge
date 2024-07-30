@@ -36,6 +36,9 @@ public class FunctionListApiController {
 		{
 			return null;
 		}
-		return functionListService.selectByExample(null);
+		functionListExample = new FunctionListExample();
+		functionListExample.createCriteria().andCaseTypeEqualTo(functionList.getCaseType());
+		functionListExample.setOrderByClause("function_code asc");
+		return functionListService.selectByExample(functionListExample);
 	}
 }

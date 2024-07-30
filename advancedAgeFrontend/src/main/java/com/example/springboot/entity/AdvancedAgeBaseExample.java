@@ -1545,6 +1545,406 @@ public class AdvancedAgeBaseExample {
             return (Criteria) this;
         }
 
+        public Criteria andCheckSpeakerPersonIsNull() {
+            addCriterion("check_speaker_person is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerPersonIsNotNull() {
+            addCriterion("check_speaker_person is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerPersonEqualTo(Integer value) {
+            addCriterion("check_speaker_person =", value, "checkSpeakerPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerPersonNotEqualTo(Integer value) {
+            addCriterion("check_speaker_person <>", value, "checkSpeakerPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerPersonGreaterThan(Integer value) {
+            addCriterion("check_speaker_person >", value, "checkSpeakerPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerPersonGreaterThanOrEqualTo(Integer value) {
+            addCriterion("check_speaker_person >=", value, "checkSpeakerPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerPersonLessThan(Integer value) {
+            addCriterion("check_speaker_person <", value, "checkSpeakerPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerPersonLessThanOrEqualTo(Integer value) {
+            addCriterion("check_speaker_person <=", value, "checkSpeakerPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerPersonIn(List<Integer> values) {
+            addCriterion("check_speaker_person in", values, "checkSpeakerPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerPersonNotIn(List<Integer> values) {
+            addCriterion("check_speaker_person not in", values, "checkSpeakerPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerPersonBetween(Integer value1, Integer value2) {
+            addCriterion("check_speaker_person between", value1, value2, "checkSpeakerPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerPersonNotBetween(Integer value1, Integer value2) {
+            addCriterion("check_speaker_person not between", value1, value2, "checkSpeakerPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerRemarkIsNull() {
+            addCriterion("check_speaker_remark is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerRemarkIsNotNull() {
+            addCriterion("check_speaker_remark is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerRemarkEqualTo(String value) {
+            addCriterion("check_speaker_remark =", value, "checkSpeakerRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerRemarkNotEqualTo(String value) {
+            addCriterion("check_speaker_remark <>", value, "checkSpeakerRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerRemarkGreaterThan(String value) {
+            addCriterion("check_speaker_remark >", value, "checkSpeakerRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerRemarkGreaterThanOrEqualTo(String value) {
+            addCriterion("check_speaker_remark >=", value, "checkSpeakerRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerRemarkLessThan(String value) {
+            addCriterion("check_speaker_remark <", value, "checkSpeakerRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerRemarkLessThanOrEqualTo(String value) {
+            addCriterion("check_speaker_remark <=", value, "checkSpeakerRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerRemarkLike(String value) {
+            addCriterion("check_speaker_remark like", value, "checkSpeakerRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerRemarkNotLike(String value) {
+            addCriterion("check_speaker_remark not like", value, "checkSpeakerRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerRemarkIn(List<String> values) {
+            addCriterion("check_speaker_remark in", values, "checkSpeakerRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerRemarkNotIn(List<String> values) {
+            addCriterion("check_speaker_remark not in", values, "checkSpeakerRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerRemarkBetween(String value1, String value2) {
+            addCriterion("check_speaker_remark between", value1, value2, "checkSpeakerRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckSpeakerRemarkNotBetween(String value1, String value2) {
+            addCriterion("check_speaker_remark not between", value1, value2, "checkSpeakerRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckScheduleRemarkIsNull() {
+            addCriterion("check_schedule_remark is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckScheduleRemarkIsNotNull() {
+            addCriterion("check_schedule_remark is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckScheduleRemarkEqualTo(String value) {
+            addCriterion("check_schedule_remark =", value, "checkScheduleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckScheduleRemarkNotEqualTo(String value) {
+            addCriterion("check_schedule_remark <>", value, "checkScheduleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckScheduleRemarkGreaterThan(String value) {
+            addCriterion("check_schedule_remark >", value, "checkScheduleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckScheduleRemarkGreaterThanOrEqualTo(String value) {
+            addCriterion("check_schedule_remark >=", value, "checkScheduleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckScheduleRemarkLessThan(String value) {
+            addCriterion("check_schedule_remark <", value, "checkScheduleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckScheduleRemarkLessThanOrEqualTo(String value) {
+            addCriterion("check_schedule_remark <=", value, "checkScheduleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckScheduleRemarkLike(String value) {
+            addCriterion("check_schedule_remark like", value, "checkScheduleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckScheduleRemarkNotLike(String value) {
+            addCriterion("check_schedule_remark not like", value, "checkScheduleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckScheduleRemarkIn(List<String> values) {
+            addCriterion("check_schedule_remark in", values, "checkScheduleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckScheduleRemarkNotIn(List<String> values) {
+            addCriterion("check_schedule_remark not in", values, "checkScheduleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckScheduleRemarkBetween(String value1, String value2) {
+            addCriterion("check_schedule_remark between", value1, value2, "checkScheduleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckScheduleRemarkNotBetween(String value1, String value2) {
+            addCriterion("check_schedule_remark not between", value1, value2, "checkScheduleRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureAmountsIsNull() {
+            addCriterion("check_expenditure_amounts is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureAmountsIsNotNull() {
+            addCriterion("check_expenditure_amounts is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureAmountsEqualTo(Integer value) {
+            addCriterion("check_expenditure_amounts =", value, "checkExpenditureAmounts");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureAmountsNotEqualTo(Integer value) {
+            addCriterion("check_expenditure_amounts <>", value, "checkExpenditureAmounts");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureAmountsGreaterThan(Integer value) {
+            addCriterion("check_expenditure_amounts >", value, "checkExpenditureAmounts");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureAmountsGreaterThanOrEqualTo(Integer value) {
+            addCriterion("check_expenditure_amounts >=", value, "checkExpenditureAmounts");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureAmountsLessThan(Integer value) {
+            addCriterion("check_expenditure_amounts <", value, "checkExpenditureAmounts");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureAmountsLessThanOrEqualTo(Integer value) {
+            addCriterion("check_expenditure_amounts <=", value, "checkExpenditureAmounts");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureAmountsIn(List<Integer> values) {
+            addCriterion("check_expenditure_amounts in", values, "checkExpenditureAmounts");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureAmountsNotIn(List<Integer> values) {
+            addCriterion("check_expenditure_amounts not in", values, "checkExpenditureAmounts");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureAmountsBetween(Integer value1, Integer value2) {
+            addCriterion("check_expenditure_amounts between", value1, value2, "checkExpenditureAmounts");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureAmountsNotBetween(Integer value1, Integer value2) {
+            addCriterion("check_expenditure_amounts not between", value1, value2, "checkExpenditureAmounts");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureRemarkIsNull() {
+            addCriterion("check_expenditure_remark is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureRemarkIsNotNull() {
+            addCriterion("check_expenditure_remark is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureRemarkEqualTo(String value) {
+            addCriterion("check_expenditure_remark =", value, "checkExpenditureRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureRemarkNotEqualTo(String value) {
+            addCriterion("check_expenditure_remark <>", value, "checkExpenditureRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureRemarkGreaterThan(String value) {
+            addCriterion("check_expenditure_remark >", value, "checkExpenditureRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureRemarkGreaterThanOrEqualTo(String value) {
+            addCriterion("check_expenditure_remark >=", value, "checkExpenditureRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureRemarkLessThan(String value) {
+            addCriterion("check_expenditure_remark <", value, "checkExpenditureRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureRemarkLessThanOrEqualTo(String value) {
+            addCriterion("check_expenditure_remark <=", value, "checkExpenditureRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureRemarkLike(String value) {
+            addCriterion("check_expenditure_remark like", value, "checkExpenditureRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureRemarkNotLike(String value) {
+            addCriterion("check_expenditure_remark not like", value, "checkExpenditureRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureRemarkIn(List<String> values) {
+            addCriterion("check_expenditure_remark in", values, "checkExpenditureRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureRemarkNotIn(List<String> values) {
+            addCriterion("check_expenditure_remark not in", values, "checkExpenditureRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureRemarkBetween(String value1, String value2) {
+            addCriterion("check_expenditure_remark between", value1, value2, "checkExpenditureRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckExpenditureRemarkNotBetween(String value1, String value2) {
+            addCriterion("check_expenditure_remark not between", value1, value2, "checkExpenditureRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckJointAuthorizeRemarkIsNull() {
+            addCriterion("check_joint_authorize_remark is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckJointAuthorizeRemarkIsNotNull() {
+            addCriterion("check_joint_authorize_remark is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckJointAuthorizeRemarkEqualTo(String value) {
+            addCriterion("check_joint_authorize_remark =", value, "checkJointAuthorizeRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckJointAuthorizeRemarkNotEqualTo(String value) {
+            addCriterion("check_joint_authorize_remark <>", value, "checkJointAuthorizeRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckJointAuthorizeRemarkGreaterThan(String value) {
+            addCriterion("check_joint_authorize_remark >", value, "checkJointAuthorizeRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckJointAuthorizeRemarkGreaterThanOrEqualTo(String value) {
+            addCriterion("check_joint_authorize_remark >=", value, "checkJointAuthorizeRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckJointAuthorizeRemarkLessThan(String value) {
+            addCriterion("check_joint_authorize_remark <", value, "checkJointAuthorizeRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckJointAuthorizeRemarkLessThanOrEqualTo(String value) {
+            addCriterion("check_joint_authorize_remark <=", value, "checkJointAuthorizeRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckJointAuthorizeRemarkLike(String value) {
+            addCriterion("check_joint_authorize_remark like", value, "checkJointAuthorizeRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckJointAuthorizeRemarkNotLike(String value) {
+            addCriterion("check_joint_authorize_remark not like", value, "checkJointAuthorizeRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckJointAuthorizeRemarkIn(List<String> values) {
+            addCriterion("check_joint_authorize_remark in", values, "checkJointAuthorizeRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckJointAuthorizeRemarkNotIn(List<String> values) {
+            addCriterion("check_joint_authorize_remark not in", values, "checkJointAuthorizeRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckJointAuthorizeRemarkBetween(String value1, String value2) {
+            addCriterion("check_joint_authorize_remark between", value1, value2, "checkJointAuthorizeRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckJointAuthorizeRemarkNotBetween(String value1, String value2) {
+            addCriterion("check_joint_authorize_remark not between", value1, value2, "checkJointAuthorizeRemark");
+            return (Criteria) this;
+        }
+
         public Criteria andCheckAttachmentRemarkIsNull() {
             addCriterion("check_attachment_remark is null");
             return (Criteria) this;
@@ -3612,6 +4012,746 @@ public class AdvancedAgeBaseExample {
 
         public Criteria andAllowanceFrequencyRecordNotBetween(String value1, String value2) {
             addCriterion("allowance_frequency_record not between", value1, value2, "allowanceFrequencyRecord");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceApprovedAmountsIsNull() {
+            addCriterion("allowance_approved_amounts is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceApprovedAmountsIsNotNull() {
+            addCriterion("allowance_approved_amounts is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceApprovedAmountsEqualTo(Integer value) {
+            addCriterion("allowance_approved_amounts =", value, "allowanceApprovedAmounts");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceApprovedAmountsNotEqualTo(Integer value) {
+            addCriterion("allowance_approved_amounts <>", value, "allowanceApprovedAmounts");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceApprovedAmountsGreaterThan(Integer value) {
+            addCriterion("allowance_approved_amounts >", value, "allowanceApprovedAmounts");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceApprovedAmountsGreaterThanOrEqualTo(Integer value) {
+            addCriterion("allowance_approved_amounts >=", value, "allowanceApprovedAmounts");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceApprovedAmountsLessThan(Integer value) {
+            addCriterion("allowance_approved_amounts <", value, "allowanceApprovedAmounts");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceApprovedAmountsLessThanOrEqualTo(Integer value) {
+            addCriterion("allowance_approved_amounts <=", value, "allowanceApprovedAmounts");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceApprovedAmountsIn(List<Integer> values) {
+            addCriterion("allowance_approved_amounts in", values, "allowanceApprovedAmounts");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceApprovedAmountsNotIn(List<Integer> values) {
+            addCriterion("allowance_approved_amounts not in", values, "allowanceApprovedAmounts");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceApprovedAmountsBetween(Integer value1, Integer value2) {
+            addCriterion("allowance_approved_amounts between", value1, value2, "allowanceApprovedAmounts");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceApprovedAmountsNotBetween(Integer value1, Integer value2) {
+            addCriterion("allowance_approved_amounts not between", value1, value2, "allowanceApprovedAmounts");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusRecordIsNull() {
+            addCriterion("allowance_file_status_record is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusRecordIsNotNull() {
+            addCriterion("allowance_file_status_record is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusRecordEqualTo(String value) {
+            addCriterion("allowance_file_status_record =", value, "allowanceFileStatusRecord");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusRecordNotEqualTo(String value) {
+            addCriterion("allowance_file_status_record <>", value, "allowanceFileStatusRecord");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusRecordGreaterThan(String value) {
+            addCriterion("allowance_file_status_record >", value, "allowanceFileStatusRecord");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusRecordGreaterThanOrEqualTo(String value) {
+            addCriterion("allowance_file_status_record >=", value, "allowanceFileStatusRecord");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusRecordLessThan(String value) {
+            addCriterion("allowance_file_status_record <", value, "allowanceFileStatusRecord");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusRecordLessThanOrEqualTo(String value) {
+            addCriterion("allowance_file_status_record <=", value, "allowanceFileStatusRecord");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusRecordLike(String value) {
+            addCriterion("allowance_file_status_record like", value, "allowanceFileStatusRecord");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusRecordNotLike(String value) {
+            addCriterion("allowance_file_status_record not like", value, "allowanceFileStatusRecord");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusRecordIn(List<String> values) {
+            addCriterion("allowance_file_status_record in", values, "allowanceFileStatusRecord");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusRecordNotIn(List<String> values) {
+            addCriterion("allowance_file_status_record not in", values, "allowanceFileStatusRecord");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusRecordBetween(String value1, String value2) {
+            addCriterion("allowance_file_status_record between", value1, value2, "allowanceFileStatusRecord");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusRecordNotBetween(String value1, String value2) {
+            addCriterion("allowance_file_status_record not between", value1, value2, "allowanceFileStatusRecord");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileRemarkIsNull() {
+            addCriterion("allowance_file_remark is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileRemarkIsNotNull() {
+            addCriterion("allowance_file_remark is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileRemarkEqualTo(String value) {
+            addCriterion("allowance_file_remark =", value, "allowanceFileRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileRemarkNotEqualTo(String value) {
+            addCriterion("allowance_file_remark <>", value, "allowanceFileRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileRemarkGreaterThan(String value) {
+            addCriterion("allowance_file_remark >", value, "allowanceFileRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileRemarkGreaterThanOrEqualTo(String value) {
+            addCriterion("allowance_file_remark >=", value, "allowanceFileRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileRemarkLessThan(String value) {
+            addCriterion("allowance_file_remark <", value, "allowanceFileRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileRemarkLessThanOrEqualTo(String value) {
+            addCriterion("allowance_file_remark <=", value, "allowanceFileRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileRemarkLike(String value) {
+            addCriterion("allowance_file_remark like", value, "allowanceFileRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileRemarkNotLike(String value) {
+            addCriterion("allowance_file_remark not like", value, "allowanceFileRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileRemarkIn(List<String> values) {
+            addCriterion("allowance_file_remark in", values, "allowanceFileRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileRemarkNotIn(List<String> values) {
+            addCriterion("allowance_file_remark not in", values, "allowanceFileRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileRemarkBetween(String value1, String value2) {
+            addCriterion("allowance_file_remark between", value1, value2, "allowanceFileRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileRemarkNotBetween(String value1, String value2) {
+            addCriterion("allowance_file_remark not between", value1, value2, "allowanceFileRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailContentIsNull() {
+            addCriterion("allowance_email_content is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailContentIsNotNull() {
+            addCriterion("allowance_email_content is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailContentEqualTo(String value) {
+            addCriterion("allowance_email_content =", value, "allowanceEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailContentNotEqualTo(String value) {
+            addCriterion("allowance_email_content <>", value, "allowanceEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailContentGreaterThan(String value) {
+            addCriterion("allowance_email_content >", value, "allowanceEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailContentGreaterThanOrEqualTo(String value) {
+            addCriterion("allowance_email_content >=", value, "allowanceEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailContentLessThan(String value) {
+            addCriterion("allowance_email_content <", value, "allowanceEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailContentLessThanOrEqualTo(String value) {
+            addCriterion("allowance_email_content <=", value, "allowanceEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailContentLike(String value) {
+            addCriterion("allowance_email_content like", value, "allowanceEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailContentNotLike(String value) {
+            addCriterion("allowance_email_content not like", value, "allowanceEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailContentIn(List<String> values) {
+            addCriterion("allowance_email_content in", values, "allowanceEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailContentNotIn(List<String> values) {
+            addCriterion("allowance_email_content not in", values, "allowanceEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailContentBetween(String value1, String value2) {
+            addCriterion("allowance_email_content between", value1, value2, "allowanceEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailContentNotBetween(String value1, String value2) {
+            addCriterion("allowance_email_content not between", value1, value2, "allowanceEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailTimeIsNull() {
+            addCriterion("allowance_email_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailTimeIsNotNull() {
+            addCriterion("allowance_email_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailTimeEqualTo(Date value) {
+            addCriterion("allowance_email_time =", value, "allowanceEmailTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailTimeNotEqualTo(Date value) {
+            addCriterion("allowance_email_time <>", value, "allowanceEmailTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailTimeGreaterThan(Date value) {
+            addCriterion("allowance_email_time >", value, "allowanceEmailTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("allowance_email_time >=", value, "allowanceEmailTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailTimeLessThan(Date value) {
+            addCriterion("allowance_email_time <", value, "allowanceEmailTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailTimeLessThanOrEqualTo(Date value) {
+            addCriterion("allowance_email_time <=", value, "allowanceEmailTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailTimeIn(List<Date> values) {
+            addCriterion("allowance_email_time in", values, "allowanceEmailTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailTimeNotIn(List<Date> values) {
+            addCriterion("allowance_email_time not in", values, "allowanceEmailTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailTimeBetween(Date value1, Date value2) {
+            addCriterion("allowance_email_time between", value1, value2, "allowanceEmailTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceEmailTimeNotBetween(Date value1, Date value2) {
+            addCriterion("allowance_email_time not between", value1, value2, "allowanceEmailTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusIsNull() {
+            addCriterion("allowance_file_status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusIsNotNull() {
+            addCriterion("allowance_file_status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusEqualTo(String value) {
+            addCriterion("allowance_file_status =", value, "allowanceFileStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusNotEqualTo(String value) {
+            addCriterion("allowance_file_status <>", value, "allowanceFileStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusGreaterThan(String value) {
+            addCriterion("allowance_file_status >", value, "allowanceFileStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusGreaterThanOrEqualTo(String value) {
+            addCriterion("allowance_file_status >=", value, "allowanceFileStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusLessThan(String value) {
+            addCriterion("allowance_file_status <", value, "allowanceFileStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusLessThanOrEqualTo(String value) {
+            addCriterion("allowance_file_status <=", value, "allowanceFileStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusLike(String value) {
+            addCriterion("allowance_file_status like", value, "allowanceFileStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusNotLike(String value) {
+            addCriterion("allowance_file_status not like", value, "allowanceFileStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusIn(List<String> values) {
+            addCriterion("allowance_file_status in", values, "allowanceFileStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusNotIn(List<String> values) {
+            addCriterion("allowance_file_status not in", values, "allowanceFileStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusBetween(String value1, String value2) {
+            addCriterion("allowance_file_status between", value1, value2, "allowanceFileStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowanceFileStatusNotBetween(String value1, String value2) {
+            addCriterion("allowance_file_status not between", value1, value2, "allowanceFileStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckAllowanceAttachmentRemarkIsNull() {
+            addCriterion("check_allowance_attachment_remark is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckAllowanceAttachmentRemarkIsNotNull() {
+            addCriterion("check_allowance_attachment_remark is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckAllowanceAttachmentRemarkEqualTo(String value) {
+            addCriterion("check_allowance_attachment_remark =", value, "checkAllowanceAttachmentRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckAllowanceAttachmentRemarkNotEqualTo(String value) {
+            addCriterion("check_allowance_attachment_remark <>", value, "checkAllowanceAttachmentRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckAllowanceAttachmentRemarkGreaterThan(String value) {
+            addCriterion("check_allowance_attachment_remark >", value, "checkAllowanceAttachmentRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckAllowanceAttachmentRemarkGreaterThanOrEqualTo(String value) {
+            addCriterion("check_allowance_attachment_remark >=", value, "checkAllowanceAttachmentRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckAllowanceAttachmentRemarkLessThan(String value) {
+            addCriterion("check_allowance_attachment_remark <", value, "checkAllowanceAttachmentRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckAllowanceAttachmentRemarkLessThanOrEqualTo(String value) {
+            addCriterion("check_allowance_attachment_remark <=", value, "checkAllowanceAttachmentRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckAllowanceAttachmentRemarkLike(String value) {
+            addCriterion("check_allowance_attachment_remark like", value, "checkAllowanceAttachmentRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckAllowanceAttachmentRemarkNotLike(String value) {
+            addCriterion("check_allowance_attachment_remark not like", value, "checkAllowanceAttachmentRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckAllowanceAttachmentRemarkIn(List<String> values) {
+            addCriterion("check_allowance_attachment_remark in", values, "checkAllowanceAttachmentRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckAllowanceAttachmentRemarkNotIn(List<String> values) {
+            addCriterion("check_allowance_attachment_remark not in", values, "checkAllowanceAttachmentRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckAllowanceAttachmentRemarkBetween(String value1, String value2) {
+            addCriterion("check_allowance_attachment_remark between", value1, value2, "checkAllowanceAttachmentRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckAllowanceAttachmentRemarkNotBetween(String value1, String value2) {
+            addCriterion("check_allowance_attachment_remark not between", value1, value2, "checkAllowanceAttachmentRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewStatusIsNull() {
+            addCriterion("review_status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewStatusIsNotNull() {
+            addCriterion("review_status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewStatusEqualTo(String value) {
+            addCriterion("review_status =", value, "reviewStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewStatusNotEqualTo(String value) {
+            addCriterion("review_status <>", value, "reviewStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewStatusGreaterThan(String value) {
+            addCriterion("review_status >", value, "reviewStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewStatusGreaterThanOrEqualTo(String value) {
+            addCriterion("review_status >=", value, "reviewStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewStatusLessThan(String value) {
+            addCriterion("review_status <", value, "reviewStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewStatusLessThanOrEqualTo(String value) {
+            addCriterion("review_status <=", value, "reviewStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewStatusLike(String value) {
+            addCriterion("review_status like", value, "reviewStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewStatusNotLike(String value) {
+            addCriterion("review_status not like", value, "reviewStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewStatusIn(List<String> values) {
+            addCriterion("review_status in", values, "reviewStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewStatusNotIn(List<String> values) {
+            addCriterion("review_status not in", values, "reviewStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewStatusBetween(String value1, String value2) {
+            addCriterion("review_status between", value1, value2, "reviewStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewStatusNotBetween(String value1, String value2) {
+            addCriterion("review_status not between", value1, value2, "reviewStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewRemarkIsNull() {
+            addCriterion("review_remark is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewRemarkIsNotNull() {
+            addCriterion("review_remark is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewRemarkEqualTo(String value) {
+            addCriterion("review_remark =", value, "reviewRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewRemarkNotEqualTo(String value) {
+            addCriterion("review_remark <>", value, "reviewRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewRemarkGreaterThan(String value) {
+            addCriterion("review_remark >", value, "reviewRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewRemarkGreaterThanOrEqualTo(String value) {
+            addCriterion("review_remark >=", value, "reviewRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewRemarkLessThan(String value) {
+            addCriterion("review_remark <", value, "reviewRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewRemarkLessThanOrEqualTo(String value) {
+            addCriterion("review_remark <=", value, "reviewRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewRemarkLike(String value) {
+            addCriterion("review_remark like", value, "reviewRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewRemarkNotLike(String value) {
+            addCriterion("review_remark not like", value, "reviewRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewRemarkIn(List<String> values) {
+            addCriterion("review_remark in", values, "reviewRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewRemarkNotIn(List<String> values) {
+            addCriterion("review_remark not in", values, "reviewRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewRemarkBetween(String value1, String value2) {
+            addCriterion("review_remark between", value1, value2, "reviewRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewRemarkNotBetween(String value1, String value2) {
+            addCriterion("review_remark not between", value1, value2, "reviewRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailContentIsNull() {
+            addCriterion("review_email_content is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailContentIsNotNull() {
+            addCriterion("review_email_content is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailContentEqualTo(String value) {
+            addCriterion("review_email_content =", value, "reviewEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailContentNotEqualTo(String value) {
+            addCriterion("review_email_content <>", value, "reviewEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailContentGreaterThan(String value) {
+            addCriterion("review_email_content >", value, "reviewEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailContentGreaterThanOrEqualTo(String value) {
+            addCriterion("review_email_content >=", value, "reviewEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailContentLessThan(String value) {
+            addCriterion("review_email_content <", value, "reviewEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailContentLessThanOrEqualTo(String value) {
+            addCriterion("review_email_content <=", value, "reviewEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailContentLike(String value) {
+            addCriterion("review_email_content like", value, "reviewEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailContentNotLike(String value) {
+            addCriterion("review_email_content not like", value, "reviewEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailContentIn(List<String> values) {
+            addCriterion("review_email_content in", values, "reviewEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailContentNotIn(List<String> values) {
+            addCriterion("review_email_content not in", values, "reviewEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailContentBetween(String value1, String value2) {
+            addCriterion("review_email_content between", value1, value2, "reviewEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailContentNotBetween(String value1, String value2) {
+            addCriterion("review_email_content not between", value1, value2, "reviewEmailContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailTimeIsNull() {
+            addCriterion("review_email_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailTimeIsNotNull() {
+            addCriterion("review_email_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailTimeEqualTo(Date value) {
+            addCriterion("review_email_time =", value, "reviewEmailTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailTimeNotEqualTo(Date value) {
+            addCriterion("review_email_time <>", value, "reviewEmailTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailTimeGreaterThan(Date value) {
+            addCriterion("review_email_time >", value, "reviewEmailTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("review_email_time >=", value, "reviewEmailTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailTimeLessThan(Date value) {
+            addCriterion("review_email_time <", value, "reviewEmailTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailTimeLessThanOrEqualTo(Date value) {
+            addCriterion("review_email_time <=", value, "reviewEmailTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailTimeIn(List<Date> values) {
+            addCriterion("review_email_time in", values, "reviewEmailTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailTimeNotIn(List<Date> values) {
+            addCriterion("review_email_time not in", values, "reviewEmailTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailTimeBetween(Date value1, Date value2) {
+            addCriterion("review_email_time between", value1, value2, "reviewEmailTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewEmailTimeNotBetween(Date value1, Date value2) {
+            addCriterion("review_email_time not between", value1, value2, "reviewEmailTime");
             return (Criteria) this;
         }
 

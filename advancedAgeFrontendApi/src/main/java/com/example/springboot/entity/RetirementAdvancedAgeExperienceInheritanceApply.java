@@ -12,6 +12,14 @@ public class RetirementAdvancedAgeExperienceInheritanceApply extends RetirementA
 
     private String guaranteeNumber;
 
+    private String registerPostalCode;
+
+    private String registerCity;
+
+    private String registerArea;
+
+    private String registerAddress;
+
     private String principal;
 
     private String jobtitle;
@@ -50,7 +58,19 @@ public class RetirementAdvancedAgeExperienceInheritanceApply extends RetirementA
 
     private String contactPhone;
 
+    private String faxAreaCode;
+
+    private String fax;
+
     private String email;
+
+    private String multipleCompany;
+
+    private String workersEmployment;
+
+    private String relatives;
+
+    private String relatedAmounts;
 
     private String attachDocumentsApply;
 
@@ -112,6 +132,38 @@ public class RetirementAdvancedAgeExperienceInheritanceApply extends RetirementA
 
     public void setGuaranteeNumber(String guaranteeNumber) {
         this.guaranteeNumber = guaranteeNumber == null ? null : guaranteeNumber.trim();
+    }
+
+    public String getRegisterPostalCode() {
+        return registerPostalCode;
+    }
+
+    public void setRegisterPostalCode(String registerPostalCode) {
+        this.registerPostalCode = registerPostalCode == null ? null : registerPostalCode.trim();
+    }
+
+    public String getRegisterCity() {
+        return registerCity;
+    }
+
+    public void setRegisterCity(String registerCity) {
+        this.registerCity = registerCity == null ? null : registerCity.trim();
+    }
+
+    public String getRegisterArea() {
+        return registerArea;
+    }
+
+    public void setRegisterArea(String registerArea) {
+        this.registerArea = registerArea == null ? null : registerArea.trim();
+    }
+
+    public String getRegisterAddress() {
+        return registerAddress;
+    }
+
+    public void setRegisterAddress(String registerAddress) {
+        this.registerAddress = registerAddress == null ? null : registerAddress.trim();
     }
 
     public String getPrincipal() {
@@ -266,12 +318,60 @@ public class RetirementAdvancedAgeExperienceInheritanceApply extends RetirementA
         this.contactPhone = contactPhone == null ? null : contactPhone.trim();
     }
 
+    public String getFaxAreaCode() {
+        return faxAreaCode;
+    }
+
+    public void setFaxAreaCode(String faxAreaCode) {
+        this.faxAreaCode = faxAreaCode == null ? null : faxAreaCode.trim();
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax == null ? null : fax.trim();
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
+    }
+
+    public String getMultipleCompany() {
+        return multipleCompany;
+    }
+
+    public void setMultipleCompany(String multipleCompany) {
+        this.multipleCompany = multipleCompany == null ? null : multipleCompany.trim();
+    }
+
+    public String getWorkersEmployment() {
+        return workersEmployment;
+    }
+
+    public void setWorkersEmployment(String workersEmployment) {
+        this.workersEmployment = workersEmployment == null ? null : workersEmployment.trim();
+    }
+
+    public String getRelatives() {
+        return relatives;
+    }
+
+    public void setRelatives(String relatives) {
+        this.relatives = relatives == null ? null : relatives.trim();
+    }
+
+    public String getRelatedAmounts() {
+        return relatedAmounts;
+    }
+
+    public void setRelatedAmounts(String relatedAmounts) {
+        this.relatedAmounts = relatedAmounts == null ? null : relatedAmounts.trim();
     }
 
     public String getAttachDocumentsApply() {

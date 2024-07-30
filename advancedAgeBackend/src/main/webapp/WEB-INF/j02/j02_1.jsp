@@ -25,13 +25,7 @@
   <%@ include file="../header.jsp" %>
   <!---------------------- top end ---------------------->
 
-    
-  <div id="main_menu">
-    <div><a href="#" class="menu-1 in">繼續僱用高齡者</a></div>
-    <div><a href="#" class="menu-2">傳承專業技術與經驗</a></div>
-    <div><a href="#" class="menu-3">退休後再就業準備協助措施</a></div>
-    <div><a href="account01" class="account">申請帳號審核管理</a></div>
-  </div>
+  <%@ include file="../mainMenu.jsp" %>
 
   <!---------------------- left menu ---------------------->
   <%@ include file="../leftMenu.jsp" %>
@@ -79,7 +73,7 @@
 	            <option value="2" <c:if test="${userInfoData.jurisdiction==2}">selected</c:if>>本署-一般使用者</option>
 	            <option value="3" <c:if test="${userInfoData.jurisdiction==3}">selected</c:if>>分署-管理者</option>
 	            <option value="4" <c:if test="${userInfoData.jurisdiction==4}">selected</c:if>>分署-審核人員</option>
-	            <option value="5" <c:if test="${userInfoData.jurisdiction==5}">selected</c:if>>分署-一般使用者</option>
+	            <option value="5" <c:if test="${userInfoData.jurisdiction==5}">selected</c:if>>分署-初審人員</option>
             </select>
           </td>
         </tr>
@@ -88,7 +82,9 @@
           <td>${userInfoData.account }<br></td>
           <input type="text" id="editAccount" name="editAccount" value="${userInfoData.account }" style="display:none">
           <th>密碼</th>
-          <td><input type="password" size="15" id="password" name="password" value="${userInfoData.password }" required/></td>
+          <td><input type="password" size="15" id="password" name="password" required/>
+          <br>
+          <span class="remark_01">密碼長度至少12字元，需有英文、數字、特殊符號的組合</span></td>
         </tr>
         <tr>
           <th>使用者姓名</th>

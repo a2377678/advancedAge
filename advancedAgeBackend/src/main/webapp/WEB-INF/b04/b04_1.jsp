@@ -10,12 +10,11 @@
 <link href="css/file.css" rel="stylesheet" type="text/css" />
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui.js"></script>
-
-<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
   
 <style type="text/css">
 .ui-datepicker {
@@ -33,13 +32,7 @@
   <%@ include file="../header.jsp" %>
   <!---------------------- top end ---------------------->
 
-    
-  <div id="main_menu">
-    <div><a href="#" class="menu-1 in">繼續僱用高齡者</a></div>
-    <div><a href="#" class="menu-2">傳承專業技術與經驗</a></div>
-    <div><a href="#" class="menu-3">退休後再就業準備協助措施</a></div>
-    <div><a href="account01" class="account">申請帳號審核管理</a></div>
-  </div>
+  <%@ include file="../mainMenu.jsp" %>
 
   <!---------------------- left menu ---------------------->
   <%@ include file="../leftMenu.jsp" %>
@@ -69,7 +62,7 @@
         <div id="page_tab">
           <div class="tab-1"><a href="b04" class="in">查詢 / 修改紀錄</a></div>
           <div class="tab-1"><a href="b04_02">實地查核登錄</a></div>
-          <div class="tab-1"><a href="/file/SAMPLE/訪查表1108-核定.docx">訪視表單下載</a></div>
+          <div class="tab-1"><a href="/file/SAMPLE/繼續僱用_查核計畫.docx">訪視表單下載</a></div>
         </div>
       
       
@@ -95,10 +88,21 @@
           <tr>
             <th>承辦單位 / 行政區：</th>
             <td><select name="unit" id="unit">
-                <option value>不限</option>
-                <c:forEach  items="${unitList}"  var="item"  varStatus="userStatus">
-		      		<option value="${item.code}" <c:if test="${searchUnit==item.code}">selected</c:if> >${item.name}</option>
-		      	</c:forEach>
+                <c:if test="${unit=='F' }">
+					<option value>不限</option>                
+	                <c:forEach  items="${unitList}"  var="item"  varStatus="userStatus">
+	                	<c:if test="${item.code!='F' }">
+			      			<option value="${item.code}" <c:if test="${searchUnit==item.code}">selected</c:if> >${item.name}</option>
+			      		</c:if>
+			      	</c:forEach>
+		      	</c:if>
+		      	<c:if test="${unit!='F' }">
+		      		<c:forEach  items="${unitList}"  var="item"  varStatus="userStatus">
+		      			<c:if test="${unit==item.code}">
+		      				<option value="${item.code}" selected>${item.name}</option>
+		      			</c:if>
+		      		</c:forEach>
+		      	</c:if>
             </select></td>
             <th>&nbsp;</th>
             <td>&nbsp;</td>
@@ -114,6 +118,7 @@
       <!------------------- 設立停止補助名單 ------------------->
       <form>
       <input type="text" id="id" value="${siteInspectionData.get('id')}" style="display:none">
+      <input type="text" id="editUnit" value="${unit}" style="display:none">
       <input type="text" id="updator" value="${id }" style="display:none">
       <div class="file_title-2">詳細資訊</div>
       <table class="table_03">
@@ -173,7 +178,7 @@
 		      	</c:forEach>
 		   		</c:when></c:choose>
               <div>
-                <input type="file" id="siteInspectionOtherFile1" name="siteInspectionOtherFile">
+                <input type="file" id="siteInspectionOtherFile1" name="siteInspectionOtherFile" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z,.tiff">
                 <button type="button" class="add" onclick="delSiteInspectionOtherFile(1)" >－</button>
                 <button type="button" class="add" onclick="addSiteInspectionOtherFile(1)" style>＋</button>
               </div>
@@ -225,7 +230,7 @@
       </table>
       <div class="page_number">
       <input type="button" class="btn_02" value="儲存修改" onclick="save()"/>
-      <input type="reset" class="btn_02" value="取消" />
+      <input type="button" class="btn_02" value="取消" onclick="location.href='b04'"/>
       </div>
       <br><br><br>
     </form>

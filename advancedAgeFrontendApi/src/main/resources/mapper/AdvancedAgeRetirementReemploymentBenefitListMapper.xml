@@ -8,6 +8,10 @@
     <result column="employee_id" property="employeeId" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="birthday" property="birthday" jdbcType="VARCHAR" />
+    <result column="insurance_type" property="insuranceType" jdbcType="CHAR" />
+    <result column="insurance_time" property="insuranceTime" jdbcType="VARCHAR" />
+    <result column="manager" property="manager" jdbcType="CHAR" />
+    <result column="working_hours" property="workingHours" jdbcType="CHAR" />
     <result column="labor_protection_time" property="laborProtectionTime" jdbcType="VARCHAR" />
     <result column="occupational_accident_protection_time" property="occupationalAccidentProtectionTime" jdbcType="VARCHAR" />
   </resultMap>
@@ -71,7 +75,8 @@
   </sql>
   <sql id="Base_Column_List" >
     identification, advanced_age_retirement_reemployment_plan_id, id, employee_id, name, 
-    birthday, labor_protection_time, occupational_accident_protection_time
+    birthday, insurance_type, insurance_time, manager, working_hours, labor_protection_time, 
+    occupational_accident_protection_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentBenefitListExample" >
     select
@@ -108,12 +113,14 @@
   <insert id="insert" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentBenefitList" >
     insert into advancedAgeRetirementReemploymentBenefitList (identification, advanced_age_retirement_reemployment_plan_id, 
       id, employee_id, name, 
-      birthday, labor_protection_time, occupational_accident_protection_time
-      )
+      birthday, insurance_type, insurance_time, 
+      manager, working_hours, labor_protection_time, 
+      occupational_accident_protection_time)
     values (#{identification,jdbcType=VARCHAR}, #{advancedAgeRetirementReemploymentPlanId,jdbcType=INTEGER}, 
       #{id,jdbcType=INTEGER}, #{employeeId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{birthday,jdbcType=VARCHAR}, #{laborProtectionTime,jdbcType=VARCHAR}, #{occupationalAccidentProtectionTime,jdbcType=VARCHAR}
-      )
+      #{birthday,jdbcType=VARCHAR}, #{insuranceType,jdbcType=CHAR}, #{insuranceTime,jdbcType=VARCHAR}, 
+      #{manager,jdbcType=CHAR}, #{workingHours,jdbcType=CHAR}, #{laborProtectionTime,jdbcType=VARCHAR}, 
+      #{occupationalAccidentProtectionTime,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentBenefitList" >
     insert into advancedAgeRetirementReemploymentBenefitList
@@ -135,6 +142,18 @@
       </if>
       <if test="birthday != null" >
         birthday,
+      </if>
+      <if test="insuranceType != null" >
+        insurance_type,
+      </if>
+      <if test="insuranceTime != null" >
+        insurance_time,
+      </if>
+      <if test="manager != null" >
+        manager,
+      </if>
+      <if test="workingHours != null" >
+        working_hours,
       </if>
       <if test="laborProtectionTime != null" >
         labor_protection_time,
@@ -161,6 +180,18 @@
       </if>
       <if test="birthday != null" >
         #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceType != null" >
+        #{insuranceType,jdbcType=CHAR},
+      </if>
+      <if test="insuranceTime != null" >
+        #{insuranceTime,jdbcType=VARCHAR},
+      </if>
+      <if test="manager != null" >
+        #{manager,jdbcType=CHAR},
+      </if>
+      <if test="workingHours != null" >
+        #{workingHours,jdbcType=CHAR},
       </if>
       <if test="laborProtectionTime != null" >
         #{laborProtectionTime,jdbcType=VARCHAR},
@@ -197,6 +228,18 @@
       <if test="record.birthday != null" >
         birthday = #{record.birthday,jdbcType=VARCHAR},
       </if>
+      <if test="record.insuranceType != null" >
+        insurance_type = #{record.insuranceType,jdbcType=CHAR},
+      </if>
+      <if test="record.insuranceTime != null" >
+        insurance_time = #{record.insuranceTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manager != null" >
+        manager = #{record.manager,jdbcType=CHAR},
+      </if>
+      <if test="record.workingHours != null" >
+        working_hours = #{record.workingHours,jdbcType=CHAR},
+      </if>
       <if test="record.laborProtectionTime != null" >
         labor_protection_time = #{record.laborProtectionTime,jdbcType=VARCHAR},
       </if>
@@ -216,6 +259,10 @@
       employee_id = #{record.employeeId,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
       birthday = #{record.birthday,jdbcType=VARCHAR},
+      insurance_type = #{record.insuranceType,jdbcType=CHAR},
+      insurance_time = #{record.insuranceTime,jdbcType=VARCHAR},
+      manager = #{record.manager,jdbcType=CHAR},
+      working_hours = #{record.workingHours,jdbcType=CHAR},
       labor_protection_time = #{record.laborProtectionTime,jdbcType=VARCHAR},
       occupational_accident_protection_time = #{record.occupationalAccidentProtectionTime,jdbcType=VARCHAR}
     <if test="_parameter != null" >
@@ -237,6 +284,18 @@
       <if test="birthday != null" >
         birthday = #{birthday,jdbcType=VARCHAR},
       </if>
+      <if test="insuranceType != null" >
+        insurance_type = #{insuranceType,jdbcType=CHAR},
+      </if>
+      <if test="insuranceTime != null" >
+        insurance_time = #{insuranceTime,jdbcType=VARCHAR},
+      </if>
+      <if test="manager != null" >
+        manager = #{manager,jdbcType=CHAR},
+      </if>
+      <if test="workingHours != null" >
+        working_hours = #{workingHours,jdbcType=CHAR},
+      </if>
       <if test="laborProtectionTime != null" >
         labor_protection_time = #{laborProtectionTime,jdbcType=VARCHAR},
       </if>
@@ -253,6 +312,10 @@
       employee_id = #{employeeId,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       birthday = #{birthday,jdbcType=VARCHAR},
+      insurance_type = #{insuranceType,jdbcType=CHAR},
+      insurance_time = #{insuranceTime,jdbcType=VARCHAR},
+      manager = #{manager,jdbcType=CHAR},
+      working_hours = #{workingHours,jdbcType=CHAR},
       labor_protection_time = #{laborProtectionTime,jdbcType=VARCHAR},
       occupational_accident_protection_time = #{occupationalAccidentProtectionTime,jdbcType=VARCHAR}
     where identification = #{identification,jdbcType=VARCHAR}

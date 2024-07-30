@@ -46,4 +46,6 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.owasp.esapi/esapi
 	implementation group: 'org.owasp.esapi', name: 'esapi', version: '2.5.0.0'
 	
+	// https://mvnrepository.com/artifact/com.github.ulisesbocchio/jasypt-spring-boot-starter
+	implementation group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot-starter', version: '3.0.4'
 }

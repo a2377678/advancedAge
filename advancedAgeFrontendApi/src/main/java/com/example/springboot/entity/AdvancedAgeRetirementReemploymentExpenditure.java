@@ -3,8 +3,6 @@ package com.example.springboot.entity;
 import java.io.Serializable;
 
 public class AdvancedAgeRetirementReemploymentExpenditure implements Serializable {
-    private Integer advancedAgeRetirementReemploymentApplyId;
-
     private Integer id;
 
     private String planId;
@@ -27,15 +25,9 @@ public class AdvancedAgeRetirementReemploymentExpenditure implements Serializabl
 
     private String applicant;
 
+    private Integer advancedAgeRetirementReemploymentApplyId;
+
     private static final long serialVersionUID = 1L;
-
-    public Integer getAdvancedAgeRetirementReemploymentApplyId() {
-        return advancedAgeRetirementReemploymentApplyId;
-    }
-
-    public void setAdvancedAgeRetirementReemploymentApplyId(Integer advancedAgeRetirementReemploymentApplyId) {
-        this.advancedAgeRetirementReemploymentApplyId = advancedAgeRetirementReemploymentApplyId;
-    }
 
     public Integer getId() {
         return id;
@@ -123,5 +115,13 @@ public class AdvancedAgeRetirementReemploymentExpenditure implements Serializabl
 
     public void setApplicant(String applicant) {
         this.applicant = applicant == null ? null : applicant.trim();
+    }
+
+    public Integer getAdvancedAgeRetirementReemploymentApplyId() {
+        return advancedAgeRetirementReemploymentApplyId;
+    }
+
+    public void setAdvancedAgeRetirementReemploymentApplyId(Integer advancedAgeRetirementReemploymentApplyId) {
+        this.advancedAgeRetirementReemploymentApplyId = advancedAgeRetirementReemploymentApplyId;
     }
 }

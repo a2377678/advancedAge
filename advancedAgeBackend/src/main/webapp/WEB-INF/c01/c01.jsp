@@ -25,13 +25,7 @@
   <%@ include file="../header.jsp" %>
   <!---------------------- top end ---------------------->
 
-    
-  <div id="main_menu">
-    <div><a href="#" class="menu-1 in">繼續僱用高齡者</a></div>
-    <div><a href="#" class="menu-2">傳承專業技術與經驗</a></div>
-    <div><a href="#" class="menu-3">退休後再就業準備協助措施</a></div>
-    <div><a href="account01" class="account">申請帳號審核管理</a></div>
-  </div>
+  <%@ include file="../mainMenu.jsp" %>
 
   <!---------------------- left menu ---------------------->
   <%@ include file="../leftMenu.jsp" %>
@@ -57,34 +51,60 @@
       
 		<c:if test="${functionPermission.indexOf('C01')!=-1 }">
       <!------------------- search ------------------->
-      <form action="c01" method="post">
+      <form action="c01" method="post" id="searchForm">
       <div id="search_bar">
         <table class="table_01">
           <tr>
               <th width="20%">統一編號 / 扣繳編號：</th>
               <td width="20%"><input type="text" size="11" id="seq" name="seq" value="${base.seq }"></td>
               <th width="10%">案件狀態：</th>
-              <td>
-              <label><input name="caseStatus" type="radio" id="caseStatus5、6" class="radio" value="5、6" <c:if test="${base.caseStatus=='5、6' || base.caseStatus==null}">checked</c:if>/>
+<!--               <td> -->
+<%--               <label><input name="caseStatus" type="radio" id="caseStatus5、6" class="radio" value="5、6" <c:if test="${base.caseStatus=='5、6' || base.caseStatus==null}">checked</c:if>/> --%>
+<!--               不限</label> -->
+<%--               <label><input name="caseStatus" type="radio" id="caseStatus5" class="radio" value="5" <c:if test="${base.caseStatus=='5'}">checked</c:if>/> --%>
+<!--               待核銷</label> -->
+<%--               <label><input name="caseStatus" type="radio" id="caseStatus6" class="radio" value="6" <c:if test="${base.caseStatus=='6'}">checked</c:if>/> --%>
+<!--               已核銷</label> -->
+<!--               </td> -->
+			  <td colspan="2">
+			  <label><input name="caseStatus" type="radio" id="caseStatus5" class="radio" value="5、6、7" <c:if test="${base.caseStatus=='5、6、7' || base.caseStatus==null}">checked</c:if>/>
               不限</label>
-              <label><input name="caseStatus" type="radio" id="caseStatus5" class="radio" value="5" <c:if test="${base.caseStatus=='5'}">checked</c:if>/>
+              <label><input name="caseStatus" type="radio" id="caseStatus5" class="radio" value="5" <c:if test="${base.caseStatus=='5' || base.caseStatus==null}">checked</c:if>/>
               待核銷</label>
               <label><input name="caseStatus" type="radio" id="caseStatus6" class="radio" value="6" <c:if test="${base.caseStatus=='6'}">checked</c:if>/>
-              已核銷</label>
+              不合格</label>
+              <label><input name="caseStatus" type="radio" id="caseStatus7" class="radio" value="7" <c:if test="${base.caseStatus=='7'}">checked</c:if>/>
+              合格</label>
               </td>
-              <td width="22%">&nbsp;</td>
           </tr>
             <tr>
               <th>承辦單位 / 行政區：</th>
               <td><select name="unit" id="unit">
-                <option value>不限</option>
-                <c:forEach  items="${unitList}"  var="item"  varStatus="userStatus">
-		      		<option value="${item.code}" <c:if test="${base.unit==item.code}">selected</c:if> >${item.name}</option>
-		      	</c:forEach>
+                <c:if test="${unit=='F' }">
+					<option value>不限</option>                
+	                <c:forEach  items="${unitList}"  var="item"  varStatus="userStatus">
+	                	<c:if test="${item.code!='F' }">
+			      			<option value="${item.code}" <c:if test="${base.unit==item.code}">selected</c:if> >${item.name}</option>
+			      		</c:if>
+			      	</c:forEach>
+		      	</c:if>
+		      	<c:if test="${unit!='F' }">
+		      		<c:forEach  items="${unitList}"  var="item"  varStatus="userStatus">
+		      			<c:if test="${unit==item.code}">
+		      				<option value="${item.code}" selected>${item.name}</option>
+		      			</c:if>
+		      		</c:forEach>
+		      	</c:if>
               </select></td>
-              <th>&nbsp;</th>
-              <td>&nbsp;</td>
-              <td>
+              <th>申請年度：</th>
+              <td><select name="year" id="year">
+                <option value>不限</option>
+                <option value="113" <c:if test="${base.year=='113' }">selected</c:if>>113年</option>
+                <option value="112" <c:if test="${base.year=='112' }">selected</c:if>>112年</option>
+                <option value="111" <c:if test="${base.year=='111' }">selected</c:if>>111年</option>
+                <option value="110" <c:if test="${base.year=='110' }">selected</c:if>>110年</option>
+              </select></td>
+              <td width="22%">
               <div class="btn_box-td">
                 <button type="submit" class="btn_01" value="開始查詢">開始查詢</button>
                 <button type="reset" class="btn_02" value="清除">清除</button>
@@ -93,7 +113,10 @@
             </tr>
         </table>
       </div>
-      
+      <input type="text" name="numbersOfPage" value="${pagination.numbersOfPage}" style="display:none"/>
+      <input type="text" name="page" id="page" value="${pagination.page}" style="display:none"/>
+      <input type="text" name="totalNumbers" value="${pagination.totalNumbers}" style="display:none"/>
+      <input type="text" name="totalPages" value="${pagination.totalPages}" style="display:none"/>
       </form>
       
       

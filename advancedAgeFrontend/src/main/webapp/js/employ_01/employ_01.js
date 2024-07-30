@@ -1,6 +1,7 @@
 function getVerify() {
+	
     // $("#imgCode").on("click", function() {
-    $("#imgVerify").attr("src", 'getVerify?' + Math.random());//jquery方式
+    $("#imgVerify").attr("src", 'getVerify?' + (new Date()).getTime());//jquery方式
     // });
 }
 

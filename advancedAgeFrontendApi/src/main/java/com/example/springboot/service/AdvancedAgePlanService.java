@@ -16,14 +16,29 @@ public class AdvancedAgePlanService{
 	AdvancedAgePlanMapper advancedAgePlanMapper;
 	
 	public int insertSelective(AdvancedAgePlan record) {
-		return advancedAgePlanMapper.insertSelective(record);
+		int a = advancedAgePlanMapper.insertSelective(record);
+		if(Integer.valueOf(a) != null){
+			return a;
+		}else{
+			return 0;
+		}
 	}
 	
 	public AdvancedAgePlan selectByPrimaryKey(Integer advancedAgeApplyId) {
-		return advancedAgePlanMapper.selectByPrimaryKey(advancedAgeApplyId);
+		AdvancedAgePlan advancedAgePlan = advancedAgePlanMapper.selectByPrimaryKey(advancedAgeApplyId);
+		if(advancedAgePlan != null) {
+			return advancedAgePlan;
+		}else {
+			return null;
+		}
 	}
 	
 	public int updateByPrimaryKeySelective(AdvancedAgePlan record) {
-		return advancedAgePlanMapper.updateByPrimaryKeySelective(record);
+		int a = advancedAgePlanMapper.updateByPrimaryKeySelective(record);
+		if(Integer.valueOf(a) != null){
+			return a;
+		}else{
+			return 0;
+		}
 	}
 }

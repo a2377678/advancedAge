@@ -39,8 +39,8 @@
   </div>
   <!-- Modal-1-2 -->
   
-  <!-- Modal-2 -->
-  <div class="modal modal-dialog-scrollable fade" id="exampleModal-2"
+  <!-- Modal-2-1 -->
+  <div class="modal modal-dialog-scrollable fade" id="exampleModal-2-1"
    tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -48,7 +48,18 @@
       </div>
     </div>
   </div>
-  <!-- Modal-2 -->
+  <!-- Modal-2-1 -->
+  
+  <!-- Modal-2-2 -->
+  <div class="modal modal-dialog-scrollable fade" id="exampleModal-2-2"
+   tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <img src="/file/SAMPLE/員工個人投保資料.jpg" alt="員工個人投保資料">
+      </div>
+    </div>
+  </div>
+  <!-- Modal-2-2 -->
   
   <!-- Modal-3 -->
   <div class="modal modal-dialog-scrollable fade" id="exampleModal-3"
@@ -77,15 +88,27 @@
   
   <!--- main --->
   <div class="main"> 
-    
+    <a href="#C" title="中央內容區塊" id="AC" accesskey="C" name="C">:::</a> <!---無障礙--->
   <!------------ 申請流程 ------------>
   <div class="apply_main">
-    <h1>繼續僱用高齡者補助計畫</h1>
+  <%@ include file="countDownComponent.jsp" %>
+    <!---無障礙/麵包屑--->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index" title="首頁">首頁</a></li>
+        <li class="breadcrumb-item active" aria-current="page">線上申辦</li>
+        <li class="breadcrumb-item active" aria-current="page">繼續僱用高齡者補助 - 申請作業</li>
+      </ol>
+    </nav>
+    <h1>繼續僱用高齡者補助 - 申請作業</h1>
     <h2>申請流程 Step4. 上傳證明文件</h2>
     
-    <!---申辦前準備--->
-    <h3>檔案格式請以 jpg、png、pdf、rar、zip、7z 為限，<br>
-    各項文件檔案大小不得超過 5mb</h3>
+    <!---上傳證明文件--->
+    <h3>
+    上傳之檔案格式請符合以下規定，其他格式則不受理：<br>
+    jpg、png、pdf 等單一檔，檔案大小以 5mb 為限，<br>
+    rar、zip、7z 等壓縮檔，檔案大小以 50mb 為限。<br>
+    </h3>
     
  
  
@@ -121,15 +144,15 @@
       	</c:forEach>
         <div class="full">
 	        <label for="registerProof<c:out value="${registerProofNumber+1}"/>">文件(<c:out value="${registerProofNumber+1}"/>)</label>
-	        <input type="file" id="registerProof<c:out value="${registerProofNumber+1}"/>" name="registerProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z">
-	        <button class="add" onclick="delRegisterProof(<c:out value="${registerProofNumber+1}"/>)">－</button>
+	        <input type="file" id="registerProof<c:out value="${registerProofNumber+1}"/>" name="registerProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z,.doc,.docx,.odt">
+<%-- 	        <button class="add" onclick="delRegisterProof(<c:out value="${registerProofNumber+1}"/>)">－</button> --%>
 	        <button class="add" onclick="addRegisterProof(<c:out value="${registerProofNumber+1}"/>)" style>＋</button>
         </div>
         </c:when>
         <c:otherwise>
         <div class="full">
 	        <label for="registerProof1">文件(1)</label>
-	        <input type="file" id="registerProof1" name="registerProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z">
+	        <input type="file" id="registerProof1" name="registerProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z,.doc,.docx,.odt">
 <!-- 	        <button class="add" onclick="delRegisterProof(1)">－</button> -->
 	        <button class="add" onclick="addRegisterProof(1)" style>＋</button>
         </div>
@@ -148,9 +171,12 @@
     
       <div class="title_main">
       <span>投保勞保或職災保險證明文件</span>
-      	<em><!-- Button trigger modal-2 -->
+      	<em>請檢附最近一個月投保人數之證明及欲申請勞工之僱用證明
+      	<!-- Button trigger modal-2 -->
           <button type="button" class="btn btn-success px-2 py-0" data-bs-toggle="modal" 
-          data-bs-target="#exampleModal-2">範例 1</button>
+          data-bs-target="#exampleModal-2-1">範例 1</button>
+          <button type="button" class="btn btn-success px-2 py-0" data-bs-toggle="modal" 
+          data-bs-target="#exampleModal-2-2">範例 2</button>
         </em>
       </div>
       
@@ -172,15 +198,15 @@
       	</c:forEach>
         <div class="full">
 	        <label for="insureProof<c:out value="${insureProofNumber+1}"/>">文件(<c:out value="${insureProofNumber+1}"/>)</label>
-	        <input type="file" id="insureProof<c:out value="${insureProofNumber+1}"/>" name="insureProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z">
-	        <button class="add" onclick="delInsureProof(<c:out value="${insureProofNumber+1}"/>)">－</button>
+	        <input type="file" id="insureProof<c:out value="${insureProofNumber+1}"/>" name="insureProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z,.doc,.docx,.odt">
+<%-- 	        <button class="add" onclick="delInsureProof(<c:out value="${insureProofNumber+1}"/>)">－</button> --%>
 	        <button class="add" onclick="addInsureProof(<c:out value="${insureProofNumber+1}"/>)" style>＋</button>
         </div>
         </c:when>
         <c:otherwise>
         <div class="full">
 	        <label for="insureProof1">文件(1)</label>
-	        <input type="file" id="insureProof1" name="insureProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z">
+	        <input type="file" id="insureProof1" name="insureProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z,.doc,.docx,.odt">
 <!-- 	        <button class="add" onclick="delInsureProof(1)">－</button> -->
 	        <button class="add" onclick="addInsureProof(1)" style>＋</button>
         </div>
@@ -224,15 +250,15 @@
       	</c:forEach>
         <div class="full">
 	        <label for="salaryProof<c:out value="${salaryProofNumber+1}"/>">文件(<c:out value="${salaryProofNumber+1}"/>)</label>
-	        <input type="file" id="salaryProof<c:out value="${salaryProofNumber+1}"/>" name="salaryProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z">
-	        <button class="add" onclick="delSalaryProof(<c:out value="${salaryProofNumber+1}"/>)">－</button>
+	        <input type="file" id="salaryProof<c:out value="${salaryProofNumber+1}"/>" name="salaryProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z,.doc,.docx,.odt">
+<%-- 	        <button class="add" onclick="delSalaryProof(<c:out value="${salaryProofNumber+1}"/>)">－</button> --%>
 	        <button class="add" onclick="addSalaryProof(<c:out value="${salaryProofNumber+1}"/>)" style>＋</button>
         </div>
         </c:when>
         <c:otherwise>
         <div class="full">
 	        <label for="salaryProof1">文件(1)</label>
-	        <input type="file" id="salaryProof1" name="salaryProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z">
+	        <input type="file" id="salaryProof1" name="salaryProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z,.doc,.docx,.odt">
 	        <button class="add" onclick="addSalaryProof(1)" style>＋</button>
         </div>
         </c:otherwise></c:choose>
@@ -275,15 +301,15 @@
       	</c:forEach>
         <div class="full">
 	        <label for="attendanceProof<c:out value="${attendanceProofNumber+1}"/>">文件(<c:out value="${attendanceProofNumber+1}"/>)</label>
-	        <input type="file" id="attendanceProof<c:out value="${attendanceProofNumber+1}"/>" name="attendanceProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z">
-	        <button class="add" onclick="delAttendanceProof(<c:out value="${attendanceProofNumber+1}"/>)">－</button>
+	        <input type="file" id="attendanceProof<c:out value="${attendanceProofNumber+1}"/>" name="attendanceProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z,.doc,.docx,.odt">
+<%-- 	        <button class="add" onclick="delAttendanceProof(<c:out value="${attendanceProofNumber+1}"/>)">－</button> --%>
 	        <button class="add" onclick="addAttendanceProof(<c:out value="${attendanceProofNumber+1}"/>)" style>＋</button>
         </div>
         </c:when>
         <c:otherwise>
         <div class="full">
           <label for="attendanceProof1">文件(1)</label>
-          <input type="file" id="attendanceProof1" name="attendanceProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z">
+          <input type="file" id="attendanceProof1" name="attendanceProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z,.doc,.docx,.odt">
           <button class="add" onclick="addAttendanceProof(1)" style>＋</button>
         </div>
         </c:otherwise></c:choose>
@@ -320,15 +346,15 @@
       	</c:forEach>
         <div class="full">
 	        <label for="necessaryProof<c:out value="${necessaryProofNumber+1}"/>">文件(<c:out value="${necessaryProofNumber+1}"/>)</label>
-	        <input type="file" id="necessaryProof<c:out value="${necessaryProofNumber+1}"/>" name="necessaryProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z">
-	        <button class="add" onclick="delNecessaryProof(<c:out value="${necessaryProofNumber+1}"/>)">－</button>
+	        <input type="file" id="necessaryProof<c:out value="${necessaryProofNumber+1}"/>" name="necessaryProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z,.doc,.docx,.odt">
+<%-- 	        <button class="add" onclick="delNecessaryProof(<c:out value="${necessaryProofNumber+1}"/>)">－</button> --%>
 	        <button class="add" onclick="addNecessaryProof(<c:out value="${necessaryProofNumber+1}"/>)" style>＋</button>
         </div>
         </c:when>
         <c:otherwise>
         <div class="full">
           <label for="necessaryProof1">文件(1)</label>
-          <input type="file" id="necessaryProof1" name="necessaryProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z">
+          <input type="file" id="necessaryProof1" name="necessaryProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z,.doc,.docx,.odt">
           <button class="add" onclick="addNecessaryProof(1)" style>＋</button>
         </div>
         </c:otherwise></c:choose>
@@ -364,7 +390,7 @@
             </div>
             <div class="pt-3 pb-5">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">返回檢查</button>
-              <button type="button" class="btn btn-primary" onclick="javascript:location.href='employ_05'">確認完成，下一步</button>
+              <button type="button" class="btn btn-primary" onclick="fileUploadCheck()">確認完成，下一步</button>
             </div>
           </div>
         </div>
@@ -378,14 +404,7 @@
   <!--- main end ---> 
   
   <!--- footer --->
-  <footer class="copyright">
-    <section>
-      <div>勞動力發展署：24219新北市新莊區中平路439號南棟4樓　電話代表號：(02)8995-6000　客服專線：0800-777-888</div>
-      <div>本署服務時間：週一至週五　上午8時30分至12時30分，下午13時30分至17時30分</div>
-      <div>最佳解析度1024x768 ，建議更新瀏覽器至以下版本：最新版本Chrome、最新版本Firefox</div>
-      <div>中華民國勞動部勞動力發展署版權所有 © 2021 All rights reserved. </div>
-    </section>
-  </footer>
+  <%@ include file="footer.jsp" %>
   <!--- footer end ---> 
   
 </div>

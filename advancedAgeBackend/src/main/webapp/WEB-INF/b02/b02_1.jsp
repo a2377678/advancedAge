@@ -25,13 +25,7 @@
   <%@ include file="../header.jsp" %>
   <!---------------------- top end ---------------------->
 
-    
-  <div id="main_menu">
-    <div><a href="javascript:void(0);" class="menu-1 in">繼續僱用高齡者</a></div>
-    <div><a href="javascript:void(0);" class="menu-2">傳承專業技術與經驗</a></div>
-    <div><a href="javascript:void(0);" class="menu-3">退休後再就業準備協助措施</a></div>
-    <div><a href="account01" class="account">申請帳號審核管理</a></div>
-  </div>
+  <%@ include file="../mainMenu.jsp" %>
 
   <!---------------------- left menu ---------------------->
   <%@ include file="../leftMenu.jsp" %>
@@ -79,7 +73,7 @@
           <th>單位名稱</th>
           <td width="35%">${apply.companyName }</td>
           <th width="18%">負責人</th>
-          <td>${apply.principal }</td>
+          <td>${companyInfoData.get("principal") }</td>
         </tr>
         <tr>
           <th>統一編號 / 扣繳編號</th>
@@ -93,8 +87,7 @@
         <tr>
           <th>勞保投保證號</th>
           <td colspan="3">${apply.guaranteeNumber.replace(';','、')}</td>
-          </tr>
-        <tr>
+        </tr>
         <tr>
           <th>聯絡地址</th>
           <td colspan="3">
@@ -104,7 +97,7 @@
 	      	<c:forEach  items="${areaList}"  var="item"  varStatus="userStatus">
 	      		<c:if test="${apply.contactArea==item.code}">${item.name}</c:if>
 	      	</c:forEach>
-          ${apply.contactAddress}</td>
+          ${apply.contactAddress.replace("<", "&lt;").replace(">", "&gt;")}</td>
           </tr>
         <tr>
           <th>聯絡人</th>
@@ -113,22 +106,14 @@
           <td>${apply.contactJobtitle}</td>
         </tr>
         <tr>
-          <th>連絡電話 / 手機</th>
+          <th>連絡電話</th>
+          <td>${apply.contactWorkPhoneAreaCode} - ${apply.contactWorkPhone} #${apply.contactWorkPhoneExtension}</td>
+          <th>行動電話</th>
           <td>${apply.contactPhone}</td>
-          <th>傳真號碼</th>
-          <td>${apply.faxAreaCode}-${apply.fax}</td>
         </tr>
         <tr>
-          <th>聯絡地址</th>
-          <td>
-          	<c:forEach  items="${cityList}"  var="item"  varStatus="userStatus">
-      			<c:if test="${apply.contactCity==item.code}">${item.name}</c:if>
-	      	</c:forEach>
-	      	<c:forEach  items="${areaList}"  var="item"  varStatus="userStatus">
-	      		<c:if test="${apply.contactArea==item.code}">${item.name}</c:if>
-	      	</c:forEach>
-          	${apply.contactAddress}
-          </td>
+          <th>傳真號碼</th>
+          <td>${apply.faxAreaCode}-${apply.fax}</td>
           <th>電子郵件</th>
           <td>${apply.email}</td>
         </tr>
@@ -154,7 +139,7 @@
         </tr>
         <tr>
           <th>2</th>
-          <td>本單位雇用勞工總人數達3人以上？ ( 配偶或三等親之內勞工不列入人數計算 )</td>
+          <td>本單位僱用勞工總人數達3人以上？ ( 配偶或三等親之內勞工不列入人數計算 )</td>
           <td width="6%"><c:if test="${apply.workersEmployment=='Y'}">是</c:if>
           				<c:if test="${apply.workersEmployment=='N'}">否</c:if></td>
           <td>
@@ -175,8 +160,8 @@
         <tr>
           <th>4</th>
           <td>本單位申請繼續僱用補助時未曾領取政府機關與本計畫屬性相同之津貼？</td>
-          <td width="6%"><c:if test="${apply.relatedAmounts=='Y'}">是</c:if>
-          				<c:if test="${apply.relatedAmounts=='N'}">否</c:if></td>
+          <td width="6%"><c:if test="${apply.relatedAmounts=='Y'}">有</c:if>
+          				<c:if test="${apply.relatedAmounts=='N'}">無</c:if></td>
           <td>
           <label><input name="checkRelatedAmounts" type="radio" class="radio" id="checkRelatedAmounts_1" value="Y" <c:if test="${base[0].checkRelatedAmounts=='Y'}">checked</c:if>/>符合</label>
           <label><input name="checkRelatedAmounts" type="radio" id="checkRelatedAmounts_0" class="radio not" value="N" <c:if test="${base[0].checkRelatedAmounts=='N'}">checked</c:if>/>不符</label>
@@ -208,7 +193,7 @@
       <table class="table_03" id="employedTable">
         <tr>
           <th width="18%">主要業務 / 服務項目</th>
-          <td colspan="3">${plan.items}</td>
+          <td colspan="3">${plan.items.replace("<", "&lt;").replace(">", "&gt;")}</td>
         </tr>
         <tr>
           <th width="18%">目前員工人數</th>
@@ -242,7 +227,7 @@
           <td>${plan.nearHighEmploymentNumber}</td>
         </tr>
         <tr>
-          <th width="18%">申請計畫人數 (D)</th>
+          <th width="18%">規劃繼續僱用人數 (B)</th>
           <td id="employmenyListSize">${employmenyListSize}</td>
         </tr>
         <tr>
@@ -259,7 +244,7 @@
         </tr>
         <tr>
           <th class="point">合格人數比率 (F)</th>
-          <td><b id="checkEmploymentPercentage"></b>%　(F) = (E) / (D) x 100%</td>
+          <td><b id="checkEmploymentPercentage"></b>%　(F) = (E) / (B) x 100%</td>
         </tr>
         <tr>
           <th class="point">檢核狀態</th>
@@ -271,6 +256,11 @@
         </tr>
       </table> 
         
+      <div class="btn_box-4">
+        <button type="button" class="btn_01" onclick="checkData('${base[0].get("seq")}','${base[0].get("year")}','${base[0].get("id")}')">補件通知</button>
+        <button type="button" class="btn_01" onclick="save()">儲存資料</button>
+      </div>
+      
       <!------------------- table 3 ------------------->
       <div class="file_title-2">檢附文件審核</div>
         <table class="table_04">
@@ -345,17 +335,17 @@
               <option value="Y" <c:if test="${base[0].checkAllowanceStatus=='Y'}">selected</c:if>>合格</option>
               <option value="N" <c:if test="${base[0].checkAllowanceStatus=='N'}">selected</c:if>>不合格</option>
             </select></td>
-            <td style="text-align:left"><a href="javascript:void(0);" target="_blank"><u>詳細資料</u></a>&nbsp; (另開頁面)</td>
+            <td style="text-align:left"><a href="https://3in1t.ejob.gov.tw/" target="_blank"><u>詳細資料</u></a>&nbsp; (另開頁面)</td>
             <td><input type="text" value="${base[0].checkAllowanceRemark}" size="50" id="checkAllowanceRemark"></td>
           </tr>
           <tr>
-            <td><b>CGSS</b></td>
+            <td><b>民間團體補(捐)助系統CGSS</b></td>
             <td><select name="checkCgssStatus" id="checkCgssStatus">
               <option>---</option>
               <option value="Y" <c:if test="${base[0].checkCgssStatus=='Y'}">selected</c:if>>合格</option>
               <option value="N" <c:if test="${base[0].checkCgssStatus=='N'}">selected</c:if>>不合格</option>
             </select></td>
-            <td style="text-align:left"><a href="javascript:void(0);" target="_blank"><u>詳細資料</u></a>&nbsp; (另開頁面)</td>
+            <td style="text-align:left"><a href="https://subsidy.nat.gov.tw/index.aspx" target="_blank"><u>詳細資料</u></a>&nbsp; (另開頁面)</td>
             <td><input type="text" <c:if test="${base[0].checkCgssRemark==''}">value="有/無違反民間團體補捐助規定"</c:if><c:if test="${base[0].checkCgssRemark!=''}">value="${base[0].checkCgssRemark}"</c:if> size="50" id="checkCgssRemark"></td>
           </tr>
           <tr>
@@ -386,11 +376,15 @@
             <td><input type="text" id="countersignId" value="${base[0].countersignId }"></td>
             <th class="point"><span class="point">審核結果</span></th>
             <td><label>
-                <input name="caseStatus" type="radio" id="caseStatus3" class="radio" value="3" <c:if test="${base[0].caseStatus=='3' }">checked</c:if>/>
+                <input name="caseStatus" type="radio" id="caseStatus3" class="radio" value="3" <c:if test="${base[0].caseStatus>=3 }">checked</c:if>/>
                 通過 </label>
               <label>
                 <input name="caseStatus" type="radio" id="caseStatus2" class="radio not" value="2" <c:if test="${base[0].caseStatus=='2' }">checked</c:if>/>
-            未通過</label></td>
+            未通過</label>
+              <label>
+            	<input name="caseStatus" type="radio" id="caseStatus1" class="radio" value="1" <c:if test="${base[0].caseStatus=='1' }">checked</c:if>/>
+            審核中</label>
+            </td>
           </tr>
           <tr>
             <th class="point">審核意見</th>
@@ -426,6 +420,7 @@
       <div class="btn_box-3">
       <input type="button" class="btn_02" value="取消修改" onclick="cancel()"/>
       <input type="button" class="btn_01" value="儲存資料" onclick="save()"/>
+      <button type="button" class="btn_01" onclick="print('${base[0].get("seq")}','${base[0].get("year")}','${base[0].get("id")}')">列印</button>
       </div>
       <br><br><br>
 

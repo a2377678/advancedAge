@@ -33,7 +33,7 @@
           <th width="13%">單位名稱：</th>
           <td width="36%">${apply.companyName}</td>
           <th width="18%">負責人：</th>
-          <td>${apply.principal}</td>
+          <td>${companyInfoData.get("principal") }</td>
         </tr>
         <tr>
           <th>行業別：</th>
@@ -222,7 +222,7 @@
         <span>上傳日期：
           
           <span class="btn">
-	          <button type="button" <c:if test="${recordStatus.last}">class="btn_a1s"</c:if><c:if test="${!recordStatus.last}">class="btn_a3s" onclick="fileStatusSave()"</c:if>>儲存</button>
+	          <button type="button" <c:if test="${recordStatus.last}">class="btn_a1s"</c:if><c:if test="${!recordStatus.last}">class="btn_a3s"</c:if>>儲存</button>
 	          <button type="button" class="btn_a2s" value="${recordStatus.count}">下載</button>
           </span>
           <span class="time">${recordItem.split('、')[5].substring(recordItem.split('、')[5].indexOf(" ")+1,recordItem.split('、')[5].length())}</span>
@@ -277,14 +277,14 @@
     
     <div class="mail_box">
       <div class="mail_text" id="mailHeader">
-        臺端申請本部111年度繼續僱用高齡者補助，經查核附件尚有缺件或不符規定。<br>
+        臺端申請本部${apply.applyYear}年度繼續僱用高齡者補助，經查核附件尚有缺件或不符規定。<br>
         需補附件項目及原因如下：
       </div>
-      <textarea class="textarea" rows="5" placeholder="請輸入文字" style="width:925px" id="mailContent"></textarea>
+      <textarea class="textarea" rows="5" placeholder="請輸入文字" style="width:925px" id="mailContent">${base.emailContent.replace('\\n','&#13;&#10;') }</textarea>
       <div class="mail_text" id="mailFooter">
       補件網址：<a href="${mailDomain}/advancedAgeFrontend/employ">${mailDomain}/advancedAgeFrontend/employ</a><br>
-        經通知限期補正，因逾期未補件，依規定不予受理。<br>
-本項補助申請之附件檢查 "電子E-mail通知" 於 111年09月12日 發送，線上查詢內容與公文通知如有不同時，以公文通知為主。<br>
+        經通知限期補正，如逾期未補件，依規定不予受理。<br>
+本項補助申請之附件檢查 "電子E-mail通知" 於 ${today.substring(0,4)-1911}年${today.substring(4,6)}月${today.substring(6,8)}日 發送，線上查詢內容與公文通知如有不同時，以公文通知為主。<br>
 祝福您　健康如意　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　勞動部敬上
       </div>
     </div>

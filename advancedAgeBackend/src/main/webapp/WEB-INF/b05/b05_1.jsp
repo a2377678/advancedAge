@@ -10,101 +10,14 @@
 <link href="css/file.css" rel="stylesheet" type="text/css" />
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui.js"></script>
 <script type="text/javascript" src="js/b05/b05_1.js"></script>
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 
-<script type="text/javascript">
-$(function(){
-	$('#condition').click(function(){
-		$('#unitData').find('a').removeClass();
-		$(this).find('a').addClass('in');
-		$('#unitDataTable').hide();
-		$('#conditionTable').show();
-	})
-	
-	$('#unitData').click(function(){
-		$('#condition').find('a').removeClass();
-		$(this).find('a').addClass('in');
-		$('#unitDataTable').show();
-		$('#conditionTable').hide();
-	})
-	
-	$('#employed').click(function(){
-		$('#list').find('a').removeClass();
-		$('#situation').find('a').removeClass();
-		$(this).find('a').addClass('in color-2');
-		$('#employedTable').show();
-		$('#listTable').hide();
-		$('#situationTable').hide();
-	})
-	
-	$('#list').click(function(){
-		$('#employed').find('a').removeClass();
-		$('#situation').find('a').removeClass();
-		$(this).find('a').addClass('in color-2');
-		$('#employedTable').hide();
-		$('#listTable').show();
-		$('#situationTable').hide();
-	})
-	
-	$('#situation').click(function(){
-		$('#employed').find('a').removeClass();
-		$('#list').find('a').removeClass();
-		$(this).find('a').addClass('in color-2');
-		$('#employedTable').hide();
-		$('#listTable').hide();
-		$('#situationTable').show();
-	})
-	
-	$('#protection').click(function(){
-		$('#approve').find('a').removeClass();
-		$('#allowance').find('a').removeClass();
-		$('#grant').find('a').removeClass();
-		$(this).find('a').addClass('in color-3');
-		$('#protectionTable').show();
-		$('#approveTable').hide();
-		$('#allowanceTable').hide();
-		$('#grantTable').hide();
-	})
-	
-	$('#approve').click(function(){
-		$('#protection').find('a').removeClass();
-		$('#allowance').find('a').removeClass();
-		$('#grant').find('a').removeClass();
-		$(this).find('a').addClass('in color-3');
-		$('#protectionTable').hide();
-		$('#approveTable').show();
-		$('#allowanceTable').hide();
-		$('#grantTable').hide();
-	})
-	$('#allowance').click(function(){
-		$('#protection').find('a').removeClass();
-		$('#approve').find('a').removeClass();
-		$('#grant').find('a').removeClass();
-		$(this).find('a').addClass('in color-3');
-		$('#protectionTable').hide();
-		$('#approveTable').hide();
-		$('#allowanceTable').show();
-		$('#grantTable').hide();
-	})
-	$('#grant').click(function(){
-		$('#protection').find('a').removeClass();
-		$('#approve').find('a').removeClass();
-		$('#allowance').find('a').removeClass();
-		$(this).find('a').addClass('in color-3');
-		$('#protectionTable').hide();
-		$('#approveTable').hide();
-		$('#allowanceTable').hide();
-		$('#grantTable').show();
-	})
-})
-
-</script>
 </head>
 
 
@@ -116,13 +29,7 @@ $(function(){
   <%@ include file="../header.jsp" %>
   <!---------------------- top end ---------------------->
 
-    
-  <div id="main_menu">
-    <div><a href="#" class="menu-1 in">繼續僱用高齡者</a></div>
-    <div><a href="#" class="menu-2">傳承專業技術與經驗</a></div>
-    <div><a href="#" class="menu-3">退休後再就業準備協助措施</a></div>
-    <div><a href="account01" class="account">申請帳號審核管理</a></div>
-  </div>
+  <%@ include file="../mainMenu.jsp" %>
 
   <!---------------------- left menu ---------------------->
   <%@ include file="../leftMenu.jsp" %>
@@ -170,7 +77,7 @@ $(function(){
           <th>單位名稱</th>
           <td width="35%">${apply.companyName }</td>
           <th width="18%">負責人</th>
-          <td>${apply.principal }</td>
+          <td>${companyInfoData.get("principal") }</td>
         </tr>
         <tr>
           <th>統一編號 / 扣繳編號</th>
@@ -184,8 +91,7 @@ $(function(){
         <tr>
           <th>勞保投保證號</th>
           <td colspan="3">${apply.guaranteeNumber.replace(';','、')}</td>
-          </tr>
-        <tr>
+        </tr>
         <tr>
           <th>聯絡地址</th>
           <td colspan="3">
@@ -195,7 +101,7 @@ $(function(){
 	      	<c:forEach  items="${areaList}"  var="item"  varStatus="userStatus">
 	      		<c:if test="${apply.contactArea==item.code}">${item.name}</c:if>
 	      	</c:forEach>
-          ${apply.contactAddress}</td>
+          ${apply.contactAddress.replace("<", "&lt;").replace(">", "&gt;")}</td>
           </tr>
         <tr>
           <th>聯絡人</th>
@@ -218,7 +124,7 @@ $(function(){
 	      	<c:forEach  items="${areaList}"  var="item"  varStatus="userStatus">
 	      		<c:if test="${apply.contactArea==item.code}">${item.name}</c:if>
 	      	</c:forEach>
-          	${apply.contactAddress}
+          	${apply.contactAddress.replace("<", "&lt;").replace(">", "&gt;")}
           </td>
           <th>電子郵件</th>
           <td>${apply.email}</td>
@@ -246,7 +152,7 @@ $(function(){
         </tr>
         <tr>
           <th>2</th>
-          <td>本單位雇用勞工總人數達3人以上？ ( 配偶或三等親之內勞工不列入人數計算 )</td>
+          <td>本單位僱用勞工總人數達3人以上？ ( 配偶或三等親之內勞工不列入人數計算 )</td>
           <td width="6%"><c:if test="${apply.workersEmployment=='Y'}">是</c:if>
           				<c:if test="${apply.workersEmployment=='N'}">否</c:if></td>
           <td>
@@ -267,8 +173,8 @@ $(function(){
         <tr>
           <th>4</th>
           <td>本單位申請繼續僱用補助時未曾領取政府機關與本計畫屬性相同之津貼？</td>
-          <td width="6%"><c:if test="${apply.relatedAmounts=='Y'}">是</c:if>
-          				<c:if test="${apply.relatedAmounts=='N'}">否</c:if></td>
+          <td width="6%"><c:if test="${apply.relatedAmounts=='Y'}">有</c:if>
+          				<c:if test="${apply.relatedAmounts=='N'}">無</c:if></td>
           <td>
           		<c:if test="${base[0].checkRelatedAmounts=='Y'}">符合</c:if>
           		<c:if test="${base[0].checkRelatedAmounts=='N'}">不符合</c:if>
@@ -334,7 +240,7 @@ $(function(){
           <td>${plan.nearHighEmploymentNumber}</td>
         </tr>
         <tr>
-          <th width="18%">申請計畫人數 (D)</th>
+          <th width="18%">規劃繼續僱用人數 (B)</th>
           <td id="employmenyListSize">${employmenyListSize}</td>
         </tr>
         <tr>
@@ -347,11 +253,11 @@ $(function(){
         </tr>
         <tr>
           <th class="point">審查合格人數 (E)</th>
-          <td><input type="text" size="5" id="checkEmploymentPerson" value="${base[0].checkEmploymentPerson }"></td>
+          <td><input type="text" size="5" id="checkEmploymentPerson" value="${base[0].checkEmploymentPerson }" disabled></td>
         </tr>
         <tr>
           <th class="point">合格人數比率 (F)</th>
-          <td><b id="checkEmploymentPercentage"></b>%　(F) = (E) / (D) x 100%</td>
+          <td><b id="checkEmploymentPercentage"></b>%　(F) = (E) / (B) x 100%</td>
         </tr>
         <tr>
           <th class="point">檢核狀態</th>
@@ -359,7 +265,7 @@ $(function(){
         </tr>
         <tr>
           <th>審查意見</th>
-          <td><textarea rows="5" style="width:700px" id="checkEmploymentRemark">${base[0].checkEmploymentRemark.replace("\\n","&#13;&#10;") }</textarea></td>
+          <td><textarea rows="5" style="width:700px" id="checkEmploymentRemark" disabled>${base[0].checkEmploymentRemark.replace("\\n","&#13;&#10;") }</textarea></td>
         </tr>
       </table> 
         
@@ -381,7 +287,7 @@ $(function(){
             <td><c:if test="${base[0].get('fileStatus')==4}"><span class="text_pass">合格</span></c:if>
             <c:if test="${base[0].get('fileStatus')!=4}"><span class="text_warn">缺件</span></c:if></td>
             <td width="14%"><a href="javascript:void(0);" onclick="attachment('${base[0].get("seq")}','${base[0].get("year")}','${base[0].get("id")}')"><u>查看資訊頁</u></a></td>
-            <td style="text-align:left"><input type="text" id="checkAttachmentRemark" value="${base[0].checkAttachmentRemark }" size="50"></td>
+            <td style="text-align:left"><input type="text" id="checkAttachmentRemark" value="${base[0].checkAttachmentRemark }" size="50" disabled></td>
           </tr>
         </table>
 
@@ -401,12 +307,12 @@ $(function(){
             <c:if test="${not empty blackList}">
 	            <td><span class="text_warn" id="checkBlacklistStatus">不合格</span></td>
 	            <td style="text-align:left"><a href="javascript:void(0);" onclick="blackList('${blackList[0].id}')"><u>詳細資料</u></a>&nbsp; (本系統) </td>
-	            <td><input type="text" size="50" id="checkBlacklistRemark" <c:if test="${base[0].checkBlacklistRemark==''}">value="不實請領或溢領，依在職中高齡者及高齡者穩定就業辦法第24條第2項停止補助2年。"</c:if><c:if test="${base[0].checkBlacklistRemark!=''}">value="${base[0].checkBlacklistRemark}"</c:if>></td>
+	            <td><input type="text" size="50" id="checkBlacklistRemark" disabled <c:if test="${base[0].checkBlacklistRemark==''}">value="不實請領或溢領，依在職中高齡者及高齡者穩定就業辦法第24條第2項停止補助2年。"</c:if><c:if test="${base[0].checkBlacklistRemark!=''}">value="${base[0].checkBlacklistRemark}"</c:if>></td>
             </c:if>
             <c:if test="${empty blackList}">
 	            <td><span class="text_pass" id="checkBlacklistStatus">合格</span></td>
 	            <td style="text-align:left"><a href="javascript:void(0);"><u>尚無紀錄</u></a>&nbsp; (本系統) </td>
-	            <td><input type="text" size="50" id="checkBlacklistRemark" <c:if test="${base[0].checkBlacklistRemark==''}">value="符合規定"</c:if><c:if test="${base[0].checkBlacklistRemark!=''}">value="${base[0].checkBlacklistRemark}"</c:if>></td>
+	            <td><input type="text" size="50" id="checkBlacklistRemark" disabled <c:if test="${base[0].checkBlacklistRemark==''}">value="符合規定"</c:if><c:if test="${base[0].checkBlacklistRemark!=''}">value="${base[0].checkBlacklistRemark}"</c:if>></td>
             </c:if>
           </tr>
           <tr>
@@ -414,55 +320,45 @@ $(function(){
             <c:if test="${not empty siteInspection}">
             <td><span class="text_warn" id="checkSiteinspectionStatus">不合格</span></td>
             <td style="text-align:left"><a href="javascript:void(0);" onclick="siteInspection('${siteInspection[0].id}')"><u>詳細資料</u></a>&nbsp; (本系統) </td>
-            <td><input type="text" size="50" id="checkSiteinspectionRemark" value="${base[0].checkSiteinspectionRemark }"></td>
+            <td><input type="text" size="50" id="checkSiteinspectionRemark" disabled value="${base[0].checkSiteinspectionRemark }"></td>
             </c:if>
             <c:if test="${empty siteInspection}">
             <td><span class="text_pass" id="checkSiteinspectionStatus">合格</span></td>
             <td style="text-align:left"><a href="javascript:void(0);"><u>尚無紀錄</u></a>&nbsp; (本系統) </td>
-            <td><input type="text" size="50" id="checkSiteinspectionRemark" <c:if test="${base[0].checkSiteinspectionRemark==''}">value="符合規定"</c:if><c:if test="${base[0].checkSiteinspectionRemark!=''}">value="${base[0].checkSiteinspectionRemark}"</c:if>></td>
+            <td><input type="text" size="50" id="checkSiteinspectionRemark" disabled <c:if test="${base[0].checkSiteinspectionRemark==''}">value="符合規定"</c:if><c:if test="${base[0].checkSiteinspectionRemark!=''}">value="${base[0].checkSiteinspectionRemark}"</c:if>></td>
             </c:if>
           </tr>
           <tr>
             <td><b>投保 / 職災</b></td>
-            <td><select name="checkInsuranceStatus" id="checkInsuranceStatus">
-              <option>---</option>
-              <option value="Y" <c:if test="${base[0].checkInsuranceStatus=='Y'}">selected</c:if>>合格</option>
-              <option value="N" <c:if test="${base[0].checkInsuranceStatus=='N'}">selected</c:if>>不合格</option>
-            </select></td>
+            <c:if test="${base[0].checkInsuranceStatus=='Y'}"><td><span class="text_pass">合格</span></td></c:if>
+            <c:if test="${base[0].checkInsuranceStatus=='N'}"><td><span class="text_warn">不合格</span></td></c:if>
+            <c:if test="${base[0].checkInsuranceStatus=='' || base[0].checkInsuranceStatus==null}"><td>&nbsp;</td></c:if>
             <td style="text-align:left"><a href="https://192.168.1.62/" target="_blank"><u>詳細資料</u></a>&nbsp; (另開頁面)</td>
-            <td><input type="text" size="50" id="checkInsuranceRemark" value="${base[0].checkInsuranceRemark }"></td>
+            <td><input type="text" size="50" id="checkInsuranceRemark" disabled value="${base[0].checkInsuranceRemark }"></td>
           </tr>
           <tr>
             <td><b>未重複請領津貼</b></td>
-            <td><select name="checkAllowanceStatus" id="checkAllowanceStatus">
-              <option>---</option>
-              <option value="Y" <c:if test="${base[0].checkAllowanceStatus=='Y'}">selected</c:if>>合格</option>
-              <option value="N" <c:if test="${base[0].checkAllowanceStatus=='N'}">selected</c:if>>不合格</option>
-            </select></td>
-            <td style="text-align:left"><a href="javascript:void(0);" target="_blank"><u>詳細資料</u></a>&nbsp; (另開頁面)</td>
-            <td><input type="text" value="${base[0].checkAllowanceRemark}" size="50" id="checkAllowanceRemark"></td>
+            <c:if test="${base[0].checkAllowanceStatus=='Y'}"><td><span class="text_pass">合格</span></td></c:if>
+            <c:if test="${base[0].checkAllowanceStatus=='N'}"><td><span class="text_warn">不合格</span></td></c:if>
+            <c:if test="${base[0].checkAllowanceStatus=='' || base[0].checkAllowanceStatus==null}"><td>&nbsp;</td></c:if>
+            <td style="text-align:left"><a href="https://3in1t.ejob.gov.tw/" target="_blank"><u>詳細資料</u></a>&nbsp; (另開頁面)</td>
+            <td><input type="text" value="${base[0].checkAllowanceRemark}" size="50" id="checkAllowanceRemark" disabled></td>
           </tr>
           <tr>
-            <td><b>CGSS</b></td>
-            <td><select name="checkCgssStatus" id="checkCgssStatus">
-              <option>---</option>
-              <option value="Y" <c:if test="${base[0].checkCgssStatus=='Y'}">selected</c:if>>合格</option>
-              <option value="N" <c:if test="${base[0].checkCgssStatus=='N'}">selected</c:if>>不合格</option>
-            </select></td>
-            <td style="text-align:left"><a href="javascript:void(0);" target="_blank"><u>詳細資料</u></a>&nbsp; (另開頁面)</td>
-            <td><input type="text" <c:if test="${base[0].checkCgssRemark==''}">value="有/無違反民間團體補捐助規定"</c:if><c:if test="${base[0].checkCgssRemark!=''}">value="${base[0].checkCgssRemark}"</c:if> size="50" id="checkCgssRemark"></td>
+            <td><b>民間團體補(捐)助系統CGSS</b></td>
+            <c:if test="${base[0].checkCgssStatus=='Y'}"><td><span class="text_pass">合格</span></td></c:if>
+            <c:if test="${base[0].checkCgssStatus=='N'}"><td><span class="text_warn">不合格</span></td></c:if>
+            <c:if test="${base[0].checkCgssStatus=='' || base[0].checkCgssStatus==null }"><td>&nbsp;</td></c:if>
+            <td style="text-align:left"><a href="https://subsidy.nat.gov.tw/index.aspx" target="_blank"><u>詳細資料</u></a>&nbsp; (另開頁面)</td>
+            <td><input type="text" <c:if test="${base[0].checkCgssRemark==''}">value="有/無違反民間團體補捐助規定"</c:if><c:if test="${base[0].checkCgssRemark!=''}">value="${base[0].checkCgssRemark}"</c:if> size="50" id="checkCgssRemark" disabled></td>
           </tr>
           <tr>
             <td><b>違反勞動法令</b></td>
-            <td>
-            <select name="checkViolationlaborlawsStatus" id="checkViolationlaborlawsStatus">
-              <option>---</option>
-              <option value="Y" <c:if test="${base[0].checkViolationlaborlawsStatus=='Y'}">selected</c:if>>合格</option>
-              <option value="N" <c:if test="${base[0].checkViolationlaborlawsStatus=='N'}">selected</c:if>>不合格</option>
-            </select>
-            </td>
+            <c:if test="${base[0].checkViolationlaborlawsStatus=='Y'}"><td><span class="text_pass">合格</span></td></c:if>
+            <c:if test="${base[0].checkViolationlaborlawsStatus=='N'}"><td><span class="text_warn">不合格</span></td></c:if>
+            <c:if test="${base[0].checkViolationlaborlawsStatus==''||base[0].checkViolationlaborlawsStatus==null}"><td>&nbsp;</td></c:if>
             <td style="text-align:left"><a href="https://announcement.mol.gov.tw/" target="_blank"><u>查詢系統</u></a>&nbsp; (另開頁面) </td>
-            <td><input type="text" size="50" id="checkViolationlaborlawsRemark" value="${base[0].checkViolationlaborlawsRemark}"></td>
+            <td><input type="text" size="50" id="checkViolationlaborlawsRemark" disabled value="${base[0].checkViolationlaborlawsRemark}"></td>
           </tr>
         </table>
         
@@ -487,7 +383,7 @@ $(function(){
         <tr>
           <th class="point">申請補助金額</th>
           <td><input type="text" id="allowanceAmounts" name="allowanceAmounts" value="${base[0].allowanceAmounts }"></td>
-          <th class="point">當年度核定金額</th>
+          <th class="point">總核定金額</th>
           <td><input type="text" id="allowanceApproveAmounts" name="allowanceApproveAmounts" value="${base[0].allowanceApproveAmounts }"></td>
         </tr>
           <tr>
@@ -529,7 +425,10 @@ $(function(){
       
       <div class="btn_box-3">
       <button type="button" class="btn_02" onclick="cancel()">取消修改</button>
-      <button type="button" class="btn_01" onclick="save()">案件核定</button>
+      <c:if test="${base[0].caseStatus<4}">
+      	<button type="button" class="btn_06" onclick="notSubsidy()">不予補助</button>
+      	<button type="button" class="btn_01" onclick="save()">案件核定</button>
+      </c:if>
       </div>
 
 	  <form method="post" id="dataForm" target="_blank">

@@ -3,8 +3,6 @@ package com.example.springboot.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class CompanyInfo implements Serializable {
@@ -58,12 +56,14 @@ public class CompanyInfo implements Serializable {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date updateTime;
 
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date verifyTime;
 
     private String verifyPerson;
 
     private String verifyUnit;
+
+    private String ssoMid;
 
     private static final long serialVersionUID = 1L;
 
@@ -281,5 +281,13 @@ public class CompanyInfo implements Serializable {
 
     public void setVerifyUnit(String verifyUnit) {
         this.verifyUnit = verifyUnit == null ? null : verifyUnit.trim();
+    }
+
+    public String getSsoMid() {
+        return ssoMid;
+    }
+
+    public void setSsoMid(String ssoMid) {
+        this.ssoMid = ssoMid == null ? null : ssoMid.trim();
     }
 }

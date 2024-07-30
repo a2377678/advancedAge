@@ -100,6 +100,68 @@ input[type=checkbox]:checked:after {
 	color: #090;
 }
 
+.stats-2 {
+	float: left;
+	background-color: #F5FCFE;
+	border-radius: 10px;
+	width: 197px;
+	border: 1px solid #9EDBF8;
+	padding-top: 5px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	margin-right: 3px;
+}
+.stats-2 .title {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #9EDBF8;
+	height: 35px;
+	margin-bottom: 5px;
+	margin-right: 10px;
+	margin-left: 10px;
+	padding-left: 0px;
+	text-align: center;
+	letter-spacing: 1px;
+	font-size: 22px;
+}
+
+.stats-2 div {
+	font-size: 16px;
+	font-weight: bold;
+	padding-left: 10px;
+	clear: both;
+	position: relative;
+	height: 30px;
+	line-height: 30px;
+}
+.stats-2 div span {
+	font-size: 24px;
+	padding-left: 10px;
+	font-weight: bold;
+	font-family: Arial;
+	width: 80px;
+	text-align: right;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	display: inline;
+	margin-right: 10px;
+}
+
+.stats-2 div span.t1{
+	color: #F99500;
+}
+.stats-2 div span.t2 {
+	color: #E61573;
+}
+.stats-2 div span.t3 {
+	color: #090;
+}
+
+
 .audit_list {
 	background-color: #FFF;
 	padding: 25px;
@@ -499,4 +561,3 @@ button.add:hover {
 	padding: 5px !important;
 	margin-left: 3px;
 }
-

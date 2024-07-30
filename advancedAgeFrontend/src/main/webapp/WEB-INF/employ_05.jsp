@@ -27,12 +27,21 @@
   
   <!--- main --->
   <div class="main"> 
-    
+    <a href="#C" title="中央內容區塊" id="AC" accesskey="C" name="C">:::</a> <!---無障礙--->
 
   <!------------ 申請流程 ------------>
   <div class="apply_main">
-    <h1>繼續僱用高齡者補助計畫</h1>
-    <h2>申請流程 Step5. 核對資料</h2>
+  <%@ include file="countDownComponent.jsp" %>
+    <!---無障礙/麵包屑--->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index" title="首頁">首頁</a></li>
+          <li class="breadcrumb-item active" aria-current="page">線上申辦</li>
+          <li class="breadcrumb-item active" aria-current="page">繼續僱用高齡者補助 - 申請作業</li>
+        </ol>
+      </nav>
+      <h1>繼續僱用高齡者補助 - 申請作業</h1>
+      <h2>申請流程 Step5. 核對資料</h2>
     
     <!---申辦前準備--->
     <h3>請核對您填寫的資料，確認並「送出案件」<br>
@@ -43,33 +52,33 @@
     <div class="form">
       <div class="title_main"><span>申請書</span></div>
     
-      <div>單位名稱：${apply.companyName}</div>
+      <div><span class="title-c">單位名稱</span>${apply.companyName}</div>
       <input type="text" id="companyName" value="${apply.companyName}" style="display:none">
         
-      <div>統一編號：${apply.seq}</div>
+      <div><span class="title-c">統一編號</span>${apply.seq}</div>
       <input type="text" id="seq" value="${apply.seq}" style="display:none">
         
-      <div>行業別：<c:forEach items="${industryList}" var="item"><c:if test="${item.code==apply.industry}">${item.name}</c:if></c:forEach></div>
+      <div><span class="title-c">行業別</span><c:forEach items="${industryList}" var="item"><c:if test="${item.code==apply.industry}">${item.name}</c:if></c:forEach></div>
         
-      <div>勞保投保證號：${apply.guaranteeNumber.replace(";","、")}</div>
+      <div><span class="title-c">勞保投保證號</span>${apply.guaranteeNumber.replace(";","、")}</div>
         
-      <div class="full">聯絡地址：
+      <div class="full"><span class="title-c">聯絡地址</span>
       	<c:forEach items="${cityList}" var="item"><c:if test="${item.code==apply.contactCity}">${item.name}</c:if></c:forEach><c:forEach items="${areaList}" var="item"><c:if test="${item.code==apply.contactArea}">${item.name}</c:if></c:forEach>${apply.contactAddress}
-      	<input type="text" id="city" value="${apply.contactCity}" style="display:none">
+      	<input type="text" id="city" value="${apply.registerCity}" style="display:none">
       </div>
         
-      <div>聯絡人：${apply.contactName}</div>
+      <div><span class="title-c">聯絡人</span>${apply.contactName}</div>
         
-      <div>聯絡人職稱：${apply.contactJobtitle}</div>
+      <div><span class="title-c">聯絡人職稱</span>${apply.contactJobtitle}</div>
         
-      <div>聯絡電話：${apply.contactWorkPhoneAreaCode} - ${apply.contactWorkPhone} #${apply.contactWorkPhoneExtension}</div>
+      <div><span class="title-c">聯絡電話</span>${apply.contactWorkPhoneAreaCode} - ${apply.contactWorkPhone} #${apply.contactWorkPhoneExtension}</div>
         
-      <div>行動電話：${apply.contactPhone}</div>
+      <div><span class="title-c">行動電話</span>${apply.contactPhone}</div>
         
-      <div>傳真號碼：${apply.faxAreaCode} - ${apply.fax}</div>
+      <div><span class="title-c">傳真號碼</span>${apply.faxAreaCode} - ${apply.fax}</div>
         
-      <div>電子信箱：${apply.email}</div>
-      
+      <div><span class="title-c">電子信箱</span>${apply.email}</div>
+      <input type="text" id="email" value="${apply.email}" style="display:none">
         
     </div>
     
@@ -79,22 +88,22 @@
     
       <div class="title_main"><span>計畫書</span></div>
     
-      <div class="full">主要業務/產品/服務：
+      <div class="full"><span class="title-c">主要業務/產品/服務</span>
       ${plan.items}</div>
         
-      <div class="ss">目前員工人數：${plan.employmentNumber }</div>
+      <div class="ss"><span class="title-c">目前員工人數</span>${plan.employmentNumber }</div>
         
-      <div class="ss">65歲以上人數：${plan.highEmploymentNumber}</div>
+      <div class="ss"><span class="title-c">65歲以上人數</span>${plan.highEmploymentNumber}</div>
         
-      <div class="ss">45~64歲人數：${plan.middleEmploymentNumber }</div>
+      <div class="ss"><span class="title-c">45~64歲人數</span>${plan.middleEmploymentNumber }</div>
         
-      <div class="ss">44歲以下人數：${plan.lowEmploymentNumber }</div>
+      <div class="ss"><span class="title-c">44歲以下人數</span>${plan.lowEmploymentNumber }</div>
         
-      <div class="ss">屆齡65歲人數 (A)：${plan.nearHighEmploymentNumber }</div>
+      <div class="ss"><span class="title-c">屆齡65歲人數 (A)</span>${plan.nearHighEmploymentNumber }</div>
         
-      <div class="ss">規劃繼續僱用人數 (B)：${plan.continueEmploymentNumber }</div>
+      <div class="ss"><span class="title-c">規劃繼續僱用人數 (B)</span>${plan.continueEmploymentNumber }</div>
         
-      <div class="ss">繼續僱用比例 (C)：${plan.continueEmploymentPercentage } %
+      <div class="ss"><span class="title-c">繼續僱用比例 (C)</span>${plan.continueEmploymentPercentage } %
       <img src="images/icon_qu.png" class="icon_qu"
 title="繼續僱用高齡者
 比例須達30%以上
@@ -131,14 +140,15 @@ C=(B)/(A) x 100%">
           <ul class="clearfix">
             <li>
               <span>勞工姓名</span>
+              <span>出生日期</span>
               <span>身分證字號</span>
               <span>保險類型</span>
               <span>加保日期</span>
-              <span>職務類型</span>
+              <span class="s">職務類型</span>
               <span>親等關係</span>
-              <span>工時類型</span>
-              <span>經常性薪資</span>
-              <span>非經常薪資</span>
+              <span class="s">工時類型</span>
+              <span>申請前3個月經常性薪資總和</span>
+              <span>申請前3個月非經常性薪資總和</span>
             </li>
           </ul>
         </div>
@@ -148,6 +158,7 @@ C=(B)/(A) x 100%">
 		      	<c:forEach items="${advancedAgeEmploymentLists}" var="item" varStatus="status">
 			      	<li>
 		              <span>${item.name}</span>
+		              <span>${item.birthday.substring(0,3)}/${item.birthday.substring(3,5)}/${item.birthday.substring(5)}</span>
 		              <span>${item.identification}</span>
 		              <span>
 		              	<c:if test="${item.laborProtectionTime.length()==7}">勞工保險</c:if>
@@ -157,7 +168,7 @@ C=(B)/(A) x 100%">
 		              	<c:if test="${item.laborProtectionTime.length()==7}">${item.laborProtectionTime.substring(0,3)}/${item.laborProtectionTime.substring(3,5)}/${item.laborProtectionTime.substring(5)}</c:if>
 			            <c:if test="${item.occupationalAccidentProtectionTime.length()==7}">${item.occupationalAccidentProtectionTime.substring(0,3)}/${item.occupationalAccidentProtectionTime.substring(3,5)}/${item.occupationalAccidentProtectionTime.substring(5)}</c:if>
 		              </span>
-		              <span>
+		              <span class="s">
 		              	<c:if test="${item.manager=='Y'}">主管</c:if>
 			            <c:if test="${item.manager=='N'}">非主管</c:if>
 			          </span>
@@ -165,7 +176,7 @@ C=(B)/(A) x 100%">
 		              	<c:if test="${item.relatives=='Y'}">三等親內</c:if>
 			            <c:if test="${item.relatives=='N'}">非三等親</c:if>
 			          </span>
-		              <span>
+		              <span class="s">
 		              	<c:if test="${item.workingHours=='A'}">全時</c:if>
 			            <c:if test="${item.workingHours=='P'}">部分工時</c:if>
 			          </span>
@@ -185,8 +196,8 @@ C=(B)/(A) x 100%">
     
       <div class="title_main"><span>檢附文件</span></div>
     
-      <div class="full">
-      	設立登記證明文件：<br>
+      <div class="full lh-lg">
+      	<span class="title-c">設立登記證明文件：</span><br>
    		<c:choose><c:when test="${not empty registerAttachment}">
       	<c:forEach items="${registerAttachment}" var="item" varStatus="status">
 	      	<c:choose>
@@ -201,8 +212,8 @@ C=(B)/(A) x 100%">
         </c:when>
         </c:choose>
       </div>
-      <div class="full">
-	      投保勞保或職災保險證明文件:<br>
+      <div class="full lh-lg">
+	      <span class="title-c">投保勞保或職災保險證明文件:</span><br>
 	      <c:choose><c:when test="${not empty insureAttachment}">
 	    	<c:forEach items="${insureAttachment}" var="item" varStatus="status">
 	     	<c:choose>
@@ -217,8 +228,8 @@ C=(B)/(A) x 100%">
 	      </c:when>
 	      </c:choose>
       </div>
-      <div class="full">
-	      薪資證明文件：<br>
+      <div class="full lh-lg">
+	      <span class="title-c">薪資證明文件：</span><br>
 	      <c:choose><c:when test="${not empty salaryAttachment}">
 	    	<c:forEach items="${salaryAttachment}" var="item" varStatus="status">
 	     	<c:choose>
@@ -233,8 +244,8 @@ C=(B)/(A) x 100%">
 	      </c:when>
 	      </c:choose>
       </div> 
-      <div class="full">
-	      出勤證明文件：<br>
+      <div class="full lh-lg">
+	      <span class="title-c">出勤證明文件：</span><br>
 	      <c:choose><c:when test="${not empty attendanceAttachment}">
 	    	<c:forEach items="${attendanceAttachment}" var="item" varStatus="status">
 	     	<c:choose>
@@ -249,8 +260,8 @@ C=(B)/(A) x 100%">
 	      </c:when>
 	      </c:choose>
       </div>
-      <div class="full">
-	      其他文件：<br>
+      <div class="full lh-lg">
+	      <span class="title-c">其他文件：</span><br>
 	      <c:choose><c:when test="${not empty necessaryAttachment}">
 	    	<c:forEach items="${necessaryAttachment}" var="item" varStatus="status">
 	     	<c:choose>
@@ -306,14 +317,7 @@ C=(B)/(A) x 100%">
   <!--- main end ---> 
   
   <!--- footer --->
-  <footer class="copyright">
-    <section>
-      <div>勞動力發展署：24219新北市新莊區中平路439號南棟4樓　電話代表號：(02)8995-6000　客服專線：0800-777-888</div>
-      <div>本署服務時間：週一至週五　上午8時30分至12時30分，下午13時30分至17時30分</div>
-      <div>最佳解析度1024x768 ，建議更新瀏覽器至以下版本：最新版本Chrome、最新版本Firefox</div>
-      <div>中華民國勞動部勞動力發展署版權所有 © 2021 All rights reserved. </div>
-    </section>
-  </footer>
+  <%@ include file="footer.jsp" %>
   <!--- footer end ---> 
   
 </div>

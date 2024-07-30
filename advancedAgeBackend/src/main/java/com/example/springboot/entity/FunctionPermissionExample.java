@@ -295,6 +295,146 @@ public class FunctionPermissionExample {
             return (Criteria) this;
         }
 
+        public Criteria andFunctionCode2IsNull() {
+            addCriterion("function_code2 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode2IsNotNull() {
+            addCriterion("function_code2 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode2EqualTo(String value) {
+            addCriterion("function_code2 =", value, "functionCode2");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode2NotEqualTo(String value) {
+            addCriterion("function_code2 <>", value, "functionCode2");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode2GreaterThan(String value) {
+            addCriterion("function_code2 >", value, "functionCode2");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode2GreaterThanOrEqualTo(String value) {
+            addCriterion("function_code2 >=", value, "functionCode2");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode2LessThan(String value) {
+            addCriterion("function_code2 <", value, "functionCode2");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode2LessThanOrEqualTo(String value) {
+            addCriterion("function_code2 <=", value, "functionCode2");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode2Like(String value) {
+            addCriterion("function_code2 like", value, "functionCode2");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode2NotLike(String value) {
+            addCriterion("function_code2 not like", value, "functionCode2");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode2In(List<String> values) {
+            addCriterion("function_code2 in", values, "functionCode2");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode2NotIn(List<String> values) {
+            addCriterion("function_code2 not in", values, "functionCode2");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode2Between(String value1, String value2) {
+            addCriterion("function_code2 between", value1, value2, "functionCode2");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode2NotBetween(String value1, String value2) {
+            addCriterion("function_code2 not between", value1, value2, "functionCode2");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode3IsNull() {
+            addCriterion("function_code3 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode3IsNotNull() {
+            addCriterion("function_code3 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode3EqualTo(String value) {
+            addCriterion("function_code3 =", value, "functionCode3");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode3NotEqualTo(String value) {
+            addCriterion("function_code3 <>", value, "functionCode3");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode3GreaterThan(String value) {
+            addCriterion("function_code3 >", value, "functionCode3");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode3GreaterThanOrEqualTo(String value) {
+            addCriterion("function_code3 >=", value, "functionCode3");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode3LessThan(String value) {
+            addCriterion("function_code3 <", value, "functionCode3");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode3LessThanOrEqualTo(String value) {
+            addCriterion("function_code3 <=", value, "functionCode3");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode3Like(String value) {
+            addCriterion("function_code3 like", value, "functionCode3");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode3NotLike(String value) {
+            addCriterion("function_code3 not like", value, "functionCode3");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode3In(List<String> values) {
+            addCriterion("function_code3 in", values, "functionCode3");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode3NotIn(List<String> values) {
+            addCriterion("function_code3 not in", values, "functionCode3");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode3Between(String value1, String value2) {
+            addCriterion("function_code3 between", value1, value2, "functionCode3");
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionCode3NotBetween(String value1, String value2) {
+            addCriterion("function_code3 not between", value1, value2, "functionCode3");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateTimeIsNull() {
             addCriterion("create_time is null");
             return (Criteria) this;

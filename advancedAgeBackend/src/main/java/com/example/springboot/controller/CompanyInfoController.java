@@ -1,5 +1,6 @@
 package com.example.springboot.controller;
 
+import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Date;
 
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.example.springboot.entity.BlackList;
 import com.example.springboot.entity.CompanyInfo;
 import com.example.springboot.util.AesUtil;
 import com.example.springboot.util.CallApi;
@@ -34,9 +37,6 @@ public class CompanyInfoController {
 
 	HttpSession session;
 	
-	@Value("${encrypt_key}")
-	private String key;
-	
 	static String SPECIAL_CHARS="!@#$%^&*_=+-/";
 	
 	@RequestMapping(value = "/editCompanyInfo", method = RequestMethod.POST)
@@ -45,15 +45,23 @@ public class CompanyInfoController {
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json = "";
 		info.setVerifyTime(new Date());
+		String pwd=randomPassword();
 		try {
-			info.setPassword(AesUtil.encrypt(randomPassword()));
+			info.setPassword(AesUtil.encrypt(pwd));
 			json = objectMapper.writeValueAsString(info);
 		} catch (JsonProcessingException e) {
 			logger.warn(e.getMessage());
 		} catch (Exception e) {
 			logger.warn(e.getMessage());
 		} 
-//		api.httpPost(ip + "editCompanyInfo", json);
+		api.httpPost(ip + "editCompanyInfo", json);
+		
+		response.setContentType("text/html;charset=UTF-8");
+		try {
+			response.getWriter().print(pwd);
+		} catch (IOException e) {
+			logger.warn(e.getMessage());
+		}
 	}
 	
 	private static char nextChar(SecureRandom rnd) {

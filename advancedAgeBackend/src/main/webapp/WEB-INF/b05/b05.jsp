@@ -26,13 +26,7 @@
   <%@ include file="../header.jsp" %>
   <!---------------------- top end ---------------------->
 
-    
-  <div id="main_menu">
-    <div><a href="#" class="menu-1 in">繼續僱用高齡者</a></div>
-    <div><a href="#" class="menu-2">傳承專業技術與經驗</a></div>
-    <div><a href="#" class="menu-3">退休後再就業準備協助措施</a></div>
-    <div><a href="account01" class="account">申請帳號審核管理</a></div>
-  </div>
+  <%@ include file="../mainMenu.jsp" %>
 
   <!---------------------- left menu ---------------------->
   <%@ include file="../leftMenu.jsp" %>
@@ -56,30 +50,42 @@
       
 		<c:if test="${functionPermission.indexOf('B05')!=-1 }">
       <!------------------- search ------------------->
-      <form action="b05" method="post">
+      <form action="b05" method="post" id="searchForm">
       <div id="search_bar">
         <table class="table_01">
           <tr>
               <th width="20%">統一編號 / 扣繳編號：</th>
               <td width="20%"><input type="text" size="11" id="seq" name="seq" value="${base.seq }"></td>
               <th width="10%">案件狀態：</th>
-              <td>
-              <label><input name="caseStatus" type="radio" id="caseStatus4、5" class="radio" value="4、5" <c:if test="${base.caseStatus=='4、5' || base.caseStatus==null}">checked</c:if>/>
+              <td colspan="2">
+              <label><input name="caseStatus" type="radio" id="caseStatus3、4、8" class="radio" value="3、4、8" <c:if test="${base.caseStatus=='3、4、8' || base.caseStatus==null}">checked</c:if>/>
               不限</label>
-              <label><input name="caseStatus" type="radio" id="caseStatus4" class="radio" value="4" <c:if test="${base.caseStatus=='4'}">checked</c:if>/>
+              <label><input name="caseStatus" type="radio" id="caseStatus3" class="radio" value="3" <c:if test="${base.caseStatus=='3'}">checked</c:if>/>
               待核定</label>
-              <label><input name="caseStatus" type="radio" id="caseStatus5" class="radio" value="5" <c:if test="${base.caseStatus=='5'}">checked</c:if>/>
+              <label><input name="caseStatus" type="radio" id="caseStatus4" class="radio" value="4" <c:if test="${base.caseStatus=='4'}">checked</c:if>/>
               已核定</label>
+              <label><input name="caseStatus" type="radio" id="caseStatus8" class="radio" value="8" <c:if test="${base.caseStatus=='8'}">checked</c:if>/>
+              不予補助</label>
               </td>
-              <td width="22%">&nbsp;</td>
           </tr>
             <tr>
               <th>承辦單位 / 行政區：</th>
               <td><select name="unit" id="unit">
-                <option value>不限</option>
-                <c:forEach  items="${unitList}"  var="item"  varStatus="userStatus">
-		      		<option value="${item.code}" <c:if test="${base.unit==item.code}">selected</c:if> >${item.name}</option>
-		      	</c:forEach>
+                <c:if test="${unit=='F' }">
+					<option value>不限</option>                
+	                <c:forEach  items="${unitList}"  var="item"  varStatus="userStatus">
+	                	<c:if test="${item.code!='F' }">
+			      			<option value="${item.code}" <c:if test="${base.unit==item.code}">selected</c:if> >${item.name}</option>
+			      		</c:if>
+			      	</c:forEach>
+		      	</c:if>
+		      	<c:if test="${unit!='F' }">
+		      		<c:forEach  items="${unitList}"  var="item"  varStatus="userStatus">
+		      			<c:if test="${unit==item.code}">
+		      				<option value="${item.code}" selected>${item.name}</option>
+		      			</c:if>
+		      		</c:forEach>
+		      	</c:if>
               </select></td>
               <th>&nbsp;</th>
               <td>&nbsp;</td>
@@ -92,7 +98,10 @@
             </tr>
         </table>
       </div>
-      
+      <input type="text" name="numbersOfPage" value="${pagination.numbersOfPage}" style="display:none"/>
+      <input type="text" name="page" id="page" value="${pagination.page}" style="display:none"/>
+      <input type="text" name="totalNumbers" value="${pagination.totalNumbers}" style="display:none"/>
+      <input type="text" name="totalPages" value="${pagination.totalPages}" style="display:none"/>
       </form>
       
       
@@ -116,10 +125,10 @@
 	      	<li>
 	          <a href="#" onclick="edit('${item.seq }','${item.year }','${item.id}')">
 	          <span class="no">${status.count}</span>
-	          <span class="update_time">${item.updateTime.substring(0,4)-1911}${item.updateTime.substring(4,10)}</span>
+	          <span class="update_time">${item.createTime.substring(0,4)-1911}${item.createTime.substring(4,10)}</span>
 	          <span class="tax_id_number">${item.seq }</span>
 	          <span class="company_name">${item.companyName }</span>
-	          <span class="update_type"><c:choose><c:when test="${item.caseStatus=='4'}">待核定</c:when><c:when test="${item.caseStatus=='5'}">已核定</c:when></c:choose></span>
+	          <span class="update_type"><c:choose><c:when test="${item.caseStatus=='3'}">待核定</c:when><c:when test="${item.caseStatus=='4'}">已核定</c:when><c:when test="${item.caseStatus=='8'}">不予補助</c:when></c:choose></span>
 	          <span class="district">
 	          	<c:forEach  items="${unitList}"  var="unitItem"  varStatus="userStatus">
 		      		<c:if test="${item.verifyUnit==unitItem.code}">${unitItem.name}</c:if> 

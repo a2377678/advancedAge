@@ -49,6 +49,18 @@ public class AdvancedAgeBase implements Serializable {
 
     private String checkEmploymentRemark;
 
+    private Integer checkSpeakerPerson;
+
+    private String checkSpeakerRemark;
+
+    private String checkScheduleRemark;
+
+    private Integer checkExpenditureAmounts;
+
+    private String checkExpenditureRemark;
+
+    private String checkJointAuthorizeRemark;
+
     private String checkAttachmentRemark;
 
     private String checkBlacklistStatus;
@@ -108,6 +120,34 @@ public class AdvancedAgeBase implements Serializable {
     private String allowanceRemark;
 
     private String allowanceFrequencyRecord;
+
+    private Integer allowanceApprovedAmounts;
+
+    private String allowanceApprovedId;
+
+    private String allowanceApprovedTime;
+
+    private String allowanceFileStatusRecord;
+
+    private String allowanceFileRemark;
+
+    private String allowanceEmailContent;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date allowanceEmailTime;
+
+    private String allowanceFileStatus;
+
+    private String checkAllowanceAttachmentRemark;
+
+    private String reviewStatus;
+
+    private String reviewRemark;
+
+    private String reviewEmailContent;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date reviewEmailTime;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
@@ -289,6 +329,54 @@ public class AdvancedAgeBase implements Serializable {
 
     public void setCheckEmploymentRemark(String checkEmploymentRemark) {
         this.checkEmploymentRemark = checkEmploymentRemark == null ? null : checkEmploymentRemark.trim();
+    }
+
+    public Integer getCheckSpeakerPerson() {
+        return checkSpeakerPerson;
+    }
+
+    public void setCheckSpeakerPerson(Integer checkSpeakerPerson) {
+        this.checkSpeakerPerson = checkSpeakerPerson;
+    }
+
+    public String getCheckSpeakerRemark() {
+        return checkSpeakerRemark;
+    }
+
+    public void setCheckSpeakerRemark(String checkSpeakerRemark) {
+        this.checkSpeakerRemark = checkSpeakerRemark == null ? null : checkSpeakerRemark.trim();
+    }
+
+    public String getCheckScheduleRemark() {
+        return checkScheduleRemark;
+    }
+
+    public void setCheckScheduleRemark(String checkScheduleRemark) {
+        this.checkScheduleRemark = checkScheduleRemark == null ? null : checkScheduleRemark.trim();
+    }
+
+    public Integer getCheckExpenditureAmounts() {
+        return checkExpenditureAmounts;
+    }
+
+    public void setCheckExpenditureAmounts(Integer checkExpenditureAmounts) {
+        this.checkExpenditureAmounts = checkExpenditureAmounts;
+    }
+
+    public String getCheckExpenditureRemark() {
+        return checkExpenditureRemark;
+    }
+
+    public void setCheckExpenditureRemark(String checkExpenditureRemark) {
+        this.checkExpenditureRemark = checkExpenditureRemark == null ? null : checkExpenditureRemark.trim();
+    }
+
+    public String getCheckJointAuthorizeRemark() {
+        return checkJointAuthorizeRemark;
+    }
+
+    public void setCheckJointAuthorizeRemark(String checkJointAuthorizeRemark) {
+        this.checkJointAuthorizeRemark = checkJointAuthorizeRemark == null ? null : checkJointAuthorizeRemark.trim();
     }
 
     public String getCheckAttachmentRemark() {
@@ -529,6 +617,110 @@ public class AdvancedAgeBase implements Serializable {
 
     public void setAllowanceFrequencyRecord(String allowanceFrequencyRecord) {
         this.allowanceFrequencyRecord = allowanceFrequencyRecord == null ? null : allowanceFrequencyRecord.trim();
+    }
+
+    public Integer getAllowanceApprovedAmounts() {
+        return allowanceApprovedAmounts;
+    }
+
+    public void setAllowanceApprovedAmounts(Integer allowanceApprovedAmounts) {
+        this.allowanceApprovedAmounts = allowanceApprovedAmounts;
+    }
+
+    public String getAllowanceApprovedId() {
+        return allowanceApprovedId;
+    }
+
+    public void setAllowanceApprovedId(String allowanceApprovedId) {
+        this.allowanceApprovedId = allowanceApprovedId == null ? null : allowanceApprovedId.trim();
+    }
+
+    public String getAllowanceApprovedTime() {
+        return allowanceApprovedTime;
+    }
+
+    public void setAllowanceApprovedTime(String allowanceApprovedTime) {
+        this.allowanceApprovedTime = allowanceApprovedTime == null ? null : allowanceApprovedTime.trim();
+    }
+
+    public String getAllowanceFileStatusRecord() {
+        return allowanceFileStatusRecord;
+    }
+
+    public void setAllowanceFileStatusRecord(String allowanceFileStatusRecord) {
+        this.allowanceFileStatusRecord = allowanceFileStatusRecord == null ? null : allowanceFileStatusRecord.trim();
+    }
+
+    public String getAllowanceFileRemark() {
+        return allowanceFileRemark;
+    }
+
+    public void setAllowanceFileRemark(String allowanceFileRemark) {
+        this.allowanceFileRemark = allowanceFileRemark == null ? null : allowanceFileRemark.trim();
+    }
+
+    public String getAllowanceEmailContent() {
+        return allowanceEmailContent;
+    }
+
+    public void setAllowanceEmailContent(String allowanceEmailContent) {
+        this.allowanceEmailContent = allowanceEmailContent == null ? null : allowanceEmailContent.trim();
+    }
+
+    public Date getAllowanceEmailTime() {
+        return allowanceEmailTime;
+    }
+
+    public void setAllowanceEmailTime(Date allowanceEmailTime) {
+        this.allowanceEmailTime = allowanceEmailTime;
+    }
+
+    public String getAllowanceFileStatus() {
+        return allowanceFileStatus;
+    }
+
+    public void setAllowanceFileStatus(String allowanceFileStatus) {
+        this.allowanceFileStatus = allowanceFileStatus == null ? null : allowanceFileStatus.trim();
+    }
+
+    public String getCheckAllowanceAttachmentRemark() {
+        return checkAllowanceAttachmentRemark;
+    }
+
+    public void setCheckAllowanceAttachmentRemark(String checkAllowanceAttachmentRemark) {
+        this.checkAllowanceAttachmentRemark = checkAllowanceAttachmentRemark == null ? null : checkAllowanceAttachmentRemark.trim();
+    }
+
+    public String getReviewStatus() {
+        return reviewStatus;
+    }
+
+    public void setReviewStatus(String reviewStatus) {
+        this.reviewStatus = reviewStatus == null ? null : reviewStatus.trim();
+    }
+
+    public String getReviewRemark() {
+        return reviewRemark;
+    }
+
+    public void setReviewRemark(String reviewRemark) {
+        this.reviewRemark = reviewRemark == null ? null : reviewRemark.trim();
+    }
+
+    public String getReviewEmailContent() {
+        return reviewEmailContent;
+    }
+
+    public void setReviewEmailContent(String reviewEmailContent) {
+        this.reviewEmailContent = reviewEmailContent == null ? null : reviewEmailContent.trim();
+    }
+
+    public Date getReviewEmailTime() {
+        return reviewEmailTime;
+    }
+
+    public void setReviewEmailTime(Date reviewEmailTime) {
+        this.reviewEmailTime = reviewEmailTime;
     }
 
     public Date getCreateTime() {

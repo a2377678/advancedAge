@@ -28,7 +28,7 @@ public class AdvancedAgeBaseController {
 	
 	@Value("${api_ip}")
 	private String ip;
-	
+	 
 	@RequestMapping(value = "/fileStatusSave", method = RequestMethod.POST)
 	public void fileStatusSave(HttpServletRequest request, HttpServletResponse response,AdvancedAgeBase base){
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -57,6 +57,42 @@ public class AdvancedAgeBaseController {
 			logger.warn(e.getMessage());
 		}
 		api.httpPost(ip+"changeFileStatus",json);
+		response.setContentType("text/html;charset=UTF-8");
+		try {
+				response.getWriter().print("success");
+		} catch (IOException e) {
+			logger.warn(e.getMessage());
+		}
+	}
+	
+	@RequestMapping(value = "/changeFileStatus2", method = RequestMethod.POST)
+	public void changeFileStatus2(HttpServletRequest request, HttpServletResponse response,AdvancedAgeBase base){
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json="";
+		try {
+			json = objectMapper.writeValueAsString(base);
+		} catch (JsonProcessingException e) {
+			logger.warn(e.getMessage());
+		}
+		api.httpPost(ip+"changeFileStatus2",json);
+		response.setContentType("text/html;charset=UTF-8");
+		try {
+				response.getWriter().print("success");
+		} catch (IOException e) {
+			logger.warn(e.getMessage());
+		}
+	}
+	
+	@RequestMapping(value = "/changeFileStatus3", method = RequestMethod.POST)
+	public void changeFileStatus3(HttpServletRequest request, HttpServletResponse response,AdvancedAgeBase base){
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json="";
+		try {
+			json = objectMapper.writeValueAsString(base);
+		} catch (JsonProcessingException e) {
+			logger.warn(e.getMessage());
+		}
+		api.httpPost(ip+"changeFileStatus3",json);
 		response.setContentType("text/html;charset=UTF-8");
 		try {
 				response.getWriter().print("success");

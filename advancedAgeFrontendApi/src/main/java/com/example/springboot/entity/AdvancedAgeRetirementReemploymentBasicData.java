@@ -13,6 +13,12 @@ public class AdvancedAgeRetirementReemploymentBasicData extends AdvancedAgeRetir
 
     private String contactName;
 
+    private String contactWorkPhoneAreaCode;
+
+    private String contactWorkPhone;
+
+    private String contactWorkPhoneExtension;
+
     private String contactPhone;
 
     private String email;
@@ -67,6 +73,30 @@ public class AdvancedAgeRetirementReemploymentBasicData extends AdvancedAgeRetir
 
     public void setContactName(String contactName) {
         this.contactName = contactName == null ? null : contactName.trim();
+    }
+
+    public String getContactWorkPhoneAreaCode() {
+        return contactWorkPhoneAreaCode;
+    }
+
+    public void setContactWorkPhoneAreaCode(String contactWorkPhoneAreaCode) {
+        this.contactWorkPhoneAreaCode = contactWorkPhoneAreaCode == null ? null : contactWorkPhoneAreaCode.trim();
+    }
+
+    public String getContactWorkPhone() {
+        return contactWorkPhone;
+    }
+
+    public void setContactWorkPhone(String contactWorkPhone) {
+        this.contactWorkPhone = contactWorkPhone == null ? null : contactWorkPhone.trim();
+    }
+
+    public String getContactWorkPhoneExtension() {
+        return contactWorkPhoneExtension;
+    }
+
+    public void setContactWorkPhoneExtension(String contactWorkPhoneExtension) {
+        this.contactWorkPhoneExtension = contactWorkPhoneExtension == null ? null : contactWorkPhoneExtension.trim();
     }
 
     public String getContactPhone() {

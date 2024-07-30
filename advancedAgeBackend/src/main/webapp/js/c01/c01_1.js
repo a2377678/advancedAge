@@ -8,6 +8,8 @@ function openData(seq,baseId,year,frequency,action){
 		$('#dataForm').attr('action','c01_result')
 	}else if(action==1){
 		$('#dataForm').attr('action','c01_list')
+	}else if(action==3){
+		$('#dataForm').attr('action','c01_file')
 	}
 	$('#dataForm').submit();
 }
@@ -41,6 +43,19 @@ function verify(record,frequency){
 	    }
     });
 }
+
+function blackList(id){
+	$('#dataForm').attr('action','b03_1');
+	$('#dataId').val(id);
+	$('#dataForm').submit();
+}
+
+function siteInspection(id){
+	$('#dataForm').attr('action','b04_1');
+	$('#dataId').val(id);
+	$('#dataForm').submit();
+}
+
 
 function cancel(){
 	location.href='c01';

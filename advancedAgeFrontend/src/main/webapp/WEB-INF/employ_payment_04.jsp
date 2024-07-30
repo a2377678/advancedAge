@@ -28,9 +28,18 @@
   
   <!--- main --->
   <div class="main"> 
-    
+    <a href="#C" title="中央內容區塊" id="AC" accesskey="C" name="C">:::</a> <!---無障礙--->
     <!------------ 申請流程 ------------>
     <div class="apply_main">
+    <%@ include file="countDownComponent.jsp" %>
+      <!---無障礙/麵包屑--->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index" title="首頁">首頁</a></li>
+          <li class="breadcrumb-item active" aria-current="page">線上申辦</li>
+          <li class="breadcrumb-item active" aria-current="page">繼續僱用高齡者補助 - 請領作業</li>
+        </ol>
+      </nav>
       <h1>繼續僱用高齡者補助 - 請領作業</h1>
       <h2>申請流程 Step4. 核對資料</h2>
       
@@ -45,27 +54,28 @@
         <!---填寫名單--->
         <c:choose><c:when test="${not empty advancedAgeEmploymentListReceipts}">
 	        <c:forEach items="${advancedAgeEmploymentListReceipts}" var="item" varStatus="status">
-	        <c:if test="${item.baseAllowanceFrequency==0 }">
+<%-- 	        <c:if test="${item.baseAllowanceFrequency==0 }"> --%>
 	            <table class="table_05">
 		            <tr>
-		              <td rowspan="5">${status.count }</td>
+		              <td rowspan="9">${status.count }</td>
 		              <th>勞工姓名</th>
-		              <th>身分證字號</th>
-		              <th>平均薪資</th>
-		              <th colspan="2">計薪方式</th>
-		              <th>退保(離職)</th>
-		              <th>退保日期</th>
-		              <th>請領次數</th>
+		              <th>出生日期</th>
+		              <th>身分證</th>
+		              <th>本期請領平均薪資</th>
 		            </tr>
 		            <tr>
 		              <td>${item.name }</td>
+		              <td>${item.birthday }</td>
 		              <td>${item.identification }</td>
 		              <td>${item.salary }</td>
-		              <td colspan="2">
-		              	<c:if test="${item.salaryMethod=='M' }">按月計</c:if>
-		              	<c:if test="${item.salaryMethod=='H' }">非按月</c:if>
-		              	<c:if test="${item.salaryMethod=='MH' }">部分按月，部分按時</c:if>
-		              </td>
+		            </tr>
+		            <tr>
+		              <th>退保</th>
+		              <th>退保日期</th>
+		              <th>計薪方式</th>
+		              <th>請領次數</th>
+		            </tr>
+		            <tr>
 		              <td>
 		              	<c:if test="${item.laborProtectionExpiredTime.length()==7}">勞工保險</c:if>
 		              	<c:if test="${item.occupationalAccidentProtectionExpiredTime.length()==7}">職災保險</c:if>
@@ -73,6 +83,11 @@
 		              <td>
 		              	<c:if test="${item.laborProtectionExpiredTime.length()==7}">${item.laborProtectionExpiredTime}</c:if>
 		              	<c:if test="${item.occupationalAccidentProtectionExpiredTime.length()==7}">${item.occupationalAccidentProtectionExpiredTime}</c:if>
+		              </td>
+		              <td>
+		              	<c:if test="${item.salaryMethod=='M' }">按月計</c:if>
+		              	<c:if test="${item.salaryMethod=='H' }">非按月</c:if>
+		              	<c:if test="${item.salaryMethod=='MH' }">部分按月，部分按時</c:if>
 		              </td>
 		              <td>
 		              	<c:if test="${item.frequency==1 }">第一期</c:if>
@@ -85,16 +100,12 @@
 		            <tr>
 		              <th>請領補助</th>
 		              <th width="19%">請領期間</th>
-		              <th>月/時數</th>
-		              <th>請領金額</th>
-		              <th>請領補助</th>
-		              <th width="19%">請領期間</th>
-		              <th>月/時數</th>
+		              <th>月數</th>
 		              <th>請領金額</th>
 		            </tr>
 		            <tr>
-	              <c:if test="${item.salaryMethod=='M'}">
 		              <td>按月計</td>
+		              <c:if test="${item.salaryMethod=='M' || item.salaryMethod=='MH'}">
 		              <td>${item.employmentMonthStartTime }~${item.employmentMonthEndTime }</td>
 		              <td>
 		              	<c:if test="${item.frequency>1 }">${item.highMonthNumber }</c:if>
@@ -102,13 +113,23 @@
 		              </td>
 		              <td><c:if test="${item.frequency>1 }">${item.highMonthNumber*15000 }</c:if>
 		              	<c:if test="${item.frequency==1 }">${item.lowMonthNumber*13000 }</c:if></td>
-		              <td>&nbsp;</td>
-		              <td>&nbsp;</td>
-		              <td>&nbsp;</td>
-		              <td>&nbsp;</td>
-	              </c:if>
-	              <c:if test="${item.salaryMethod=='H'}">
+		              </c:if>
+		              <c:if test="${item.salaryMethod=='H'}">
+		              <td></td>
+		              <td></td>
+		              <td></td>
+		              </c:if>
+		            </tr>
+		            
+		            <tr>
+		              <th>請領補助</th>
+		              <th width="19%">請領期間</th>
+		              <th>月數</th>
+		              <th>請領金額</th>
+		            </tr>
+		            <tr>
 		              <td>按時計</td>
+		              <c:if test="${item.salaryMethod=='H' || item.salaryMethod=='MH' }">
 		              <td>
 		              	${item.employmentHourStartTime }~${item.employmentHourEndTime }
 		              </td>
@@ -120,50 +141,29 @@
 		              	<c:if test="${item.frequency>1 }">${item.highHoursNumber*80 }</c:if>
 	              		<c:if test="${item.frequency==1 }">${item.lowHoursNumber*70 }</c:if>
 		              </td>
-		              <td>&nbsp;</td>
-		              <td>&nbsp;</td>
-		              <td>&nbsp;</td>
-		              <td>&nbsp;</td>
-	              </c:if>
-	              <c:if test="${item.salaryMethod=='MH'}">
-	              	  <td>按月計</td>
-		              <td>${item.employmentMonthStartTime }~${item.employmentMonthEndTime }</td>
-		              <td>
-		              	<c:if test="${item.frequency>1 }">${item.highMonthNumber }</c:if>
-		              	<c:if test="${item.frequency==1 }">${item.lowMonthNumber }</c:if>
-		              </td>
-		              <td><c:if test="${item.frequency>1 }">${item.highMonthNumber*15000 }</c:if>
-		              	<c:if test="${item.frequency==1 }">${item.lowMonthNumber*13000 }</c:if></td>
-		              <td>按時計</td>
-		              <td>
-		              	${item.employmentHourStartTime }~${item.employmentHourEndTime }
-		              </td>
-		              <td>
-		              	<c:if test="${item.frequency>1 }">${item.highHoursNumber}</c:if>
-	              		<c:if test="${item.frequency==1 }">${item.lowHoursNumber}</c:if>
-	              	  </td>
-		              <td>
-		              	<c:if test="${item.frequency>1 }">${item.highHoursNumber*80 }</c:if>
-	              		<c:if test="${item.frequency==1 }">${item.lowHoursNumber*70 }</c:if>
-		              </td>
-	              </c:if>
+		              </c:if>
+		              <c:if test="${item.salaryMethod=='M' }">
+		              	<td></td>
+			              <td></td>
+			              <td></td>
+		              </c:if>
 		            </tr>
 		            <tr>
 		              <td colspan="8" style="text-align:left;">計薪備註：${item.salaryMethodRemark.replace(';','、') }</td>
 		            </tr>
 		          </table>
-			</c:if>
+<%-- 			</c:if> --%>
        	</c:forEach></c:when></c:choose>
       </div>
 
 
       <div class="form">
         <div class="title_main"><span>檢附文件</span></div>
-        <div class="full">原核定函影本：<br>
+        <div class="full lh-lg"><span class="title-c mb-5">原核定函影本：</span><br>
         	<c:choose><c:when test="${not empty approvedAttachment}">
 		      	<c:forEach items="${approvedAttachment}" var="item" varStatus="status">
 			      	<c:choose>
-				      	<c:when test="${item.fileType=='approved' && (baseAllowanceFrequencyTime+1)==item.fileFrequency}">
+				      	<c:when test="${item.fileType=='approved' && (fileFrequencyTime)==item.fileFrequency}">
 					        <a href="download?path=${item.filePath}/${item.fileName}" target="_blank">${item.fileName}</a>&nbsp;&nbsp;
 					        ${item.createTime.substring(0,4)-1911}/${item.createTime.substring(5,7)}/${item.createTime.substring(8,16)}&nbsp;&nbsp;
 					        <fmt:formatNumber value="${item.fileSize/1024}" maxFractionDigits="1"/>KB
@@ -174,11 +174,11 @@
 	        </c:when>
 	        </c:choose>
         </div>
-        <div class="full">領據：<br>
+        <div class="full lh-lg"><span class="title-c mb-5">領據：</span><br>
         	<c:choose><c:when test="${not empty receiptAttachment}">
 		      	<c:forEach items="${receiptAttachment}" var="item" varStatus="status">
 			      	<c:choose>
-				      	<c:when test="${item.fileType=='receipt' && (baseAllowanceFrequencyTime+1)==item.fileFrequency}">
+				      	<c:when test="${item.fileType=='receipt' && (fileFrequencyTime)==item.fileFrequency}">
 					        <a href="download?path=${item.filePath}/${item.fileName}" target="_blank">${item.fileName}</a>&nbsp;&nbsp;
 					        ${item.createTime.substring(0,4)-1911}/${item.createTime.substring(5,7)}/${item.createTime.substring(8,16)}&nbsp;&nbsp;
 					        <fmt:formatNumber value="${item.fileSize/1024}" maxFractionDigits="1"/>KB
@@ -189,11 +189,11 @@
 	        </c:when>
 	        </c:choose>
 	    </div>
-        <div class="full">僱用證明：<br>
+        <div class="full lh-lg"><span class="title-c mb-5">僱用證明：</span><br>
         	<c:choose><c:when test="${not empty employmentAttachment}">
 		      	<c:forEach items="${employmentAttachment}" var="item" varStatus="status">
 			      	<c:choose>
-				      	<c:when test="${item.fileType=='employment' && (baseAllowanceFrequencyTime+1)==item.fileFrequency}">
+				      	<c:when test="${item.fileType=='employment' && (fileFrequencyTime)==item.fileFrequency}">
 					        <a href="download?path=${item.filePath}/${item.fileName}" target="_blank">${item.fileName}</a>&nbsp;&nbsp;
 					        ${item.createTime.substring(0,4)-1911}/${item.createTime.substring(5,7)}/${item.createTime.substring(8,16)}&nbsp;&nbsp;
 					        <fmt:formatNumber value="${item.fileSize/1024}" maxFractionDigits="1"/>KB
@@ -204,11 +204,11 @@
 	        </c:when>
 	        </c:choose>
 	    </div>
-        <div class="full">薪資證明：<br>
+        <div class="full lh-lg"><span class="title-c mb-5">薪資證明：</span><br>
         	<c:choose><c:when test="${not empty salaryAttachment}">
 		      	<c:forEach items="${salaryAttachment}" var="item" varStatus="status">
 			      	<c:choose>
-				      	<c:when test="${item.fileType=='salary' && (baseAllowanceFrequencyTime+1)==item.fileFrequency}">
+				      	<c:when test="${item.fileType=='salary' && (fileFrequencyTime)==item.fileFrequency}">
 					        <a href="download?path=${item.filePath}/${item.fileName}" target="_blank">${item.fileName}</a>&nbsp;&nbsp;
 					        ${item.createTime.substring(0,4)-1911}/${item.createTime.substring(5,7)}/${item.createTime.substring(8,16)}&nbsp;&nbsp;
 					        <fmt:formatNumber value="${item.fileSize/1024}" maxFractionDigits="1"/>KB
@@ -219,11 +219,11 @@
 	        </c:when>
 	        </c:choose>
 	    </div>
-        <div class="full">出勤證明文件：<br>
+        <div class="full lh-lg"><span class="title-c mb-5">出勤證明文件：</span><br>
         	<c:choose><c:when test="${not empty attendanceAttachment}">
 		      	<c:forEach items="${attendanceAttachment}" var="item" varStatus="status">
 			      	<c:choose>
-				      	<c:when test="${item.fileType=='attendance' && (baseAllowanceFrequencyTime+1)==item.fileFrequency}">
+				      	<c:when test="${item.fileType=='attendance' && (fileFrequencyTime)==item.fileFrequency}">
 					        <a href="download?path=${item.filePath}/${item.fileName}" target="_blank">${item.fileName}</a>&nbsp;&nbsp;
 					        ${item.createTime.substring(0,4)-1911}/${item.createTime.substring(5,7)}/${item.createTime.substring(8,16)}&nbsp;&nbsp;
 					        <fmt:formatNumber value="${item.fileSize/1024}" maxFractionDigits="1"/>KB
@@ -234,11 +234,11 @@
 	        </c:when>
 	        </c:choose>
 	    </div>
-        <div class="full">其他文件：<br>
+        <div class="full lh-lg"><span class="title-c mb-5">其他文件：</span><br>
         	<c:choose><c:when test="${not empty necessaryAttachment}">
 		      	<c:forEach items="${necessaryAttachment}" var="item" varStatus="status">
 			      	<c:choose>
-				      	<c:when test="${item.fileType=='necessary' && (baseAllowanceFrequencyTime+1)==item.fileFrequency}">
+				      	<c:when test="${item.fileType=='necessary' && (fileFrequencyTime)==item.fileFrequency}">
 					        <a href="download?path=${item.filePath}/${item.fileName}" target="_blank">${item.fileName}</a>&nbsp;&nbsp;
 					        ${item.createTime.substring(0,4)-1911}/${item.createTime.substring(5,7)}/${item.createTime.substring(8,16)}&nbsp;&nbsp;
 					        <fmt:formatNumber value="${item.fileSize/1024}" maxFractionDigits="1"/>KB
@@ -263,14 +263,7 @@
   <!--- main end ---> 
   
   <!--- footer --->
-  <footer class="copyright">
-    <section>
-      <div>勞動力發展署：24219新北市新莊區中平路439號南棟4樓　電話代表號：(02)8995-6000　客服專線：0800-777-888</div>
-      <div>本署服務時間：週一至週五　上午8時30分至12時30分，下午13時30分至17時30分</div>
-      <div>最佳解析度1024x768 ，建議更新瀏覽器至以下版本：最新版本Chrome、最新版本Firefox</div>
-      <div>中華民國勞動部勞動力發展署版權所有 © 2021 All rights reserved. </div>
-    </section>
-  </footer>
+  <%@ include file="footer.jsp" %>
   <!--- footer end ---> 
   
 </div>

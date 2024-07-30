@@ -18,9 +18,8 @@ function jurisdiction(){
 	    },
 	    dataType:"text", //ajax返回值text（json格式也可用這返回，也可設成json）
 	    success: function(text){ 
-			let json=jQuery.parseJSON(text);
+			let json = JSON.parse(text);
 			if(json.status=='success'){
-				let json_spl=json.code.split("、");
 				$('input[name^="functionCode"]').each(function(){
 					if(json.code.indexOf($(this).val())!=-1)
 					{
@@ -60,7 +59,7 @@ function saveData(){
 	    },
 	    dataType:"text", //ajax返回值text（json格式也可用這返回，也可設成json）
 	    success: function(text){ 
-			let json=jQuery.parseJSON(text);
+			let json = JSON.parse(text);
 			if(json.status=='success'){
 				alert('儲存成功');
 			}

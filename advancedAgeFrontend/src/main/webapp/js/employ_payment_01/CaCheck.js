@@ -105,9 +105,15 @@ function getData(){
         data: {
             base64: $('#ResultSignedData').val()
         },
-        success: function(msg){ 
-			if(msg=='success'){
-        		location.href='employ_02';
+        success: function(result){ 
+			let result_spl=result.split(";");
+			if(result_spl[0]=='success'){
+				var redirectUrl = result_spl[1];
+	            if (/^[a-zA-Z]+_\d+$/.test(redirectUrl)) {
+	                location.href = encodeURIComponent(redirectUrl);
+	            } else {
+	                alert("無效的重定向 URL");
+	            }
 			}else{
 				alert('讀卡失敗');
 			}

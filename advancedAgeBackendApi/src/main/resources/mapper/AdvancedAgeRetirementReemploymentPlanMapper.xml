@@ -6,14 +6,28 @@
     <result column="id" property="id" jdbcType="INTEGER" />
     <result column="work_content" property="workContent" jdbcType="VARCHAR" />
     <result column="friendly_measures" property="friendlyMeasures" jdbcType="VARCHAR" />
+    <result column="employee_number" property="employeeNumber" jdbcType="INTEGER" />
+    <result column="beneficiary_number" property="beneficiaryNumber" jdbcType="INTEGER" />
+    <result column="subsidy_type" property="subsidyType" jdbcType="INTEGER" />
+    <result column="amounts" property="amounts" jdbcType="INTEGER" />
+    <result column="multiple_applications" property="multipleApplications" jdbcType="CHAR" />
+    <result column="multiple_applications_description" property="multipleApplicationsDescription" jdbcType="VARCHAR" />
+    <result column="apply_same_year" property="applySameYear" jdbcType="CHAR" />
+    <result column="apply_same_year_description" property="applySameYearDescription" jdbcType="VARCHAR" />
     <result column="plan_goal" property="planGoal" jdbcType="VARCHAR" />
     <result column="plan_content" property="planContent" jdbcType="VARCHAR" />
     <result column="plan_start_time" property="planStartTime" jdbcType="VARCHAR" />
     <result column="plan_end_time" property="planEndTime" jdbcType="VARCHAR" />
+    <result column="execution_city" property="executionCity" jdbcType="VARCHAR" />
     <result column="quality_benefit" property="qualityBenefit" jdbcType="VARCHAR" />
     <result column="quantify_benefit" property="quantifyBenefit" jdbcType="VARCHAR" />
     <result column="plan_execution_situation" property="planExecutionSituation" jdbcType="VARCHAR" />
+    <result column="attach_benefit_list" property="attachBenefitList" jdbcType="CHAR" />
+    <result column="attach_expenditure" property="attachExpenditure" jdbcType="CHAR" />
+    <result column="attach_basic_data" property="attachBasicData" jdbcType="CHAR" />
     <result column="other_attachment" property="otherAttachment" jdbcType="VARCHAR" />
+    <result column="has_joint_unit" property="hasJointUnit" jdbcType="CHAR" />
+    <result column="execution_city_address" property="executionCityAddress" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -75,8 +89,11 @@
   </sql>
   <sql id="Base_Column_List" >
     advanced_age_retirement_reemployment_apply_id, id, work_content, friendly_measures, 
-    plan_goal, plan_content, plan_start_time, plan_end_time, quality_benefit, quantify_benefit, 
-    plan_execution_situation, other_attachment
+    employee_number, beneficiary_number, subsidy_type, amounts, multiple_applications, 
+    multiple_applications_description, apply_same_year, apply_same_year_description, 
+    plan_goal, plan_content, plan_start_time, plan_end_time, execution_city, quality_benefit, 
+    quantify_benefit, plan_execution_situation, attach_benefit_list, attach_expenditure, 
+    attach_basic_data, other_attachment, has_joint_unit, execution_city_address
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentPlanExample" >
     select
@@ -110,15 +127,25 @@
   </delete>
   <insert id="insert" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentPlan" >
     insert into advancedAgeRetirementReemploymentPlan (advanced_age_retirement_reemployment_apply_id, id, 
-      work_content, friendly_measures, plan_goal, 
+      work_content, friendly_measures, employee_number, 
+      beneficiary_number, subsidy_type, amounts, 
+      multiple_applications, multiple_applications_description, 
+      apply_same_year, apply_same_year_description, plan_goal, 
       plan_content, plan_start_time, plan_end_time, 
-      quality_benefit, quantify_benefit, plan_execution_situation, 
-      other_attachment)
+      execution_city, quality_benefit, quantify_benefit, 
+      plan_execution_situation, attach_benefit_list, 
+      attach_expenditure, attach_basic_data, other_attachment, 
+      has_joint_unit, execution_city_address)
     values (#{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, 
-      #{workContent,jdbcType=VARCHAR}, #{friendlyMeasures,jdbcType=VARCHAR}, #{planGoal,jdbcType=VARCHAR}, 
+      #{workContent,jdbcType=VARCHAR}, #{friendlyMeasures,jdbcType=VARCHAR}, #{employeeNumber,jdbcType=INTEGER}, 
+      #{beneficiaryNumber,jdbcType=INTEGER}, #{subsidyType,jdbcType=INTEGER}, #{amounts,jdbcType=INTEGER}, 
+      #{multipleApplications,jdbcType=CHAR}, #{multipleApplicationsDescription,jdbcType=VARCHAR}, 
+      #{applySameYear,jdbcType=CHAR}, #{applySameYearDescription,jdbcType=VARCHAR}, #{planGoal,jdbcType=VARCHAR}, 
       #{planContent,jdbcType=VARCHAR}, #{planStartTime,jdbcType=VARCHAR}, #{planEndTime,jdbcType=VARCHAR}, 
-      #{qualityBenefit,jdbcType=VARCHAR}, #{quantifyBenefit,jdbcType=VARCHAR}, #{planExecutionSituation,jdbcType=VARCHAR}, 
-      #{otherAttachment,jdbcType=VARCHAR})
+      #{executionCity,jdbcType=VARCHAR}, #{qualityBenefit,jdbcType=VARCHAR}, #{quantifyBenefit,jdbcType=VARCHAR}, 
+      #{planExecutionSituation,jdbcType=VARCHAR}, #{attachBenefitList,jdbcType=CHAR}, 
+      #{attachExpenditure,jdbcType=CHAR}, #{attachBasicData,jdbcType=CHAR}, #{otherAttachment,jdbcType=VARCHAR}, 
+      #{hasJointUnit,jdbcType=CHAR}, #{executionCityAddress,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.springboot.entity.AdvancedAgeRetirementReemploymentPlan" >
     insert into advancedAgeRetirementReemploymentPlan
@@ -135,6 +162,30 @@
       <if test="friendlyMeasures != null" >
         friendly_measures,
       </if>
+      <if test="employeeNumber != null" >
+        employee_number,
+      </if>
+      <if test="beneficiaryNumber != null" >
+        beneficiary_number,
+      </if>
+      <if test="subsidyType != null" >
+        subsidy_type,
+      </if>
+      <if test="amounts != null" >
+        amounts,
+      </if>
+      <if test="multipleApplications != null" >
+        multiple_applications,
+      </if>
+      <if test="multipleApplicationsDescription != null" >
+        multiple_applications_description,
+      </if>
+      <if test="applySameYear != null" >
+        apply_same_year,
+      </if>
+      <if test="applySameYearDescription != null" >
+        apply_same_year_description,
+      </if>
       <if test="planGoal != null" >
         plan_goal,
       </if>
@@ -147,6 +198,9 @@
       <if test="planEndTime != null" >
         plan_end_time,
       </if>
+      <if test="executionCity != null" >
+        execution_city,
+      </if>
       <if test="qualityBenefit != null" >
         quality_benefit,
       </if>
@@ -156,8 +210,23 @@
       <if test="planExecutionSituation != null" >
         plan_execution_situation,
       </if>
+      <if test="attachBenefitList != null" >
+        attach_benefit_list,
+      </if>
+      <if test="attachExpenditure != null" >
+        attach_expenditure,
+      </if>
+      <if test="attachBasicData != null" >
+        attach_basic_data,
+      </if>
       <if test="otherAttachment != null" >
         other_attachment,
+      </if>
+      <if test="hasJointUnit != null" >
+        has_joint_unit,
+      </if>
+      <if test="executionCityAddress != null" >
+        execution_city_address,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -173,6 +242,30 @@
       <if test="friendlyMeasures != null" >
         #{friendlyMeasures,jdbcType=VARCHAR},
       </if>
+      <if test="employeeNumber != null" >
+        #{employeeNumber,jdbcType=INTEGER},
+      </if>
+      <if test="beneficiaryNumber != null" >
+        #{beneficiaryNumber,jdbcType=INTEGER},
+      </if>
+      <if test="subsidyType != null" >
+        #{subsidyType,jdbcType=INTEGER},
+      </if>
+      <if test="amounts != null" >
+        #{amounts,jdbcType=INTEGER},
+      </if>
+      <if test="multipleApplications != null" >
+        #{multipleApplications,jdbcType=CHAR},
+      </if>
+      <if test="multipleApplicationsDescription != null" >
+        #{multipleApplicationsDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="applySameYear != null" >
+        #{applySameYear,jdbcType=CHAR},
+      </if>
+      <if test="applySameYearDescription != null" >
+        #{applySameYearDescription,jdbcType=VARCHAR},
+      </if>
       <if test="planGoal != null" >
         #{planGoal,jdbcType=VARCHAR},
       </if>
@@ -185,6 +278,9 @@
       <if test="planEndTime != null" >
         #{planEndTime,jdbcType=VARCHAR},
       </if>
+      <if test="executionCity != null" >
+        #{executionCity,jdbcType=VARCHAR},
+      </if>
       <if test="qualityBenefit != null" >
         #{qualityBenefit,jdbcType=VARCHAR},
       </if>
@@ -194,8 +290,23 @@
       <if test="planExecutionSituation != null" >
         #{planExecutionSituation,jdbcType=VARCHAR},
       </if>
+      <if test="attachBenefitList != null" >
+        #{attachBenefitList,jdbcType=CHAR},
+      </if>
+      <if test="attachExpenditure != null" >
+        #{attachExpenditure,jdbcType=CHAR},
+      </if>
+      <if test="attachBasicData != null" >
+        #{attachBasicData,jdbcType=CHAR},
+      </if>
       <if test="otherAttachment != null" >
         #{otherAttachment,jdbcType=VARCHAR},
+      </if>
+      <if test="hasJointUnit != null" >
+        #{hasJointUnit,jdbcType=CHAR},
+      </if>
+      <if test="executionCityAddress != null" >
+        #{executionCityAddress,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -220,6 +331,30 @@
       <if test="record.friendlyMeasures != null" >
         friendly_measures = #{record.friendlyMeasures,jdbcType=VARCHAR},
       </if>
+      <if test="record.employeeNumber != null" >
+        employee_number = #{record.employeeNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.beneficiaryNumber != null" >
+        beneficiary_number = #{record.beneficiaryNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.subsidyType != null" >
+        subsidy_type = #{record.subsidyType,jdbcType=INTEGER},
+      </if>
+      <if test="record.amounts != null" >
+        amounts = #{record.amounts,jdbcType=INTEGER},
+      </if>
+      <if test="record.multipleApplications != null" >
+        multiple_applications = #{record.multipleApplications,jdbcType=CHAR},
+      </if>
+      <if test="record.multipleApplicationsDescription != null" >
+        multiple_applications_description = #{record.multipleApplicationsDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applySameYear != null" >
+        apply_same_year = #{record.applySameYear,jdbcType=CHAR},
+      </if>
+      <if test="record.applySameYearDescription != null" >
+        apply_same_year_description = #{record.applySameYearDescription,jdbcType=VARCHAR},
+      </if>
       <if test="record.planGoal != null" >
         plan_goal = #{record.planGoal,jdbcType=VARCHAR},
       </if>
@@ -232,6 +367,9 @@
       <if test="record.planEndTime != null" >
         plan_end_time = #{record.planEndTime,jdbcType=VARCHAR},
       </if>
+      <if test="record.executionCity != null" >
+        execution_city = #{record.executionCity,jdbcType=VARCHAR},
+      </if>
       <if test="record.qualityBenefit != null" >
         quality_benefit = #{record.qualityBenefit,jdbcType=VARCHAR},
       </if>
@@ -241,8 +379,23 @@
       <if test="record.planExecutionSituation != null" >
         plan_execution_situation = #{record.planExecutionSituation,jdbcType=VARCHAR},
       </if>
+      <if test="record.attachBenefitList != null" >
+        attach_benefit_list = #{record.attachBenefitList,jdbcType=CHAR},
+      </if>
+      <if test="record.attachExpenditure != null" >
+        attach_expenditure = #{record.attachExpenditure,jdbcType=CHAR},
+      </if>
+      <if test="record.attachBasicData != null" >
+        attach_basic_data = #{record.attachBasicData,jdbcType=CHAR},
+      </if>
       <if test="record.otherAttachment != null" >
         other_attachment = #{record.otherAttachment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hasJointUnit != null" >
+        has_joint_unit = #{record.hasJointUnit,jdbcType=CHAR},
+      </if>
+      <if test="record.executionCityAddress != null" >
+        execution_city_address = #{record.executionCityAddress,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -255,14 +408,28 @@
       id = #{record.id,jdbcType=INTEGER},
       work_content = #{record.workContent,jdbcType=VARCHAR},
       friendly_measures = #{record.friendlyMeasures,jdbcType=VARCHAR},
+      employee_number = #{record.employeeNumber,jdbcType=INTEGER},
+      beneficiary_number = #{record.beneficiaryNumber,jdbcType=INTEGER},
+      subsidy_type = #{record.subsidyType,jdbcType=INTEGER},
+      amounts = #{record.amounts,jdbcType=INTEGER},
+      multiple_applications = #{record.multipleApplications,jdbcType=CHAR},
+      multiple_applications_description = #{record.multipleApplicationsDescription,jdbcType=VARCHAR},
+      apply_same_year = #{record.applySameYear,jdbcType=CHAR},
+      apply_same_year_description = #{record.applySameYearDescription,jdbcType=VARCHAR},
       plan_goal = #{record.planGoal,jdbcType=VARCHAR},
       plan_content = #{record.planContent,jdbcType=VARCHAR},
       plan_start_time = #{record.planStartTime,jdbcType=VARCHAR},
       plan_end_time = #{record.planEndTime,jdbcType=VARCHAR},
+      execution_city = #{record.executionCity,jdbcType=VARCHAR},
       quality_benefit = #{record.qualityBenefit,jdbcType=VARCHAR},
       quantify_benefit = #{record.quantifyBenefit,jdbcType=VARCHAR},
       plan_execution_situation = #{record.planExecutionSituation,jdbcType=VARCHAR},
-      other_attachment = #{record.otherAttachment,jdbcType=VARCHAR}
+      attach_benefit_list = #{record.attachBenefitList,jdbcType=CHAR},
+      attach_expenditure = #{record.attachExpenditure,jdbcType=CHAR},
+      attach_basic_data = #{record.attachBasicData,jdbcType=CHAR},
+      other_attachment = #{record.otherAttachment,jdbcType=VARCHAR},
+      has_joint_unit = #{record.hasJointUnit,jdbcType=CHAR},
+      execution_city_address = #{record.executionCityAddress,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -279,6 +446,30 @@
       <if test="friendlyMeasures != null" >
         friendly_measures = #{friendlyMeasures,jdbcType=VARCHAR},
       </if>
+      <if test="employeeNumber != null" >
+        employee_number = #{employeeNumber,jdbcType=INTEGER},
+      </if>
+      <if test="beneficiaryNumber != null" >
+        beneficiary_number = #{beneficiaryNumber,jdbcType=INTEGER},
+      </if>
+      <if test="subsidyType != null" >
+        subsidy_type = #{subsidyType,jdbcType=INTEGER},
+      </if>
+      <if test="amounts != null" >
+        amounts = #{amounts,jdbcType=INTEGER},
+      </if>
+      <if test="multipleApplications != null" >
+        multiple_applications = #{multipleApplications,jdbcType=CHAR},
+      </if>
+      <if test="multipleApplicationsDescription != null" >
+        multiple_applications_description = #{multipleApplicationsDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="applySameYear != null" >
+        apply_same_year = #{applySameYear,jdbcType=CHAR},
+      </if>
+      <if test="applySameYearDescription != null" >
+        apply_same_year_description = #{applySameYearDescription,jdbcType=VARCHAR},
+      </if>
       <if test="planGoal != null" >
         plan_goal = #{planGoal,jdbcType=VARCHAR},
       </if>
@@ -291,6 +482,9 @@
       <if test="planEndTime != null" >
         plan_end_time = #{planEndTime,jdbcType=VARCHAR},
       </if>
+      <if test="executionCity != null" >
+        execution_city = #{executionCity,jdbcType=VARCHAR},
+      </if>
       <if test="qualityBenefit != null" >
         quality_benefit = #{qualityBenefit,jdbcType=VARCHAR},
       </if>
@@ -300,8 +494,23 @@
       <if test="planExecutionSituation != null" >
         plan_execution_situation = #{planExecutionSituation,jdbcType=VARCHAR},
       </if>
+      <if test="attachBenefitList != null" >
+        attach_benefit_list = #{attachBenefitList,jdbcType=CHAR},
+      </if>
+      <if test="attachExpenditure != null" >
+        attach_expenditure = #{attachExpenditure,jdbcType=CHAR},
+      </if>
+      <if test="attachBasicData != null" >
+        attach_basic_data = #{attachBasicData,jdbcType=CHAR},
+      </if>
       <if test="otherAttachment != null" >
         other_attachment = #{otherAttachment,jdbcType=VARCHAR},
+      </if>
+      <if test="hasJointUnit != null" >
+        has_joint_unit = #{hasJointUnit,jdbcType=CHAR},
+      </if>
+      <if test="executionCityAddress != null" >
+        execution_city_address = #{executionCityAddress,jdbcType=VARCHAR},
       </if>
     </set>
     where advanced_age_retirement_reemployment_apply_id = #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER}
@@ -311,14 +520,28 @@
     set id = #{id,jdbcType=INTEGER},
       work_content = #{workContent,jdbcType=VARCHAR},
       friendly_measures = #{friendlyMeasures,jdbcType=VARCHAR},
+      employee_number = #{employeeNumber,jdbcType=INTEGER},
+      beneficiary_number = #{beneficiaryNumber,jdbcType=INTEGER},
+      subsidy_type = #{subsidyType,jdbcType=INTEGER},
+      amounts = #{amounts,jdbcType=INTEGER},
+      multiple_applications = #{multipleApplications,jdbcType=CHAR},
+      multiple_applications_description = #{multipleApplicationsDescription,jdbcType=VARCHAR},
+      apply_same_year = #{applySameYear,jdbcType=CHAR},
+      apply_same_year_description = #{applySameYearDescription,jdbcType=VARCHAR},
       plan_goal = #{planGoal,jdbcType=VARCHAR},
       plan_content = #{planContent,jdbcType=VARCHAR},
       plan_start_time = #{planStartTime,jdbcType=VARCHAR},
       plan_end_time = #{planEndTime,jdbcType=VARCHAR},
+      execution_city = #{executionCity,jdbcType=VARCHAR},
       quality_benefit = #{qualityBenefit,jdbcType=VARCHAR},
       quantify_benefit = #{quantifyBenefit,jdbcType=VARCHAR},
       plan_execution_situation = #{planExecutionSituation,jdbcType=VARCHAR},
-      other_attachment = #{otherAttachment,jdbcType=VARCHAR}
+      attach_benefit_list = #{attachBenefitList,jdbcType=CHAR},
+      attach_expenditure = #{attachExpenditure,jdbcType=CHAR},
+      attach_basic_data = #{attachBasicData,jdbcType=CHAR},
+      other_attachment = #{otherAttachment,jdbcType=VARCHAR},
+      has_joint_unit = #{hasJointUnit,jdbcType=CHAR},
+      execution_city_address = #{executionCityAddress,jdbcType=VARCHAR}
     where advanced_age_retirement_reemployment_apply_id = #{advancedAgeRetirementReemploymentApplyId,jdbcType=INTEGER}
   </update>
 </mapper>

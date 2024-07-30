@@ -14,6 +14,8 @@ public class AdvancedAgeApply extends AdvancedAgeApplyKey implements Serializabl
 
     private String principal;
 
+    private String registerPostalCode;
+
     private String registerCity;
 
     private String registerArea;
@@ -77,7 +79,7 @@ public class AdvancedAgeApply extends AdvancedAgeApplyKey implements Serializabl
     private String attachDocumentsOtherProof;
 
     private String attachDocumentsOtherProofDocument;
-    
+
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
 
@@ -129,6 +131,14 @@ public class AdvancedAgeApply extends AdvancedAgeApplyKey implements Serializabl
 
     public void setPrincipal(String principal) {
         this.principal = principal == null ? null : principal.trim();
+    }
+
+    public String getRegisterPostalCode() {
+        return registerPostalCode;
+    }
+
+    public void setRegisterPostalCode(String registerPostalCode) {
+        this.registerPostalCode = registerPostalCode == null ? null : registerPostalCode.trim();
     }
 
     public String getRegisterCity() {

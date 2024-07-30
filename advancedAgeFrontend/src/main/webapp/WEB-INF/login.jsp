@@ -21,18 +21,27 @@
   
   <!--- main --->
   <div class="main"> 
-    
+    <a href="#C" title="中央內容區塊" id="AC" accesskey="C" name="C">:::</a> <!---無障礙--->
   <!------------ 申請流程 ------------>
   <div class="apply_main">
-<!--     <h1>帳號申請／登入</h1> -->
-    <h1>帳號登入</h1>
+	<!---無障礙/麵包屑--->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index" title="首頁">首頁</a></li>
+        <li class="breadcrumb-item active" aria-current="page">帳號申請及登入</li>
+      </ol>
+    </nav>
+    <h1>帳號申請／登入</h1>
     <h2>驗證身分</h2>
     
     <!---申辦前準備--->
     <h3>請先「登入帳號」或使用「工商憑證」進行登入，<br>
     若您忘記密碼請聯繫我們，將由人工查詢及回覆。</h3>
-    <div class="login">
+    <div class="login clearfix">
+    	<label for="type"></label>
     	<input type="text" id="type" name="type" value="${type }" style="display:none">
+    	<label for="caseType"></label>
+    	<input type="text" id="caseType" name="caseType" value="${caseType }" style="display:none">
       <div class="mode style-2">
         <div class="title_line">無卡申請</div>
         <div class="title_word">帳號登入</div>
@@ -75,22 +84,28 @@
         
           <li>
           
-          <label for="">密碼</label>
+          <label for="pin">密碼</label>
           <input type="password" pattern="[a-zA-Z0-9]{8,16}" name="pin" id="pin" placeholder="工商憑證卡片PIN碼" value="">
+          	<label for="tbs"></label>
 				<INPUT type="text" name="tbs" id="tbs" value="TBS" style="display:none">
+<label for="tbsEncoding"></label>
 <SELECT name="tbsEncoding" id="tbsEncoding" style="display:none"><OPTION value="NONE" selected>NONE</OPTION><OPTION value="base64" >base64</OPTION></SELECT>
+<label for="hashAlgorithm"></label>
 <SELECT name="hashAlgorithm" id="hashAlgorithm" style="display:none"><OPTION value="SHA1">SHA1</OPTION>
   	   <OPTION value="SHA256" selected>SHA256</OPTION>	   <OPTION value="SHA384">SHA384</OPTION>
   	   <OPTION value="SHA512">SHA512</OPTION>	   </SELECT><BR>
+<label for="nonce"></label>
 <INPUT type="text" name="nonce" id="nonce" style="display:none"><BR>
+<label for="withCardSN"></label>
 <SELECT name="withCardSN" id="withCardSN" style="display:none"><OPTION value="true">true</OPTION>	   <OPTION value="false" 
   selected>false</OPTION>	   </SELECT>
-
+<label for="ResultSignedData"></label>
 <TEXTAREA name="b64SignedData" id="ResultSignedData" rows="8" cols="65" style="display:none"></TEXTAREA><br/>
+<label for="returnCode"></label>
 <input type="text" name="returnCode" id="returnCode" style="display:none">
           </li>
           
-          <li><div><a href="#">讀卡元件</a>　<a href="https://moeacaweb.nat.gov.tw/MoeaeeWeb/function/cert_3.aspx" target="_blank">忘記密碼</a></div></li>
+          <li><div><a href="https://moica.nat.gov.tw/download/File/HiCOS_Client.zip" target="_blank">讀卡元件</a>　<a href="https://moeacaweb.nat.gov.tw/MoeaeeWeb/function/cert_3.aspx" target="_blank">忘記密碼</a></div></li>
         
           <li><div><a href="http://localhost:61161/selfTest.htm" target="_blank">使用環境建議與檢測</a></div></li>
         
@@ -104,10 +119,21 @@
         </ul>
       </div>
       
+      <div class="mode style-3">
+        <div class="title_line">無卡申請</div>
+        <div class="title_word">就業通帳號登入</div>
+        <ul>
+          <li>
+          <label for="SSOseq">統編</label>
+          <input type="text" pattern="\d{8}" maxlength="8" id="SSOseq" placeholder="請輸入統一編號">
+          </li>
+          <li>若您已有台灣就業通網站帳號，請輸入台灣就業通帳號，並點選下方登入，頁面將引導至台灣就業通網站。</li>
+          <li>
+            <div><button type="button" onclick="SSO()">登入</button></div>
+          </li>
+        </ul>
+      </div>
     </div>
-    
-    
-    <div class="page"></div>
     
   </div>
   <!------------ 申請流程 END ------------>
@@ -116,14 +142,7 @@
   <!--- main end ---> 
   
   <!--- footer --->
-  <footer class="copyright">
-    <section>
-      <div>勞動力發展署：24219新北市新莊區中平路439號南棟4樓　電話代表號：(02)8995-6000　客服專線：0800-777-888</div>
-      <div>本署服務時間：週一至週五　上午8時30分至12時30分，下午13時30分至17時30分</div>
-      <div>最佳解析度1024x768 ，建議更新瀏覽器至以下版本：最新版本Chrome、最新版本Firefox</div>
-      <div>中華民國勞動部勞動力發展署版權所有 © 2021 All rights reserved. </div>
-    </section>
-  </footer>
+  <%@ include file="footer.jsp" %>
   <!--- footer end ---> 
   
 </div>

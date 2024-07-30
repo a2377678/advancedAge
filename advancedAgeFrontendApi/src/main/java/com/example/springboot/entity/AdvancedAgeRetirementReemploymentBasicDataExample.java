@@ -174,63 +174,63 @@ public class AdvancedAgeRetirementReemploymentBasicDataExample {
             return (Criteria) this;
         }
 
-        public Criteria andAdvancedAgeRetirementReemploymentJointAuthorizeIdIsNull() {
-            addCriterion("advanced_age_retirement_reemployment_joint_authorize_id is null");
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdIsNull() {
+            addCriterion("advanced_age_retirement_reemployment_apply_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andAdvancedAgeRetirementReemploymentJointAuthorizeIdIsNotNull() {
-            addCriterion("advanced_age_retirement_reemployment_joint_authorize_id is not null");
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdIsNotNull() {
+            addCriterion("advanced_age_retirement_reemployment_apply_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andAdvancedAgeRetirementReemploymentJointAuthorizeIdEqualTo(Integer value) {
-            addCriterion("advanced_age_retirement_reemployment_joint_authorize_id =", value, "advancedAgeRetirementReemploymentJointAuthorizeId");
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdEqualTo(Integer value) {
+            addCriterion("advanced_age_retirement_reemployment_apply_id =", value, "advancedAgeRetirementReemploymentApplyId");
             return (Criteria) this;
         }
 
-        public Criteria andAdvancedAgeRetirementReemploymentJointAuthorizeIdNotEqualTo(Integer value) {
-            addCriterion("advanced_age_retirement_reemployment_joint_authorize_id <>", value, "advancedAgeRetirementReemploymentJointAuthorizeId");
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdNotEqualTo(Integer value) {
+            addCriterion("advanced_age_retirement_reemployment_apply_id <>", value, "advancedAgeRetirementReemploymentApplyId");
             return (Criteria) this;
         }
 
-        public Criteria andAdvancedAgeRetirementReemploymentJointAuthorizeIdGreaterThan(Integer value) {
-            addCriterion("advanced_age_retirement_reemployment_joint_authorize_id >", value, "advancedAgeRetirementReemploymentJointAuthorizeId");
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdGreaterThan(Integer value) {
+            addCriterion("advanced_age_retirement_reemployment_apply_id >", value, "advancedAgeRetirementReemploymentApplyId");
             return (Criteria) this;
         }
 
-        public Criteria andAdvancedAgeRetirementReemploymentJointAuthorizeIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("advanced_age_retirement_reemployment_joint_authorize_id >=", value, "advancedAgeRetirementReemploymentJointAuthorizeId");
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("advanced_age_retirement_reemployment_apply_id >=", value, "advancedAgeRetirementReemploymentApplyId");
             return (Criteria) this;
         }
 
-        public Criteria andAdvancedAgeRetirementReemploymentJointAuthorizeIdLessThan(Integer value) {
-            addCriterion("advanced_age_retirement_reemployment_joint_authorize_id <", value, "advancedAgeRetirementReemploymentJointAuthorizeId");
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdLessThan(Integer value) {
+            addCriterion("advanced_age_retirement_reemployment_apply_id <", value, "advancedAgeRetirementReemploymentApplyId");
             return (Criteria) this;
         }
 
-        public Criteria andAdvancedAgeRetirementReemploymentJointAuthorizeIdLessThanOrEqualTo(Integer value) {
-            addCriterion("advanced_age_retirement_reemployment_joint_authorize_id <=", value, "advancedAgeRetirementReemploymentJointAuthorizeId");
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdLessThanOrEqualTo(Integer value) {
+            addCriterion("advanced_age_retirement_reemployment_apply_id <=", value, "advancedAgeRetirementReemploymentApplyId");
             return (Criteria) this;
         }
 
-        public Criteria andAdvancedAgeRetirementReemploymentJointAuthorizeIdIn(List<Integer> values) {
-            addCriterion("advanced_age_retirement_reemployment_joint_authorize_id in", values, "advancedAgeRetirementReemploymentJointAuthorizeId");
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdIn(List<Integer> values) {
+            addCriterion("advanced_age_retirement_reemployment_apply_id in", values, "advancedAgeRetirementReemploymentApplyId");
             return (Criteria) this;
         }
 
-        public Criteria andAdvancedAgeRetirementReemploymentJointAuthorizeIdNotIn(List<Integer> values) {
-            addCriterion("advanced_age_retirement_reemployment_joint_authorize_id not in", values, "advancedAgeRetirementReemploymentJointAuthorizeId");
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdNotIn(List<Integer> values) {
+            addCriterion("advanced_age_retirement_reemployment_apply_id not in", values, "advancedAgeRetirementReemploymentApplyId");
             return (Criteria) this;
         }
 
-        public Criteria andAdvancedAgeRetirementReemploymentJointAuthorizeIdBetween(Integer value1, Integer value2) {
-            addCriterion("advanced_age_retirement_reemployment_joint_authorize_id between", value1, value2, "advancedAgeRetirementReemploymentJointAuthorizeId");
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdBetween(Integer value1, Integer value2) {
+            addCriterion("advanced_age_retirement_reemployment_apply_id between", value1, value2, "advancedAgeRetirementReemploymentApplyId");
             return (Criteria) this;
         }
 
-        public Criteria andAdvancedAgeRetirementReemploymentJointAuthorizeIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("advanced_age_retirement_reemployment_joint_authorize_id not between", value1, value2, "advancedAgeRetirementReemploymentJointAuthorizeId");
+        public Criteria andAdvancedAgeRetirementReemploymentApplyIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("advanced_age_retirement_reemployment_apply_id not between", value1, value2, "advancedAgeRetirementReemploymentApplyId");
             return (Criteria) this;
         }
 
@@ -571,6 +571,216 @@ public class AdvancedAgeRetirementReemploymentBasicDataExample {
 
         public Criteria andContactNameNotBetween(String value1, String value2) {
             addCriterion("contact_name not between", value1, value2, "contactName");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeIsNull() {
+            addCriterion("contact_work_phone_area_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeIsNotNull() {
+            addCriterion("contact_work_phone_area_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeEqualTo(String value) {
+            addCriterion("contact_work_phone_area_code =", value, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeNotEqualTo(String value) {
+            addCriterion("contact_work_phone_area_code <>", value, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeGreaterThan(String value) {
+            addCriterion("contact_work_phone_area_code >", value, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("contact_work_phone_area_code >=", value, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeLessThan(String value) {
+            addCriterion("contact_work_phone_area_code <", value, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeLessThanOrEqualTo(String value) {
+            addCriterion("contact_work_phone_area_code <=", value, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeLike(String value) {
+            addCriterion("contact_work_phone_area_code like", value, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeNotLike(String value) {
+            addCriterion("contact_work_phone_area_code not like", value, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeIn(List<String> values) {
+            addCriterion("contact_work_phone_area_code in", values, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeNotIn(List<String> values) {
+            addCriterion("contact_work_phone_area_code not in", values, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeBetween(String value1, String value2) {
+            addCriterion("contact_work_phone_area_code between", value1, value2, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeNotBetween(String value1, String value2) {
+            addCriterion("contact_work_phone_area_code not between", value1, value2, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneIsNull() {
+            addCriterion("contact_work_phone is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneIsNotNull() {
+            addCriterion("contact_work_phone is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneEqualTo(String value) {
+            addCriterion("contact_work_phone =", value, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneNotEqualTo(String value) {
+            addCriterion("contact_work_phone <>", value, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneGreaterThan(String value) {
+            addCriterion("contact_work_phone >", value, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneGreaterThanOrEqualTo(String value) {
+            addCriterion("contact_work_phone >=", value, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneLessThan(String value) {
+            addCriterion("contact_work_phone <", value, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneLessThanOrEqualTo(String value) {
+            addCriterion("contact_work_phone <=", value, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneLike(String value) {
+            addCriterion("contact_work_phone like", value, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneNotLike(String value) {
+            addCriterion("contact_work_phone not like", value, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneIn(List<String> values) {
+            addCriterion("contact_work_phone in", values, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneNotIn(List<String> values) {
+            addCriterion("contact_work_phone not in", values, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneBetween(String value1, String value2) {
+            addCriterion("contact_work_phone between", value1, value2, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneNotBetween(String value1, String value2) {
+            addCriterion("contact_work_phone not between", value1, value2, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionIsNull() {
+            addCriterion("contact_work_phone_extension is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionIsNotNull() {
+            addCriterion("contact_work_phone_extension is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionEqualTo(String value) {
+            addCriterion("contact_work_phone_extension =", value, "contactWorkPhoneExtension");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionNotEqualTo(String value) {
+            addCriterion("contact_work_phone_extension <>", value, "contactWorkPhoneExtension");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionGreaterThan(String value) {
+            addCriterion("contact_work_phone_extension >", value, "contactWorkPhoneExtension");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionGreaterThanOrEqualTo(String value) {
+            addCriterion("contact_work_phone_extension >=", value, "contactWorkPhoneExtension");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionLessThan(String value) {
+            addCriterion("contact_work_phone_extension <", value, "contactWorkPhoneExtension");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionLessThanOrEqualTo(String value) {
+            addCriterion("contact_work_phone_extension <=", value, "contactWorkPhoneExtension");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionLike(String value) {
+            addCriterion("contact_work_phone_extension like", value, "contactWorkPhoneExtension");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionNotLike(String value) {
+            addCriterion("contact_work_phone_extension not like", value, "contactWorkPhoneExtension");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionIn(List<String> values) {
+            addCriterion("contact_work_phone_extension in", values, "contactWorkPhoneExtension");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionNotIn(List<String> values) {
+            addCriterion("contact_work_phone_extension not in", values, "contactWorkPhoneExtension");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionBetween(String value1, String value2) {
+            addCriterion("contact_work_phone_extension between", value1, value2, "contactWorkPhoneExtension");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionNotBetween(String value1, String value2) {
+            addCriterion("contact_work_phone_extension not between", value1, value2, "contactWorkPhoneExtension");
             return (Criteria) this;
         }
 

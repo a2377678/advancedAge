@@ -1,6 +1,6 @@
 <!doctype html>
 <%@ page contentType="text/html; charset=UTF-8" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 String path = request.getContextPath();
 String requestURI=request.getRequestURI().replace(path,"").replace("/WEB-INF",""); 
@@ -19,7 +19,8 @@ String requestURI=request.getRequestURI().replace(path,"").replace("/WEB-INF",""
 		<div id="collapse0" class="panel-collapse collapse <%if(requestURI.indexOf("/b01")!=-1){ %>in<%} %>">
 			<div class="panel-body">
 				<ul>
-                  <li><a href="b01" <%if(requestURI.indexOf("/b01")!=-1){ %>class="in"<%} %>>申請案件查詢</a></li>
+                  <li><a href="b01" <%if(requestURI.indexOf("/b01")!=-1 && requestURI.indexOf("/b01_division")==-1){ %>class="in"<%} %>>申請案件查詢</a></li>
+                  <c:if test="${jurisdiction==1 }"><li><a href="b01_division" <%if(requestURI.indexOf("/b01_division")!=-1){ %>class="in"<%} %>>案件分案</a></li></c:if>
                 </ul>
 			</div>
 		</div>
@@ -95,21 +96,19 @@ String requestURI=request.getRequestURI().replace(path,"").replace("/WEB-INF",""
     
     <!---------- collapse8 ---------->
     <div class="panel panel-default">
-		<div class="panel-heading<%if(requestURI.indexOf("/index")!=-1){ %>-in<%} %>">
+		<div class="panel-heading<%if(requestURI.indexOf("/i")!=-1){ %>-in<%} %>">
 			<h4 class="panel-title">
 				<a data-toggle="collapse" data-parent="#accordion" href="#collapse8">彙整與統計</a>
 			</h4>
 		</div>
-		<div id="collapse8" class="panel-collapse collapse <%if(requestURI.indexOf("/index")!=-1){ %>in<%} %>">
+		<div id="collapse8" class="panel-collapse collapse <%if(requestURI.indexOf("/i")!=-1){ %>in<%} %>">
 			<div class="panel-body">
 				<ul>
-                  <li><a href="index" <%if(requestURI.indexOf("/index")!=-1){ %>class="in"<%} %>>統計概況 (儀錶板)</a></li>
-                  <li><a href="#">繼續僱用申請人數</a></li>
-                  <li><a href="#">繼續僱用補助金額</a></li>
-                  <li><a href="#">原有薪資級距</a></li>
-                  <li><a href="#">申請單位行業別</a></li>
-                  <li><a href="#">申請單位補助金額</a></li>
-                  <li><a href="#">申請單位申請情形</a></li>
+                  <li><a href="i01" <%if(requestURI.indexOf("/i01")!=-1){ %>class="in"<%} %>>統計概況 (儀錶板)</a></li>
+		         <li><a href="i02" <%if(requestURI.indexOf("/i02")!=-1){ %>class="in"<%} %>>案件統計分析</a></li>
+		         <li><a href="i03" <%if(requestURI.indexOf("/i03")!=-1){ %>class="in"<%} %>>近三年事業單位申請情形</a></li>
+		         <li><a href="i04" <%if(requestURI.indexOf("/i04")!=-1){ %>class="in"<%} %>>事業單位申請金額統計</a></li>
+		         <li><a href="i05" <%if(requestURI.indexOf("/i05")!=-1){ %>class="in"<%} %>>年度申請金額統計</a></li>
                 </ul>
 		  </div>
 		</div>

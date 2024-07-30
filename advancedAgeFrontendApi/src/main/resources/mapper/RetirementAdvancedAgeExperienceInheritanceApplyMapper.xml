@@ -7,6 +7,10 @@
     <result column="id" property="id" jdbcType="INTEGER" />
     <result column="company_name" property="companyName" jdbcType="VARCHAR" />
     <result column="guarantee_number" property="guaranteeNumber" jdbcType="VARCHAR" />
+    <result column="register_postal_code" property="registerPostalCode" jdbcType="VARCHAR" />
+    <result column="register_city" property="registerCity" jdbcType="VARCHAR" />
+    <result column="register_area" property="registerArea" jdbcType="VARCHAR" />
+    <result column="register_address" property="registerAddress" jdbcType="VARCHAR" />
     <result column="principal" property="principal" jdbcType="VARCHAR" />
     <result column="jobtitle" property="jobtitle" jdbcType="VARCHAR" />
     <result column="contact_city" property="contactCity" jdbcType="VARCHAR" />
@@ -26,7 +30,13 @@
     <result column="contact_work_phone" property="contactWorkPhone" jdbcType="VARCHAR" />
     <result column="contact_work_phone_extension" property="contactWorkPhoneExtension" jdbcType="VARCHAR" />
     <result column="contact_phone" property="contactPhone" jdbcType="VARCHAR" />
+    <result column="fax_area_code" property="faxAreaCode" jdbcType="VARCHAR" />
+    <result column="fax" property="fax" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="multiple_company" property="multipleCompany" jdbcType="CHAR" />
+    <result column="workers_employment" property="workersEmployment" jdbcType="CHAR" />
+    <result column="relatives" property="relatives" jdbcType="CHAR" />
+    <result column="related_amounts" property="relatedAmounts" jdbcType="CHAR" />
     <result column="attach_documents_apply" property="attachDocumentsApply" jdbcType="CHAR" />
     <result column="attach_documents_plan" property="attachDocumentsPlan" jdbcType="CHAR" />
     <result column="attach_documents_schedule" property="attachDocumentsSchedule" jdbcType="CHAR" />
@@ -104,16 +114,17 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    seq, apply_year, id, company_name, guarantee_number, principal, jobtitle, contact_city, 
-    contact_area, contact_address, employee_number, retirement_experience_inheritance_number, 
-    employee_number_structure_1, employee_number_structure_2, employee_number_structure_3, 
-    employee_number_structure_4, company_attributes, industry, contact_name, contact_jobtitle, 
-    contact_work_phone_area_code, contact_work_phone, contact_work_phone_extension, contact_phone, 
-    email, attach_documents_apply, attach_documents_plan, attach_documents_schedule, 
-    attach_documents_expenditure, attach_documents_register_proof, attach_documents_speaker_retirement_proof, 
-    attach_documents_speaker_experience_proof, attach_documents_employment_proof, attach_documents_other_proof, 
-    attach_documents_other_proof_document, agree, filler, applicant, create_time, updator, 
-    update_time, remark
+    seq, apply_year, id, company_name, guarantee_number, register_postal_code, register_city, 
+    register_area, register_address, principal, jobtitle, contact_city, contact_area, 
+    contact_address, employee_number, retirement_experience_inheritance_number, employee_number_structure_1, 
+    employee_number_structure_2, employee_number_structure_3, employee_number_structure_4, 
+    company_attributes, industry, contact_name, contact_jobtitle, contact_work_phone_area_code, 
+    contact_work_phone, contact_work_phone_extension, contact_phone, fax_area_code, fax, 
+    email, multiple_company, workers_employment, relatives, related_amounts, attach_documents_apply, 
+    attach_documents_plan, attach_documents_schedule, attach_documents_expenditure, attach_documents_register_proof, 
+    attach_documents_speaker_retirement_proof, attach_documents_speaker_experience_proof, 
+    attach_documents_employment_proof, attach_documents_other_proof, attach_documents_other_proof_document, 
+    agree, filler, applicant, create_time, updator, update_time, remark
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceApplyExample" >
     select
@@ -149,41 +160,47 @@
   </delete>
   <insert id="insert" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceApply" >
     insert into retirementAdvancedAgeExperienceInheritanceApply (seq, apply_year, id, 
-      company_name, guarantee_number, principal, 
-      jobtitle, contact_city, contact_area, 
-      contact_address, employee_number, retirement_experience_inheritance_number, 
-      employee_number_structure_1, employee_number_structure_2, 
-      employee_number_structure_3, employee_number_structure_4, 
-      company_attributes, industry, contact_name, 
-      contact_jobtitle, contact_work_phone_area_code, 
-      contact_work_phone, contact_work_phone_extension, 
-      contact_phone, email, attach_documents_apply, 
-      attach_documents_plan, attach_documents_schedule, 
-      attach_documents_expenditure, attach_documents_register_proof, 
-      attach_documents_speaker_retirement_proof, attach_documents_speaker_experience_proof, 
-      attach_documents_employment_proof, attach_documents_other_proof, 
-      attach_documents_other_proof_document, agree, 
-      filler, applicant, create_time, 
-      updator, update_time, remark
-      )
+      company_name, guarantee_number, register_postal_code, 
+      register_city, register_area, register_address, 
+      principal, jobtitle, contact_city, 
+      contact_area, contact_address, employee_number, 
+      retirement_experience_inheritance_number, employee_number_structure_1, 
+      employee_number_structure_2, employee_number_structure_3, 
+      employee_number_structure_4, company_attributes, 
+      industry, contact_name, contact_jobtitle, 
+      contact_work_phone_area_code, contact_work_phone, 
+      contact_work_phone_extension, contact_phone, 
+      fax_area_code, fax, email, 
+      multiple_company, workers_employment, relatives, 
+      related_amounts, attach_documents_apply, attach_documents_plan, 
+      attach_documents_schedule, attach_documents_expenditure, 
+      attach_documents_register_proof, attach_documents_speaker_retirement_proof, 
+      attach_documents_speaker_experience_proof, attach_documents_employment_proof, 
+      attach_documents_other_proof, attach_documents_other_proof_document, 
+      agree, filler, applicant, 
+      create_time, updator, update_time, 
+      remark)
     values (#{seq,jdbcType=VARCHAR}, #{applyYear,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}, 
-      #{companyName,jdbcType=VARCHAR}, #{guaranteeNumber,jdbcType=VARCHAR}, #{principal,jdbcType=VARCHAR}, 
-      #{jobtitle,jdbcType=VARCHAR}, #{contactCity,jdbcType=VARCHAR}, #{contactArea,jdbcType=VARCHAR}, 
-      #{contactAddress,jdbcType=VARCHAR}, #{employeeNumber,jdbcType=INTEGER}, #{retirementExperienceInheritanceNumber,jdbcType=INTEGER}, 
-      #{employeeNumberStructure1,jdbcType=INTEGER}, #{employeeNumberStructure2,jdbcType=INTEGER}, 
-      #{employeeNumberStructure3,jdbcType=INTEGER}, #{employeeNumberStructure4,jdbcType=INTEGER}, 
-      #{companyAttributes,jdbcType=CHAR}, #{industry,jdbcType=CHAR}, #{contactName,jdbcType=VARCHAR}, 
-      #{contactJobtitle,jdbcType=VARCHAR}, #{contactWorkPhoneAreaCode,jdbcType=VARCHAR}, 
-      #{contactWorkPhone,jdbcType=VARCHAR}, #{contactWorkPhoneExtension,jdbcType=VARCHAR}, 
-      #{contactPhone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{attachDocumentsApply,jdbcType=CHAR}, 
-      #{attachDocumentsPlan,jdbcType=CHAR}, #{attachDocumentsSchedule,jdbcType=CHAR}, 
-      #{attachDocumentsExpenditure,jdbcType=CHAR}, #{attachDocumentsRegisterProof,jdbcType=CHAR}, 
-      #{attachDocumentsSpeakerRetirementProof,jdbcType=CHAR}, #{attachDocumentsSpeakerExperienceProof,jdbcType=CHAR}, 
-      #{attachDocumentsEmploymentProof,jdbcType=CHAR}, #{attachDocumentsOtherProof,jdbcType=CHAR}, 
-      #{attachDocumentsOtherProofDocument,jdbcType=VARCHAR}, #{agree,jdbcType=CHAR}, 
-      #{filler,jdbcType=VARCHAR}, #{applicant,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updator,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
-      )
+      #{companyName,jdbcType=VARCHAR}, #{guaranteeNumber,jdbcType=VARCHAR}, #{registerPostalCode,jdbcType=VARCHAR}, 
+      #{registerCity,jdbcType=VARCHAR}, #{registerArea,jdbcType=VARCHAR}, #{registerAddress,jdbcType=VARCHAR}, 
+      #{principal,jdbcType=VARCHAR}, #{jobtitle,jdbcType=VARCHAR}, #{contactCity,jdbcType=VARCHAR}, 
+      #{contactArea,jdbcType=VARCHAR}, #{contactAddress,jdbcType=VARCHAR}, #{employeeNumber,jdbcType=INTEGER}, 
+      #{retirementExperienceInheritanceNumber,jdbcType=INTEGER}, #{employeeNumberStructure1,jdbcType=INTEGER}, 
+      #{employeeNumberStructure2,jdbcType=INTEGER}, #{employeeNumberStructure3,jdbcType=INTEGER}, 
+      #{employeeNumberStructure4,jdbcType=INTEGER}, #{companyAttributes,jdbcType=CHAR}, 
+      #{industry,jdbcType=CHAR}, #{contactName,jdbcType=VARCHAR}, #{contactJobtitle,jdbcType=VARCHAR}, 
+      #{contactWorkPhoneAreaCode,jdbcType=VARCHAR}, #{contactWorkPhone,jdbcType=VARCHAR}, 
+      #{contactWorkPhoneExtension,jdbcType=VARCHAR}, #{contactPhone,jdbcType=VARCHAR}, 
+      #{faxAreaCode,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{multipleCompany,jdbcType=CHAR}, #{workersEmployment,jdbcType=CHAR}, #{relatives,jdbcType=CHAR}, 
+      #{relatedAmounts,jdbcType=CHAR}, #{attachDocumentsApply,jdbcType=CHAR}, #{attachDocumentsPlan,jdbcType=CHAR}, 
+      #{attachDocumentsSchedule,jdbcType=CHAR}, #{attachDocumentsExpenditure,jdbcType=CHAR}, 
+      #{attachDocumentsRegisterProof,jdbcType=CHAR}, #{attachDocumentsSpeakerRetirementProof,jdbcType=CHAR}, 
+      #{attachDocumentsSpeakerExperienceProof,jdbcType=CHAR}, #{attachDocumentsEmploymentProof,jdbcType=CHAR}, 
+      #{attachDocumentsOtherProof,jdbcType=CHAR}, #{attachDocumentsOtherProofDocument,jdbcType=VARCHAR}, 
+      #{agree,jdbcType=CHAR}, #{filler,jdbcType=VARCHAR}, #{applicant,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updator,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritanceApply" >
     insert into retirementAdvancedAgeExperienceInheritanceApply
@@ -202,6 +219,18 @@
       </if>
       <if test="guaranteeNumber != null" >
         guarantee_number,
+      </if>
+      <if test="registerPostalCode != null" >
+        register_postal_code,
+      </if>
+      <if test="registerCity != null" >
+        register_city,
+      </if>
+      <if test="registerArea != null" >
+        register_area,
+      </if>
+      <if test="registerAddress != null" >
+        register_address,
       </if>
       <if test="principal != null" >
         principal,
@@ -260,8 +289,26 @@
       <if test="contactPhone != null" >
         contact_phone,
       </if>
+      <if test="faxAreaCode != null" >
+        fax_area_code,
+      </if>
+      <if test="fax != null" >
+        fax,
+      </if>
       <if test="email != null" >
         email,
+      </if>
+      <if test="multipleCompany != null" >
+        multiple_company,
+      </if>
+      <if test="workersEmployment != null" >
+        workers_employment,
+      </if>
+      <if test="relatives != null" >
+        relatives,
+      </if>
+      <if test="relatedAmounts != null" >
+        related_amounts,
       </if>
       <if test="attachDocumentsApply != null" >
         attach_documents_apply,
@@ -331,6 +378,18 @@
       <if test="guaranteeNumber != null" >
         #{guaranteeNumber,jdbcType=VARCHAR},
       </if>
+      <if test="registerPostalCode != null" >
+        #{registerPostalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="registerCity != null" >
+        #{registerCity,jdbcType=VARCHAR},
+      </if>
+      <if test="registerArea != null" >
+        #{registerArea,jdbcType=VARCHAR},
+      </if>
+      <if test="registerAddress != null" >
+        #{registerAddress,jdbcType=VARCHAR},
+      </if>
       <if test="principal != null" >
         #{principal,jdbcType=VARCHAR},
       </if>
@@ -388,8 +447,26 @@
       <if test="contactPhone != null" >
         #{contactPhone,jdbcType=VARCHAR},
       </if>
+      <if test="faxAreaCode != null" >
+        #{faxAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        #{fax,jdbcType=VARCHAR},
+      </if>
       <if test="email != null" >
         #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="multipleCompany != null" >
+        #{multipleCompany,jdbcType=CHAR},
+      </if>
+      <if test="workersEmployment != null" >
+        #{workersEmployment,jdbcType=CHAR},
+      </if>
+      <if test="relatives != null" >
+        #{relatives,jdbcType=CHAR},
+      </if>
+      <if test="relatedAmounts != null" >
+        #{relatedAmounts,jdbcType=CHAR},
       </if>
       <if test="attachDocumentsApply != null" >
         #{attachDocumentsApply,jdbcType=CHAR},
@@ -468,6 +545,18 @@
       <if test="record.guaranteeNumber != null" >
         guarantee_number = #{record.guaranteeNumber,jdbcType=VARCHAR},
       </if>
+      <if test="record.registerPostalCode != null" >
+        register_postal_code = #{record.registerPostalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerCity != null" >
+        register_city = #{record.registerCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerArea != null" >
+        register_area = #{record.registerArea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerAddress != null" >
+        register_address = #{record.registerAddress,jdbcType=VARCHAR},
+      </if>
       <if test="record.principal != null" >
         principal = #{record.principal,jdbcType=VARCHAR},
       </if>
@@ -525,8 +614,26 @@
       <if test="record.contactPhone != null" >
         contact_phone = #{record.contactPhone,jdbcType=VARCHAR},
       </if>
+      <if test="record.faxAreaCode != null" >
+        fax_area_code = #{record.faxAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fax != null" >
+        fax = #{record.fax,jdbcType=VARCHAR},
+      </if>
       <if test="record.email != null" >
         email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.multipleCompany != null" >
+        multiple_company = #{record.multipleCompany,jdbcType=CHAR},
+      </if>
+      <if test="record.workersEmployment != null" >
+        workers_employment = #{record.workersEmployment,jdbcType=CHAR},
+      </if>
+      <if test="record.relatives != null" >
+        relatives = #{record.relatives,jdbcType=CHAR},
+      </if>
+      <if test="record.relatedAmounts != null" >
+        related_amounts = #{record.relatedAmounts,jdbcType=CHAR},
       </if>
       <if test="record.attachDocumentsApply != null" >
         attach_documents_apply = #{record.attachDocumentsApply,jdbcType=CHAR},
@@ -591,6 +698,10 @@
       id = #{record.id,jdbcType=INTEGER},
       company_name = #{record.companyName,jdbcType=VARCHAR},
       guarantee_number = #{record.guaranteeNumber,jdbcType=VARCHAR},
+      register_postal_code = #{record.registerPostalCode,jdbcType=VARCHAR},
+      register_city = #{record.registerCity,jdbcType=VARCHAR},
+      register_area = #{record.registerArea,jdbcType=VARCHAR},
+      register_address = #{record.registerAddress,jdbcType=VARCHAR},
       principal = #{record.principal,jdbcType=VARCHAR},
       jobtitle = #{record.jobtitle,jdbcType=VARCHAR},
       contact_city = #{record.contactCity,jdbcType=VARCHAR},
@@ -610,7 +721,13 @@
       contact_work_phone = #{record.contactWorkPhone,jdbcType=VARCHAR},
       contact_work_phone_extension = #{record.contactWorkPhoneExtension,jdbcType=VARCHAR},
       contact_phone = #{record.contactPhone,jdbcType=VARCHAR},
+      fax_area_code = #{record.faxAreaCode,jdbcType=VARCHAR},
+      fax = #{record.fax,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
+      multiple_company = #{record.multipleCompany,jdbcType=CHAR},
+      workers_employment = #{record.workersEmployment,jdbcType=CHAR},
+      relatives = #{record.relatives,jdbcType=CHAR},
+      related_amounts = #{record.relatedAmounts,jdbcType=CHAR},
       attach_documents_apply = #{record.attachDocumentsApply,jdbcType=CHAR},
       attach_documents_plan = #{record.attachDocumentsPlan,jdbcType=CHAR},
       attach_documents_schedule = #{record.attachDocumentsSchedule,jdbcType=CHAR},
@@ -643,6 +760,18 @@
       </if>
       <if test="guaranteeNumber != null" >
         guarantee_number = #{guaranteeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="registerPostalCode != null" >
+        register_postal_code = #{registerPostalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="registerCity != null" >
+        register_city = #{registerCity,jdbcType=VARCHAR},
+      </if>
+      <if test="registerArea != null" >
+        register_area = #{registerArea,jdbcType=VARCHAR},
+      </if>
+      <if test="registerAddress != null" >
+        register_address = #{registerAddress,jdbcType=VARCHAR},
       </if>
       <if test="principal != null" >
         principal = #{principal,jdbcType=VARCHAR},
@@ -701,8 +830,26 @@
       <if test="contactPhone != null" >
         contact_phone = #{contactPhone,jdbcType=VARCHAR},
       </if>
+      <if test="faxAreaCode != null" >
+        fax_area_code = #{faxAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
       <if test="email != null" >
         email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="multipleCompany != null" >
+        multiple_company = #{multipleCompany,jdbcType=CHAR},
+      </if>
+      <if test="workersEmployment != null" >
+        workers_employment = #{workersEmployment,jdbcType=CHAR},
+      </if>
+      <if test="relatives != null" >
+        relatives = #{relatives,jdbcType=CHAR},
+      </if>
+      <if test="relatedAmounts != null" >
+        related_amounts = #{relatedAmounts,jdbcType=CHAR},
       </if>
       <if test="attachDocumentsApply != null" >
         attach_documents_apply = #{attachDocumentsApply,jdbcType=CHAR},
@@ -764,6 +911,10 @@
     set id = #{id,jdbcType=INTEGER},
       company_name = #{companyName,jdbcType=VARCHAR},
       guarantee_number = #{guaranteeNumber,jdbcType=VARCHAR},
+      register_postal_code = #{registerPostalCode,jdbcType=VARCHAR},
+      register_city = #{registerCity,jdbcType=VARCHAR},
+      register_area = #{registerArea,jdbcType=VARCHAR},
+      register_address = #{registerAddress,jdbcType=VARCHAR},
       principal = #{principal,jdbcType=VARCHAR},
       jobtitle = #{jobtitle,jdbcType=VARCHAR},
       contact_city = #{contactCity,jdbcType=VARCHAR},
@@ -783,7 +934,13 @@
       contact_work_phone = #{contactWorkPhone,jdbcType=VARCHAR},
       contact_work_phone_extension = #{contactWorkPhoneExtension,jdbcType=VARCHAR},
       contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      fax_area_code = #{faxAreaCode,jdbcType=VARCHAR},
+      fax = #{fax,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
+      multiple_company = #{multipleCompany,jdbcType=CHAR},
+      workers_employment = #{workersEmployment,jdbcType=CHAR},
+      relatives = #{relatives,jdbcType=CHAR},
+      related_amounts = #{relatedAmounts,jdbcType=CHAR},
       attach_documents_apply = #{attachDocumentsApply,jdbcType=CHAR},
       attach_documents_plan = #{attachDocumentsPlan,jdbcType=CHAR},
       attach_documents_schedule = #{attachDocumentsSchedule,jdbcType=CHAR},

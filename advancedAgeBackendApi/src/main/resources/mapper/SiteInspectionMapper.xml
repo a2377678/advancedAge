@@ -5,6 +5,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="seq" property="seq" jdbcType="VARCHAR" />
     <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="case_type" property="caseType" jdbcType="CHAR" />
     <result column="unit" property="unit" jdbcType="VARCHAR" />
     <result column="inspect_date" property="inspectDate" jdbcType="VARCHAR" />
     <result column="inspector" property="inspector" jdbcType="VARCHAR" />
@@ -74,8 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, seq, company_name, unit, inspect_date, inspector, result, reason, creator, updator, 
-    create_time, update_time
+    id, seq, company_name, case_type, unit, inspect_date, inspector, result, reason, 
+    creator, updator, create_time, update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.SiteInspectionExample" >
     select
@@ -109,15 +110,15 @@
   </delete>
   <insert id="insert" parameterType="com.example.springboot.entity.SiteInspection" >
     insert into siteInspection (id, seq, company_name, 
-      unit, inspect_date, inspector, 
-      result, reason, creator, 
-      updator, create_time, update_time
-      )
+      case_type, unit, inspect_date, 
+      inspector, result, reason, 
+      creator, updator, create_time, 
+      update_time)
     values (#{id,jdbcType=INTEGER}, #{seq,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, 
-      #{unit,jdbcType=VARCHAR}, #{inspectDate,jdbcType=VARCHAR}, #{inspector,jdbcType=VARCHAR}, 
-      #{result,jdbcType=CHAR}, #{reason,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
-      #{updator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+      #{caseType,jdbcType=CHAR}, #{unit,jdbcType=VARCHAR}, #{inspectDate,jdbcType=VARCHAR}, 
+      #{inspector,jdbcType=VARCHAR}, #{result,jdbcType=CHAR}, #{reason,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR}, #{updator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.example.springboot.entity.SiteInspection" useGeneratedKeys="true" keyProperty="id">
     insert into siteInspection
@@ -130,6 +131,9 @@
       </if>
       <if test="companyName != null" >
         company_name,
+      </if>
+      <if test="caseType != null" >
+        case_type,
       </if>
       <if test="unit != null" >
         unit,
@@ -168,6 +172,9 @@
       </if>
       <if test="companyName != null" >
         #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="caseType != null" >
+        #{caseType,jdbcType=CHAR},
       </if>
       <if test="unit != null" >
         #{unit,jdbcType=VARCHAR},
@@ -216,6 +223,9 @@
       <if test="record.companyName != null" >
         company_name = #{record.companyName,jdbcType=VARCHAR},
       </if>
+      <if test="record.caseType != null" >
+        case_type = #{record.caseType,jdbcType=CHAR},
+      </if>
       <if test="record.unit != null" >
         unit = #{record.unit,jdbcType=VARCHAR},
       </if>
@@ -253,6 +263,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       seq = #{record.seq,jdbcType=VARCHAR},
       company_name = #{record.companyName,jdbcType=VARCHAR},
+      case_type = #{record.caseType,jdbcType=CHAR},
       unit = #{record.unit,jdbcType=VARCHAR},
       inspect_date = #{record.inspectDate,jdbcType=VARCHAR},
       inspector = #{record.inspector,jdbcType=VARCHAR},
@@ -274,6 +285,9 @@
       </if>
       <if test="companyName != null" >
         company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="caseType != null" >
+        case_type = #{caseType,jdbcType=CHAR},
       </if>
       <if test="unit != null" >
         unit = #{unit,jdbcType=VARCHAR},
@@ -309,6 +323,7 @@
     update siteInspection
     set seq = #{seq,jdbcType=VARCHAR},
       company_name = #{companyName,jdbcType=VARCHAR},
+      case_type = #{caseType,jdbcType=CHAR},
       unit = #{unit,jdbcType=VARCHAR},
       inspect_date = #{inspectDate,jdbcType=VARCHAR},
       inspector = #{inspector,jdbcType=VARCHAR},

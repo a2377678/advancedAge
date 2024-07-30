@@ -208,7 +208,7 @@ input[type=radio] {
 	margin-bottom: 50px;
 }
 #login {
-	width: 350px;
+	width: 400px;
 	margin-right: auto;
 	margin-left: auto;
 }
@@ -939,22 +939,10 @@ a.btn_01, a.btn_01:hover {
 	border-radius: 5px;
 	font-size: 16px;
 	color: #000;
-	background-color: #FDCD4D;
-	border-top-width: 1px;
-	border-right-width: 1px;
-	border-bottom-width: 1px;
-	border-left-width: 1px;
-	border-top-style: solid;
-	border-right-style: solid;
-	border-bottom-style: solid;
-	border-left-style: solid;
-	border-top-color: #FF9;
-	border-right-color: #960;
-	border-bottom-color: #960;
-	border-left-color: #FF9;
+	background-color: #01841b;
 }
 .btn_04:hover {
-	background-color: #E19B0D;
+	background-color: #006c16;
 }
 a.btn_04, a.btn_04:hover {
 	color: #000 !important;
@@ -1046,14 +1034,6 @@ a.btn_05, a.btn_05:hover {
 	padding-bottom: 50px;
 	text-align: center;
 }
-.btn_box-3 {
-	clear: both;
-	padding-top: 40px;
-	padding-bottom: 40px;
-	text-align: center;
-}
-
-
 .btn_box-2 {
 	clear: both;
 	padding-top: 20px;
@@ -1061,6 +1041,18 @@ a.btn_05, a.btn_05:hover {
 	text-align: center;
 	min-height: 35px !important;
 }
+.btn_box-3 {
+	clear: both;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	text-align: center;
+}
+.btn_box-4 {
+	clear: both;
+	padding-top: 15px;
+	text-align: center;
+}
+
 .btn_box-td {
 	font-size: 14px;
 	text-align: right;
@@ -1341,9 +1333,7 @@ table {
 	line-height: 30px;
 	padding-left: 5px;
 }
-.table_03_print th.point {
 
-}
 .table_03_print input {
 	border: 1px solid #aaa;
 	border-radius: 3px;

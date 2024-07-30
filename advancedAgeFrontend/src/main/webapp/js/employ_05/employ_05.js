@@ -16,12 +16,13 @@ function finish(){
 	    data: {
 			companyName : $('#companyName').val(),
 			seq : $('#seq').val(),
-			city : $('#city').val()
+			city : $('#city').val(),
+			email : $('#email').val(),
 	    },
 	    dataType:"text", //ajax返回值text（json格式也可用這返回，也可設成json）
 	    success: function(json){
 			if(json=='success'){
-				location.href='employ_06?';
+				location.href='employ_06';
 			}
 		}
 	})

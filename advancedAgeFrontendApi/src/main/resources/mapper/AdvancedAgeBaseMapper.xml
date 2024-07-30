@@ -5,7 +5,7 @@
     <id column="aaid" property="aaid" jdbcType="VARCHAR" />
     <result column="id" property="id" jdbcType="INTEGER" />
     <result column="seq" property="seq" jdbcType="VARCHAR" />
-    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="NVARCHAR" />
     <result column="year" property="year" jdbcType="VARCHAR" />
     <result column="unit" property="unit" jdbcType="VARCHAR" />
     <result column="city" property="city" jdbcType="VARCHAR" />
@@ -23,6 +23,12 @@
     <result column="check_not_mandatory" property="checkNotMandatory" jdbcType="NCHAR" />
     <result column="check_employment_person" property="checkEmploymentPerson" jdbcType="INTEGER" />
     <result column="check_employment_remark" property="checkEmploymentRemark" jdbcType="VARCHAR" />
+    <result column="check_speaker_person" property="checkSpeakerPerson" jdbcType="INTEGER" />
+    <result column="check_speaker_remark" property="checkSpeakerRemark" jdbcType="VARCHAR" />
+    <result column="check_schedule_remark" property="checkScheduleRemark" jdbcType="VARCHAR" />
+    <result column="check_expenditure_amounts" property="checkExpenditureAmounts" jdbcType="INTEGER" />
+    <result column="check_expenditure_remark" property="checkExpenditureRemark" jdbcType="VARCHAR" />
+    <result column="check_joint_authorize_remark" property="checkJointAuthorizeRemark" jdbcType="VARCHAR" />
     <result column="check_attachment_remark" property="checkAttachmentRemark" jdbcType="VARCHAR" />
     <result column="check_blacklist_status" property="checkBlacklistStatus" jdbcType="CHAR" />
     <result column="check_blacklist_remark" property="checkBlacklistRemark" jdbcType="VARCHAR" />
@@ -53,6 +59,17 @@
     <result column="allowance_approve_time" property="allowanceApproveTime" jdbcType="VARCHAR" />
     <result column="allowance_remark" property="allowanceRemark" jdbcType="VARCHAR" />
     <result column="allowance_frequency_record" property="allowanceFrequencyRecord" jdbcType="VARCHAR" />
+    <result column="allowance_approved_amounts" property="allowanceApprovedAmounts" jdbcType="INTEGER" />
+    <result column="allowance_file_status_record" property="allowanceFileStatusRecord" jdbcType="VARCHAR" />
+    <result column="allowance_file_remark" property="allowanceFileRemark" jdbcType="VARCHAR" />
+    <result column="allowance_email_content" property="allowanceEmailContent" jdbcType="VARCHAR" />
+    <result column="allowance_email_time" property="allowanceEmailTime" jdbcType="TIMESTAMP" />
+    <result column="allowance_file_status" property="allowanceFileStatus" jdbcType="CHAR" />
+    <result column="check_allowance_attachment_remark" property="checkAllowanceAttachmentRemark" jdbcType="VARCHAR" />
+    <result column="review_status" property="reviewStatus" jdbcType="CHAR" />
+    <result column="review_remark" property="reviewRemark" jdbcType="VARCHAR" />
+    <result column="review_email_content" property="reviewEmailContent" jdbcType="VARCHAR" />
+    <result column="review_email_time" property="reviewEmailTime" jdbcType="TIMESTAMP" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="updator" property="updator" jdbcType="VARCHAR" />
@@ -121,15 +138,19 @@
     aaid, id, seq, company_name, year, unit, city, case_type, case_status, file_status_record, 
     file_remark, email_content, email_time, file_status, check_multiple_company, check_workers_employment, 
     check_relatives, check_related_amounts, check_not_mandatory, check_employment_person, 
-    check_employment_remark, check_attachment_remark, check_blacklist_status, check_blacklist_remark, 
-    check_siteInspection_status, check_siteInspection_remark, check_insurance_status, 
-    check_insurance_remark, check_allowance_status, check_allowance_remark, check_cgss_status, 
-    check_cgss_remark, check_violationlaborlaws_status, check_violationlaborlaws_remark, 
-    official_document_number, case_description, allowance_id, allowance_amounts, countersign_id, 
-    allowance_company_name, allowance_seq, allowance_plan_name, allowance_apply_time, 
-    allowance_apply_start_time, allowance_apply_end_time, allowance_total_amounts, allowance_approve_amounts, 
-    allowance_approve_id, allowance_approve_time, allowance_remark, allowance_frequency_record, 
-    create_time, update_time, updator, verify_unit, verify_person
+    check_employment_remark, check_speaker_person, check_speaker_remark, check_schedule_remark, 
+    check_expenditure_amounts, check_expenditure_remark, check_joint_authorize_remark, 
+    check_attachment_remark, check_blacklist_status, check_blacklist_remark, check_siteInspection_status, 
+    check_siteInspection_remark, check_insurance_status, check_insurance_remark, check_allowance_status, 
+    check_allowance_remark, check_cgss_status, check_cgss_remark, check_violationlaborlaws_status, 
+    check_violationlaborlaws_remark, official_document_number, case_description, allowance_id, 
+    allowance_amounts, countersign_id, allowance_company_name, allowance_seq, allowance_plan_name, 
+    allowance_apply_time, allowance_apply_start_time, allowance_apply_end_time, allowance_total_amounts, 
+    allowance_approve_amounts, allowance_approve_id, allowance_approve_time, allowance_remark, 
+    allowance_frequency_record, allowance_approved_amounts, allowance_file_status_record, 
+    allowance_file_remark, allowance_email_content, allowance_email_time, allowance_file_status, 
+    check_allowance_attachment_remark, review_status, review_remark, review_email_content, 
+    review_email_time, create_time, update_time, updator, verify_unit, verify_person
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.AdvancedAgeBaseExample" >
     select
@@ -169,7 +190,10 @@
       email_time, file_status, check_multiple_company, 
       check_workers_employment, check_relatives, check_related_amounts, 
       check_not_mandatory, check_employment_person, 
-      check_employment_remark, check_attachment_remark, 
+      check_employment_remark, check_speaker_person, 
+      check_speaker_remark, check_schedule_remark, 
+      check_expenditure_amounts, check_expenditure_remark, 
+      check_joint_authorize_remark, check_attachment_remark, 
       check_blacklist_status, check_blacklist_remark, 
       check_siteInspection_status, check_siteInspection_remark, 
       check_insurance_status, check_insurance_remark, 
@@ -183,16 +207,24 @@
       allowance_total_amounts, allowance_approve_amounts, 
       allowance_approve_id, allowance_approve_time, 
       allowance_remark, allowance_frequency_record, 
+      allowance_approved_amounts, allowance_file_status_record, 
+      allowance_file_remark, allowance_email_content, 
+      allowance_email_time, allowance_file_status, 
+      check_allowance_attachment_remark, review_status, 
+      review_remark, review_email_content, review_email_time, 
       create_time, update_time, updator, 
       verify_unit, verify_person)
     values (#{aaid,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}, #{seq,jdbcType=VARCHAR}, 
-      #{companyName,jdbcType=VARCHAR}, #{year,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
+      #{companyName,jdbcType=NVARCHAR}, #{year,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
       #{city,jdbcType=VARCHAR}, #{caseType,jdbcType=CHAR}, #{caseStatus,jdbcType=CHAR}, 
       #{fileStatusRecord,jdbcType=VARCHAR}, #{fileRemark,jdbcType=VARCHAR}, #{emailContent,jdbcType=VARCHAR}, 
       #{emailTime,jdbcType=TIMESTAMP}, #{fileStatus,jdbcType=CHAR}, #{checkMultipleCompany,jdbcType=CHAR}, 
       #{checkWorkersEmployment,jdbcType=CHAR}, #{checkRelatives,jdbcType=CHAR}, #{checkRelatedAmounts,jdbcType=CHAR}, 
       #{checkNotMandatory,jdbcType=NCHAR}, #{checkEmploymentPerson,jdbcType=INTEGER}, 
-      #{checkEmploymentRemark,jdbcType=VARCHAR}, #{checkAttachmentRemark,jdbcType=VARCHAR}, 
+      #{checkEmploymentRemark,jdbcType=VARCHAR}, #{checkSpeakerPerson,jdbcType=INTEGER}, 
+      #{checkSpeakerRemark,jdbcType=VARCHAR}, #{checkScheduleRemark,jdbcType=VARCHAR}, 
+      #{checkExpenditureAmounts,jdbcType=INTEGER}, #{checkExpenditureRemark,jdbcType=VARCHAR}, 
+      #{checkJointAuthorizeRemark,jdbcType=VARCHAR}, #{checkAttachmentRemark,jdbcType=VARCHAR}, 
       #{checkBlacklistStatus,jdbcType=CHAR}, #{checkBlacklistRemark,jdbcType=VARCHAR}, 
       #{checkSiteinspectionStatus,jdbcType=CHAR}, #{checkSiteinspectionRemark,jdbcType=VARCHAR}, 
       #{checkInsuranceStatus,jdbcType=CHAR}, #{checkInsuranceRemark,jdbcType=VARCHAR}, 
@@ -206,6 +238,11 @@
       #{allowanceTotalAmounts,jdbcType=INTEGER}, #{allowanceApproveAmounts,jdbcType=INTEGER}, 
       #{allowanceApproveId,jdbcType=VARCHAR}, #{allowanceApproveTime,jdbcType=VARCHAR}, 
       #{allowanceRemark,jdbcType=VARCHAR}, #{allowanceFrequencyRecord,jdbcType=VARCHAR}, 
+      #{allowanceApprovedAmounts,jdbcType=INTEGER}, #{allowanceFileStatusRecord,jdbcType=VARCHAR}, 
+      #{allowanceFileRemark,jdbcType=VARCHAR}, #{allowanceEmailContent,jdbcType=VARCHAR}, 
+      #{allowanceEmailTime,jdbcType=TIMESTAMP}, #{allowanceFileStatus,jdbcType=CHAR}, 
+      #{checkAllowanceAttachmentRemark,jdbcType=VARCHAR}, #{reviewStatus,jdbcType=CHAR}, 
+      #{reviewRemark,jdbcType=VARCHAR}, #{reviewEmailContent,jdbcType=VARCHAR}, #{reviewEmailTime,jdbcType=TIMESTAMP}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{updator,jdbcType=VARCHAR}, 
       #{verifyUnit,jdbcType=VARCHAR}, #{verifyPerson,jdbcType=VARCHAR})
   </insert>
@@ -274,6 +311,24 @@
       </if>
       <if test="checkEmploymentRemark != null" >
         check_employment_remark,
+      </if>
+      <if test="checkSpeakerPerson != null" >
+        check_speaker_person,
+      </if>
+      <if test="checkSpeakerRemark != null" >
+        check_speaker_remark,
+      </if>
+      <if test="checkScheduleRemark != null" >
+        check_schedule_remark,
+      </if>
+      <if test="checkExpenditureAmounts != null" >
+        check_expenditure_amounts,
+      </if>
+      <if test="checkExpenditureRemark != null" >
+        check_expenditure_remark,
+      </if>
+      <if test="checkJointAuthorizeRemark != null" >
+        check_joint_authorize_remark,
       </if>
       <if test="checkAttachmentRemark != null" >
         check_attachment_remark,
@@ -365,6 +420,39 @@
       <if test="allowanceFrequencyRecord != null" >
         allowance_frequency_record,
       </if>
+      <if test="allowanceApprovedAmounts != null" >
+        allowance_approved_amounts,
+      </if>
+      <if test="allowanceFileStatusRecord != null" >
+        allowance_file_status_record,
+      </if>
+      <if test="allowanceFileRemark != null" >
+        allowance_file_remark,
+      </if>
+      <if test="allowanceEmailContent != null" >
+        allowance_email_content,
+      </if>
+      <if test="allowanceEmailTime != null" >
+        allowance_email_time,
+      </if>
+      <if test="allowanceFileStatus != null" >
+        allowance_file_status,
+      </if>
+      <if test="checkAllowanceAttachmentRemark != null" >
+        check_allowance_attachment_remark,
+      </if>
+      <if test="reviewStatus != null" >
+        review_status,
+      </if>
+      <if test="reviewRemark != null" >
+        review_remark,
+      </if>
+      <if test="reviewEmailContent != null" >
+        review_email_content,
+      </if>
+      <if test="reviewEmailTime != null" >
+        review_email_time,
+      </if>
       <if test="createTime != null" >
         create_time,
       </if>
@@ -392,7 +480,7 @@
         #{seq,jdbcType=VARCHAR},
       </if>
       <if test="companyName != null" >
-        #{companyName,jdbcType=VARCHAR},
+        #{companyName,jdbcType=NVARCHAR},
       </if>
       <if test="year != null" >
         #{year,jdbcType=VARCHAR},
@@ -444,6 +532,24 @@
       </if>
       <if test="checkEmploymentRemark != null" >
         #{checkEmploymentRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkSpeakerPerson != null" >
+        #{checkSpeakerPerson,jdbcType=INTEGER},
+      </if>
+      <if test="checkSpeakerRemark != null" >
+        #{checkSpeakerRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkScheduleRemark != null" >
+        #{checkScheduleRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkExpenditureAmounts != null" >
+        #{checkExpenditureAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="checkExpenditureRemark != null" >
+        #{checkExpenditureRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkJointAuthorizeRemark != null" >
+        #{checkJointAuthorizeRemark,jdbcType=VARCHAR},
       </if>
       <if test="checkAttachmentRemark != null" >
         #{checkAttachmentRemark,jdbcType=VARCHAR},
@@ -535,6 +641,39 @@
       <if test="allowanceFrequencyRecord != null" >
         #{allowanceFrequencyRecord,jdbcType=VARCHAR},
       </if>
+      <if test="allowanceApprovedAmounts != null" >
+        #{allowanceApprovedAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="allowanceFileStatusRecord != null" >
+        #{allowanceFileStatusRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceFileRemark != null" >
+        #{allowanceFileRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceEmailContent != null" >
+        #{allowanceEmailContent,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceEmailTime != null" >
+        #{allowanceEmailTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="allowanceFileStatus != null" >
+        #{allowanceFileStatus,jdbcType=CHAR},
+      </if>
+      <if test="checkAllowanceAttachmentRemark != null" >
+        #{checkAllowanceAttachmentRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewStatus != null" >
+        #{reviewStatus,jdbcType=CHAR},
+      </if>
+      <if test="reviewRemark != null" >
+        #{reviewRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewEmailContent != null" >
+        #{reviewEmailContent,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewEmailTime != null" >
+        #{reviewEmailTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -571,7 +710,7 @@
         seq = #{record.seq,jdbcType=VARCHAR},
       </if>
       <if test="record.companyName != null" >
-        company_name = #{record.companyName,jdbcType=VARCHAR},
+        company_name = #{record.companyName,jdbcType=NVARCHAR},
       </if>
       <if test="record.year != null" >
         year = #{record.year,jdbcType=VARCHAR},
@@ -623,6 +762,24 @@
       </if>
       <if test="record.checkEmploymentRemark != null" >
         check_employment_remark = #{record.checkEmploymentRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkSpeakerPerson != null" >
+        check_speaker_person = #{record.checkSpeakerPerson,jdbcType=INTEGER},
+      </if>
+      <if test="record.checkSpeakerRemark != null" >
+        check_speaker_remark = #{record.checkSpeakerRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkScheduleRemark != null" >
+        check_schedule_remark = #{record.checkScheduleRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkExpenditureAmounts != null" >
+        check_expenditure_amounts = #{record.checkExpenditureAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="record.checkExpenditureRemark != null" >
+        check_expenditure_remark = #{record.checkExpenditureRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkJointAuthorizeRemark != null" >
+        check_joint_authorize_remark = #{record.checkJointAuthorizeRemark,jdbcType=VARCHAR},
       </if>
       <if test="record.checkAttachmentRemark != null" >
         check_attachment_remark = #{record.checkAttachmentRemark,jdbcType=VARCHAR},
@@ -714,6 +871,39 @@
       <if test="record.allowanceFrequencyRecord != null" >
         allowance_frequency_record = #{record.allowanceFrequencyRecord,jdbcType=VARCHAR},
       </if>
+      <if test="record.allowanceApprovedAmounts != null" >
+        allowance_approved_amounts = #{record.allowanceApprovedAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="record.allowanceFileStatusRecord != null" >
+        allowance_file_status_record = #{record.allowanceFileStatusRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allowanceFileRemark != null" >
+        allowance_file_remark = #{record.allowanceFileRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allowanceEmailContent != null" >
+        allowance_email_content = #{record.allowanceEmailContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allowanceEmailTime != null" >
+        allowance_email_time = #{record.allowanceEmailTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.allowanceFileStatus != null" >
+        allowance_file_status = #{record.allowanceFileStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.checkAllowanceAttachmentRemark != null" >
+        check_allowance_attachment_remark = #{record.checkAllowanceAttachmentRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reviewStatus != null" >
+        review_status = #{record.reviewStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.reviewRemark != null" >
+        review_remark = #{record.reviewRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reviewEmailContent != null" >
+        review_email_content = #{record.reviewEmailContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reviewEmailTime != null" >
+        review_email_time = #{record.reviewEmailTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.createTime != null" >
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
@@ -739,7 +929,7 @@
     set aaid = #{record.aaid,jdbcType=VARCHAR},
       id = #{record.id,jdbcType=INTEGER},
       seq = #{record.seq,jdbcType=VARCHAR},
-      company_name = #{record.companyName,jdbcType=VARCHAR},
+      company_name = #{record.companyName,jdbcType=NVARCHAR},
       year = #{record.year,jdbcType=VARCHAR},
       unit = #{record.unit,jdbcType=VARCHAR},
       city = #{record.city,jdbcType=VARCHAR},
@@ -757,6 +947,12 @@
       check_not_mandatory = #{record.checkNotMandatory,jdbcType=NCHAR},
       check_employment_person = #{record.checkEmploymentPerson,jdbcType=INTEGER},
       check_employment_remark = #{record.checkEmploymentRemark,jdbcType=VARCHAR},
+      check_speaker_person = #{record.checkSpeakerPerson,jdbcType=INTEGER},
+      check_speaker_remark = #{record.checkSpeakerRemark,jdbcType=VARCHAR},
+      check_schedule_remark = #{record.checkScheduleRemark,jdbcType=VARCHAR},
+      check_expenditure_amounts = #{record.checkExpenditureAmounts,jdbcType=INTEGER},
+      check_expenditure_remark = #{record.checkExpenditureRemark,jdbcType=VARCHAR},
+      check_joint_authorize_remark = #{record.checkJointAuthorizeRemark,jdbcType=VARCHAR},
       check_attachment_remark = #{record.checkAttachmentRemark,jdbcType=VARCHAR},
       check_blacklist_status = #{record.checkBlacklistStatus,jdbcType=CHAR},
       check_blacklist_remark = #{record.checkBlacklistRemark,jdbcType=VARCHAR},
@@ -787,6 +983,17 @@
       allowance_approve_time = #{record.allowanceApproveTime,jdbcType=VARCHAR},
       allowance_remark = #{record.allowanceRemark,jdbcType=VARCHAR},
       allowance_frequency_record = #{record.allowanceFrequencyRecord,jdbcType=VARCHAR},
+      allowance_approved_amounts = #{record.allowanceApprovedAmounts,jdbcType=INTEGER},
+      allowance_file_status_record = #{record.allowanceFileStatusRecord,jdbcType=VARCHAR},
+      allowance_file_remark = #{record.allowanceFileRemark,jdbcType=VARCHAR},
+      allowance_email_content = #{record.allowanceEmailContent,jdbcType=VARCHAR},
+      allowance_email_time = #{record.allowanceEmailTime,jdbcType=TIMESTAMP},
+      allowance_file_status = #{record.allowanceFileStatus,jdbcType=CHAR},
+      check_allowance_attachment_remark = #{record.checkAllowanceAttachmentRemark,jdbcType=VARCHAR},
+      review_status = #{record.reviewStatus,jdbcType=CHAR},
+      review_remark = #{record.reviewRemark,jdbcType=VARCHAR},
+      review_email_content = #{record.reviewEmailContent,jdbcType=VARCHAR},
+      review_email_time = #{record.reviewEmailTime,jdbcType=TIMESTAMP},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       updator = #{record.updator,jdbcType=VARCHAR},
@@ -806,7 +1013,7 @@
         seq = #{seq,jdbcType=VARCHAR},
       </if>
       <if test="companyName != null" >
-        company_name = #{companyName,jdbcType=VARCHAR},
+        company_name = #{companyName,jdbcType=NVARCHAR},
       </if>
       <if test="year != null" >
         year = #{year,jdbcType=VARCHAR},
@@ -858,6 +1065,24 @@
       </if>
       <if test="checkEmploymentRemark != null" >
         check_employment_remark = #{checkEmploymentRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkSpeakerPerson != null" >
+        check_speaker_person = #{checkSpeakerPerson,jdbcType=INTEGER},
+      </if>
+      <if test="checkSpeakerRemark != null" >
+        check_speaker_remark = #{checkSpeakerRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkScheduleRemark != null" >
+        check_schedule_remark = #{checkScheduleRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkExpenditureAmounts != null" >
+        check_expenditure_amounts = #{checkExpenditureAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="checkExpenditureRemark != null" >
+        check_expenditure_remark = #{checkExpenditureRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkJointAuthorizeRemark != null" >
+        check_joint_authorize_remark = #{checkJointAuthorizeRemark,jdbcType=VARCHAR},
       </if>
       <if test="checkAttachmentRemark != null" >
         check_attachment_remark = #{checkAttachmentRemark,jdbcType=VARCHAR},
@@ -949,6 +1174,39 @@
       <if test="allowanceFrequencyRecord != null" >
         allowance_frequency_record = #{allowanceFrequencyRecord,jdbcType=VARCHAR},
       </if>
+      <if test="allowanceApprovedAmounts != null" >
+        allowance_approved_amounts = #{allowanceApprovedAmounts,jdbcType=INTEGER},
+      </if>
+      <if test="allowanceFileStatusRecord != null" >
+        allowance_file_status_record = #{allowanceFileStatusRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceFileRemark != null" >
+        allowance_file_remark = #{allowanceFileRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceEmailContent != null" >
+        allowance_email_content = #{allowanceEmailContent,jdbcType=VARCHAR},
+      </if>
+      <if test="allowanceEmailTime != null" >
+        allowance_email_time = #{allowanceEmailTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="allowanceFileStatus != null" >
+        allowance_file_status = #{allowanceFileStatus,jdbcType=CHAR},
+      </if>
+      <if test="checkAllowanceAttachmentRemark != null" >
+        check_allowance_attachment_remark = #{checkAllowanceAttachmentRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewStatus != null" >
+        review_status = #{reviewStatus,jdbcType=CHAR},
+      </if>
+      <if test="reviewRemark != null" >
+        review_remark = #{reviewRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewEmailContent != null" >
+        review_email_content = #{reviewEmailContent,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewEmailTime != null" >
+        review_email_time = #{reviewEmailTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -971,7 +1229,7 @@
     update advancedAgeBase
     set id = #{id,jdbcType=INTEGER},
       seq = #{seq,jdbcType=VARCHAR},
-      company_name = #{companyName,jdbcType=VARCHAR},
+      company_name = #{companyName,jdbcType=NVARCHAR},
       year = #{year,jdbcType=VARCHAR},
       unit = #{unit,jdbcType=VARCHAR},
       city = #{city,jdbcType=VARCHAR},
@@ -989,6 +1247,12 @@
       check_not_mandatory = #{checkNotMandatory,jdbcType=NCHAR},
       check_employment_person = #{checkEmploymentPerson,jdbcType=INTEGER},
       check_employment_remark = #{checkEmploymentRemark,jdbcType=VARCHAR},
+      check_speaker_person = #{checkSpeakerPerson,jdbcType=INTEGER},
+      check_speaker_remark = #{checkSpeakerRemark,jdbcType=VARCHAR},
+      check_schedule_remark = #{checkScheduleRemark,jdbcType=VARCHAR},
+      check_expenditure_amounts = #{checkExpenditureAmounts,jdbcType=INTEGER},
+      check_expenditure_remark = #{checkExpenditureRemark,jdbcType=VARCHAR},
+      check_joint_authorize_remark = #{checkJointAuthorizeRemark,jdbcType=VARCHAR},
       check_attachment_remark = #{checkAttachmentRemark,jdbcType=VARCHAR},
       check_blacklist_status = #{checkBlacklistStatus,jdbcType=CHAR},
       check_blacklist_remark = #{checkBlacklistRemark,jdbcType=VARCHAR},
@@ -1019,6 +1283,17 @@
       allowance_approve_time = #{allowanceApproveTime,jdbcType=VARCHAR},
       allowance_remark = #{allowanceRemark,jdbcType=VARCHAR},
       allowance_frequency_record = #{allowanceFrequencyRecord,jdbcType=VARCHAR},
+      allowance_approved_amounts = #{allowanceApprovedAmounts,jdbcType=INTEGER},
+      allowance_file_status_record = #{allowanceFileStatusRecord,jdbcType=VARCHAR},
+      allowance_file_remark = #{allowanceFileRemark,jdbcType=VARCHAR},
+      allowance_email_content = #{allowanceEmailContent,jdbcType=VARCHAR},
+      allowance_email_time = #{allowanceEmailTime,jdbcType=TIMESTAMP},
+      allowance_file_status = #{allowanceFileStatus,jdbcType=CHAR},
+      check_allowance_attachment_remark = #{checkAllowanceAttachmentRemark,jdbcType=VARCHAR},
+      review_status = #{reviewStatus,jdbcType=CHAR},
+      review_remark = #{reviewRemark,jdbcType=VARCHAR},
+      review_email_content = #{reviewEmailContent,jdbcType=VARCHAR},
+      review_email_time = #{reviewEmailTime,jdbcType=TIMESTAMP},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       updator = #{updator,jdbcType=VARCHAR},

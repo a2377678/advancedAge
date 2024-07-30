@@ -21,9 +21,7 @@ public class UnitApiController {
 	@Autowired
 	UnitService unitService;
 	
-	Date date = new Date();
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	int applyYear=Integer.valueOf(sdf.format(date).substring(0,4))-1911;
 
 	@Value("${api_token}")
 	private String apiToken;

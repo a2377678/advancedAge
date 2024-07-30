@@ -5,6 +5,7 @@
     <id column="function_code" property="functionCode" jdbcType="VARCHAR" />
     <result column="id" property="id" jdbcType="INTEGER" />
     <result column="function_name" property="functionName" jdbcType="VARCHAR" />
+    <result column="case_type" property="caseType" jdbcType="CHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    function_code, id, function_name, create_time, update_time
+    function_code, id, function_name, case_type, create_time, update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.FunctionListExample" >
     select
@@ -101,9 +102,11 @@
   </delete>
   <insert id="insert" parameterType="com.example.springboot.entity.FunctionList" >
     insert into functionList (function_code, id, function_name, 
-      create_time, update_time)
+      case_type, create_time, update_time
+      )
     values (#{functionCode,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}, #{functionName,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{caseType,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.example.springboot.entity.FunctionList" >
     insert into functionList
@@ -116,6 +119,9 @@
       </if>
       <if test="functionName != null" >
         function_name,
+      </if>
+      <if test="caseType != null" >
+        case_type,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -133,6 +139,9 @@
       </if>
       <if test="functionName != null" >
         #{functionName,jdbcType=VARCHAR},
+      </if>
+      <if test="caseType != null" >
+        #{caseType,jdbcType=CHAR},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -160,6 +169,9 @@
       <if test="record.functionName != null" >
         function_name = #{record.functionName,jdbcType=VARCHAR},
       </if>
+      <if test="record.caseType != null" >
+        case_type = #{record.caseType,jdbcType=CHAR},
+      </if>
       <if test="record.createTime != null" >
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
@@ -176,6 +188,7 @@
     set function_code = #{record.functionCode,jdbcType=VARCHAR},
       id = #{record.id,jdbcType=INTEGER},
       function_name = #{record.functionName,jdbcType=VARCHAR},
+      case_type = #{record.caseType,jdbcType=CHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
@@ -191,6 +204,9 @@
       <if test="functionName != null" >
         function_name = #{functionName,jdbcType=VARCHAR},
       </if>
+      <if test="caseType != null" >
+        case_type = #{caseType,jdbcType=CHAR},
+      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -204,6 +220,7 @@
     update functionList
     set id = #{id,jdbcType=INTEGER},
       function_name = #{functionName,jdbcType=VARCHAR},
+      case_type = #{caseType,jdbcType=CHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where function_code = #{functionCode,jdbcType=VARCHAR}

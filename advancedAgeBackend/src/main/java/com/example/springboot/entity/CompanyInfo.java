@@ -49,7 +49,7 @@ public class CompanyInfo implements Serializable {
     private String contactAddress;
 
     private String accountStatus;
-    
+
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
 
@@ -62,6 +62,8 @@ public class CompanyInfo implements Serializable {
     private String verifyPerson;
 
     private String verifyUnit;
+
+    private String ssoMid;
 
     private static final long serialVersionUID = 1L;
 
@@ -279,5 +281,13 @@ public class CompanyInfo implements Serializable {
 
     public void setVerifyUnit(String verifyUnit) {
         this.verifyUnit = verifyUnit == null ? null : verifyUnit.trim();
+    }
+
+    public String getSsoMid() {
+        return ssoMid;
+    }
+
+    public void setSsoMid(String ssoMid) {
+        this.ssoMid = ssoMid == null ? null : ssoMid.trim();
     }
 }

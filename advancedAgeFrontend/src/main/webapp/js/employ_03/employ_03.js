@@ -1,30 +1,54 @@
 $(function(){
+	$.datepicker.regional['zh-TW']={
+   dayNames:["星期日","星期一","星期二","星期三","星期四","星期五","星期六"],
+   dayNamesMin:["日","一","二","三","四","五","六"],
+   monthNames:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+   monthNamesShort:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+   prevText:"上月",
+   nextText:"次月",
+   weekHeader:"週"
+};
+	$.datepicker.setDefaults($.datepicker.regional["zh-TW"]);
 	$('#listForm').validate();
+	
+	$('input[name^="birthday"]').datepicker({ 
+		changeMonth: true,
+	    changeYear: true,
+		yearRange: "-100:+0",
+		dateFormat: "yymmdd",
+//		defaultDate : "-64y",
+		onSelect: function (dateText, inst) {
+            dateText = dateText - 19110000;
+			if(dateText.toString().length==6){
+				dateText = '0'+dateText.toString().substr(0, 2) + dateText.toString().substr(2, 2) + dateText.toString().substr(4);
+			}else if(dateText.toString().length==7){
+            	dateText = dateText.toString().substr(0, 3)+ dateText.toString().substr(3, 2) + dateText.toString().substr(5);
+			}
+            $(this).val(dateText);
+        } 
+	});
+	
+	$('input[name^="insuranceTime"]').datepicker({ 
+		changeMonth: true,
+	    changeYear: true,
+		yearRange: "-100:+0",
+		dateFormat: "yymmdd",
+		onSelect: function (dateText, inst) {
+            dateText = dateText - 19110000;
+			if(dateText.toString().length==6){
+				dateText = '0'+dateText.toString().substr(0, 2) + dateText.toString().substr(2, 2) + dateText.toString().substr(4);
+			}else if(dateText.toString().length==7){
+            	dateText = dateText.toString().substr(0, 3)+ dateText.toString().substr(3, 2) + dateText.toString().substr(5);
+			}
+            $(this).val(dateText);
+        } 
+	});
+	
 	if($('#excel').find('a').attr('class') != '' && $('#excel').find('a').attr('class') != undefined)
 	{
 		$('#listStaff').hide();
 		$('#listFile').show();
 	}
-	$('button.close').click(function(){
-		if(confirm('是否確定要移除？'))
-		{
-			let path=$(this).parent().parent('li');
-			$.ajax({
-			    type: "POST",
-			    url: 'delAdvancedAgeEmploymentList',
-			    data: {
-					identification : $(this).parent().parent('li').find('input[name^="identification"]').val()
-			    },
-			    dataType:"text", //ajax返回值text（json格式也可用這返回，也可設成json）
-			    success: function(json){
-					if(json=='success'){
-						path.remove();
-					}
-				}
-			})
-		}
-		return false;
-	});
 	$('#nearHighEmploymentNumber').change(function(){
 		$('#continueEmploymentPercentage').val((Number($('#continueEmploymentNumber').val())/Number($(this).val())*100).toFixed(1));
 	});
@@ -59,6 +83,24 @@ $(function(){
 //		}
 	});
 	
+	$('input[name^="identification"]').change(function(){
+		if($(this).val().length>0)
+		{
+			$(this).parent().parent('li').find('input').attr('required',true);
+			$(this).parent().parent('li').find('select').attr('required',true);
+		}
+		else
+		{
+			if($(this).attr('id')!='identification1'){
+				$(this).parent().parent('li').find('input').attr('required',false);
+				$(this).parent().parent('li').find('select').attr('required',false);
+				$(this).parent().parent('li').find('input').removeClass();
+				$(this).parent().parent('li').find('select').removeClass();
+				$(this).parent().parent('li').find('label.error').remove();
+			}
+		}
+	});
+	
 	$('#employed').click(function(){
 		$('#excel').find('a').removeClass();
 		$(this).find('a').addClass('in color-2');
@@ -73,6 +115,18 @@ $(function(){
 		$('#listStaff').hide();
 		$('#listFile').show();
 	});
+	
+	$('#highEmploymentNumber').change(function(){
+		$('#employmentNumber').val(Number($(this).val())+Number($('#middleEmploymentNumber').val())+Number($('#lowEmploymentNumber').val()));
+	})
+	
+	$('#middleEmploymentNumber').change(function(){
+		$('#employmentNumber').val(Number($(this).val())+Number($('#highEmploymentNumber').val())+Number($('#lowEmploymentNumber').val()));
+	})
+	
+	$('#lowEmploymentNumber').change(function(){
+		$('#employmentNumber').val(Number($(this).val())+Number($('#highEmploymentNumber').val())+Number($('#middleEmploymentNumber').val()));
+	})
 });
 
 function planSave(showMsg,upload){
@@ -194,17 +248,33 @@ function planSave(showMsg,upload){
 //}
 
 function listAdd(){
-	maxNum=Number($('#listStaff').find('li').last().find('input[name^="name"]').attr('id').replace('name',''))+1;
-	if(maxNum<6)
-	{
-		$('#listStaff').find('ol').append('<li>'+
+		maxNum = 1;
+	let countli = $('#listStaff ol li').length;
+	if (countli > 0) {
+		maxNum = Number($('#listStaff').find('li').last().find('input[name^="name"]').attr('id').replace('name', '')) + 1;
+	}
+	if (countli < 5 && countli != 0) {
+		listAddContent();
+	}
+	if (countli == 0) {
+		maxNum = 1;
+		listAddContent();
+	}
+}
+
+function listAddContent() {
+	$('#listStaff').find('ol').append('<li>'+
 	          '<div class="ss">'+
 	          '<label for="name'+maxNum+'">勞工姓名</label>  '+
 	          '<input type="text" id="name'+maxNum+'" name="name">'+
 	          '</div>'+
+			  '<div class="ss">'+
+	          '<label for="birthday'+maxNum+'">出生日期</label>  '+
+	          '<input type="text" id="birthday'+maxNum+'" name="birthday" placeholder="yyymmdd" readonly>'+
+	          '</div>'+
 	          '<div class="ss">'+
 	          '<label for="identification'+maxNum+'">身分證字號</label>  '+
-	          '<input type="text" id="identification'+maxNum+'" name="identification">'+
+	          '<input type="text" id="identification'+maxNum+'" name="identification" maxlength="10">'+
 	          '</div>'+
 	          '<div class="ss">'+
 	          '<label for="insuranceType'+maxNum+'">保險類型</label>  '+
@@ -216,7 +286,7 @@ function listAdd(){
 	          '</div>'+
 	          '<div class="ss">'+
 	          '<label for="insuranceTime'+maxNum+'">加保日期</label>  '+
-	          '<input type="text" id="insuranceTime'+maxNum+'" name="insuranceTime" placeholder="yyymmdd" maxlength="7" oninput = "value=value.replace(/[^0-9]/g,\'\')">'+
+	          '<input type="text" id="insuranceTime'+maxNum+'" name="insuranceTime" placeholder="yyymmdd" maxlength="7" readonly oninput = "value=value.replace(/[^0-9]/g,\'\')">'+
 	          '</div>'+
 	          '<div class="ss">'+
 	          '<label for="manager'+maxNum+'">職務類型</label>  '+
@@ -249,46 +319,36 @@ function listAdd(){
 	          '  <option value="P">部分工時</option>'+
 	          '</select>'+
 	          '</div>'+
-	          '<div class="ss">'+
-	          '<label for="averageSalary'+maxNum+'">平均薪資</label>  '+
-	          '<input type="text" id="averageSalary'+maxNum+'" name="averageSalary" class="readonly" placeholder="填寫完自動計算" readonly>'+
-	          '</div>'+
-	          '<div class="m">'+
-	          '<label for="recurringSalary'+maxNum+'">經常性薪資</label>  '+
-	          '<input type="text" id="recurringSalary'+maxNum+'" name="recurringSalary" pattern="[0-9]*" placeholder="申請前3個月總和">'+ 
+	          '<div class="m full-2">'+
+	          '<label for="recurringSalary'+maxNum+'" class="l">申請前3個月經常性薪資總和</label>  '+
+	          '<input type="text" class="l" id="recurringSalary'+maxNum+'" name="recurringSalary" pattern="[0-9]*" placeholder="申請前3個月總和">'+ 
 	          ' ( 本薪 / 津貼 / 經常性獎金 )'+
 	          '<img src="images/icon_qu.png" class="icon_qu"'+
 	          'title="【經常性薪資】\n'+
 	'包含：本薪、交通津貼、伙食津貼、\n'+
 	'　　　績效獎金、全勤獎金、工作獎金；\n'+  
 	'不含：差旅費、差旅津貼、交際費。"></div>'+          
-			  '<div class="m">'+
-	          '<label for="notRecurringSalary'+maxNum+'">非經常性薪資</label> '+
-	          '<input type="text" id="notRecurringSalary'+maxNum+'" name="notRecurringSalary" placeholder="申請前3個月總和">'+
+			  '<div class="m full-2">'+
+	          '<label for="notRecurringSalary'+maxNum+'"  class="l">申請前3個月非經常性薪資總和</label> '+
+	          '<input type="text" class="l" id="notRecurringSalary'+maxNum+'" name="notRecurringSalary" placeholder="申請前3個月總和">'+
 	' ( 加班費 / 不休假獎金 )'+
 	          '<img src="images/icon_qu.png" class="icon_qu"'+
 	          'title="【非經常性薪資】\n'+
 	'包含：加班費、不休假獎金；  \n'+
 	'不含：紅利、年終獎金、久任獎金、三節獎\n'+
 	'　　　金、醫療補助費、子女教育補助費。"></div>'+
-	          '<div class="close"><button class="close" title="移除此筆資料">X</button></div>'+
+			  '<div class="ss">'+
+	          '<label for="averageSalary'+maxNum+'">平均薪資</label>  '+
+	          '<input type="text" id="averageSalary'+maxNum+'" name="averageSalary" class="readonly pmall" placeholder="填寫完自動計算" readonly>'+
+	          '</div>'+
+	          '<div class="close"><button type="button" onclick="delEmploymentList(this);" class="close" title="移除此筆資料">X</button></div>'+
 	        '</li>');
-		$('button.close').click(function(){
-			$.ajax({
-			    type: "POST",
-			    url: 'delAdvancedAgeEmploymentList',
-			    data: {
-					identification : $(this).parent().parent('li').find('input[name^="identification"]').val(),
-			    },
-			    dataType:"text", //ajax返回值text（json格式也可用這返回，也可設成json）
-			    success: function(json){
-					
-				}
-			})
-			$(this).parent().parent('li').remove();
-		});
-		
-		$('input[name^="recurringSalary"]').change(function(){
+
+		if(maxNum==1){
+			$('#identification1').parent().parent('li').find('input').attr('required',true);
+			$('#identification1').parent().parent('li').find('select').attr('required',true);
+		}
+		$('#recurringSalary'+maxNum).change(function(){
 	//		let total=Number($(this).parent().parent().find('input[name^="notRecurringSalary"]').val())+Number($(this).val());
 			let total=Number($(this).val());
 			$(this).parent().parent().find('input[name^="averageSalary"]').val(Math.floor(total/3));
@@ -299,7 +359,7 @@ function listAdd(){
 	//		$(this).parent().parent().find('input[name^="averageSalary"]').val(Math.floor(total/3));
 	//	});
 		
-		$('input[name^="identification"]').change(function(){
+		$('#identification'+maxNum).change(function(){
 			if($(this).val().length>0)
 			{
 				$(this).parent().parent('li').find('input').attr('required',true);
@@ -307,14 +367,67 @@ function listAdd(){
 			}
 			else
 			{
-				$(this).parent().parent('li').find('input').attr('required',false);
-				$(this).parent().parent('li').find('select').attr('required',false);
-				$(this).parent().parent('li').find('input').removeClass();
-				$(this).parent().parent('li').find('select').removeClass();
-				$(this).parent().parent('li').find('label.error').remove();
+				if($(this).attr('id')!='identification1'){
+					$(this).parent().parent('li').find('input').attr('required',false);
+					$(this).parent().parent('li').find('select').attr('required',false);
+					$(this).parent().parent('li').find('input').removeClass();
+					$(this).parent().parent('li').find('select').removeClass();
+					$(this).parent().parent('li').find('label.error').remove();
+				}
 			}
 		});
+	$('#birthday'+maxNum).datepicker({ 
+		changeMonth: true,
+	    changeYear: true,
+		yearRange: "-100:+0",
+		dateFormat: "yymmdd",
+		onSelect: function (dateText, inst) {
+            dateText = dateText - 19110000;
+			if(dateText.toString().length==6){
+				dateText = '0'+dateText.toString().substr(0, 2) + dateText.toString().substr(2, 2) + dateText.toString().substr(4);
+			}else if(dateText.toString().length==7){
+            	dateText = dateText.toString().substr(0, 3)+ dateText.toString().substr(3, 2) + dateText.toString().substr(5);
+			}
+            $(this).val(dateText);
+        } 
+	});
+	
+	$('#insuranceTime'+maxNum).datepicker({ 
+		changeMonth: true,
+	    changeYear: true,
+		yearRange: "-100:+0",
+		dateFormat: "yymmdd",
+		onSelect: function (dateText, inst) {
+            dateText = dateText - 19110000;
+			if(dateText.toString().length==6){
+				dateText = '0'+dateText.toString().substr(0, 2) + dateText.toString().substr(2, 2) + dateText.toString().substr(4);
+			}else if(dateText.toString().length==7){
+            	dateText = dateText.toString().substr(0, 3)+ dateText.toString().substr(3, 2) + dateText.toString().substr(5);
+			}
+            $(this).val(dateText);
+        } 
+	});
+}
+
+function delEmploymentList(item){
+	if(confirm('是否確定要移除？'))
+	{
+		let path=$(item).parent().parent('li');
+		$.ajax({
+		    type: "POST",
+		    url: 'delAdvancedAgeEmploymentList',
+		    data: {
+				identification : $(item).parent().parent('li').find('input[name^="identification"]').val()
+		    },
+		    dataType:"text", //ajax返回值text（json格式也可用這返回，也可設成json）
+		    success: function(json){
+				if(json=='success'){
+					path.remove();
+				}
+			}
+		})
 	}
+	return false;
 }
 
 //function listDelete(){
@@ -351,6 +464,7 @@ function listSave(showMsg){
 				{
 					if($(this).find('select[name^="insuranceType"]').val()==1){
 						let data={"name" : $(this).find('input[name^="name"]').val(),
+							"birthday" : $(this).find('input[name^="birthday"]').val(),
 							"identification" : $(this).find('input[name^="identification"]').val(),
 							"laborProtectionTime" : $(this).find('input[name^="insuranceTime"]').val(),
 							"manager" : $(this).find('select[name^="manager"]').val(),
@@ -365,6 +479,7 @@ function listSave(showMsg){
 					else
 					{
 						let data={"name" : $(this).find('input[name^="name"]').val(),
+							"birthday" : $(this).find('input[name^="birthday"]').val(),
 							"identification" : $(this).find('input[name^="identification"]').val(),
 							"occupationalAccidentProtectionTime" : $(this).find('input[name^="insuranceTime"]').val(),
 							"manager" : $(this).find('select[name^="manager"]').val(),
@@ -430,10 +545,10 @@ function fileUpload(showMsg){
 				let file = new FormData();
 				file.append('uploadFile',$('#uploadFile').get(0).files[0]);
 				$.confirm({
-				    title: '補助名單上傳前確認',
+				    title: '上傳前確認',
 				    animation: 'zoom',
 				    closeAnimation: 'scale',
-				    content: '提醒您上傳會先清除之前的補助名單',
+				    content: '提醒您！再次上傳將會「覆蓋先前上傳的檔案」，以及您手動填寫的「線上填寫資料」',
 				    buttons: {
 				      確認: function() {
 				        $.ajax({
@@ -445,10 +560,14 @@ function fileUpload(showMsg){
 							data: file,
 							success: function(res) {
 						   	// 判斷是否接收成功
-								if(res.indexOf('success')!=-1)
+								if(res=='success')
 								{
 							   		alert('檔案已上傳');
 									window.location.reload();
+								}else{
+									alert('請確認 "檔案格式" 和 "內容欄位" 是否填寫完整與正確');
+									$('#uploadFile').val('');
+									$('#loader-container').hide();
 								}
 							}
 						});
@@ -463,6 +582,7 @@ function fileUpload(showMsg){
 			else
 			{
 				alert('請選擇上傳檔案');
+				$('#loader-container').hide();
 			}
 	    },
 	    error: function(json){
@@ -590,60 +710,61 @@ function totalSave(showMsg){
 		    },
 		    dataType:"text", //ajax返回值text（json格式也可用這返回，也可設成json）
 		    success: function(json){  
-				if($('#listForm').valid()){
-					let list=[];
-					$('#listStaff').find('li').each(function(index,value){
-						if($(this).find('input[name^="identification"]').val()!='')
-						{
-							if($(this).find('select[name^="insuranceType"]').val()==1){
-								let data={"name" : $(this).find('input[name^="name"]').val(),
-									"identification" : $(this).find('input[name^="identification"]').val(),
-									"laborProtectionTime" : $(this).find('input[name^="insuranceTime"]').val(),
-									"manager" : $(this).find('select[name^="manager"]').val(),
-									"relatives" : $(this).find('select[name^="relatives"]').val(),
-									"workingHours" : $(this).find('select[name^="workingHours"]').val(),
-									"averageSalary" : $(this).find('input[name^="averageSalary"]').val(),
-									"recurringSalary" : $(this).find('input[name^="recurringSalary"]').val(),
-									"notRecurringSalary" : $(this).find('input[name^="notRecurringSalary"]').val()
-								}
-								list.push(data);
+				let list=[];
+				$('#listStaff').find('li').each(function(index,value){
+					if($(this).find('input[name^="identification"]').val()!='')
+					{
+						if($(this).find('select[name^="insuranceType"]').val()==1){
+							let data={"name" : $(this).find('input[name^="name"]').val(),
+								"birthday" : $(this).find('input[name^="birthday"]').val(),
+								"identification" : $(this).find('input[name^="identification"]').val(),
+								"laborProtectionTime" : $(this).find('input[name^="insuranceTime"]').val(),
+								"manager" : $(this).find('select[name^="manager"]').val(),
+								"relatives" : $(this).find('select[name^="relatives"]').val(),
+								"workingHours" : $(this).find('select[name^="workingHours"]').val(),
+								"averageSalary" : $(this).find('input[name^="averageSalary"]').val(),
+								"recurringSalary" : $(this).find('input[name^="recurringSalary"]').val(),
+								"notRecurringSalary" : $(this).find('input[name^="notRecurringSalary"]').val()
 							}
-							else
-							{
-								let data={"name" : $(this).find('input[name^="name"]').val(),
-									"identification" : $(this).find('input[name^="identification"]').val(),
-									"occupationalAccidentProtectionTime" : $(this).find('input[name^="insuranceTime"]').val(),
-									"manager" : $(this).find('select[name^="manager"]').val(),
-									"relatives" : $(this).find('select[name^="relatives"]').val(),
-									"workingHours" : $(this).find('select[name^="workingHours"]').val(),
-									"averageSalary" : $(this).find('input[name^="averageSalary"]').val(),
-									"recurringSalary" : $(this).find('input[name^="recurringSalary"]').val(),
-									"notRecurringSalary" : $(this).find('input[name^="notRecurringSalary"]').val()
-								}
-								list.push(data);
-							}
+							list.push(data);
 						}
-						
-					});
-					$.ajax({
-					    type: "POST",
-					    url: 'addAdvancedAgeEmploymentList',
-					    data: JSON.stringify(list),
-					    dataType:"text", //ajax返回值text（json格式也可用這返回，也可設成json）
-						contentType:"application/json",
-					    success: function(json){  
-					   		if(showMsg=='Y')
-							{
-					   			alert('資料已暫存');
-								window.location.reload();
+						else
+						{
+							let data={"name" : $(this).find('input[name^="name"]').val(),
+								"birthday" : $(this).find('input[name^="birthday"]').val(),
+								"identification" : $(this).find('input[name^="identification"]').val(),
+								"occupationalAccidentProtectionTime" : $(this).find('input[name^="insuranceTime"]').val(),
+								"manager" : $(this).find('select[name^="manager"]').val(),
+								"relatives" : $(this).find('select[name^="relatives"]').val(),
+								"workingHours" : $(this).find('select[name^="workingHours"]').val(),
+								"averageSalary" : $(this).find('input[name^="averageSalary"]').val(),
+								"recurringSalary" : $(this).find('input[name^="recurringSalary"]').val(),
+								"notRecurringSalary" : $(this).find('input[name^="notRecurringSalary"]').val()
 							}
-					    },
-					    error: function(json){
-						    alert('稍等5秒再試');
-							$('#loader-container').hide();
-					    }
-				    });
-				}
+							list.push(data);
+						}
+					}
+					
+				});
+				$.ajax({
+				    type: "POST",
+				    url: 'addAdvancedAgeEmploymentList',
+				    data: JSON.stringify(list),
+				    dataType:"text", //ajax返回值text（json格式也可用這返回，也可設成json）
+					contentType:"application/json",
+				    success: function(json){  
+				   		if(showMsg=='Y')
+						{
+				   			alert('資料已暫存');
+							window.location.reload();
+						}
+				    },
+				    error: function(json){
+					    alert('稍等5秒再試');
+						$('#loader-container').hide();
+				    }
+			    });
+				
 		    },
 		    error: function(json){
 			    alert(json);
@@ -681,10 +802,10 @@ function totalSave(showMsg){
 					let file = new FormData();
 					file.append('uploadFile',$('#uploadFile').get(0).files[0]);
 					$.confirm({
-					    title: '補助名單上傳前確認',
+					    title: '上傳前確認',
 					    animation: 'zoom',
 					    closeAnimation: 'scale',
-					    content: '提醒您上傳會先清除之前的補助名單',
+					    content: '提醒您！再次上傳將會「覆蓋先前上傳的檔案」，以及您手動填寫的「線上填寫資料」',
 					    buttons: {
 					      確認: function() {
 					        $.ajax({
@@ -698,11 +819,12 @@ function totalSave(showMsg){
 							   	// 判斷是否接收成功
 									if(res=='success')
 									{
-										if(showMsg=='Y')
-										{
-								   			alert('資料已暫存');
-											window.location.reload();
-										}
+								   		alert('檔案已上傳');
+										window.location.reload();
+									}else{
+										alert('請確認 "檔案格式" 和 "內容欄位" 是否填寫完整與正確');
+										$('#uploadFile').val('');
+										$('#loader-container').hide();
 									}
 								}
 							});
@@ -770,6 +892,7 @@ function next(){
 							{
 								if($(this).find('select[name^="insuranceType"]').val()==1){
 									let data={"name" : $(this).find('input[name^="name"]').val(),
+										"birthday" : $(this).find('input[name^="birthday"]').val(),
 										"identification" : $(this).find('input[name^="identification"]').val(),
 										"laborProtectionTime" : $(this).find('input[name^="insuranceTime"]').val(),
 										"manager" : $(this).find('select[name^="manager"]').val(),
@@ -784,6 +907,7 @@ function next(){
 								else
 								{
 									let data={"name" : $(this).find('input[name^="name"]').val(),
+										"birthday" : $(this).find('input[name^="birthday"]').val(),
 										"identification" : $(this).find('input[name^="identification"]').val(),
 										"occupationalAccidentProtectionTime" : $(this).find('input[name^="insuranceTime"]').val(),
 										"manager" : $(this).find('select[name^="manager"]').val(),
@@ -853,10 +977,10 @@ function next(){
 						let file = new FormData();
 						file.append('uploadFile',$('#uploadFile').get(0).files[0]);
 						$.confirm({
-						    title: '補助名單上傳前確認',
+						    title: '上傳前確認',
 						    animation: 'zoom',
 						    closeAnimation: 'scale',
-						    content: '提醒您上傳會先清除之前的補助名單',
+						    content: '提醒您！再次上傳將會「覆蓋先前上傳的檔案」，以及您手動填寫的「線上填寫資料」',
 						    buttons: {
 						      確認: function() {
 						        $.ajax({
@@ -874,8 +998,9 @@ function next(){
 										}
 										else
 										{
+											alert('請確認 "檔案格式" 和 "內容欄位" 是否填寫完整與正確');
+											$('#uploadFile').val('');
 											$('#loader-container').hide();
-											alert('檔案錯誤');
 										}
 									}
 								});
@@ -901,6 +1026,7 @@ function next(){
 			    },
 			    error: function(json){
 				    alert(json);
+					$('#loader-container').hide();
 			    }
 		    });
 			

@@ -17,18 +17,38 @@ public class AdvancedAgeApplyService{
 	AdvancedAgeApplyMapper advancedAgeApplyMapper;
 	
 	public int insertSelective(AdvancedAgeApply record) {
-		return advancedAgeApplyMapper.insertSelective(record);
+		int a = advancedAgeApplyMapper.insertSelective(record);
+		if(Integer.valueOf(a) != null){
+			return a;
+		}else{
+			return 0;
+		}
 	}
 	
 	public AdvancedAgeApply selectByPrimaryKey(AdvancedAgeApplyKey key) {
-		return advancedAgeApplyMapper.selectByPrimaryKey(key);
+		AdvancedAgeApply advancedAgeApply = advancedAgeApplyMapper.selectByPrimaryKey(key);
+		if(advancedAgeApply != null) {
+			return advancedAgeApply;
+		}else {
+			return null;
+		}
 	}
 	
 	public List<AdvancedAgeApply> selectByExample(AdvancedAgeApplyExample example){
-		return advancedAgeApplyMapper.selectByExample(example);
+		List<AdvancedAgeApply> list = advancedAgeApplyMapper.selectByExample(example);
+		if(list != null) {
+			return list;
+		}else {
+			return null;
+		}
 	}
 	
 	public int updateByPrimaryKeySelective(AdvancedAgeApply record) {
-		return advancedAgeApplyMapper.updateByPrimaryKeySelective(record);
+		int a = advancedAgeApplyMapper.updateByPrimaryKeySelective(record);
+		if(Integer.valueOf(a) != null){
+			return a;
+		}else{
+			return 0;
+		}
 	}
 }

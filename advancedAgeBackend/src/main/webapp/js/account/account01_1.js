@@ -24,6 +24,9 @@ function sendMail(){
 				url: 'sendCompanyInfoMail',// 資料不需要編碼
 				data: {
 					email: $('#email').val(),
+					pwd : json,
+					companyName : $('#enrollCompanyName').text(),
+					seq : $('#enrollSeq').text(),
 				},
 				success: function(res) {
 //			   	// 判斷是否接收成功

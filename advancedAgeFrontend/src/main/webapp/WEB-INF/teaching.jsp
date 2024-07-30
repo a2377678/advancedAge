@@ -20,16 +20,43 @@
   
   <!--- main --->
   <div class="main"> 
-    
+    <a href="#C" title="中央內容區塊" id="AC" accesskey="C" name="C">:::</a> <!---無障礙--->
   <!------------ 申請流程 ------------>
   <div class="apply_main">
+  <!---無障礙/麵包屑--->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index" title="首頁">首頁</a></li>
+        <li class="breadcrumb-item active" aria-current="page">申請教學</li>
+      </ol>
+    </nav>
     <h1>申請教學</h1>
     <h2><span class="title-1">補助計畫申請流程教學</span></h2>
 
-    <div class="list-group my-5 py-5 h5">
-      <a href="/file/SAMPLE/繼續僱用高齡者補助計畫_申請教學.pdf" target="_blank"
-      class="list-group-item list-group-item-action list-group-item-light py-3" 
+	<div class="list-group my-5 py-5 h5">
+      <a href="/file/SAMPLE/teaching/繼續僱用_申請教學.pdf" target="_blank"
+      class="list-group-item list-group-item-action list-group-item-info py-3" 
       title="申請教學_繼續僱用高齡者補助計畫 ( 另開視窗 )">申請教學_繼續僱用高齡者補助計畫 ( 另開視窗 )</a>
+
+      <a href="/file/SAMPLE/teaching/繼續僱用_請領教學.pdf" target="_blank"
+      class="list-group-item list-group-item-action list-group-item-light py-3" 
+      title="請領教學_繼續僱用高齡者補助計畫 ( 另開視窗 )">請領教學_繼續僱用高齡者補助計畫 ( 另開視窗 )</a>
+    
+      <a href="/file/SAMPLE/teaching/傳承_申請教學.pdf" target="_blank"
+      class="list-group-item list-group-item-action list-group-item-info py-3" 
+      title="申請教學_僱用退休中高齡者及高齡者傳承專業技術及經驗補助計畫 ( 另開視窗 )">申請教學_僱用退休中高齡者及高齡者傳承專業技術及經驗補助計畫 ( 另開視窗 )</a>
+
+      <a href="/file/SAMPLE/teaching/傳承_請領教學.pdf" target="_blank"
+      class="list-group-item list-group-item-action list-group-item-light py-3" 
+      title="請領教學_僱用退休中高齡者及高齡者傳承專業技術及經驗補助計畫 ( 另開視窗 )">請領教學_僱用退休中高齡者及高齡者傳承專業技術及經驗補助計畫 ( 另開視窗 )</a>
+    
+      <a href="/file/SAMPLE/teaching/再就業_申請教學.pdf" target="_blank"
+      class="list-group-item list-group-item-action list-group-item-info py-3" 
+      title="申請教學_中高齡者退休後再就業準備協助措施補助計畫 ( 另開視窗 )">申請教學_中高齡者退休後再就業準備協助措施補助計畫 ( 另開視窗 )</a>
+
+      <a href="/file/SAMPLE/teaching/再就業_請領教學.pdf" target="_blank"
+      class="list-group-item list-group-item-action list-group-item-light py-3" 
+      title="請領教學_中高齡者退休後再就業準備協助措施補助計畫 ( 另開視窗 )">請領教學_中高齡者退休後再就業準備協助措施補助計畫 ( 另開視窗 )</a>
     </div>
 
     <div class="page my-5 py-5"></div>
@@ -42,14 +69,7 @@
   <!--- main end ---> 
   
   <!--- footer --->
-  <footer class="copyright">
-    <section>
-      <div>勞動力發展署：24219新北市新莊區中平路439號南棟4樓　電話代表號：(02)8995-6000　客服專線：0800-777-888</div>
-      <div>本署服務時間：週一至週五　上午8時30分至12時30分，下午13時30分至17時30分</div>
-      <div>最佳解析度1024x768 ，建議更新瀏覽器至以下版本：最新版本Chrome、最新版本Firefox</div>
-      <div>中華民國勞動部勞動力發展署版權所有 © 2021 All rights reserved. </div>
-    </section>
-  </footer>
+  <%@ include file="footer.jsp" %>
   <!--- footer end ---> 
   
 </div>

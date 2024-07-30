@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.dao.RetirementAdvancedAgeExperienceInheritancePlanMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritancePlan" >
+    <id column="retirement_advanced_age_experience_inheritance_apply_id" property="retirementAdvancedAgeExperienceInheritanceApplyId" jdbcType="INTEGER" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="apply_year" property="applyYear" jdbcType="VARCHAR" />
+    <result column="items" property="items" jdbcType="VARCHAR" />
+    <result column="friendly_measures" property="friendlyMeasures" jdbcType="VARCHAR" />
+    <result column="employment_number" property="employmentNumber" jdbcType="INTEGER" />
+    <result column="high_employment_number" property="highEmploymentNumber" jdbcType="INTEGER" />
+    <result column="middle_employment_number" property="middleEmploymentNumber" jdbcType="INTEGER" />
+    <result column="low_employment_number" property="lowEmploymentNumber" jdbcType="INTEGER" />
+    <result column="lower_employment_number" property="lowerEmploymentNumber" jdbcType="INTEGER" />
+    <result column="retirement_employment_number" property="retirementEmploymentNumber" jdbcType="INTEGER" />
+    <result column="plan_description" property="planDescription" jdbcType="VARCHAR" />
+    <result column="execution_way" property="executionWay" jdbcType="VARCHAR" />
+    <result column="execution_way_description" property="executionWayDescription" jdbcType="VARCHAR" />
+    <result column="plan_start_time" property="planStartTime" jdbcType="VARCHAR" />
+    <result column="plan_end_time" property="planEndTime" jdbcType="VARCHAR" />
+    <result column="experience_inheritance" property="experienceInheritance" jdbcType="VARCHAR" />
+    <result column="participate" property="participate" jdbcType="VARCHAR" />
+    <result column="benefit" property="benefit" jdbcType="VARCHAR" />
+    <result column="plan_execution_situation" property="planExecutionSituation" jdbcType="VARCHAR" />
+    <result column="other_attachment" property="otherAttachment" jdbcType="VARCHAR" />
+    <result column="attach_speaker_list" property="attachSpeakerList" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    retirement_advanced_age_experience_inheritance_apply_id, id, apply_year, items, friendly_measures, 
+    employment_number, high_employment_number, middle_employment_number, low_employment_number, 
+    lower_employment_number, retirement_employment_number, plan_description, execution_way, 
+    execution_way_description, plan_start_time, plan_end_time, experience_inheritance, 
+    participate, benefit, plan_execution_situation, other_attachment, attach_speaker_list
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritancePlanExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from retirementAdvancedAgeExperienceInheritancePlan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from retirementAdvancedAgeExperienceInheritancePlan
+    where retirement_advanced_age_experience_inheritance_apply_id = #{retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from retirementAdvancedAgeExperienceInheritancePlan
+    where retirement_advanced_age_experience_inheritance_apply_id = #{retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritancePlanExample" >
+    delete from retirementAdvancedAgeExperienceInheritancePlan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritancePlan" >
+    insert into retirementAdvancedAgeExperienceInheritancePlan (retirement_advanced_age_experience_inheritance_apply_id, id, 
+      apply_year, items, friendly_measures, 
+      employment_number, high_employment_number, 
+      middle_employment_number, low_employment_number, 
+      lower_employment_number, retirement_employment_number, 
+      plan_description, execution_way, execution_way_description, 
+      plan_start_time, plan_end_time, experience_inheritance, 
+      participate, benefit, plan_execution_situation, 
+      other_attachment, attach_speaker_list)
+    values (#{retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, 
+      #{applyYear,jdbcType=VARCHAR}, #{items,jdbcType=VARCHAR}, #{friendlyMeasures,jdbcType=VARCHAR}, 
+      #{employmentNumber,jdbcType=INTEGER}, #{highEmploymentNumber,jdbcType=INTEGER}, 
+      #{middleEmploymentNumber,jdbcType=INTEGER}, #{lowEmploymentNumber,jdbcType=INTEGER}, 
+      #{lowerEmploymentNumber,jdbcType=INTEGER}, #{retirementEmploymentNumber,jdbcType=INTEGER}, 
+      #{planDescription,jdbcType=VARCHAR}, #{executionWay,jdbcType=VARCHAR}, #{executionWayDescription,jdbcType=VARCHAR}, 
+      #{planStartTime,jdbcType=VARCHAR}, #{planEndTime,jdbcType=VARCHAR}, #{experienceInheritance,jdbcType=VARCHAR}, 
+      #{participate,jdbcType=VARCHAR}, #{benefit,jdbcType=VARCHAR}, #{planExecutionSituation,jdbcType=VARCHAR}, 
+      #{otherAttachment,jdbcType=VARCHAR}, #{attachSpeakerList,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritancePlan" >
+    insert into retirementAdvancedAgeExperienceInheritancePlan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="retirementAdvancedAgeExperienceInheritanceApplyId != null" >
+        retirement_advanced_age_experience_inheritance_apply_id,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="applyYear != null" >
+        apply_year,
+      </if>
+      <if test="items != null" >
+        items,
+      </if>
+      <if test="friendlyMeasures != null" >
+        friendly_measures,
+      </if>
+      <if test="employmentNumber != null" >
+        employment_number,
+      </if>
+      <if test="highEmploymentNumber != null" >
+        high_employment_number,
+      </if>
+      <if test="middleEmploymentNumber != null" >
+        middle_employment_number,
+      </if>
+      <if test="lowEmploymentNumber != null" >
+        low_employment_number,
+      </if>
+      <if test="lowerEmploymentNumber != null" >
+        lower_employment_number,
+      </if>
+      <if test="retirementEmploymentNumber != null" >
+        retirement_employment_number,
+      </if>
+      <if test="planDescription != null" >
+        plan_description,
+      </if>
+      <if test="executionWay != null" >
+        execution_way,
+      </if>
+      <if test="executionWayDescription != null" >
+        execution_way_description,
+      </if>
+      <if test="planStartTime != null" >
+        plan_start_time,
+      </if>
+      <if test="planEndTime != null" >
+        plan_end_time,
+      </if>
+      <if test="experienceInheritance != null" >
+        experience_inheritance,
+      </if>
+      <if test="participate != null" >
+        participate,
+      </if>
+      <if test="benefit != null" >
+        benefit,
+      </if>
+      <if test="planExecutionSituation != null" >
+        plan_execution_situation,
+      </if>
+      <if test="otherAttachment != null" >
+        other_attachment,
+      </if>
+      <if test="attachSpeakerList != null" >
+        attach_speaker_list,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="retirementAdvancedAgeExperienceInheritanceApplyId != null" >
+        #{retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="applyYear != null" >
+        #{applyYear,jdbcType=VARCHAR},
+      </if>
+      <if test="items != null" >
+        #{items,jdbcType=VARCHAR},
+      </if>
+      <if test="friendlyMeasures != null" >
+        #{friendlyMeasures,jdbcType=VARCHAR},
+      </if>
+      <if test="employmentNumber != null" >
+        #{employmentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="highEmploymentNumber != null" >
+        #{highEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="middleEmploymentNumber != null" >
+        #{middleEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="lowEmploymentNumber != null" >
+        #{lowEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="lowerEmploymentNumber != null" >
+        #{lowerEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="retirementEmploymentNumber != null" >
+        #{retirementEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="planDescription != null" >
+        #{planDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="executionWay != null" >
+        #{executionWay,jdbcType=VARCHAR},
+      </if>
+      <if test="executionWayDescription != null" >
+        #{executionWayDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="planStartTime != null" >
+        #{planStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="planEndTime != null" >
+        #{planEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="experienceInheritance != null" >
+        #{experienceInheritance,jdbcType=VARCHAR},
+      </if>
+      <if test="participate != null" >
+        #{participate,jdbcType=VARCHAR},
+      </if>
+      <if test="benefit != null" >
+        #{benefit,jdbcType=VARCHAR},
+      </if>
+      <if test="planExecutionSituation != null" >
+        #{planExecutionSituation,jdbcType=VARCHAR},
+      </if>
+      <if test="otherAttachment != null" >
+        #{otherAttachment,jdbcType=VARCHAR},
+      </if>
+      <if test="attachSpeakerList != null" >
+        #{attachSpeakerList,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritancePlanExample" resultType="java.lang.Integer" >
+    select count(*) from retirementAdvancedAgeExperienceInheritancePlan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update retirementAdvancedAgeExperienceInheritancePlan
+    <set >
+      <if test="record.retirementAdvancedAgeExperienceInheritanceApplyId != null" >
+        retirement_advanced_age_experience_inheritance_apply_id = #{record.retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.applyYear != null" >
+        apply_year = #{record.applyYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.items != null" >
+        items = #{record.items,jdbcType=VARCHAR},
+      </if>
+      <if test="record.friendlyMeasures != null" >
+        friendly_measures = #{record.friendlyMeasures,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employmentNumber != null" >
+        employment_number = #{record.employmentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.highEmploymentNumber != null" >
+        high_employment_number = #{record.highEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.middleEmploymentNumber != null" >
+        middle_employment_number = #{record.middleEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.lowEmploymentNumber != null" >
+        low_employment_number = #{record.lowEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.lowerEmploymentNumber != null" >
+        lower_employment_number = #{record.lowerEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.retirementEmploymentNumber != null" >
+        retirement_employment_number = #{record.retirementEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.planDescription != null" >
+        plan_description = #{record.planDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.executionWay != null" >
+        execution_way = #{record.executionWay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.executionWayDescription != null" >
+        execution_way_description = #{record.executionWayDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planStartTime != null" >
+        plan_start_time = #{record.planStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planEndTime != null" >
+        plan_end_time = #{record.planEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.experienceInheritance != null" >
+        experience_inheritance = #{record.experienceInheritance,jdbcType=VARCHAR},
+      </if>
+      <if test="record.participate != null" >
+        participate = #{record.participate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.benefit != null" >
+        benefit = #{record.benefit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planExecutionSituation != null" >
+        plan_execution_situation = #{record.planExecutionSituation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherAttachment != null" >
+        other_attachment = #{record.otherAttachment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attachSpeakerList != null" >
+        attach_speaker_list = #{record.attachSpeakerList,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update retirementAdvancedAgeExperienceInheritancePlan
+    set retirement_advanced_age_experience_inheritance_apply_id = #{record.retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER},
+      id = #{record.id,jdbcType=INTEGER},
+      apply_year = #{record.applyYear,jdbcType=VARCHAR},
+      items = #{record.items,jdbcType=VARCHAR},
+      friendly_measures = #{record.friendlyMeasures,jdbcType=VARCHAR},
+      employment_number = #{record.employmentNumber,jdbcType=INTEGER},
+      high_employment_number = #{record.highEmploymentNumber,jdbcType=INTEGER},
+      middle_employment_number = #{record.middleEmploymentNumber,jdbcType=INTEGER},
+      low_employment_number = #{record.lowEmploymentNumber,jdbcType=INTEGER},
+      lower_employment_number = #{record.lowerEmploymentNumber,jdbcType=INTEGER},
+      retirement_employment_number = #{record.retirementEmploymentNumber,jdbcType=INTEGER},
+      plan_description = #{record.planDescription,jdbcType=VARCHAR},
+      execution_way = #{record.executionWay,jdbcType=VARCHAR},
+      execution_way_description = #{record.executionWayDescription,jdbcType=VARCHAR},
+      plan_start_time = #{record.planStartTime,jdbcType=VARCHAR},
+      plan_end_time = #{record.planEndTime,jdbcType=VARCHAR},
+      experience_inheritance = #{record.experienceInheritance,jdbcType=VARCHAR},
+      participate = #{record.participate,jdbcType=VARCHAR},
+      benefit = #{record.benefit,jdbcType=VARCHAR},
+      plan_execution_situation = #{record.planExecutionSituation,jdbcType=VARCHAR},
+      other_attachment = #{record.otherAttachment,jdbcType=VARCHAR},
+      attach_speaker_list = #{record.attachSpeakerList,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritancePlan" >
+    update retirementAdvancedAgeExperienceInheritancePlan
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="applyYear != null" >
+        apply_year = #{applyYear,jdbcType=VARCHAR},
+      </if>
+      <if test="items != null" >
+        items = #{items,jdbcType=VARCHAR},
+      </if>
+      <if test="friendlyMeasures != null" >
+        friendly_measures = #{friendlyMeasures,jdbcType=VARCHAR},
+      </if>
+      <if test="employmentNumber != null" >
+        employment_number = #{employmentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="highEmploymentNumber != null" >
+        high_employment_number = #{highEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="middleEmploymentNumber != null" >
+        middle_employment_number = #{middleEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="lowEmploymentNumber != null" >
+        low_employment_number = #{lowEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="lowerEmploymentNumber != null" >
+        lower_employment_number = #{lowerEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="retirementEmploymentNumber != null" >
+        retirement_employment_number = #{retirementEmploymentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="planDescription != null" >
+        plan_description = #{planDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="executionWay != null" >
+        execution_way = #{executionWay,jdbcType=VARCHAR},
+      </if>
+      <if test="executionWayDescription != null" >
+        execution_way_description = #{executionWayDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="planStartTime != null" >
+        plan_start_time = #{planStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="planEndTime != null" >
+        plan_end_time = #{planEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="experienceInheritance != null" >
+        experience_inheritance = #{experienceInheritance,jdbcType=VARCHAR},
+      </if>
+      <if test="participate != null" >
+        participate = #{participate,jdbcType=VARCHAR},
+      </if>
+      <if test="benefit != null" >
+        benefit = #{benefit,jdbcType=VARCHAR},
+      </if>
+      <if test="planExecutionSituation != null" >
+        plan_execution_situation = #{planExecutionSituation,jdbcType=VARCHAR},
+      </if>
+      <if test="otherAttachment != null" >
+        other_attachment = #{otherAttachment,jdbcType=VARCHAR},
+      </if>
+      <if test="attachSpeakerList != null" >
+        attach_speaker_list = #{attachSpeakerList,jdbcType=CHAR},
+      </if>
+    </set>
+    where retirement_advanced_age_experience_inheritance_apply_id = #{retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.RetirementAdvancedAgeExperienceInheritancePlan" >
+    update retirementAdvancedAgeExperienceInheritancePlan
+    set id = #{id,jdbcType=INTEGER},
+      apply_year = #{applyYear,jdbcType=VARCHAR},
+      items = #{items,jdbcType=VARCHAR},
+      friendly_measures = #{friendlyMeasures,jdbcType=VARCHAR},
+      employment_number = #{employmentNumber,jdbcType=INTEGER},
+      high_employment_number = #{highEmploymentNumber,jdbcType=INTEGER},
+      middle_employment_number = #{middleEmploymentNumber,jdbcType=INTEGER},
+      low_employment_number = #{lowEmploymentNumber,jdbcType=INTEGER},
+      lower_employment_number = #{lowerEmploymentNumber,jdbcType=INTEGER},
+      retirement_employment_number = #{retirementEmploymentNumber,jdbcType=INTEGER},
+      plan_description = #{planDescription,jdbcType=VARCHAR},
+      execution_way = #{executionWay,jdbcType=VARCHAR},
+      execution_way_description = #{executionWayDescription,jdbcType=VARCHAR},
+      plan_start_time = #{planStartTime,jdbcType=VARCHAR},
+      plan_end_time = #{planEndTime,jdbcType=VARCHAR},
+      experience_inheritance = #{experienceInheritance,jdbcType=VARCHAR},
+      participate = #{participate,jdbcType=VARCHAR},
+      benefit = #{benefit,jdbcType=VARCHAR},
+      plan_execution_situation = #{planExecutionSituation,jdbcType=VARCHAR},
+      other_attachment = #{otherAttachment,jdbcType=VARCHAR},
+      attach_speaker_list = #{attachSpeakerList,jdbcType=CHAR}
+    where retirement_advanced_age_experience_inheritance_apply_id = #{retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER}
+  </update>
+</mapper>

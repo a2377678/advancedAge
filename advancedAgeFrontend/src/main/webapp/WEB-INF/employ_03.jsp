@@ -13,7 +13,9 @@
 <link rel="stylesheet" href="css/main.css" type="text/css">
 
 <link rel="stylesheet" href="css/cmxform.css" type="text/css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<link rel="stylesheet" href="css/jquery-confirm.min.css" type="text/css">
+
+<link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -25,10 +27,19 @@
   
   <!--- main --->
   <div class="main"> 
-    
+    <a href="#C" title="中央內容區塊" id="AC" accesskey="C" name="C">:::</a> <!---無障礙--->
   <!------------ 申請流程 ------------>
   <div class="apply_main">
-    <h1>繼續僱用高齡者補助計畫</h1>
+  <%@ include file="countDownComponent.jsp" %>
+    <!---無障礙/麵包屑--->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index" title="首頁">首頁</a></li>
+        <li class="breadcrumb-item active" aria-current="page">線上申辦</li>
+        <li class="breadcrumb-item active" aria-current="page">繼續僱用高齡者補助 - 申請作業</li>
+      </ol>
+    </nav>
+    <h1>繼續僱用高齡者補助 - 申請作業</h1>
     <h2>申請流程 Step3. 填寫計畫書</h2>
     
     <!---申辦前準備--->
@@ -45,11 +56,11 @@
     
       <div class="full">
       <label for="items">主要業務/產品/服務</label>
-      <input type="text" size="86%" id="items" name="items" value="${plan.items}" required>
+      <input type="text" size="86%" id="items" name="items" value="${plan.items}" maxlength="100" required>
       </div>
       <div class="full">
       <label for="employmentNumber">目前員工人數</label>
-      <input type="number" step="1" min="0" id="employmentNumber" name="employmentNumber" value="${plan.employmentNumber}" required>
+      <input type="number" class="readonly" step="1" min="0" id="employmentNumber" name="employmentNumber" value="${plan.employmentNumber}" placeholder="自動加總" required readonly>
       </div>
         
       <div class="full">
@@ -107,7 +118,7 @@ C=(B)/(A) x 100%">
       <div class="title_main">
       <span>繼續僱用補助名單清冊</span>
       <em>請視需要自行增刪欄位，若名單超過5人請下載
-      【<a href="/file/SAMPLE/申請補助專用表格.xlsx" title="Excel申請專用表格(另開視窗)">申請補助專用表格.xlsx</a>】
+      【<a href="/file/SAMPLE/繼續僱用-申請補助專用表_統編扣繳_單位名稱.xlsx" title="申請專用Excel表 ( 另存新檔 )">申請補助專用表格.xlsx</a>】
       填寫後上傳</em>
       </div>
       
@@ -128,8 +139,13 @@ C=(B)/(A) x 100%">
 	          </div>
 	          
 	          <div class="ss">
+	          <label for="birthday">出生日期</label>
+	          <input type="text" id="birthday${status.count}" name="birthday${status.count}" placeholder="yyymmdd" value="${item.birthday}" readonly>
+	          </div>
+          
+	          <div class="ss">
 	          <label for="identification${status.count}">身分證字號</label>
-	          <input type="text" id="identification${status.count}" name="identification${status.count}" value="${item.identification}">
+	          <input type="text" id="identification${status.count}" name="identification${status.count}" maxlength="10" value="${item.identification}">
 	          </div>
 	        
 	          <div class="ss">
@@ -143,7 +159,7 @@ C=(B)/(A) x 100%">
 	        
 	          <div class="ss">
 	          <label for="insuranceTime${status.count}">加保日期</label>
-	          <input type="text" id="insuranceTime${status.count}" name="insuranceTime${status.count}" placeholder="yyymmdd" maxlength="7" oninput = "value=value.replace(/[^\d]/g,'')" value="<c:choose><c:when test="${item.laborProtectionTime.length()==7}">${item.laborProtectionTime}</c:when><c:otherwise>${item.occupationalAccidentProtectionTime}</c:otherwise></c:choose>">
+	          <input type="text" id="insuranceTime${status.count}" name="insuranceTime${status.count}" placeholder="yyymmdd" maxlength="7" oninput = "value=value.replace(/[^\d]/g,'')" value="<c:choose><c:when test="${item.laborProtectionTime.length()==7}">${item.laborProtectionTime}</c:when><c:otherwise>${item.occupationalAccidentProtectionTime}</c:otherwise></c:choose>" readonly>
 	          </div>
 	        
 	          <div class="ss">
@@ -164,11 +180,11 @@ C=(B)/(A) x 100%">
 	          </select>
 	          <img src="images/icon_qu.png" class="icon_qu"
 	          title="【三親等內】之親屬包含：
-	配偶、父母、子女、兄弟姊妹、
-	(外)祖父母、(外)孫子女、
-	伯、叔、姑、舅、姨、
-	姪子(女)、外甥(女)、
-	(外)曾祖父母、(外)曾孫子女">
+配偶、父母、子女、兄弟姊妹、
+(外)祖父母、(外)孫子女、
+伯、叔、姑、舅、姨、
+姪子(女)、外甥(女)、
+(外)曾祖父母、(外)曾孫子女">
 	          </div>
 	        
 	          <div class="ss">
@@ -180,32 +196,32 @@ C=(B)/(A) x 100%">
 	          </select>
 	          </div>
 	        
-	          <div class="ss">
-	          <label for="averageSalary${status.count}">平均薪資</label>
-	          <input type="text" id="averageSalary${status.count}" name="averageSalary" class="readonly" placeholder="填寫完自動計算" value="${item.averageSalary}" readonly>
-	          </div>
-	        
-	          <div class="m">
-	          <label for="recurringSalary${status.count}">經常性薪資</label>
-	          <input type="text" id="recurringSalary${status.count}" name="recurringSalary${status.count}" pattern="[0-9]*" placeholder="申請前3個月總和" value="${item.recurringSalary}"> 
+	          <div class="m full-2">
+	          <label for="recurringSalary${status.count}" class="l">申請前3個月經常性薪資總和</label>
+	          <input type="text" class="l" id="recurringSalary${status.count}" name="recurringSalary${status.count}" pattern="[0-9]*" placeholder="申請前3個月總和" value="${item.recurringSalary}"> 
 	          ( 本薪 / 津貼 / 經常性獎金 )
 	          <img src="images/icon_qu.png" class="icon_qu"
 	          title="【經常性薪資】
-	包含：本薪、交通津貼、伙食津貼、
+包含：本薪、交通津貼、伙食津貼、
 	　　　績效獎金、全勤獎金、工作獎金；  
-	不含：差旅費、差旅津貼、交際費。"></div>
+不含：差旅費、差旅津貼、交際費。"></div>
 	        
-	          <div class="m">
-	          <label for="notRecurringSalary${status.count}">非經常性薪資</label>
-	          <input type="text" id="notRecurringSalary${status.count}" name="notRecurringSalary${status.count}" placeholder="申請前3個月總和" value="${item.notRecurringSalary}">
+	          <div class="m full-2">
+	          <label for="notRecurringSalary${status.count}" class="l">申請前3個月非經常性薪資總和</label>
+	          <input type="text" class="l" id="notRecurringSalary${status.count}" name="notRecurringSalary${status.count}" placeholder="申請前3個月總和" value="${item.notRecurringSalary}">
 	( 加班費 / 不休假獎金 )
 	          <img src="images/icon_qu.png" class="icon_qu"
 	          title="【非經常性薪資】
-	包含：加班費、不休假獎金；  
-	不含：紅利、年終獎金、久任獎金、三節獎
+包含：加班費、不休假獎金；  
+不含：紅利、年終獎金、久任獎金、三節獎
 	　　　金、醫療補助費、子女教育補助費。"></div>
-	
-	          <div class="close"><button class="close" title="移除此筆資料">X</button></div>
+	  
+	          <div class="ss">
+	          <label for="averageSalary${status.count}">平均薪資</label>
+	          <input type="text" id="averageSalary${status.count}" name="averageSalary" class="readonly pmall" placeholder="填寫完自動計算" value="${item.averageSalary}" readonly>
+	          </div>
+	          
+	          <div class="close"><button type="button" onclick="delEmploymentList(this);" class="close" title="移除此筆資料">X</button></div>
 	          
 	        </li>
 			</c:forEach>
@@ -214,17 +230,22 @@ C=(B)/(A) x 100%">
 	        <li>
 	          <div class="ss">
 	          <label for="name1">勞工姓名</label>
-	          <input type="text" id="name1" name="name">
+	          <input type="text" id="name1" name="name" required>
+	          </div>
+	          
+	          <div class="ss">
+	          <label for="birthday1">出生日期</label>
+	          <input type="text" id="birthday1" name="birthday" placeholder="yyymmdd" required readonly>
 	          </div>
 	          
 	          <div class="ss">
 	          <label for="identification1">身分證字號</label>
-	          <input type="text" id="identification1" name="identification">
+	          <input type="text" id="identification1" name="identification" maxlength="10" required>
 	          </div>
 	        
 	          <div class="ss">
 	          <label for="insuranceType1">保險類型</label>
-	          <select id="insuranceType1" name="insuranceType">
+	          <select id="insuranceType1" name="insuranceType" required>
 	            <option value>請選擇</option>
 	            <option value="1">勞工保險</option>
 	            <option value="2">職災保險</option>
@@ -233,12 +254,12 @@ C=(B)/(A) x 100%">
 	        
 	          <div class="ss">
 	          <label for="insuranceTime1">加保日期</label>
-	          <input type="text" id="insuranceTime1" name="insuranceTime" placeholder="yyymmdd" maxlength="7" oninput = "value=value.replace(/[^\d]/g,'')">
+	          <input type="text" id="insuranceTime1" name="insuranceTime" placeholder="yyymmdd" maxlength="7" oninput = "value=value.replace(/[^\d]/g,'')" required readonly>
 	          </div>
 	        
 	          <div class="ss">
 	          <label for="manager1">職務類型</label>
-	          <select id="manager1" name="manager">
+	          <select id="manager1" name="manager" required>
 	            <option value>請選擇</option>
 	            <option value="Y">主管</option>
 	            <option value="N">非主管</option>
@@ -247,237 +268,57 @@ C=(B)/(A) x 100%">
 	        
 	          <div class="ss">
 	          <label for="relatives1">親等關係</label>
-	          <select id="relatives1" name="relatives">
+	          <select id="relatives1" name="relatives" required>
 	            <option value>請選擇</option>
 	            <option value="N">非三親等</option>
 	            <option value="Y">三親等內</option>
 	          </select>
 	          <img src="images/icon_qu.png" class="icon_qu"
 	          title="【三親等內】之親屬包含：
-	配偶、父母、子女、兄弟姊妹、
-	(外)祖父母、(外)孫子女、
-	伯、叔、姑、舅、姨、
-	姪子(女)、外甥(女)、
-	(外)曾祖父母、(外)曾孫子女">
+配偶、父母、子女、兄弟姊妹、
+(外)祖父母、(外)孫子女、
+伯、叔、姑、舅、姨、
+姪子(女)、外甥(女)、
+(外)曾祖父母、(外)曾孫子女">
 	          </div>
 	        
 	          <div class="ss">
 	          <label for="workingHours1">工時類型</label>
-	          <select id="workingHours1" name="workingHours">
+	          <select id="workingHours1" name="workingHours" required>
 	            <option value>請選擇</option>
 	            <option value="A">全時</option>
 	            <option value="P">部分工時</option>
 	          </select>
 	          </div>
 	        
+	          <div class="m full-2">
+	          <label for="recurringSalary1" class="l">申請前3個月經常性薪資總和</label>
+	          <input type="text" class="l" id="recurringSalary1" name="recurringSalary" pattern="[0-9]*" placeholder="" required> 
+	          ( 本薪 / 津貼 / 經常性獎金 )
+	          <img src="images/icon_qu.png" class="icon_qu"
+	          title="【經常性薪資】
+包含：本薪、交通津貼、伙食津貼、
+	　　　績效獎金、全勤獎金、工作獎金；  
+不含：差旅費、差旅津貼、交際費。"></div>
+	        
+	          <div class="m full-2">
+	          <label for="notRecurringSalary1" class="l">申請前3個月非經常性薪資總和</label>
+	          <input type="text" class="l" id="notRecurringSalary1" name="notRecurringSalary" placeholder="" required>
+	( 加班費 / 不休假獎金 )
+	          <img src="images/icon_qu.png" class="icon_qu"
+	          title="【非經常性薪資】
+包含：加班費、不休假獎金；  
+不含：紅利、年終獎金、久任獎金、三節獎
+	　　　金、醫療補助費、子女教育補助費。"></div>
+	
 	          <div class="ss">
 	          <label for="averageSalary1">平均薪資</label>
 	          <input type="text" id="averageSalary1" name="averageSalary" class="readonly" placeholder="填寫完自動計算" readonly>
 	          </div>
 	        
-	          <div class="m">
-	          <label for="recurringSalary1">經常性薪資</label>
-	          <input type="text" id="recurringSalary1" name="recurringSalary" pattern="[0-9]*" placeholder="申請前3個月總和"> 
-	          ( 本薪 / 津貼 / 經常性獎金 )
-	          <img src="images/icon_qu.png" class="icon_qu"
-	          title="【經常性薪資】
-	包含：本薪、交通津貼、伙食津貼、
-	　　　績效獎金、全勤獎金、工作獎金；  
-	不含：差旅費、差旅津貼、交際費。"></div>
-	        
-	          <div class="m">
-	          <label for="notRecurringSalary1">非經常性薪資</label>
-	          <input type="text" id="notRecurringSalary1" name="notRecurringSalary" placeholder="申請前3個月總和">
-	( 加班費 / 不休假獎金 )
-	          <img src="images/icon_qu.png" class="icon_qu"
-	          title="【非經常性薪資】
-	包含：加班費、不休假獎金；  
-	不含：紅利、年終獎金、久任獎金、三節獎
-	　　　金、醫療補助費、子女教育補助費。"></div>
-	
-	          <div class="close"><button class="close" title="移除此筆資料">X</button></div>
+	          <div class="close"><button type="button" onclick="delEmploymentList(this);" class="close" title="移除此筆資料">X</button></div>
 	          
 	        </li>
-	        
-	        
-	        <!---02--->
-	        <li>
-	          <div class="ss">
-	          <label for="name2">勞工姓名</label>
-	          <input type="text" id="name2" name="name">
-	          </div>
-	          
-	          <div class="ss">
-	          <label for="identification2">身分證字號</label>
-	          <input type="text" id="identification2" name="identification">
-	          </div>
-	        
-	          <div class="ss">
-	          <label for="insuranceType2">保險類型</label>
-	          <select id="insuranceType2" name="insuranceType">
-	            <option value>請選擇</option>
-	            <option value="1">勞工保險</option>
-	            <option value="2">職災保險</option>
-	          </select>
-	          </div>
-	        
-	          <div class="ss">
-	          <label for="insuranceTime2">加保日期</label>
-	          <input type="text" id="insuranceTime2" name="insuranceTime" placeholder="yyymmdd" maxlength="7" oninput = "value=value.replace(/[^\d]/g,'')">
-	          </div>
-	        
-	          <div class="ss">
-	          <label for="manager2">職務類型</label>
-	          <select id="manager2" name="manager">
-	            <option value>請選擇</option>
-	            <option value="Y">主管</option>
-	            <option value="N">非主管</option>
-	          </select>
-	          </div>
-	        
-	          <div class="ss">
-	          <label for="relatives2">親等關係</label>
-	          <select id="relatives2" name="relatives">
-	            <option value>請選擇</option>
-	            <option value="N">非三親等</option>
-	            <option value="Y">三親等內</option>
-	          </select>
-	          <img src="images/icon_qu.png" class="icon_qu"
-	          title="【三親等內】之親屬包含：
-	配偶、父母、子女、兄弟姊妹、
-	(外)祖父母、(外)孫子女、
-	伯、叔、姑、舅、姨、
-	姪子(女)、外甥(女)、
-	(外)曾祖父母、(外)曾孫子女">
-	          </div>
-	        
-	          <div class="ss">
-	          <label for="workingHours2">工時類型</label>
-	          <select id="workingHours2" name="workingHours">
-	            <option value>請選擇</option>
-	            <option value="A">全時</option>
-	            <option value="P">部分工時</option>
-	          </select>
-	          </div>
-	        
-	          <div class="ss">
-	          <label for="averageSalary2">平均薪資</label>
-	          <input type="text" id="averageSalary2" name="averageSalary" class="readonly" placeholder="填寫完自動計算" readonly>
-	          </div>
-	        
-	          <div class="m">
-	          <label for="recurringSalary2">經常性薪資</label>
-	          <input type="text" id="recurringSalary2" name="recurringSalary" pattern="[0-9]*" placeholder="申請前3個月總和"> 
-	          ( 本薪 / 津貼 / 經常性獎金 )
-	          <img src="images/icon_qu.png" class="icon_qu"
-	          title="【經常性薪資】
-	包含：本薪、交通津貼、伙食津貼、
-	　　　績效獎金、全勤獎金、工作獎金；  
-	不含：差旅費、差旅津貼、交際費。"></div>
-	        
-	          <div class="m">
-	          <label for="notRecurringSalary2">非經常性薪資</label>
-	          <input type="text" id="notRecurringSalary2" name="notRecurringSalary" placeholder="申請前3個月總和">
-	( 加班費 / 不休假獎金 )
-	          <img src="images/icon_qu.png" class="icon_qu"
-	          title="【非經常性薪資】
-	包含：加班費、不休假獎金；  
-	不含：紅利、年終獎金、久任獎金、三節獎
-	　　　金、醫療補助費、子女教育補助費。"></div>
-	
-	          <div class="close"><button class="close" title="移除此筆資料">X</button></div>
-	          
-	        </li>
-	        
-	        
-	        <!---03--->
-	        <li>
-	          <div class="ss">
-	          <label for="name3">勞工姓名</label>
-	          <input type="text" id="name3" name="name">
-	          </div>
-	          
-	          <div class="ss">
-	          <label for="identification3">身分證字號</label>
-	          <input type="text" id="identification3" name="identification">
-	          </div>
-	        
-	          <div class="ss">
-	          <label for="insuranceType3">保險類型</label>
-	          <select id="insuranceType3" name="insuranceType">
-	            <option value>請選擇</option>
-	            <option value="1">勞工保險</option>
-	            <option value="2">職災保險</option>
-	          </select>
-	          </div>
-	        
-	          <div class="ss">
-	          <label for="insuranceTime3">加保日期</label>
-	          <input type="text" id="insuranceTime3" name="insuranceTime" placeholder="yyymmdd" maxlength="7" oninput = "value=value.replace(/[^\d]/g,'')">
-	          </div>
-	        
-	          <div class="ss">
-	          <label for="manager3">職務類型</label>
-	          <select id="manager3" name="manager">
-	            <option value>請選擇</option>
-	            <option value="Y">主管</option>
-	            <option value="N">非主管</option>
-	          </select>
-	          </div>
-	        
-	          <div class="ss">
-	          <label for="relatives3">親等關係</label>
-	          <select id="relatives3" name="relatives">
-	            <option value>請選擇</option>
-	            <option value="N">非三親等</option>
-	            <option value="Y">三親等內</option>
-	          </select>
-	          <img src="images/icon_qu.png" class="icon_qu"
-	          title="【三親等內】之親屬包含：
-	配偶、父母、子女、兄弟姊妹、
-	(外)祖父母、(外)孫子女、
-	伯、叔、姑、舅、姨、
-	姪子(女)、外甥(女)、
-	(外)曾祖父母、(外)曾孫子女">
-	          </div>
-	        
-	          <div class="ss">
-	          <label for="workingHours3">工時類型</label>
-	          <select id="workingHours3" name="workingHours">
-	            <option value>請選擇</option>
-	            <option value="A">全時</option>
-	            <option value="P">部分工時</option>
-	          </select>
-	          </div>
-	        
-	          <div class="ss">
-	          <label for="averageSalary3">平均薪資</label>
-	          <input type="text" id="averageSalary3" name="averageSalary" class="readonly" placeholder="填寫完自動計算" readonly>
-	          </div>
-	        
-	          <div class="m">
-	          <label for="recurringSalary3">經常性薪資</label>
-	          <input type="text" id="recurringSalary3" name="recurringSalary" pattern="[0-9]*" placeholder="申請前3個月總和"> 
-	          ( 本薪 / 津貼 / 經常性獎金 )
-	          <img src="images/icon_qu.png" class="icon_qu"
-	          title="【經常性薪資】
-	包含：本薪、交通津貼、伙食津貼、
-	　　　績效獎金、全勤獎金、工作獎金；  
-	不含：差旅費、差旅津貼、交際費。"></div>
-	        
-	          <div class="m">
-	          <label for="notRecurringSalary3">非經常性薪資</label>
-	          <input type="text" id="notRecurringSalary3" name="notRecurringSalary" placeholder="申請前3個月總和">
-	( 加班費 / 不休假獎金 )
-	          <img src="images/icon_qu.png" class="icon_qu"
-	          title="【非經常性薪資】
-	包含：加班費、不休假獎金；  
-	不含：紅利、年終獎金、久任獎金、三節獎
-	　　　金、醫療補助費、子女教育補助費。"></div>
-	
-	          <div class="close"><button class="close" title="移除此筆資料">X</button></div>
-	          
-	        </li>       
 	        
 	        </c:otherwise></c:choose>
 	        
@@ -538,25 +379,20 @@ C=(B)/(A) x 100%">
   <!--- main end ---> 
   
   <!--- footer --->
-  <footer class="copyright">
-    <section>
-      <div>勞動力發展署：24219新北市新莊區中平路439號南棟4樓　電話代表號：(02)8995-6000　客服專線：0800-777-888</div>
-      <div>本署服務時間：週一至週五　上午8時30分至12時30分，下午13時30分至17時30分</div>
-      <div>最佳解析度1024x768 ，建議更新瀏覽器至以下版本：最新版本Chrome、最新版本Firefox</div>
-      <div>中華民國勞動部勞動力發展署版權所有 © 2021 All rights reserved. </div>
-    </section>
-  </footer>
+  <%@ include file="footer.jsp" %>
   <!--- footer end ---> 
   
 </div>
 <script src="js/jquery-3.6.0.min.js"></script> 
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script src="js/jquery-confirm.min.js"></script>
 <script src="js/employ_03/employ_03.js"></script>
 
 <script src="js/jquery.validate.min.js"></script>
 <script src="js/additional-methods.min.js"></script>
 <script src="js/messages_zh_TW.min.js"></script>
+
+<script type="text/javascript" src="js/jquery-ui.js"></script>
 </body>
 </html>

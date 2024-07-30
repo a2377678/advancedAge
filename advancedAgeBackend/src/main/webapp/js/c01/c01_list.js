@@ -5,9 +5,13 @@ $(function(){
 	}else{
 		$('#checkEmploymentPerson').html('不合格');
 	}
-	
-	$('#gpdf').click(function(){
-		html2canvas(document.getElementById('export_content')).then(canvas => {
+})
+
+function openData(){
+	$('#dataForm').submit();
+}
+function pdf(){
+	html2canvas(document.getElementById('export_content')).then(canvas => {
 	        //返回图片dataURL，参数：图片格式和清晰度(0-1)
 	        var pageData = canvas.toDataURL('image/jpeg', 1.0);
 	        //方向默认竖直，尺寸ponits，格式a4[595.28,841.89]
@@ -16,9 +20,7 @@ $(function(){
 	        doc.addImage(pageData, 'JPEG', 30, 30, 595.28*0.9, 592.28/canvas.width * canvas.height );
 	        doc.save('補助名單清冊.pdf');
 	    });
-	})
-})
-
+}
 function doPrint(){
 	bdhtml=window.document.body.innerHTML;
 	sprnstr="<!--startprint-->";
@@ -27,18 +29,18 @@ function doPrint(){
 	prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr));
 	window.document.body.innerHTML=prnhtml;
 	window.print();
-	window.document.body.innerHTML=bdhtml
+	window.document.body.innerHTML=bdhtml;
 }
 
 function save(){
 	let list=[];
 	$('#listStaff').find('td[name^="identification"]').each(function(index,value){
-		
+		let num=$(this).attr('id').replace('identification','');
 		let data={"identification" : $(this).text(),
 				"frequency" : $(this).parent().find('td[name^="frequency"]').text(),
 				"advancedAgeBaseId" : $('#baseId').val(),
 				"seq" : $('#seq').text(),
-				"adjustAmounts" : $(this).parent().find('input[name^="adjustAmounts"]').val()};
+				"adjustAmounts" : $(this).parent().parent().find('input[id="adjustAmounts'+num+'"]').val()};
 		if($(this).parent().find('select[name^="approveStatus"]').val()!='')
 		{
 			data.approveStatus=$(this).parent().find('select[name^="approveStatus"]').val();

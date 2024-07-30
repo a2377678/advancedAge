@@ -16,21 +16,34 @@
 <script src="js/jquery.validate.min.js"></script>
 <script src="js/additional-methods.min.js"></script>
 <script src="js/messages_zh_TW.min.js"></script>
+<script src="js/employ_payment/employ_payment.js"></script>
 </head>
-
+<style>
+label.error {
+    color: red;
+    font-style: italic;
+}
+</style>
 <body>
 <div class=""> 
   
   <!--- header --->
-<!--   <header> -->
 	<%@ include file="header.jsp" %>
   <!--- header end ---> 
   
   <!--- main --->
   <div class="main"> 
-    
+    <a href="#C" title="中央內容區塊" id="AC" accesskey="C" name="C">:::</a> <!---無障礙--->
     <!------------ 申請流程 ------------>
     <div class="apply_main">
+      <!---無障礙/麵包屑--->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index" title="首頁">首頁</a></li>
+          <li class="breadcrumb-item active" aria-current="page">線上申辦</li>
+          <li class="breadcrumb-item active" aria-current="page">繼續僱用高齡者補助 - 請領作業</li>
+        </ol>
+      </nav>
       <h1>繼續僱用高齡者補助 - 請領作業</h1>
       <h2>申辦通過方可進行請領申請</h2>
       
@@ -38,29 +51,32 @@
       <div class="notice">
         <div>【您是否已符合及備妥下列事項呢 ?】</div>
         <ol>
-          <li>原核定函影本</li>
-          <li>領據 ( 須加蓋公司大小章及張貼匯款帳戶封面影本 )</li>
-          <li>僱用證明文件</li>
-          <li>薪資證明文件</li>
-          <li>出勤證明文件</li>
-          <li>其他經審查之必要文件</li>
+          <li>僱用證明文件。</li>
+          <li>薪資證明文件。</li>
+          <li>原核定函影本。</li>
+          <li>領據 ( 須加蓋公司大小章及張貼匯款帳戶封面影本 )。</li>
+          <li>請領繼續僱用補助清冊。</li>
+          <li>繼續僱用之高齡者請領補助期間之出勤證明文件。</li>
+          <li>其他經本署或各分署認定有必要提出之文件、資料。</li>
         </ol>
       </div>
       
       <!---申辦前準備--->
       <div class="notice">
         <div>【請領切結事項】</div>
-        <p>本單位符合在職中高齡者及高齡者穩定就業辦法第20條規定，檢附必要之文件，向勞動部勞動力發展署 ( 含分署 ) 請領繼續僱用補助 ( 明細清冊如次頁填寫表單及檢附文件 ) ，如有違反中高齡者及高齡者就業促進法、在職中高齡者及高齡者穩定就業辦法及繼續僱用補助計畫相關規定之情形，願歸還已領取之款項，並負一切責任。</p>
+        <p>本單位符合在職中高齡者及高齡者穩定就業辦法第20條規定，檢附必要之文件，向勞動部勞動力發展署各分署請領繼續僱用補助 ( 明細清冊如次頁填寫表單及檢附文件 ) ，如有違反中高齡者及高齡者就業促進法、在職中高齡者及高齡者穩定就業辦法及繼續僱用補助計畫相關規定之情形，願歸還已領取之款項，並負一切責任。</p>
       </div>
-      <form id="form" action="employ_payment_01" method="post">
+      <form id="form">
 	      <div>
-	        <input id="check" type="checkbox" required>
+	      <label for="check"></label>
+	        <input id="check" name="verify" type="checkbox" required>
 	        本人已詳閱資格條件，並同意遵守上述申辦切結事項
 	      </div>
+	      </form>
 	      <div class="page">
-	        <button type="submit">立即申辦</button>
+	        <button onclick="aVerify()">立即申辦</button>
 	      </div>
-	  </form>
+	  
     </div>
     <!------------ 申請流程 END ------------> 
     
@@ -68,14 +84,7 @@
   <!--- main end ---> 
   
   <!--- footer --->
-  <footer class="copyright">
-    <section>
-      <div>勞動力發展署：24219新北市新莊區中平路439號南棟4樓　電話代表號：(02)8995-6000　客服專線：0800-777-888</div>
-      <div>本署服務時間：週一至週五　上午8時30分至12時30分，下午13時30分至17時30分</div>
-      <div>最佳解析度1024x768 ，建議更新瀏覽器至以下版本：最新版本Chrome、最新版本Firefox</div>
-      <div>中華民國勞動部勞動力發展署版權所有 © 2021 All rights reserved. </div>
-    </section>
-  </footer>
+  <%@ include file="footer.jsp" %>
   <!--- footer end ---> 
   
 </div>

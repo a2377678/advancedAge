@@ -44,9 +44,16 @@
   
   <!--- main --->
   <div class="main"> 
-    
+    <a href="#C" title="中央內容區塊" id="AC" accesskey="C" name="C">:::</a> <!---無障礙--->
   <!------------ 申請流程 ------------>
   <div class="apply_main">
+    <!---無障礙/麵包屑--->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index" title="首頁">首頁</a></li>
+        <li class="breadcrumb-item active" aria-current="page">帳號註冊 ( 無卡申請 )</li>
+      </ol>
+    </nav>
     <h1>帳號註冊 ( 無卡申請 )</h1>
     <h2>填寫資料及上傳登記證明文件</h2>
     
@@ -81,7 +88,7 @@
       		<option value="${item.code}" <c:if test="${apply.industry==item.code}">selected</c:if> >${item.name}</option>
       	</c:forEach>
       </select>
-      <a href="https://mobile.stat.gov.tw/StandardIndustrialQuery.aspx" target="_blank" title="(另開新視窗)"><img src="images/icon_qu.png" alt="行業別分類說明"></a>
+      <a href="https://www.stat.gov.tw/standardindustrialclassification.aspx?n=3144&sms=0&rid=11" target="_blank" title="(另開新視窗)"><img src="images/icon_qu.png" alt="行業別分類說明"></a>
       </div>
         
       <div>
@@ -100,6 +107,7 @@
       <select name="registerArea" id="registerArea" required>
         <option value>請選擇</option>
       </select>
+      <label for="registerAddress" style="display:none"></label>
       <input type="text" id="registerAddress" name="registerAddress" size="65%" placeholder="請填寫詳細地址" required>
       </div>
         
@@ -114,8 +122,10 @@
       <select name="contactArea" id="contactArea" required>
         <option value>請選擇</option>
       </select>
-      <input type="text" id="contactAddress" name="contactAddress" size="65%" placeholder="請填寫詳細地址" value="${apply.contactAddress}" required>
-      <input type="checkbox" name="checkbox" id="checkbox">
+      <label for="contactAddress" style="display:none"></label>
+      <input type="text" id="contactAddress" name="contactAddress" size="65%" placeholder="請填寫詳細地址" required>
+      <label for="checkbox" style="display:none"></label>
+	  <input type="checkbox" name="checkbox" id="checkbox">
       同登記地址
       </div>
         
@@ -129,7 +139,7 @@
       <input type="text" id="contactJobtitle" name="contactJobtitle" required>
       </div>
         
-      <div>
+      <div class="phone">
       <label for="contactWorkPhoneAreaCode">聯絡電話</label>
       <input type="tel" maxlength="3" id="contactWorkPhoneAreaCode" name="contactWorkPhoneAreaCode" size="2" placeholder="區碼" required> -
       <input type="tel" maxlength="8" id="contactWorkPhone" name="contactWorkPhone" size="12" placeholder="電話號碼" required> #
@@ -173,7 +183,7 @@
       <div class="file_box" id="register">  
         <div class="full">
 	        <label for="registerProof1">文件(1)</label>
-	        <input type="file" id="registerProof1" name="registerProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z" required>
+	        <input type="file" id="registerProof1" name="registerProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z,.doc,.docx,.odt" required>
 	        <button type="button" class="add" onclick="addRegisterProof(1)" style>＋</button>
         </div>
       </div>
@@ -181,13 +191,14 @@
       <div class="title_main">
       <span>申請單位授權書</span>
       <em>須加蓋公司單位及負責人用印 (公司大小章)
-      【<a href="/file/SAMPLE/申請單位授權書.doc" title="下載申請單位授權書">下載申請單位授權書.doc</a>】</em>
+      【<a href="/file/SAMPLE/申請單位授權書.docx" title="下載申請單位授權書">下載申請單位授權書.docx</a>】
+      【<a href="/file/SAMPLE/申請單位授權書.odt" title="下載申請單位授權書odt">下載申請單位授權書.odt</a>】</em>
       </div>
       
       <div class="file_box" id="authorize">  
         <div class="full">
         <label for="authorizeProof1">文件(1)</label>
-        <input type="file" id="authorizeProof1" name="authorizeProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z" required>
+        <input type="file" id="authorizeProof1" name="authorizeProof" accept=".jpg ,.png ,.pdf ,.rar ,.zip ,.7z,.doc,.docx,.odt" required>
         <button class="add" onclick="addAuthorizeProof(1)" style>＋</button>
         </div>
       </div>
@@ -207,14 +218,7 @@
   <!--- main end ---> 
   
   <!--- footer --->
-  <footer class="copyright">
-    <section>
-      <div>勞動力發展署：24219新北市新莊區中平路439號南棟4樓　電話代表號：(02)8995-6000　客服專線：0800-777-888</div>
-      <div>本署服務時間：週一至週五　上午8時30分至12時30分，下午13時30分至17時30分</div>
-      <div>最佳解析度1024x768 ，建議更新瀏覽器至以下版本：最新版本Chrome、最新版本Firefox</div>
-      <div>中華民國勞動部勞動力發展署版權所有 © 2021 All rights reserved. </div>
-    </section>
-  </footer>
+  <%@ include file="footer.jsp" %>
   <!--- footer end ---> 
   
 </div>

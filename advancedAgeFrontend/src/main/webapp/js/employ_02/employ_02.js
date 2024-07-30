@@ -1,11 +1,76 @@
 $(function(){
+	$('#registerCity').change(function(){
+		if($('#checkbox').prop('checked')){
+			$('#contactCity').val($(this).val());
+			$('#registerArea').html('<option value="null">請選擇</option>');
+			$('#contactArea').html('<option value="null">請選擇</option>');
+			if($('#registerCity').val()!='')
+			{
+				$.ajax({
+				    type: "POST",
+				    url: 'getAreaList',
+				    data: {
+				    	cityCode : $('#registerCity').val()
+				    },
+				    dataType:"text", //ajax返回值text（json格式也可用這返回，也可設成json）
+				    success: function(json){  
+						let areaSplit=json.split(";");
+						for(let a=0;a<areaSplit.length;a++)
+						{
+							let optionValue = $('<div>').text(areaSplit[a].split(",")[0]).html();
+		                    let optionText = $('<div>').text(areaSplit[a].split(",")[1]).html();
+							$('#registerArea').append('<option value="' + optionValue + '">' + optionText + '</option>');
+		                    $('#contactArea').append('<option value="' + optionValue + '">' + optionText + '</option>');
+//							$('#registerArea').append('<option value="'+areaSplit[a].split(",")[0]+'">'+areaSplit[a].split(",")[1]+'</option>');
+//							$('#contactArea').append('<option value="'+areaSplit[a].split(",")[0]+'">'+areaSplit[a].split(",")[1]+'</option>');
+						}
+				    },
+				    error: function(json){
+//					    alert(json);
+				    }
+			    });
+			}
+			
+		}else{
+			$('#registerArea').html('<option value="null">請選擇</option>');
+			if($('#registerCity').val()!='')
+			{
+				$.ajax({
+				    type: "POST",
+				    url: 'getAreaList',
+				    data: {
+				    	cityCode : $('#registerCity').val()
+				    },
+				    dataType:"text", //ajax返回值text（json格式也可用這返回，也可設成json）
+				    success: function(json){  
+						let areaSplit=json.split(";");
+						for(let a=0;a<areaSplit.length;a++)
+						{
+							let optionValue = $('<div>').text(areaSplit[a].split(",")[0]).html();
+		                    let optionText = $('<div>').text(areaSplit[a].split(",")[1]).html();
+							$('#registerArea').append('<option value="' + optionValue + '">' + optionText + '</option>');
+//							$('#registerArea').append('<option value="'+areaSplit[a].split(",")[0]+'">'+areaSplit[a].split(",")[1]+'</option>');
+						}
+				    },
+				    error: function(json){
+					    alert(json);
+				    }
+			    });
+			}
+		}
+	});
 	
-	// Initialize select2
-//	$("#city").select2();
-//	$.validator.setDefaults({
-//	    submitHandler: function() {
-//	    }
-//	});
+	$('#registerArea').change(function(){
+		if($('#checkbox').prop('checked')){
+			$('#contactArea').val($('#registerArea').val());
+		}
+	});
+	$('#registerAddress').change(function(){
+		if($('#checkbox').prop('checked')){
+			$('#contactAddress').val($('#registerAddress').val());
+		}
+	});
+	
 	$('#contactCity').change(function(){
 		$('#contactArea').html('<option value="null">請選擇</option>');
 		if($('#contactCity').val()!='')
@@ -21,7 +86,10 @@ $(function(){
 					let areaSplit=json.split(";");
 					for(let a=0;a<areaSplit.length;a++)
 					{
-						$('#contactArea').append('<option value="'+areaSplit[a].split(",")[0]+'">'+areaSplit[a].split(",")[1]+'</option>');
+						let optionValue = $('<div>').text(areaSplit[a].split(",")[0]).html();
+	                    let optionText = $('<div>').text(areaSplit[a].split(",")[1]).html();
+						$('#contactArea').append('<option value="' + optionValue + '">' + optionText + '</option>');
+//						$('#contactArea').append('<option value="'+areaSplit[a].split(",")[0]+'">'+areaSplit[a].split(",")[1]+'</option>');
 					}
 			    },
 			    error: function(json){
@@ -31,7 +99,38 @@ $(function(){
 		}
 	});
 	
-	
+	$('#checkbox').click(function(){
+		if($('#checkbox').prop('checked')){
+			$('#contactCity').val($('#registerCity').val());
+			$('#contactArea').html('<option value="null">請選擇</option>');
+			if($('#contactCity').val()!='')
+			{
+				$.ajax({
+				    type: "POST",
+				    url: 'getAreaList',
+				    data: {
+				    	cityCode : $('#contactCity').val()
+				    },
+				    dataType:"text", //ajax返回值text（json格式也可用這返回，也可設成json）
+				    success: function(json){  
+						let areaSplit=json.split(";");
+						for(let a=0;a<areaSplit.length;a++)
+						{
+							let optionValue = $('<div>').text(areaSplit[a].split(",")[0]).html();
+	                    	let optionText = $('<div>').text(areaSplit[a].split(",")[1]).html();
+							$('#contactArea').append('<option value="' + optionValue + '">' + optionText + '</option>');
+//							$('#contactArea').append('<option value="'+areaSplit[a].split(",")[0]+'">'+areaSplit[a].split(",")[1]+'</option>');
+						}
+						$('#contactArea').val($('#registerArea').val());
+				    },
+				    error: function(json){
+					    alert(json);
+				    }
+			    });
+			}
+			$('#contactAddress').val($('#registerAddress').val());
+		}
+	})
 })
 
 function addGuarantee(num){
@@ -76,6 +175,9 @@ function save(){
 				companyName : $('#companyName').val(),
 		    	seq : $('#seq').val(),
 				industry : $('#industry').val(),
+				registerCity : $('#registerCity').val(), 
+				registerArea : $('#registerArea').val(),
+				registerAddress : $('#registerAddress').val(),
 				contactCity : $('#contactCity').val(), 
 				contactArea : $('#contactArea').val(),
 				contactAddress : $('#contactAddress').val(),
@@ -151,6 +253,9 @@ function next(){
 				companyName : $('#companyName').val(),
 		    	seq : $('#seq').val(),
 				industry : $('#industry').val(),
+				registerCity : $('#registerCity').val(), 
+				registerArea : $('#registerArea').val(),
+				registerAddress : $('#registerAddress').val(),
 				contactCity : $('#contactCity').val(), 
 				contactArea : $('#contactArea').val(),
 				contactAddress : $('#contactAddress').val(),

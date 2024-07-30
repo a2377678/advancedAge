@@ -17,6 +17,7 @@ import com.example.springboot.entity.AdvancedAgeBaseExample;
 import com.example.springboot.entity.CompanyInfo;
 import com.example.springboot.entity.CompanyInfoExample;
 import com.example.springboot.service.CompanyInfoService;
+import com.example.springboot.util.DateFormatUtil;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -27,7 +28,9 @@ public class CompanyInfoApiController {
 	CompanyInfoService companyInfoService;
 	
 	CompanyInfoExample companyInfoExample;
-	Date date = new Date();
+	
+	DateFormatUtil dateFormatUtil;
+	
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
 	@Value("${api_token}")
@@ -71,7 +74,7 @@ public class CompanyInfoApiController {
 		{
 			return 0;
 		}
-		info.setUpdateTime(date);
+		info.setUpdateTime(new Date());
 		int a=companyInfoService.updateByPrimaryKeySelective(info);
 		
 		return a;

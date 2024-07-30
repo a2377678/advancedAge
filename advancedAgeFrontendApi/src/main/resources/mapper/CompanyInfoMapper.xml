@@ -26,6 +26,10 @@
     <result column="account_status" property="accountStatus" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="verify_time" property="verifyTime" jdbcType="TIMESTAMP" />
+    <result column="verify_person" property="verifyPerson" jdbcType="VARCHAR" />
+    <result column="verify_unit" property="verifyUnit" jdbcType="VARCHAR" />
+    <result column="sso_mid" property="ssoMid" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -89,7 +93,8 @@
     seq, id, company_name, password, principal, industry, register_city, register_area, 
     register_address, contact_name, contact_jobtitle, contact_work_phone_area_code, contact_work_phone, 
     contact_work_phone_extension, contact_phone, fax_area_code, fax, email, contact_city, 
-    contact_area, contact_address, account_status, create_time, update_time
+    contact_area, contact_address, account_status, create_time, update_time, verify_time, 
+    verify_person, verify_unit, sso_mid
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.CompanyInfoExample" >
     select
@@ -97,7 +102,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from companyInfo
+    from companyinfo
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -108,21 +113,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from companyInfo
+    from companyinfo
     where seq = #{seq,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from companyInfo
+    delete from companyinfo
     where seq = #{seq,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.example.springboot.entity.CompanyInfoExample" >
-    delete from companyInfo
+    delete from companyinfo
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.example.springboot.entity.CompanyInfo" >
-    insert into companyInfo (seq, id, company_name, 
+    insert into companyinfo (seq, id, company_name, 
       password, principal, industry, 
       register_city, register_area, register_address, 
       contact_name, contact_jobtitle, contact_work_phone_area_code, 
@@ -130,7 +135,8 @@
       contact_phone, fax_area_code, fax, 
       email, contact_city, contact_area, 
       contact_address, account_status, create_time, 
-      update_time)
+      update_time, verify_time, verify_person, 
+      verify_unit, sso_mid)
     values (#{seq,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}, #{companyName,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{principal,jdbcType=VARCHAR}, #{industry,jdbcType=CHAR}, 
       #{registerCity,jdbcType=VARCHAR}, #{registerArea,jdbcType=VARCHAR}, #{registerAddress,jdbcType=VARCHAR}, 
@@ -139,10 +145,11 @@
       #{contactPhone,jdbcType=VARCHAR}, #{faxAreaCode,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{contactCity,jdbcType=VARCHAR}, #{contactArea,jdbcType=VARCHAR}, 
       #{contactAddress,jdbcType=VARCHAR}, #{accountStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+      #{updateTime,jdbcType=TIMESTAMP}, #{verifyTime,jdbcType=TIMESTAMP}, #{verifyPerson,jdbcType=VARCHAR}, 
+      #{verifyUnit,jdbcType=VARCHAR}, #{ssoMid,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.springboot.entity.CompanyInfo" >
-    insert into companyInfo
+    insert into companyinfo
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="seq != null" >
         seq,
@@ -215,6 +222,18 @@
       </if>
       <if test="updateTime != null" >
         update_time,
+      </if>
+      <if test="verifyTime != null" >
+        verify_time,
+      </if>
+      <if test="verifyPerson != null" >
+        verify_person,
+      </if>
+      <if test="verifyUnit != null" >
+        verify_unit,
+      </if>
+      <if test="ssoMid != null" >
+        sso_mid,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -290,16 +309,28 @@
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="verifyTime != null" >
+        #{verifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="verifyPerson != null" >
+        #{verifyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyUnit != null" >
+        #{verifyUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="ssoMid != null" >
+        #{ssoMid,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.example.springboot.entity.CompanyInfoExample" resultType="java.lang.Integer" >
-    select count(*) from companyInfo
+    select count(*) from companyinfo
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update companyInfo
+    update companyinfo
     <set >
       <if test="record.seq != null" >
         seq = #{record.seq,jdbcType=VARCHAR},
@@ -373,13 +404,25 @@
       <if test="record.updateTime != null" >
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.verifyTime != null" >
+        verify_time = #{record.verifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.verifyPerson != null" >
+        verify_person = #{record.verifyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verifyUnit != null" >
+        verify_unit = #{record.verifyUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ssoMid != null" >
+        sso_mid = #{record.ssoMid,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update companyInfo
+    update companyinfo
     set seq = #{record.seq,jdbcType=VARCHAR},
       id = #{record.id,jdbcType=INTEGER},
       company_name = #{record.companyName,jdbcType=VARCHAR},
@@ -403,13 +446,17 @@
       contact_address = #{record.contactAddress,jdbcType=VARCHAR},
       account_status = #{record.accountStatus,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      verify_time = #{record.verifyTime,jdbcType=TIMESTAMP},
+      verify_person = #{record.verifyPerson,jdbcType=VARCHAR},
+      verify_unit = #{record.verifyUnit,jdbcType=VARCHAR},
+      sso_mid = #{record.ssoMid,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.CompanyInfo" >
-    update companyInfo
+    update companyinfo
     <set >
       <if test="id != null" >
         id = #{id,jdbcType=INTEGER},
@@ -480,11 +527,23 @@
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="verifyTime != null" >
+        verify_time = #{verifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="verifyPerson != null" >
+        verify_person = #{verifyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyUnit != null" >
+        verify_unit = #{verifyUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="ssoMid != null" >
+        sso_mid = #{ssoMid,jdbcType=VARCHAR},
+      </if>
     </set>
     where seq = #{seq,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.CompanyInfo" >
-    update companyInfo
+    update companyinfo
     set id = #{id,jdbcType=INTEGER},
       company_name = #{companyName,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
@@ -507,7 +566,11 @@
       contact_address = #{contactAddress,jdbcType=VARCHAR},
       account_status = #{accountStatus,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      verify_time = #{verifyTime,jdbcType=TIMESTAMP},
+      verify_person = #{verifyPerson,jdbcType=VARCHAR},
+      verify_unit = #{verifyUnit,jdbcType=VARCHAR},
+      sso_mid = #{ssoMid,jdbcType=VARCHAR}
     where seq = #{seq,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -10,12 +10,11 @@
 <link href="css/file.css" rel="stylesheet" type="text/css" />
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui.js"></script>
-
-<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
   
 <style type="text/css">
 .ui-datepicker {
@@ -33,13 +32,7 @@
   <%@ include file="../header.jsp" %>
   <!---------------------- top end ---------------------->
 
-    
-  <div id="main_menu">
-    <div><a href="#" class="menu-1 in">繼續僱用高齡者</a></div>
-    <div><a href="#" class="menu-2">傳承專業技術與經驗</a></div>
-    <div><a href="#" class="menu-3">退休後再就業準備協助措施</a></div>
-    <div><a href="account01" class="account">申請帳號審核管理</a></div>
-  </div>
+  <%@ include file="../mainMenu.jsp" %>
 
   <!---------------------- left menu ---------------------->
   <%@ include file="../leftMenu.jsp" %>
@@ -66,7 +59,7 @@
         <div id="page_tab">
           <div class="tab-1"><a href="b04">查詢 / 修改紀錄</a></div>
           <div class="tab-1"><a href="b04_02" class="in">實地查核登錄</a></div>
-          <div class="tab-1"><a href="/file/SAMPLE/訪查表1108-核定.docx">訪視表單下載</a></div>
+          <div class="tab-1"><a href="/file/SAMPLE/繼續僱用_查核計畫.docx">訪視表單下載</a></div>
         </div>
       
       
@@ -76,7 +69,7 @@
         <table class="table_01">
           <tr>
             <th width="20%">統一編號 / 扣繳編號：</th>
-            <td width="10%"><input type="text" id="seq" name="seq" value="${base.seq}" size="11"></td>
+            <td width="10%"><input type="text" id="seq" name="seq" maxlength="8" value="${base.seq}" size="11"></td>
             <td width="12%">
               <div class="btn_box-td">
                 <button type="submit" class="search_btn" value="開始查詢">開始查詢</button>

@@ -305,6 +305,76 @@ public class MailRecordExample {
             return (Criteria) this;
         }
 
+        public Criteria andMailTypeIsNull() {
+            addCriterion("mail_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMailTypeIsNotNull() {
+            addCriterion("mail_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMailTypeEqualTo(String value) {
+            addCriterion("mail_type =", value, "mailType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMailTypeNotEqualTo(String value) {
+            addCriterion("mail_type <>", value, "mailType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMailTypeGreaterThan(String value) {
+            addCriterion("mail_type >", value, "mailType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMailTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("mail_type >=", value, "mailType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMailTypeLessThan(String value) {
+            addCriterion("mail_type <", value, "mailType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMailTypeLessThanOrEqualTo(String value) {
+            addCriterion("mail_type <=", value, "mailType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMailTypeLike(String value) {
+            addCriterion("mail_type like", value, "mailType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMailTypeNotLike(String value) {
+            addCriterion("mail_type not like", value, "mailType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMailTypeIn(List<String> values) {
+            addCriterion("mail_type in", values, "mailType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMailTypeNotIn(List<String> values) {
+            addCriterion("mail_type not in", values, "mailType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMailTypeBetween(String value1, String value2) {
+            addCriterion("mail_type between", value1, value2, "mailType");
+            return (Criteria) this;
+        }
+
+        public Criteria andMailTypeNotBetween(String value1, String value2) {
+            addCriterion("mail_type not between", value1, value2, "mailType");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateTimeIsNull() {
             addCriterion("create_time is null");
             return (Criteria) this;

@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class AdvancedAgeRetirementReemploymentBasicDataKey implements Serializable {
     private String seq;
 
-    private Integer advancedAgeRetirementReemploymentJointAuthorizeId;
+    private Integer advancedAgeRetirementReemploymentApplyId;
 
     private static final long serialVersionUID = 1L;
 
@@ -17,11 +17,11 @@ public class AdvancedAgeRetirementReemploymentBasicDataKey implements Serializab
         this.seq = seq == null ? null : seq.trim();
     }
 
-    public Integer getAdvancedAgeRetirementReemploymentJointAuthorizeId() {
-        return advancedAgeRetirementReemploymentJointAuthorizeId;
+    public Integer getAdvancedAgeRetirementReemploymentApplyId() {
+        return advancedAgeRetirementReemploymentApplyId;
     }
 
-    public void setAdvancedAgeRetirementReemploymentJointAuthorizeId(Integer advancedAgeRetirementReemploymentJointAuthorizeId) {
-        this.advancedAgeRetirementReemploymentJointAuthorizeId = advancedAgeRetirementReemploymentJointAuthorizeId;
+    public void setAdvancedAgeRetirementReemploymentApplyId(Integer advancedAgeRetirementReemploymentApplyId) {
+        this.advancedAgeRetirementReemploymentApplyId = advancedAgeRetirementReemploymentApplyId;
     }
 }

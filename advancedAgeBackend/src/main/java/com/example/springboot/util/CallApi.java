@@ -32,26 +32,26 @@ public class CallApi {
 //	String requestBody;
 	HttpURLConnection con;
 	
-//	public String httpGet(String ip){
-//		client = HttpClient.newHttpClient();
-////		client = HttpClient.newBuilder().build();
-//        request = HttpRequest.newBuilder()
-//                .uri(URI.create(ip))
-//                .build();
-//        
-//		
-//		try {
-//			response = client.send(request,
-//			        HttpResponse.BodyHandlers.ofString());
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return response.body();
-//	}
+	public String httpGet(String ip){
+		client = HttpClient.newHttpClient();
+//		client = HttpClient.newBuilder().build();
+        request = HttpRequest.newBuilder()
+                .uri(URI.create(ip))
+                .build();
+        
+		
+		try {
+			response = client.send(request,
+			        HttpResponse.BodyHandlers.ofString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return response.body();
+	}
 	
 	public String httpPost(String ip,String json){
 		String urlParameters = convertToString(json);//"seq=12313321&companyName=test";
@@ -117,6 +117,7 @@ public class CallApi {
 				}
 			}
 		}
+		result = result.replace("<", "＜").replace(">", "＞").replace("\'", "’").replace("\\", "＼").replace("#", "＃");
 		return result+"&token="+SystemConfig.getProperty("api_token");
 	}
 }

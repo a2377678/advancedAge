@@ -16,6 +16,7 @@ public class UnitService{
 	UnitMapper unitMapper;
 	
 	public List<Unit> selectByExample(UnitExample example){
+		example.setOrderByClause("id asc");
 		return unitMapper.selectByExample(example);
 	}
 	

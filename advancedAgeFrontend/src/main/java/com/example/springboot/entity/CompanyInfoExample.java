@@ -1954,6 +1954,76 @@ public class CompanyInfoExample {
             addCriterion("verify_unit not between", value1, value2, "verifyUnit");
             return (Criteria) this;
         }
+
+        public Criteria andSsoMidIsNull() {
+            addCriterion("sso_mid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSsoMidIsNotNull() {
+            addCriterion("sso_mid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSsoMidEqualTo(String value) {
+            addCriterion("sso_mid =", value, "ssoMid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSsoMidNotEqualTo(String value) {
+            addCriterion("sso_mid <>", value, "ssoMid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSsoMidGreaterThan(String value) {
+            addCriterion("sso_mid >", value, "ssoMid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSsoMidGreaterThanOrEqualTo(String value) {
+            addCriterion("sso_mid >=", value, "ssoMid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSsoMidLessThan(String value) {
+            addCriterion("sso_mid <", value, "ssoMid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSsoMidLessThanOrEqualTo(String value) {
+            addCriterion("sso_mid <=", value, "ssoMid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSsoMidLike(String value) {
+            addCriterion("sso_mid like", value, "ssoMid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSsoMidNotLike(String value) {
+            addCriterion("sso_mid not like", value, "ssoMid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSsoMidIn(List<String> values) {
+            addCriterion("sso_mid in", values, "ssoMid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSsoMidNotIn(List<String> values) {
+            addCriterion("sso_mid not in", values, "ssoMid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSsoMidBetween(String value1, String value2) {
+            addCriterion("sso_mid between", value1, value2, "ssoMid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSsoMidNotBetween(String value1, String value2) {
+            addCriterion("sso_mid not between", value1, value2, "ssoMid");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

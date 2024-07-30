@@ -3,8 +3,6 @@ package com.example.springboot.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 public class AdvancedAgeRetirementReemploymentApply extends AdvancedAgeRetirementReemploymentApplyKey implements Serializable {
     private Integer id;
 
@@ -18,6 +16,14 @@ public class AdvancedAgeRetirementReemploymentApply extends AdvancedAgeRetiremen
 
     private String guaranteeNumber;
 
+    private String registerPostalCode;
+
+    private String registerCity;
+
+    private String registerArea;
+
+    private String registerAddress;
+
     private String principal;
 
     private String jobtitle;
@@ -27,6 +33,10 @@ public class AdvancedAgeRetirementReemploymentApply extends AdvancedAgeRetiremen
     private String contactArea;
 
     private String contactAddress;
+
+    private String multipleCompany;
+
+    private String relatedAmounts;
 
     private Integer employeeNumber;
 
@@ -47,6 +57,10 @@ public class AdvancedAgeRetirementReemploymentApply extends AdvancedAgeRetiremen
     private String contactWorkPhoneExtension;
 
     private String contactPhone;
+
+    private String faxAreaCode;
+
+    private String fax;
 
     private String email;
 
@@ -80,7 +94,6 @@ public class AdvancedAgeRetirementReemploymentApply extends AdvancedAgeRetiremen
 
     private String attachDocumentsOtherProofDocument;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
 
     private String agree;
@@ -91,7 +104,6 @@ public class AdvancedAgeRetirementReemploymentApply extends AdvancedAgeRetiremen
 
     private String updator;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date updateTime;
 
     private String remark;
@@ -146,6 +158,38 @@ public class AdvancedAgeRetirementReemploymentApply extends AdvancedAgeRetiremen
         this.guaranteeNumber = guaranteeNumber == null ? null : guaranteeNumber.trim();
     }
 
+    public String getRegisterPostalCode() {
+        return registerPostalCode;
+    }
+
+    public void setRegisterPostalCode(String registerPostalCode) {
+        this.registerPostalCode = registerPostalCode == null ? null : registerPostalCode.trim();
+    }
+
+    public String getRegisterCity() {
+        return registerCity;
+    }
+
+    public void setRegisterCity(String registerCity) {
+        this.registerCity = registerCity == null ? null : registerCity.trim();
+    }
+
+    public String getRegisterArea() {
+        return registerArea;
+    }
+
+    public void setRegisterArea(String registerArea) {
+        this.registerArea = registerArea == null ? null : registerArea.trim();
+    }
+
+    public String getRegisterAddress() {
+        return registerAddress;
+    }
+
+    public void setRegisterAddress(String registerAddress) {
+        this.registerAddress = registerAddress == null ? null : registerAddress.trim();
+    }
+
     public String getPrincipal() {
         return principal;
     }
@@ -184,6 +228,22 @@ public class AdvancedAgeRetirementReemploymentApply extends AdvancedAgeRetiremen
 
     public void setContactAddress(String contactAddress) {
         this.contactAddress = contactAddress == null ? null : contactAddress.trim();
+    }
+
+    public String getMultipleCompany() {
+        return multipleCompany;
+    }
+
+    public void setMultipleCompany(String multipleCompany) {
+        this.multipleCompany = multipleCompany == null ? null : multipleCompany.trim();
+    }
+
+    public String getRelatedAmounts() {
+        return relatedAmounts;
+    }
+
+    public void setRelatedAmounts(String relatedAmounts) {
+        this.relatedAmounts = relatedAmounts == null ? null : relatedAmounts.trim();
     }
 
     public Integer getEmployeeNumber() {
@@ -264,6 +324,22 @@ public class AdvancedAgeRetirementReemploymentApply extends AdvancedAgeRetiremen
 
     public void setContactPhone(String contactPhone) {
         this.contactPhone = contactPhone == null ? null : contactPhone.trim();
+    }
+
+    public String getFaxAreaCode() {
+        return faxAreaCode;
+    }
+
+    public void setFaxAreaCode(String faxAreaCode) {
+        this.faxAreaCode = faxAreaCode == null ? null : faxAreaCode.trim();
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax == null ? null : fax.trim();
     }
 
     public String getEmail() {

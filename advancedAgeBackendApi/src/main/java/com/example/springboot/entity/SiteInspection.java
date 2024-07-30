@@ -12,6 +12,8 @@ public class SiteInspection implements Serializable {
 
     private String companyName;
 
+    private String caseType;
+
     private String unit;
 
     private String inspectDate;
@@ -56,6 +58,14 @@ public class SiteInspection implements Serializable {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName == null ? null : companyName.trim();
+    }
+
+    public String getCaseType() {
+        return caseType;
+    }
+
+    public void setCaseType(String caseType) {
+        this.caseType = caseType == null ? null : caseType.trim();
     }
 
     public String getUnit() {

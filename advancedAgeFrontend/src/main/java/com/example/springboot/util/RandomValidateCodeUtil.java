@@ -19,27 +19,27 @@ public class RandomValidateCodeUtil {
 
 
 	Logger logger = LogManager.getLogger(RandomValidateCodeUtil.class);
-    public static final String RANDOMCODEKEY= "RANDOMVALIDATECODEKEY";//���session����key
-    private String randString = "0123456789";//�H�����ͥu���Ʀr���r�Ŧ� private String
-//    private String randString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";//�H�����ͥu���r�����r�Ŧ�
-//    private String randString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//�H�����ͼƦr�P�r���զX���r�Ŧ�
-    private int width = 95;// �Ϥ��e
-    private int height = 25;// �Ϥ���
-    private int lineSize = 40;// �F�Z�u�ƶq
-    private int stringNum = 4;// �H�����ͦr�żƶq
+    public static final String RANDOMCODEKEY= "RANDOMVALIDATECODEKEY";//放到session中的key
+    private String randString = "0123456789";//隨機產生只有數字的字符串 private String
+//    private String randString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";//隨機產生只有字母的字符串
+//    private String randString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//隨機產生數字與字母組合的字符串
+    private int width = 95;// 圖片寬
+    private int height = 25;// 圖片高
+    private int lineSize = 40;// 干擾線數量
+    private int stringNum = 4;// 隨機產生字符數量
 
 
     private SecureRandom random = new SecureRandom();
 
-    /**
-     * ��o�r��
+    /*
+     * 獲得字體
      */
     private Font getFont() {
         return new Font("Fixedsys", Font.CENTER_BASELINE, 18);
     }
 
-    /**
-     * ��o�C��
+    /*
+     * 獲得顏色
      */
     private Color getRandColor(int fc, int bc) {
         if (fc > 255)
@@ -53,41 +53,41 @@ public class RandomValidateCodeUtil {
     }
 
     /**
-     * �ͦ��H���Ϥ�
+     * 生成隨機圖片
      */
     public void getRandcode(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        // BufferedImage���O�㦳�w�R�Ϫ�Image��,Image���O�Ω�y�z�Ϲ��H������
+        // BufferedImage類是具有緩衝區的Image類,Image類是用於描述圖像信息的類
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_BGR);
-        Graphics g = image.getGraphics();// ����Image��H��Graphics��H,���H�i�H�b�Ϲ��W�i��U��ø��ާ@
-        g.fillRect(0, 0, width, height);//�Ϥ��j�p
-        g.setFont(new Font("Times New Roman", Font.ROMAN_BASELINE, 20));//�r��j�p
-        g.setColor(getRandColor(110, 133));//�r���C��
-        // ø��F�Z�u
+        Graphics g = image.getGraphics();// 產生Image對象的Graphics對象,改對象可以在圖像上進行各種繪製操作
+        g.fillRect(0, 0, width, height);
+        g.setFont(new Font("Times New Roman", Font.ROMAN_BASELINE, 20));
+        g.setColor(getRandColor(110, 133));
+        // 繪製干擾線
         for (int i = 0; i <= lineSize; i++) {
             drowLine(g);
         }
-        // ø���H���r��
+        // 繪製隨機字符
         String randomString = "";
         for (int i = 1; i <= stringNum; i++) {
             randomString = drowString(g, randomString, i);
         }
-//        logger.info(randomString);
-        //�N�ͦ����H���r�Ŧ�O�s��session��
+        //將生成的隨機字符串保存到session中，而jsp界面通過session.getAttribute("RANDOMCODEKEY")，
+        //獲得生成的驗證碼，然後跟用戶輸入的進行比較
         session.removeAttribute(RANDOMCODEKEY);
         session.setAttribute(RANDOMCODEKEY, randomString);
         g.dispose();
         try {
-            // �N���s�����Ϥ��q�L�y�ʧΦ���X��Ȥ��
+            // 將內存中的圖片通過流動形式輸出到客戶端
             ImageIO.write(image, "JPEG", response.getOutputStream());
-        } catch (IOException e) {
-            logger.warn(e.getMessage());
+        } catch (Exception e) {
+        	logger.warn(e.getMessage());
         }
 
     }
 
-    /**
-     * ø��r�Ŧ�
+    /*
+     * 繪製字符串
      */
     private String drowString(Graphics g, String randomString, int i) {
         g.setFont(getFont());
@@ -101,8 +101,8 @@ public class RandomValidateCodeUtil {
         return randomString;
     }
 
-    /**
-     * ø��F�Z�u
+    /*
+     * 繪製干擾線
      */
     private void drowLine(Graphics g) {
         int x = random.nextInt(width);
@@ -112,8 +112,8 @@ public class RandomValidateCodeUtil {
         g.drawLine(x, y, x + xl, y + yl);
     }
 
-    /**
-     * ����H�����r��
+    /*
+     * 獲取隨機的字符
      */
     public String getRandomString(int num) {
         return String.valueOf(randString.charAt(num));

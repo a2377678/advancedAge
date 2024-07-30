@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.dao.RetirementAdvancedAgeParticipateStudentMapper" >
+  <resultMap id="BaseResultMap" type="com.example.springboot.entity.RetirementAdvancedAgeParticipateStudent" >
+    <id column="name" property="name" jdbcType="VARCHAR" />
+    <id column="seniority" property="seniority" jdbcType="INTEGER" />
+    <id column="retirement_advanced_age_experience_inheritance_apply_id" property="retirementAdvancedAgeExperienceInheritanceApplyId" jdbcType="INTEGER" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="labor_protection_time" property="laborProtectionTime" jdbcType="VARCHAR" />
+    <result column="occupational_accident_protection_time" property="occupationalAccidentProtectionTime" jdbcType="VARCHAR" />
+    <result column="manager" property="manager" jdbcType="CHAR" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="working_hours" property="workingHours" jdbcType="CHAR" />
+    <result column="seniority_month" property="seniorityMonth" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    name, seniority, retirement_advanced_age_experience_inheritance_apply_id, id, labor_protection_time, 
+    occupational_accident_protection_time, manager, department, working_hours, seniority_month
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.RetirementAdvancedAgeParticipateStudentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from retirementAdvancedAgeParticipateStudent
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.example.springboot.entity.RetirementAdvancedAgeParticipateStudentKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from retirementAdvancedAgeParticipateStudent
+    where name = #{name,jdbcType=VARCHAR}
+      and seniority = #{seniority,jdbcType=INTEGER}
+      and retirement_advanced_age_experience_inheritance_apply_id = #{retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.example.springboot.entity.RetirementAdvancedAgeParticipateStudentKey" >
+    delete from retirementAdvancedAgeParticipateStudent
+    where name = #{name,jdbcType=VARCHAR}
+      and seniority = #{seniority,jdbcType=INTEGER}
+      and retirement_advanced_age_experience_inheritance_apply_id = #{retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.springboot.entity.RetirementAdvancedAgeParticipateStudentExample" >
+    delete from retirementAdvancedAgeParticipateStudent
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.springboot.entity.RetirementAdvancedAgeParticipateStudent" >
+    insert into retirementAdvancedAgeParticipateStudent (name, seniority, retirement_advanced_age_experience_inheritance_apply_id, 
+      id, labor_protection_time, occupational_accident_protection_time, 
+      manager, department, working_hours, 
+      seniority_month)
+    values (#{name,jdbcType=VARCHAR}, #{seniority,jdbcType=INTEGER}, #{retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER}, 
+      #{id,jdbcType=INTEGER}, #{laborProtectionTime,jdbcType=VARCHAR}, #{occupationalAccidentProtectionTime,jdbcType=VARCHAR}, 
+      #{manager,jdbcType=CHAR}, #{department,jdbcType=VARCHAR}, #{workingHours,jdbcType=CHAR}, 
+      #{seniorityMonth,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springboot.entity.RetirementAdvancedAgeParticipateStudent" >
+    insert into retirementAdvancedAgeParticipateStudent
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="seniority != null" >
+        seniority,
+      </if>
+      <if test="retirementAdvancedAgeExperienceInheritanceApplyId != null" >
+        retirement_advanced_age_experience_inheritance_apply_id,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="laborProtectionTime != null" >
+        labor_protection_time,
+      </if>
+      <if test="occupationalAccidentProtectionTime != null" >
+        occupational_accident_protection_time,
+      </if>
+      <if test="manager != null" >
+        manager,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="workingHours != null" >
+        working_hours,
+      </if>
+      <if test="seniorityMonth != null" >
+        seniority_month,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="seniority != null" >
+        #{seniority,jdbcType=INTEGER},
+      </if>
+      <if test="retirementAdvancedAgeExperienceInheritanceApplyId != null" >
+        #{retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="laborProtectionTime != null" >
+        #{laborProtectionTime,jdbcType=VARCHAR},
+      </if>
+      <if test="occupationalAccidentProtectionTime != null" >
+        #{occupationalAccidentProtectionTime,jdbcType=VARCHAR},
+      </if>
+      <if test="manager != null" >
+        #{manager,jdbcType=CHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="workingHours != null" >
+        #{workingHours,jdbcType=CHAR},
+      </if>
+      <if test="seniorityMonth != null" >
+        #{seniorityMonth,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.springboot.entity.RetirementAdvancedAgeParticipateStudentExample" resultType="java.lang.Integer" >
+    select count(*) from retirementAdvancedAgeParticipateStudent
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update retirementAdvancedAgeParticipateStudent
+    <set >
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seniority != null" >
+        seniority = #{record.seniority,jdbcType=INTEGER},
+      </if>
+      <if test="record.retirementAdvancedAgeExperienceInheritanceApplyId != null" >
+        retirement_advanced_age_experience_inheritance_apply_id = #{record.retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.laborProtectionTime != null" >
+        labor_protection_time = #{record.laborProtectionTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.occupationalAccidentProtectionTime != null" >
+        occupational_accident_protection_time = #{record.occupationalAccidentProtectionTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manager != null" >
+        manager = #{record.manager,jdbcType=CHAR},
+      </if>
+      <if test="record.department != null" >
+        department = #{record.department,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workingHours != null" >
+        working_hours = #{record.workingHours,jdbcType=CHAR},
+      </if>
+      <if test="record.seniorityMonth != null" >
+        seniority_month = #{record.seniorityMonth,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update retirementAdvancedAgeParticipateStudent
+    set name = #{record.name,jdbcType=VARCHAR},
+      seniority = #{record.seniority,jdbcType=INTEGER},
+      retirement_advanced_age_experience_inheritance_apply_id = #{record.retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER},
+      id = #{record.id,jdbcType=INTEGER},
+      labor_protection_time = #{record.laborProtectionTime,jdbcType=VARCHAR},
+      occupational_accident_protection_time = #{record.occupationalAccidentProtectionTime,jdbcType=VARCHAR},
+      manager = #{record.manager,jdbcType=CHAR},
+      department = #{record.department,jdbcType=VARCHAR},
+      working_hours = #{record.workingHours,jdbcType=CHAR},
+      seniority_month = #{record.seniorityMonth,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springboot.entity.RetirementAdvancedAgeParticipateStudent" >
+    update retirementAdvancedAgeParticipateStudent
+    <set >
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="laborProtectionTime != null" >
+        labor_protection_time = #{laborProtectionTime,jdbcType=VARCHAR},
+      </if>
+      <if test="occupationalAccidentProtectionTime != null" >
+        occupational_accident_protection_time = #{occupationalAccidentProtectionTime,jdbcType=VARCHAR},
+      </if>
+      <if test="manager != null" >
+        manager = #{manager,jdbcType=CHAR},
+      </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="workingHours != null" >
+        working_hours = #{workingHours,jdbcType=CHAR},
+      </if>
+      <if test="seniorityMonth != null" >
+        seniority_month = #{seniorityMonth,jdbcType=INTEGER},
+      </if>
+    </set>
+    where name = #{name,jdbcType=VARCHAR}
+      and seniority = #{seniority,jdbcType=INTEGER}
+      and retirement_advanced_age_experience_inheritance_apply_id = #{retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springboot.entity.RetirementAdvancedAgeParticipateStudent" >
+    update retirementAdvancedAgeParticipateStudent
+    set id = #{id,jdbcType=INTEGER},
+      labor_protection_time = #{laborProtectionTime,jdbcType=VARCHAR},
+      occupational_accident_protection_time = #{occupationalAccidentProtectionTime,jdbcType=VARCHAR},
+      manager = #{manager,jdbcType=CHAR},
+      department = #{department,jdbcType=VARCHAR},
+      working_hours = #{workingHours,jdbcType=CHAR},
+      seniority_month = #{seniorityMonth,jdbcType=INTEGER}
+    where name = #{name,jdbcType=VARCHAR}
+      and seniority = #{seniority,jdbcType=INTEGER}
+      and retirement_advanced_age_experience_inheritance_apply_id = #{retirementAdvancedAgeExperienceInheritanceApplyId,jdbcType=INTEGER}
+  </update>
+</mapper>

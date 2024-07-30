@@ -20,9 +20,16 @@
   
   <!--- main --->
   <div class="main"> 
-    
+    <a href="#C" title="中央內容區塊" id="AC" accesskey="C" name="C">:::</a> <!---無障礙--->
   <!------------ 申請流程 ------------>
   <div class="apply_main">
+  <!---無障礙/麵包屑--->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index" title="首頁">首頁</a></li>
+        <li class="breadcrumb-item active" aria-current="page">網站導覽</li>
+      </ol>
+    </nav>
     <h1>網站導覽</h1>
 
     <div class="require">
@@ -48,21 +55,36 @@
         
         <ul class='list-group-numbered pb-4'>
           <li><a href="index" title="首頁" class="m1-in in">首頁</a></li>
-          <li><a href="require" title="補助計畫" class="m2">補助計畫</a></li>
+          <li><a href="require" title="補助計畫" class="m2">補助計畫</a>
+            <ul class='list-group-numbered'>
+              <li><a href="require" title="繼續僱用高齡者">繼續僱用高齡者</a></li>
+              <li><a href="require_teach" title="僱用退休中高齡者及高齡者傳承專業技術及經驗補助計畫">僱用退休中高齡者及高齡者傳承專業技術及經驗補助計畫</a></li>
+              <li><a href="require_career" title="中高齡者退休後再就業準備協助措施">中高齡者退休後再就業準備協助措施</a></li>
+            </ul>
+          </li>
           <li><a href="employ" title="線上申辦" class="m3">線上申辦</a>
             <ul class='list-group-numbered'>
-              <li><a href='employ' title='繼續僱用高齡者補助計畫申請'>繼續僱用高齡者補助計畫申請</a></li>
+              <li><a href='employ' title='繼續僱用高齡者補助 - 申請作業'>繼續僱用高齡者補助 - 申請作業</a></li>
+              <li><a href='employ_payment' title='繼續僱用高齡者補助 - 請領作業'>繼續僱用高齡者補助 - 請領作業</a></li>
+              <li><a href='teach' title='退休者傳承專業技術經驗 - 申請作業'>退休者傳承專業技術經驗 - 申請作業</a></li>
+              <li><a href='teach_payment' title='退休者傳承專業技術經驗 - 請領作業'>退休者傳承專業技術經驗 - 請領作業</a></li>
+              <li><a href='career' title='再就業準備協助措施 - 申請作業'>再就業準備協助措施 - 申請作業</a></li>
+              <li><a href='career_payment' title='再就業準備協助措施 - 請領作業'>再就業準備協助措施 - 請領作業</a></li>
             </ul>
           </li>
           <li><a href="schedule" title="案件查詢" class="m4">案件查詢</a>
             <ul class='list-group-numbered'>
-              <li><a href='schedule' title='申請案件進度查詢'>申請案件進度查詢</a></li>
-              <li><a href='schedule_pass' title='申請案件請領 (審核通過)'>申請案件請領 (審核通過)</a></li>
+              <li><a href="schedule" title="繼續僱用高齡者 - 申請進度">繼續僱用高齡者 - 申請進度</a></li>
+              <li><a href="schedule_employ_payment" title="繼續僱用高齡者 - 請領進度">繼續僱用高齡者 - 請領進度</a></li>
+              <li><a href="schedule_teach" title="退休者傳承專業技術經驗 - 申請進度">退休者傳承專業技術經驗 - 申請進度</a></li>
+              <li><a href="schedule_teach_payment" title="退休者傳承專業技術經驗 - 請領進度">退休者傳承專業技術經驗 - 請領進度</a></li>
+              <li><a href="schedule_career" title="再就業準備協助措施 - 申請進度">再就業準備協助措施 - 申請進度</a></li>
+              <li><a href="schedule_career_payment" title="再就業準備協助措施 - 請領進度">再就業準備協助措施 - 請領進度</a></li>
             </ul>
           </li>
           <li><a href="teaching" title="申請教學" class="m5">申請教學</a></li>
           <li><a href="downloadSample" title="資料下載" class="m6">資料下載</a></li>
-          <li><a href="service" title="諮詢服務" class="m7">諮詢服務</a></li>
+          <li><a href="https://job.taiwanjobs.gov.tw/internet/index/service_location.aspx" title="諮詢服務" class="m7" target="_blank">諮詢服務</a></li>
         </ul>
 
     </div>
@@ -74,14 +96,7 @@
   <!--- main end ---> 
   
   <!--- footer --->
-  <footer class="copyright">
-    <section>
-      <div>勞動力發展署：24219新北市新莊區中平路439號南棟4樓　電話代表號：(02)8995-6000　客服專線：0800-777-888</div>
-      <div>本署服務時間：週一至週五　上午8時30分至12時30分，下午13時30分至17時30分</div>
-      <div>最佳解析度1024x768 ，建議更新瀏覽器至以下版本：最新版本Chrome、最新版本Firefox</div>
-      <div>中華民國勞動部勞動力發展署版權所有 © 2021 All rights reserved. </div>
-    </section>
-  </footer>
+  <%@ include file="footer.jsp" %>
   <!--- footer end ---> 
   
 </div>

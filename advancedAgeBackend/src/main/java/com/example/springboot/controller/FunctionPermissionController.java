@@ -51,6 +51,26 @@ public class FunctionPermissionController {
 		}
 	}
 	
+	@RequestMapping(value = "/selectFunctionPermissionCtype", method = RequestMethod.POST)
+	public void selectFunctionPermissionCtype(HttpServletRequest request, HttpServletResponse response,FunctionPermission functionPermission){
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json="";
+		try {
+			json = objectMapper.writeValueAsString(functionPermission);
+		} catch (JsonProcessingException e) {
+			logger.warn(e.getMessage());
+		}
+		String jsondata = api.httpPost(ip+"selectFunctionPermission",json);
+		
+		response.setContentType("text/html;charset=UTF-8");
+		try {
+			functionPermission = objectMapper.readValue(jsondata, FunctionPermission.class);
+			response.getWriter().print("{\"status\":\"success\",\"code\":\""+StringEscapeUtils.escapeHtml(functionPermission.getFunctionCode3())+"\"}");
+		} catch (IOException e) {
+			logger.warn(e.getMessage());
+		}
+	}
+	
 	@RequestMapping(value = "/editFunctionPermission", method = RequestMethod.POST)
 	public void editFunctionPermission(HttpServletRequest request, HttpServletResponse response,FunctionPermission functionPermission){
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -69,4 +89,25 @@ public class FunctionPermissionController {
 			logger.warn(e.getMessage());
 		}
 	}
+	
+	@RequestMapping(value = "/selectFunctionPermission2", method = RequestMethod.POST)
+	public void selectFunctionPermission2(HttpServletRequest request, HttpServletResponse response,FunctionPermission functionPermission){
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json="";
+		try {
+			json = objectMapper.writeValueAsString(functionPermission);
+		} catch (JsonProcessingException e) {
+			logger.warn(e.getMessage());
+		}
+		String jsondata = api.httpPost(ip+"selectFunctionPermission",json);
+		
+		response.setContentType("text/html;charset=UTF-8");
+		try {
+			functionPermission = objectMapper.readValue(jsondata, FunctionPermission.class);
+			response.getWriter().print("{\"status\":\"success\",\"code\":\""+StringEscapeUtils.escapeHtml(functionPermission.getFunctionCode2())+"\"}");
+		} catch (IOException e) {
+			logger.warn(e.getMessage());
+		}
+	}
+	
 }

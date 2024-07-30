@@ -18,7 +18,10 @@ function sendMail(){
 			   	type: 'post',
 				url: 'sendCompanyInfoMail',// 資料不需要編碼
 				data: {
-					email: $('#email').val(),
+					email: $('#email').text(),
+					pwd : json,
+					companyName : $('#enrollCompanyName').text(),
+					seq : $('#enrollSeq').text(),
 				},
 				success: function(res) {
 //			   	// 判斷是否接收成功

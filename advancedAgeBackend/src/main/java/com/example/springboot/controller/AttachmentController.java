@@ -63,6 +63,7 @@ public class AttachmentController {
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
+		boolean checkFile=true;
 		if(blackListFiles !=null) {
 			for(int i=0;i<blackListFiles.length;i++) {
 				try {
@@ -90,10 +91,25 @@ public class AttachmentController {
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}catch (Exception e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}
 				api.httpPost(ip+"fileUplolad",json);
+			}
+			response.setContentType("text/html;charset=UTF-8");
+			try {
+				if(checkFile){
+					response.getWriter().print("success");
+				}
+				else {
+					response.getWriter().print("fail");
+				}
+			} catch (IOException e) {
+				logger.warn(e.getMessage());
 			}
 		}
 	}
@@ -106,6 +122,7 @@ public class AttachmentController {
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
+		boolean checkFile=true;
 		if(blackListFiles !=null) {
 			for(int i=0;i<blackListFiles.length;i++) {
 				try {
@@ -133,10 +150,25 @@ public class AttachmentController {
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}catch (Exception e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}
 				api.httpPost(ip+"fileUplolad",json);
+			}
+			response.setContentType("text/html;charset=UTF-8");
+			try {
+				if(checkFile){
+					response.getWriter().print("success");
+				}
+				else {
+					response.getWriter().print("fail");
+				}
+			} catch (IOException e) {
+				logger.warn(e.getMessage());
 			}
 		}
 	}
@@ -149,6 +181,7 @@ public class AttachmentController {
 		Attachment attach;
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json="";
+		boolean checkFile=true;
 		if(blackListFiles !=null) {
 			for(int i=0;i<blackListFiles.length;i++) {
 				try {
@@ -176,10 +209,25 @@ public class AttachmentController {
 					json = objectMapper.writeValueAsString(attach);
 				} catch (IOException e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}catch (Exception e) {
 					logger.warn(e.getMessage());
+					checkFile=false;
+					break;
 				}
 				api.httpPost(ip+"fileUplolad",json);
+			}
+			response.setContentType("text/html;charset=UTF-8");
+			try {
+				if(checkFile){
+					response.getWriter().print("success");
+				}
+				else {
+					response.getWriter().print("fail");
+				}
+			} catch (IOException e) {
+				logger.warn(e.getMessage());
 			}
 		}
 	}
@@ -225,8 +273,12 @@ public class AttachmentController {
         	logger.warn(e.getMessage());
         }finally {
         	try {
-				fis.close();
-				os.close();
+        		if(fis != null) {
+        			fis.close();
+				}
+        		if(os != null) {
+        			os.close();
+        		}
 			} catch (IOException e) {
 				logger.warn(e.getMessage());
 			}
@@ -270,8 +322,12 @@ public class AttachmentController {
 			logger.warn(e.getMessage());
 		}finally {
 			try {
-				fs.close();
-				stream.close(); 
+				if(fs != null) {
+					fs.close();
+				}
+				if(stream != null) {
+					stream.close(); 
+				}
 			} catch (IOException e) {
 				logger.warn(e.getMessage());
 			}

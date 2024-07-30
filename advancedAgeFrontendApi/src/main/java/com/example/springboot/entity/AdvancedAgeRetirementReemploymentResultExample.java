@@ -645,6 +645,356 @@ public class AdvancedAgeRetirementReemploymentResultExample {
             return (Criteria) this;
         }
 
+        public Criteria andContactWorkPhoneAreaCodeIsNull() {
+            addCriterion("contact_work_phone_area_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeIsNotNull() {
+            addCriterion("contact_work_phone_area_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeEqualTo(String value) {
+            addCriterion("contact_work_phone_area_code =", value, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeNotEqualTo(String value) {
+            addCriterion("contact_work_phone_area_code <>", value, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeGreaterThan(String value) {
+            addCriterion("contact_work_phone_area_code >", value, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("contact_work_phone_area_code >=", value, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeLessThan(String value) {
+            addCriterion("contact_work_phone_area_code <", value, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeLessThanOrEqualTo(String value) {
+            addCriterion("contact_work_phone_area_code <=", value, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeLike(String value) {
+            addCriterion("contact_work_phone_area_code like", value, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeNotLike(String value) {
+            addCriterion("contact_work_phone_area_code not like", value, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeIn(List<String> values) {
+            addCriterion("contact_work_phone_area_code in", values, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeNotIn(List<String> values) {
+            addCriterion("contact_work_phone_area_code not in", values, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeBetween(String value1, String value2) {
+            addCriterion("contact_work_phone_area_code between", value1, value2, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneAreaCodeNotBetween(String value1, String value2) {
+            addCriterion("contact_work_phone_area_code not between", value1, value2, "contactWorkPhoneAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneIsNull() {
+            addCriterion("contact_work_phone is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneIsNotNull() {
+            addCriterion("contact_work_phone is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneEqualTo(String value) {
+            addCriterion("contact_work_phone =", value, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneNotEqualTo(String value) {
+            addCriterion("contact_work_phone <>", value, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneGreaterThan(String value) {
+            addCriterion("contact_work_phone >", value, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneGreaterThanOrEqualTo(String value) {
+            addCriterion("contact_work_phone >=", value, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneLessThan(String value) {
+            addCriterion("contact_work_phone <", value, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneLessThanOrEqualTo(String value) {
+            addCriterion("contact_work_phone <=", value, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneLike(String value) {
+            addCriterion("contact_work_phone like", value, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneNotLike(String value) {
+            addCriterion("contact_work_phone not like", value, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneIn(List<String> values) {
+            addCriterion("contact_work_phone in", values, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneNotIn(List<String> values) {
+            addCriterion("contact_work_phone not in", values, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneBetween(String value1, String value2) {
+            addCriterion("contact_work_phone between", value1, value2, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneNotBetween(String value1, String value2) {
+            addCriterion("contact_work_phone not between", value1, value2, "contactWorkPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionIsNull() {
+            addCriterion("contact_work_phone_extension is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionIsNotNull() {
+            addCriterion("contact_work_phone_extension is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionEqualTo(String value) {
+            addCriterion("contact_work_phone_extension =", value, "contactWorkPhoneExtension");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionNotEqualTo(String value) {
+            addCriterion("contact_work_phone_extension <>", value, "contactWorkPhoneExtension");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionGreaterThan(String value) {
+            addCriterion("contact_work_phone_extension >", value, "contactWorkPhoneExtension");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionGreaterThanOrEqualTo(String value) {
+            addCriterion("contact_work_phone_extension >=", value, "contactWorkPhoneExtension");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionLessThan(String value) {
+            addCriterion("contact_work_phone_extension <", value, "contactWorkPhoneExtension");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionLessThanOrEqualTo(String value) {
+            addCriterion("contact_work_phone_extension <=", value, "contactWorkPhoneExtension");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionLike(String value) {
+            addCriterion("contact_work_phone_extension like", value, "contactWorkPhoneExtension");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionNotLike(String value) {
+            addCriterion("contact_work_phone_extension not like", value, "contactWorkPhoneExtension");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionIn(List<String> values) {
+            addCriterion("contact_work_phone_extension in", values, "contactWorkPhoneExtension");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionNotIn(List<String> values) {
+            addCriterion("contact_work_phone_extension not in", values, "contactWorkPhoneExtension");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionBetween(String value1, String value2) {
+            addCriterion("contact_work_phone_extension between", value1, value2, "contactWorkPhoneExtension");
+            return (Criteria) this;
+        }
+
+        public Criteria andContactWorkPhoneExtensionNotBetween(String value1, String value2) {
+            addCriterion("contact_work_phone_extension not between", value1, value2, "contactWorkPhoneExtension");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxAreaCodeIsNull() {
+            addCriterion("fax_area_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxAreaCodeIsNotNull() {
+            addCriterion("fax_area_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxAreaCodeEqualTo(String value) {
+            addCriterion("fax_area_code =", value, "faxAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxAreaCodeNotEqualTo(String value) {
+            addCriterion("fax_area_code <>", value, "faxAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxAreaCodeGreaterThan(String value) {
+            addCriterion("fax_area_code >", value, "faxAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxAreaCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("fax_area_code >=", value, "faxAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxAreaCodeLessThan(String value) {
+            addCriterion("fax_area_code <", value, "faxAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxAreaCodeLessThanOrEqualTo(String value) {
+            addCriterion("fax_area_code <=", value, "faxAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxAreaCodeLike(String value) {
+            addCriterion("fax_area_code like", value, "faxAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxAreaCodeNotLike(String value) {
+            addCriterion("fax_area_code not like", value, "faxAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxAreaCodeIn(List<String> values) {
+            addCriterion("fax_area_code in", values, "faxAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxAreaCodeNotIn(List<String> values) {
+            addCriterion("fax_area_code not in", values, "faxAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxAreaCodeBetween(String value1, String value2) {
+            addCriterion("fax_area_code between", value1, value2, "faxAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxAreaCodeNotBetween(String value1, String value2) {
+            addCriterion("fax_area_code not between", value1, value2, "faxAreaCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxIsNull() {
+            addCriterion("fax is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxIsNotNull() {
+            addCriterion("fax is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxEqualTo(String value) {
+            addCriterion("fax =", value, "fax");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxNotEqualTo(String value) {
+            addCriterion("fax <>", value, "fax");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxGreaterThan(String value) {
+            addCriterion("fax >", value, "fax");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxGreaterThanOrEqualTo(String value) {
+            addCriterion("fax >=", value, "fax");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxLessThan(String value) {
+            addCriterion("fax <", value, "fax");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxLessThanOrEqualTo(String value) {
+            addCriterion("fax <=", value, "fax");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxLike(String value) {
+            addCriterion("fax like", value, "fax");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxNotLike(String value) {
+            addCriterion("fax not like", value, "fax");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxIn(List<String> values) {
+            addCriterion("fax in", values, "fax");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxNotIn(List<String> values) {
+            addCriterion("fax not in", values, "fax");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxBetween(String value1, String value2) {
+            addCriterion("fax between", value1, value2, "fax");
+            return (Criteria) this;
+        }
+
+        public Criteria andFaxNotBetween(String value1, String value2) {
+            addCriterion("fax not between", value1, value2, "fax");
+            return (Criteria) this;
+        }
+
         public Criteria andEmailIsNull() {
             addCriterion("email is null");
             return (Criteria) this;

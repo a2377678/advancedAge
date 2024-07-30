@@ -138,14 +138,15 @@ public class CallApi {
 			{
 				if(result.equals(""))
 				{
-					result=data_spl[i].replace("\"", "").replace(":","=");
+					result=data_spl[i].replace("\":","\"=").replace("\"", "");
 				}
 				else
 				{
-					result=result+"&"+data_spl[i].replace("\"", "").replace(":","=");
+					result=result+"&"+data_spl[i].replace("\":","\"=").replace("\"", "");
 				}
 			}
 		}
+		result = result.replace("<", "＜").replace(">", "＞").replace("\'", "’").replace("\\", "＼").replace("#", "＃");
 		return result+"&token="+SystemConfig.getProperty("api_token");
 	}
 }

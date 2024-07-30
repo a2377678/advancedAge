@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"  %>  
 <html lang="zh-hant-TW">
 <head>
 <meta charset="UTF-8">
@@ -12,40 +13,19 @@
 <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
 
 <link rel="stylesheet" href="css/cmxform.css" type="text/css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<link rel="stylesheet" href="css/jquery-confirm.min.css" type="text/css">
+<link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
 
 <script src="js/jquery-3.6.0.min.js"></script> 
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script src="js/jquery-confirm.min.js"></script>
 
 <script src="js/jquery.validate.min.js"></script>
 <script src="js/additional-methods.min.js"></script>
 <script src="js/messages_zh_TW.min.js"></script>
 <script src="js/employ_payment_02/employ_payment_02.js"></script>
-
-<script type="text/javascript">
-$(function(){
-	
-	$('#employed').click(function(){
-		$('#list').find('a').removeClass();
-		$(this).find('a').addClass('in color-2');
-		$('#employedTable').show();
-		$('#listTable').hide();
-	})
-	
-	$('#list').click(function(){
-		$('#employed').find('a').removeClass();
-		$(this).find('a').addClass('in color-2');
-		$('#employedTable').hide();
-		$('#listTable').show();
-	})
-	
-})
-
-</script>
-
-
+<script src="js/jquery-ui.js"></script>
 </head>
 
 <body>
@@ -57,9 +37,18 @@ $(function(){
   
   <!--- main --->
   <div class="main"> 
-    
+    <a href="#C" title="中央內容區塊" id="AC" accesskey="C" name="C">:::</a> <!---無障礙--->
   <!------------ 申請流程 ------------>
   <div class="apply_main">
+  <%@ include file="countDownComponent.jsp" %>
+    <!---無障礙/麵包屑--->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index" title="首頁">首頁</a></li>
+        <li class="breadcrumb-item active" aria-current="page">線上申辦</li>
+        <li class="breadcrumb-item active" aria-current="page">繼續僱用高齡者補助 - 請領作業</li>
+      </ol>
+    </nav>
     <h1>繼續僱用高齡者補助 - 請領作業</h1>
     <h2>申請流程 Step2. 填寫請領名單</h2>
     
@@ -69,20 +58,45 @@ $(function(){
     
     <p class="lh-base fw-bold pb-3">依勞動基準法及性別工作平等法等相關法令規定請假，<br>
 致雇主給付薪資低於上開核發標準，依實際獲致薪資數額發給。</p>
+	<c:set var="startIndex" value="${fn:length(base.allowanceFrequencyRecord.split(';'))-1}"></c:set> 
+    <form id="searchForm" action="employ_payment_02" method="post">
+    <!------------選擇請領資料----------->
+	  	<div class="input-group pb-4 mx-auto patmant_select">
+	  		<select class="form-select rounded-pill rounded border-secondary" id="baseId" name="baseId">
+	  			<c:forEach items="${baseList.toList()}" var="baseItem"  varStatus="status">
+	  				<c:if test="${baseItem.get('caseStatus')>=4}">
+	  					<option value="${baseItem.get('id')}" <c:if test="${not empty baseId && baseId==baseItem.get('id')}">selected</c:if><c:if test="${empty baseId && status.last}">selected</c:if>>${baseItem.get("year")}年度</option>
+	  				</c:if>
+	  			</c:forEach>
+		    </select>
+		    <select class="form-select rounded-pill rounded-end border-secondary" id="baseAllowanceFrequencyTime" name="baseAllowanceFrequencyTime">
+		    	<option value="0" <c:if test="${baseAllowanceFrequencyTime==0}">selected</c:if>>本次請領 (新)</option>
+		    	<option disabled>----------------------</option>
+		    	<c:forEach items="${base.allowanceFrequencyRecord.split(';') }" var="eachItem"  varStatus="status">
+			    	<c:set var="data_spl" value="${base.allowanceFrequencyRecord.split(';')[startIndex-status.index]}"></c:set>
+			    	<c:set var="data" value="${data_spl.substring(0,data_spl.lastIndexOf('、'))}"></c:set>
+			    	<option value="${startIndex-status.index+1}" <c:if test="${baseAllowanceFrequencyTime==startIndex-status.index+1}">selected</c:if> <c:if test="${data_spl.substring(data_spl.lastIndexOf('、')+1)==1}">disabled</c:if>>第${data.split('、')[0]}次請領 
+			    	${data.split('、')[1].substring(0,4)-1911}/${data.split('、')[1].substring(5,7)}/${data.split('、')[1].substring(8,10)}</option>
+		    	</c:forEach>
+		    	<option disabled>----------------------</option>
+		    </select>
+	    	<button class="btn rounded-pill rounded-start btn-outline-secondary w-25" type="submit">確認</button>
+    	</div>
+    </form>
     
-    
+	  
     <!-------------繼續僱用補助名單清冊------------>
     <div class="form">
     
       <div class="title_main">
       <span>繼續僱用請領名單清冊</span>
       <em>請視需要自行增刪欄位，若名單超過5人請下載
-      【<a href="/file/SAMPLE/繼續僱用-請領專用表.xlsx" title="繼續僱用-請領專用Excel表 ( 另存新檔 )">繼續僱用-請領專用表.xlsx</a>】
+      【<a href="/file/SAMPLE/繼續僱用_請領專用表.xlsx" title="繼續僱用-請領專用Excel表 ( 另存新檔 )">繼續僱用-請領專用表.xlsx</a>】
       填寫後上傳</em>
       </div>
       
       <input type="text" id="seq" name="seq" value="${seq}" style="display:none">
-      <input type="text" id="baseId" name="baseId" value="${baseId}" style="display:none">
+<%--       <input type="text" id="baseId" name="baseId" value="${baseId}" style="display:none"> --%>
       <div id="page_tab">
         <div class="tab-1" id="employed"><a class="in color-2">線上填寫資料</a></div>
         <div class="tab-1" id="list"><a>上傳專用表格</a></div>
@@ -94,7 +108,7 @@ $(function(){
         <ol class="staff">
         <c:choose><c:when test="${not empty advancedAgeEmploymentListReceipts}">
 	        <c:forEach items="${advancedAgeEmploymentListReceipts}" var="item" varStatus="status">
-	        	<c:if test="${item.baseAllowanceFrequency==0 }">
+<%-- 	        	<c:if test="${item.baseAllowanceFrequency==0 }"> --%>
 	        	<li id="employedTable${status.count}">
 		          <div class="ss">
 		          <label for="name${status.count}">勞工姓名</label>
@@ -102,10 +116,20 @@ $(function(){
 		          </div>
 		          
 		          <div class="ss">
+		          <label for="birthday${status.count}">出生日期</label>
+		          <input type="text" id="birthday${status.count}" name="birthday${status.count}" placeholder="yyymmdd" value="${item.birthday}" readonly>
+		          </div>
+		          
+		          <div class="ss">
 		          <label for="identification${status.count}">身分證字號</label>
-		          <input type="text" id="identification${status.count}" name="identification${status.count}" value="${item.identification}">
+		          <input type="text" id="identification${status.count}" name="identification${status.count}" maxlength="10" value="${item.identification}">
 		          </div>
 		        
+		          <div class="ss">
+		            <label for="salary${status.count}">本期請領<br>平均薪資</label>
+		            <input type="text" id="salary${status.count}" name="salary${status.count}" placeholder="每月平均薪資" pattern="[0-9]*" value="${item.salary}">
+		          </div>
+		          
 		          <div class="ss">
 		          <label for="insuranceType${status.count}">退保(離職)</label>
 		          <select id="insuranceType${status.count}" name="insuranceType${status.count}">
@@ -118,16 +142,11 @@ $(function(){
 		        
 		          <div class="ss">
 		          <label for="insuranceTime${status.count}">退保日期</label>
-		          <input type="text" id="insuranceTime${status.count}" name="insuranceTime${status.count}" placeholder="yyymmdd" maxlength="7" oninput="value=value.replace(/[^\d]/g,'')"
+		          <input type="text" id="insuranceTime${status.count}" name="insuranceTime${status.count}" placeholder="yyymmdd" maxlength="7" oninput="value=value.replace(/[^\d]/g,'')" readonly
 		          	<c:if test="${item.laborProtectionExpiredTime.length()==7}">value="${item.laborProtectionExpiredTime}"</c:if>
 		          	<c:if test="${item.occupationalAccidentProtectionExpiredTime.length()==7}">value="${item.occupationalAccidentProtectionExpiredTime}"</c:if>>
 		          </div>
 		        
-		          <div class="ss">
-		            <label for="salary${status.count}">平均薪資</label>
-		            <input type="text" id="salary${status.count}" name="salary${status.count}" placeholder="每月平均薪資" pattern="[0-9]*" value="${item.salary}">
-		          </div>
-		          
 		          <div class="m">
 		            <label for="salaryMethod${status.count}">計薪方式
 		            </label>
@@ -139,31 +158,33 @@ $(function(){
 		            </select>
 		            <input type="text" class="w-50" id="salaryMethodRemark${status.count}" name="salaryMethodRemark${status.count}" placeholder="例：7月95小時, 8月106小時..." value="${item.salaryMethodRemark.replace(';',',')}">
 		            <img src="images/icon_qu.png" class="icon_qu" title="
-		【按月計】免填備註
-		【非按月】請敘明每月時數
+【按月計】免填備註
+【非按月】請敘明每月時數
 		 如：7月95小時, 8月106小時...">
 		          </div>
 		        
 		          <div class="ss">
-		          <label for="frequency${status.count}">請領次數</label>
+		          <label for="frequency${status.count}">請領期數</label>
 		          <select id="frequency${status.count}" name="frequency${status.count}">
 		            <option value>請選擇</option>
-		            <option value="1" <c:if test="${item.frequency==1}">selected</c:if>>第1次</option>
-		            <option value="2" <c:if test="${item.frequency==2}">selected</c:if>>第2次</option>
-		            <option value="3" <c:if test="${item.frequency==3}">selected</c:if>>第3次</option>
-		            <option value="4" <c:if test="${item.frequency==4}">selected</c:if>>第4次</option>
-		            <option value="5" <c:if test="${item.frequency==5}">selected</c:if>>第5次</option>
+		            <option value="1" <c:if test="${item.frequency==1}">selected</c:if>>第1期</option>
+		            <option value="2" <c:if test="${item.frequency==2}">selected</c:if>>第2期</option>
+		            <option value="3" <c:if test="${item.frequency==3}">selected</c:if>>第3期</option>
+		            <option value="4" <c:if test="${item.frequency==4}">selected</c:if>>第4期</option>
+		            <option value="5" <c:if test="${item.frequency==5}">selected</c:if>>第5期</option>
 		          </select>
 		            <img src="images/icon_qu.png" class="icon_qu" title="
-		【第1次】請領期間為前6個月
-		 ，未滿6個月不予發給。
+【第1期】請領期間為前6個月
+，未滿6個月不予發給。
 		 
-		【第2~5次】請領申請期間，
-		 為第7~18個月，最長12個月。">
+【第2~5期】請領申請期間，
+為第7~18個月，最長12個月。">
 		          </div>
 		        
-		        <c:if test="${item.employmentMonthStartTime.length()==7 }">
-		          <div class="m w-100 point-2">
+		        <div class="px-4">（以下請領若有2種計薪方式，請按右方 <kbd>+</kbd> 按鈕增加欄位）</div> 
+		        
+		        <c:if test="${item.employmentMonthStartTime.length()!=7 && item.employmentHourStartTime.length()!=7}">
+		        	<div class="m patmant">
 		            <label for="salaryType${status.count}1">請領補助</label>
 		            <select id="salaryType${status.count}1" name="salaryType${status.count}1">
 		              <option value>請選擇</option>
@@ -171,25 +192,62 @@ $(function(){
 		              <option value="H">按時計</option>
 		            </select>
 		            <img src="images/icon_qu.png" class="icon_qu" title="
-		【按月計酬】
-		 第1-6個月每人每月補助 13,000 元。
-		 第7-18個月每人每月補助 15,000 元。
+【按月計酬】
+第1-6個月每人每月補助 13,000 元。
+第7-18個月每人每月補助 15,000 元。
 		
-		【非按月計酬】
-		 第1-6個月每人每小時補助 70 元，
-		 每月最高補助 13,000 元。
-		 第7-18個月每人每小時補助 80 元，
-		 每月最高補有 15,000 元。">
+【非按月計酬】
+第1-6個月每人每小時補助 70 元，
+每月最高補助 13,000 元。
+第7-18個月每人每小時補助 80 元，
+每月最高補有 15,000 元。">
 		
-		            <label for="">申請期間</label>
-		            <input type="text" class="short-2" id="employmentStartTime${status.count}1" name="employmentStartTime${status.count}1" placeholder="yyymmdd" maxlength="7" oninput = "value=value.replace(/[^\d]/g,'')" value="${item.employmentMonthStartTime}"> 至
-		            <input type="text" class="short-2" id="employmentEndTime${status.count}1" name="employmentEndTime${status.count}1" placeholder="yyymmdd" maxlength="7" oninput = "value=value.replace(/[^\d]/g,'')" value="${item.employmentMonthEndTime}">
+		            <label for="employmentStartTime${status.count}1">申請期間</label>
+		            <input type="text" class="short-2" id="employmentStartTime${status.count}1" name="employmentStartTime${status.count}1" placeholder="yyymmdd" maxlength="7" oninput = "value=value.replace(/[^\d]/g,'')" value="${item.employmentMonthStartTime}" required readonly> 至
+		            <input type="text" class="short-2" id="employmentEndTime${status.count}1" name="employmentEndTime${status.count}1" placeholder="yyymmdd" maxlength="7" oninput = "value=value.replace(/[^\d]/g,'')" value="${item.employmentMonthEndTime}" required readonly>
 		
-		            <label for="">月數 / 時數</label>
+		            <label for="count${status.count}1">月數 / 時數</label>
 		            <input type="number" class="short" step="1" min="0" id="count${status.count}1" name="count${status.count}1" 
 			            <c:if test="${item.frequency==1}">value="${item.lowMonthNumber }"</c:if>
 			            <c:if test="${item.frequency>1}">value="${item.highMonthNumber }"</c:if>>
-		            <label for="">請領金額</label>
+		            <label for="amounts${status.count}1">請領金額</label>
+		            <input type="text" id="amounts${status.count}1" name="amounts${status.count}1" 
+		            <c:if test="${item.frequency==1}">value="${item.lowMonthNumber*13000 }"</c:if>
+		            <c:if test="${item.frequency>1}">value="${item.highMonthNumber*15000 }"</c:if>
+		             class="readonly" placeholder="自動計算" readonly>
+		            
+	            	<button type="button" class="add" onclick="showNewSalaryType('${status.count}')"<c:if test="${item.employmentHourStartTime.length()==7 }"> style="display:none;"</c:if>>＋</button>
+		          </div>
+		        </c:if>
+		        
+		        <c:if test="${item.employmentMonthStartTime.length()==7 }">
+		          <div class="m patmant">
+		            <label for="salaryType${status.count}1">請領補助</label>
+		            <select id="salaryType${status.count}1" name="salaryType${status.count}1">
+		              <option value>請選擇</option>
+		              <option value="M" selected>按月計</option>
+		              <option value="H">按時計</option>
+		            </select>
+		            <img src="images/icon_qu.png" class="icon_qu" title="
+【按月計酬】
+第1-6個月每人每月補助 13,000 元。
+第7-18個月每人每月補助 15,000 元。
+		
+【非按月計酬】
+第1-6個月每人每小時補助 70 元，
+每月最高補助 13,000 元。
+第7-18個月每人每小時補助 80 元，
+每月最高補有 15,000 元。">
+		
+		            <label for="employmentStartTime${status.count}1">申請期間</label>
+		            <input type="text" class="short-2" id="employmentStartTime${status.count}1" name="employmentStartTime${status.count}1" placeholder="yyymmdd" maxlength="7" oninput = "value=value.replace(/[^\d]/g,'')" value="${item.employmentMonthStartTime}" readonly> 至
+		            <input type="text" class="short-2" id="employmentEndTime${status.count}1" name="employmentEndTime${status.count}1" placeholder="yyymmdd" maxlength="7" oninput = "value=value.replace(/[^\d]/g,'')" value="${item.employmentMonthEndTime}" readonly>
+		
+		            <label for="count${status.count}1">月數 / 時數</label>
+		            <input type="number" class="short" step="1" min="0" id="count${status.count}1" name="count${status.count}1" 
+			            <c:if test="${item.frequency==1}">value="${item.lowMonthNumber }"</c:if>
+			            <c:if test="${item.frequency>1}">value="${item.highMonthNumber }"</c:if>>
+		            <label for="amounts${status.count}1">請領金額</label>
 		            <input type="text" id="amounts${status.count}1" name="amounts${status.count}1" 
 		            <c:if test="${item.frequency==1}">value="${item.lowMonthNumber*13000 }"</c:if>
 		            <c:if test="${item.frequency>1}">value="${item.highMonthNumber*15000 }"</c:if>
@@ -200,7 +258,7 @@ $(function(){
 		         </c:if>
 		         
 		         <c:if test="${item.employmentHourStartTime.length()==7 }">
-		          <div class="m w-100 point-2">
+		          <div class="m patmant">
 		            <label for="salaryType${status.count}1">請領補助</label>
 		            <select id="salaryType${status.count}1" name="salaryType${status.count}1">
 		              <option value>請選擇</option>
@@ -208,25 +266,25 @@ $(function(){
 		              <option value="H" selected>按時計</option>
 		            </select>
 		            <img src="images/icon_qu.png" class="icon_qu" title="
-		【按月計酬】
-		 第1-6個月每人每月補助 13,000 元。
-		 第7-18個月每人每月補助 15,000 元。
+【按月計酬】
+第1-6個月每人每月補助 13,000 元。
+第7-18個月每人每月補助 15,000 元。
 		
-		【非按月計酬】
-		 第1-6個月每人每小時補助 70 元，
-		 每月最高補助 13,000 元。
-		 第7-18個月每人每小時補助 80 元，
-		 每月最高補有 15,000 元。">
+【非按月計酬】
+第1-6個月每人每小時補助 70 元，
+每月最高補助 13,000 元。
+第7-18個月每人每小時補助 80 元，
+每月最高補有 15,000 元。">
 		
-		            <label for="">申請期間</label>
-		            <input type="text" class="short-2" id="employmentStartTime${status.count}1" name="employmentStartTime${status.count}1" placeholder="yyymmdd" maxlength="7" oninput = "value=value.replace(/[^\d]/g,'')" value="${item.employmentHourStartTime}"> 至
-		            <input type="text" class="short-2" id="employmentEndTime${status.count}1" name="employmentEndTime${status.count}1" placeholder="yyymmdd" maxlength="7" oninput = "value=value.replace(/[^\d]/g,'')" value="${item.employmentHourEndTime}">
+		            <label for="employmentStartTime${status.count}1">申請期間</label>
+		            <input type="text" class="short-2" id="employmentStartTime${status.count}1" name="employmentStartTime${status.count}1" placeholder="yyymmdd" maxlength="7" oninput = "value=value.replace(/[^\d]/g,'')" value="${item.employmentHourStartTime}" readonly> 至
+		            <input type="text" class="short-2" id="employmentEndTime${status.count}1" name="employmentEndTime${status.count}1" placeholder="yyymmdd" maxlength="7" oninput = "value=value.replace(/[^\d]/g,'')" value="${item.employmentHourEndTime}" readonly>
 		
-		            <label for="">月數 / 時數</label>
+		            <label for="count${status.count}1">月數 / 時數</label>
 		            <input type="number" class="short" step="1" min="0" id="count${status.count}1" name="count${status.count}1" 
 			            <c:if test="${item.frequency==1}">value="${item.lowHoursNumber }"</c:if>
 			            <c:if test="${item.frequency>1}">value="${item.highHoursNumber }"</c:if>>
-		            <label for="">請領金額</label>
+		            <label for="amounts${status.count}1">請領金額</label>
 		            <input type="text" id="amounts${status.count}1" name="amounts${status.count}1" 
 		            <c:if test="${item.frequency==1}">value="${item.lowHoursNumber*70 }"</c:if>
 		            <c:if test="${item.frequency>1}">value="${item.highHoursNumber*80 }"</c:if> 
@@ -240,26 +298,34 @@ $(function(){
 		          </div>
 		         </c:if>
 		          
-		          <div class="px-4">（請領若有2種計薪方式，請按右方+按鈕增加欄位）</div>   
-		
-		          <div class="close"><button class="close" title="移除此筆資料">X</button></div>
+		          <div class="close"><button type="button" onclick="delEmploymentList(this);" class="close" title="移除此筆資料">X</button></div>
 	          
 	        </li>
-	        </c:if>
+<%-- 	        </c:if> --%>
 	    	</c:forEach>
         </c:when><c:otherwise>
 	        <!---01--->
 	        <li id="employedTable1">
 	          <div class="ss">
 	          <label for="name1">勞工姓名</label>
-	          <input type="text" id="name1" name="name1">
+	          <input type="text" id="name1" name="name1" required>
+	          </div>
+	          
+	          <div class="ss">
+	          <label for="birthday1">出生日期</label>
+	          <input type="text" id="birthday1" name="birthday1" required readonly>
 	          </div>
 	          
 	          <div class="ss">
 	          <label for="identification1">身分證字號</label>
-	          <input type="text" id="identification1" name="identification1">
+	          <input type="text" id="identification1" name="identification1" maxlength="10" required>
 	          </div>
 	        
+	          <div class="ss">
+	            <label for="salary1">本期請領<br>平均薪資</label>
+	            <input type="text" id="salary1" name="salary1" placeholder="每月平均薪資" pattern="[0-9]*" required>
+	          </div>
+	          
 	          <div class="ss">
 	          <label for="insuranceType1">退保(離職)</label>
 	          <select id="insuranceType1" name="insuranceType1">
@@ -272,18 +338,13 @@ $(function(){
 	        
 	          <div class="ss">
 	          <label for="insuranceTime1">退保日期</label>
-	          <input type="text" id="insuranceTime1" name="insuranceTime1" placeholder="yyymmdd" maxlength="7" oninput = "value=value.replace(/[^\d]/g,'')">
+	          <input type="text" id="insuranceTime1" name="insuranceTime1" placeholder="yyymmdd" maxlength="7" oninput = "value=value.replace(/[^\d]/g,'')" readonly>
 	          </div>
 	        
-	          <div class="ss">
-	            <label for="salary1">平均薪資</label>
-	            <input type="text" id="salary1" name="salary1" placeholder="每月平均薪資" pattern="[0-9]*">
-	          </div>
-	          
 	          <div class="m">
 	            <label for="salaryMethod1">計薪方式
 	            </label>
-	            <select id="salaryMethod1" name="salaryMethod1">
+	            <select id="salaryMethod1" name="salaryMethod1" required>
 	              <option value>請選擇</option>
 	              <option value="M">按月計</option>
 	              <option value="H">非按月</option>
@@ -291,64 +352,62 @@ $(function(){
 	            </select>
 	            <input type="text" class="w-50" id="salaryMethodRemark1" name="salaryMethodRemark1" placeholder="例：7月95小時, 8月106小時...">
 	            <img src="images/icon_qu.png" class="icon_qu" title="
-	【按月計】免填備註
-	【非按月】請敘明每月時數
-	 如：7月95小時, 8月106小時...">
+【按月計】免填備註
+【非按月】請敘明每月時數
+如：7月95小時, 8月106小時...">
 	          </div>
 	        
 	          <div class="ss">
-	          <label for="frequency1">請領次數</label>
-	          <select id="frequency1" name="frequency1">
+	          <label for="frequency1">請領期數</label>
+	          <select id="frequency1" name="frequency1" required>
 	            <option value>請選擇</option>
-	            <option value="1">第1次</option>
-	            <option value="2">第2次</option>
-	            <option value="3">第3次</option>
-	            <option value="4">第4次</option>
-	            <option value="5">第5次</option>
+	            <option value="1">第1期</option>
+	            <option value="2">第2期</option>
+	            <option value="3">第3期</option>
+	            <option value="4">第4期</option>
+	            <option value="5">第5期</option>
 	          </select>
 	            <img src="images/icon_qu.png" class="icon_qu" title="
-	【第1次】請領期間為前6個月
-	 ，未滿6個月不予發給。
+【第1期】請領期間為前6個月
+，未滿6個月不予發給。
 	 
-	【第2~5次】請領申請期間，
-	 為第7~18個月，最長12個月。">
+【第2~5期】請領申請期間，
+為第7~18個月，最長12個月。">
 	          </div>
 	        
-	          <div class="m w-100 point-2">
+	          <div class="px-4">（以下請領若有2種計薪方式，請按右方 <kbd>+</kbd> 按鈕增加欄位）</div> 
+	        
+	          <div class="m patmant">
 	            <label for="salaryType11">請領補助</label>
-	            <select id="salaryType11" name="salaryType11">
+	            <select id="salaryType11" name="salaryType11" required>
 	              <option value>請選擇</option>
 	              <option value="M">按月計</option>
 	              <option value="H">按時計</option>
 	            </select>
 	            <img src="images/icon_qu.png" class="icon_qu" title="
-	【按月計酬】
-	 第1-6個月每人每月補助 13,000 元。
-	 第7-18個月每人每月補助 15,000 元。
+【按月計酬】
+第1-6個月每人每月補助 13,000 元。
+第7-18個月每人每月補助 15,000 元。
 	
-	【非按月計酬】
-	 第1-6個月每人每小時補助 70 元，
-	 每月最高補助 13,000 元。
-	 第7-18個月每人每小時補助 80 元，
-	 每月最高補有 15,000 元。">
+【非按月計酬】
+第1-6個月每人每小時補助 70 元，
+每月最高補助 13,000 元。
+第7-18個月每人每小時補助 80 元，
+每月最高補有 15,000 元。">
 	
-	            <label for="">申請期間</label>
-	            <input type="text" class="short-2" id="employmentStartTime11" name="employmentStartTime11" placeholder="yyymmdd" maxlength="7" oninput = "value=value.replace(/[^\d]/g,'')"> 至
-	            <input type="text" class="short-2" id="employmentEndTime11" name="employmentEndTime11" placeholder="yyymmdd" maxlength="7" oninput = "value=value.replace(/[^\d]/g,'')">
+	            <label for="employmentStartTime11">申請期間</label>
+	            <input type="text" class="short-2" id="employmentStartTime11" name="employmentStartTime11" placeholder="yyymmdd" maxlength="7" oninput = "value=value.replace(/[^\d]/g,'')" required readonly> 至
+	            <input type="text" class="short-2" id="employmentEndTime11" name="employmentEndTime11" placeholder="yyymmdd" maxlength="7" oninput = "value=value.replace(/[^\d]/g,'')" required readonly>
 	
-	            <label for="">月數 / 時數</label>
-	            <input type="number" class="short" step="1" min="0" id="count11" name="count11">
-	            <label for="">請領金額</label>
+	            <label for="count11">月數 / 時數</label>
+	            <input type="number" class="short" step="1" min="0" id="count11" name="count11" required>
+	            <label for="amounts11">請領金額</label>
 	            <input type="text" id="amounts11" name="amounts11" class="readonly" placeholder="自動計算" readonly>
 	            <button type="button" class="add" onclick="showNewSalaryType('1')">＋</button>
 	       
 	          </div>
 	          
-	          
-	          <div class="px-4">（請領若有2種計薪方式，請按右方+按鈕增加欄位）</div>   
-	
-	
-	          <div class="close"><button class="close" title="移除此筆資料">X</button></div>
+	          <div class="close"><button type="button" onclick="delEmploymentList(this);" class="close" title="移除此筆資料">X</button></div>
 	          
 	        </li>
 	    </c:otherwise></c:choose>
@@ -392,14 +451,7 @@ $(function(){
   <!--- main end ---> 
   
   <!--- footer --->
-  <footer class="copyright">
-    <section>
-      <div>勞動力發展署：24219新北市新莊區中平路439號南棟4樓　電話代表號：(02)8995-6000　客服專線：0800-777-888</div>
-      <div>本署服務時間：週一至週五　上午8時30分至12時30分，下午13時30分至17時30分</div>
-      <div>最佳解析度1024x768 ，建議更新瀏覽器至以下版本：最新版本Chrome、最新版本Firefox</div>
-      <div>中華民國勞動部勞動力發展署版權所有 © 2021 All rights reserved. </div>
-    </section>
-  </footer>
+  <%@ include file="footer.jsp" %>
   <!--- footer end ---> 
   
 </div>

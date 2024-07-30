@@ -8,14 +8,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 <title>中高齡就業相關補助計畫</title>
-<link rel="stylesheet" href="css/bootstrap.css" type="text/css">
-<link rel="stylesheet" href="css/template.css" type="text/css">
 <link rel="stylesheet" href="css/main.css" type="text/css">
-
+<link rel="stylesheet" href="css/template.css" type="text/css">
+<link rel="stylesheet" href="css/bootstrap.css" type="text/css">
 <link rel="stylesheet" href="css/cmxform.css" type="text/css">
+<link rel="stylesheet" href="css/select2.min.css" type="text/css">
 
-<!-- Select2 CSS --> 
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"  type="text/css"/>
 </head>
 
 <body>
@@ -27,12 +25,20 @@
   
   <!--- main --->
   <div class="main"> 
-    
+    <a href="#C" title="中央內容區塊" id="AC" accesskey="C" name="C">:::</a> <!---無障礙--->
   <!------------ 申請流程 ------------>
   <div class="apply_main">
-    <h1>繼續僱用高齡者補助計畫</h1>
+  <%@ include file="countDownComponent.jsp" %>
+  <!---無障礙/麵包屑--->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index" title="首頁">首頁</a></li>
+        <li class="breadcrumb-item active" aria-current="page">線上申辦</li>
+        <li class="breadcrumb-item active" aria-current="page">繼續僱用高齡者補助 - 申請作業</li>
+      </ol>
+    </nav>
+    <h1>繼續僱用高齡者補助 - 申請作業</h1>
     <h2>申請流程 Step2. 填寫申請書</h2>
-    
     
     <!---申辦前準備--->
     <h3>請確實填寫資料，如有不實，主管機關可駁回<br>
@@ -44,12 +50,12 @@
       
       <div>
       <label for="companyName">單位名稱</label>
-      <input type="text" size="35" id="companyName" name="companyName" value="${apply.companyName}" required>
+      <input type="text" size="35" id="companyName" name="companyName" <c:if test="${empty apply.companyName}">value="${companyInfoData.get('companyName')}"</c:if><c:if test="${not empty apply.companyName}">value="${apply.companyName}"</c:if> required>
       </div>
         
       <div>
       <label for="seq">統一編號</label>
-      <input type="text" pattern="\d{8}" minlength="8" maxlength="8" id="seq" name="seq" value="${apply.seq}" required>
+      <input type="text" pattern="\d{8}" minlength="8" maxlength="8" id="seq" name="seq" <c:if test="${empty companyInfoData.get('seq')}">value="${apply.seq}"</c:if><c:if test="${not empty companyInfoData.get('seq')}">value="${companyInfoData.get('seq')}"</c:if> required readonly>
       </div>
       
       <!---<div>
@@ -61,11 +67,18 @@
       <label for="industry">行業別</label>
       <select name="industry" id="industry" required>
       	<option value>請選擇</option>
-      	<c:forEach  items="${industryList}"  var="item"  varStatus="userStatus">
-      		<option value="${item.code}" <c:if test="${apply.industry==item.code}">selected</c:if> >${item.name}</option>
-      	</c:forEach>
+      	<c:if test="${not empty apply.industry}">
+	      	<c:forEach  items="${industryList}"  var="item"  varStatus="userStatus">
+	      		<option value="${item.code}" <c:if test="${apply.industry==item.code}">selected</c:if> >${item.name}</option>
+	      	</c:forEach>
+      	</c:if>
+      	<c:if test="${empty apply.industry}">
+      		<c:forEach  items="${industryList}"  var="item"  varStatus="userStatus">
+	      		<option value="${item.code}" <c:if test="${companyInfoData.get('industry')==item.code}">selected</c:if> >${item.name}</option>
+	      	</c:forEach>
+      	</c:if>
       </select>
-      <a href="https://mobile.stat.gov.tw/StandardIndustrialQuery.aspx" target="_blank" title="(另開新視窗)"><img src="images/icon_qu.png" alt="行業別分類說明"></a> 
+      <a href="https://www.stat.gov.tw/standardindustrialclassification.aspx?n=3144&sms=0&rid=11" target="_blank" title="(另開新視窗)"><img src="images/icon_qu.png" alt="行業別分類說明"></a> 
       </div>
         
       <div class="file_box">
@@ -104,68 +117,116 @@
 		    </c:otherwise>
 	    </c:choose>
       </div>
-        
+      
       <div class="full">
-      <label for="contactCity">聯絡地址</label>
-      <select name="contactCity" id="contactCity" required>
-        <option value>請選擇</option>
-        <c:forEach  items="${cityList}"  var="item"  varStatus="userStatus">
-      		<option value="${item.code}" <c:if test="${apply.contactCity==item.code}">selected</c:if>>${item.name}</option>
-      	</c:forEach>
-      </select>
-      <select name="contactArea" id="contactArea" required>
-        <option value>請選擇</option>
-        <c:forEach  items="${areaList}"  var="item"  varStatus="userStatus">
-      		<option value="${item.code}" <c:if test="${apply.contactArea==item.code}">selected</c:if>>${item.name}</option>
-      	</c:forEach>
-      </select>
-      <input type="text" id="contactAddress" name="contactAddress" size="65%" placeholder="請填寫詳細地址" value="${apply.contactAddress}" required>
+	      <label for="registerCity">登記地址</label>
+	      <select name="registerCity" id="registerCity" required>
+	        <option value>請選擇</option>
+	        <c:if test="${not empty  apply.registerCity}">
+	        	<c:forEach  items="${cityList}"  var="item"  varStatus="userStatus">
+		      		<option value="${item.code}" <c:if test="${apply.registerCity==item.code}">selected</c:if>>${item.name}</option>
+		      	</c:forEach>
+	        </c:if>
+	        <c:if test="${empty apply.registerCity}">
+	      		<c:forEach  items="${cityList}"  var="item"  varStatus="userStatus">
+		      		<option value="${item.code}" <c:if test="${companyInfoData.get('registerCity')==item.code}">selected</c:if> >${item.name}</option>
+		      	</c:forEach>
+	      	</c:if>
+	      </select>
+	      <select name="registerArea" id="registerArea" required>
+	        <option value>請選擇</option>
+	        <c:if test="${not empty apply.registerArea}">
+		        <c:forEach  items="${registerAreaList}"  var="item"  varStatus="userStatus">
+		      		<option value="${item.code}" <c:if test="${apply.registerArea==item.code}">selected</c:if>>${item.name}</option>
+		      	</c:forEach>
+		    </c:if>
+		    <c:if test="${empty apply.registerArea}">
+		        <c:forEach  items="${companyRegisterAreaList}"  var="item"  varStatus="userStatus">
+		      		<option value="${item.code}" <c:if test="${companyInfoData.get('registerArea')==item.code}">selected</c:if>>${item.name}</option>
+		      	</c:forEach>
+		    </c:if>
+	      </select>
+	      <input type="text" id="registerAddress" name="registerAddress" size="60%" placeholder="請填寫詳細地址" <c:if test="${not empty apply.registerAddress}">value="${apply.registerAddress}"</c:if><c:if test="${empty apply.registerAddress}">value="${companyInfoData.get('registerAddress')}"</c:if> required>
+      </div>
+      
+      <div class="full">
+	      <label for="contactCity">聯絡地址</label>
+	      <select name="contactCity" id="contactCity" required>
+	        <option value>請選擇</option>
+	        <c:if test="${not empty apply.contactCity}">
+		        <c:forEach  items="${cityList}"  var="item"  varStatus="userStatus">
+		      		<option value="${item.code}" <c:if test="${apply.contactCity==item.code}">selected</c:if>>${item.name}</option>
+		      	</c:forEach>
+	      	</c:if>
+	      	<c:if test="${empty apply.contactCity}">
+		        <c:forEach  items="${cityList}"  var="item"  varStatus="userStatus">
+		      		<option value="${item.code}" <c:if test="${companyInfoData.get('contactCity')==item.code}">selected</c:if>>${item.name}</option>
+		      	</c:forEach>
+	      	</c:if>
+	      </select>
+	      <select name="contactArea" id="contactArea" required>
+	        <option value>請選擇</option>
+	        <c:if test="${not empty apply.contactArea}">
+		        <c:forEach  items="${contactAreaList}"  var="item"  varStatus="userStatus">
+		      		<option value="${item.code}" <c:if test="${apply.contactArea==item.code}">selected</c:if>>${item.name}</option>
+		      	</c:forEach>
+		    </c:if>
+		    <c:if test="${empty apply.contactArea}">
+		        <c:forEach  items="${companyContactAreaList}"  var="item"  varStatus="userStatus">
+		      		<option value="${item.code}" <c:if test="${companyInfoData.get('contactArea')==item.code}">selected</c:if>>${item.name}</option>
+		      	</c:forEach>
+		    </c:if>
+	      </select>
+	      <input type="text" id="contactAddress" name="contactAddress" size="60%" placeholder="請填寫詳細地址" <c:if test="${not empty apply.contactAddress}">value="${apply.contactAddress}"</c:if><c:if test="${empty apply.contactAddress}">value="${companyInfoData.get('contactAddress')}"</c:if> required>
+	      <label for="checkbox" style="display:none"></label>
+		  <input type="checkbox" name="checkbox" id="checkbox">
+	      同登記地址
       </div>
         
       <div>
       <label for="contactName">聯絡人</label>
-      <input type="text" id="contactName" name="contactName" value="${apply.contactName}" required>
+      <input type="text" id="contactName" name="contactName" <c:if test="${not empty apply.contactName}">value="${apply.contactName}"</c:if><c:if test="${empty apply.contactName}">value="${companyInfoData.get('contactName')}"</c:if> required>
       </div>
         
       <div>
       <label for="contactJobtitle">聯絡人職稱</label>
-      <input type="text" id="contactJobtitle" name="contactJobtitle" value="${apply.contactJobtitle}" required>
+      <input type="text" id="contactJobtitle" name="contactJobtitle" <c:if test="${not empty apply.contactJobtitle}">value="${apply.contactJobtitle}"</c:if><c:if test="${empty apply.contactJobtitle}">value="${companyInfoData.get('contactJobtitle')}"</c:if> required>
       </div>
         
       <div>
       <label for="contactWorkPhoneAreaCode">聯絡電話</label>
-      <input type="tel" maxlength="3" id="contactWorkPhoneAreaCode" name="contactWorkPhoneAreaCode" size="2" placeholder="區碼" value="${apply.contactWorkPhoneAreaCode}" required> -
-      <input type="tel" maxlength="8" id="contactWorkPhone" name="contactWorkPhone" size="12" placeholder="電話號碼" value="${apply.contactWorkPhone}" required> #
-      <input type="tel" maxlength="6" id="contactWorkPhoneExtension" name="contactWorkPhoneExtension" size="3" placeholder="分機" value="${apply.contactWorkPhoneExtension}">
+      <input type="tel" maxlength="3" id="contactWorkPhoneAreaCode" name="contactWorkPhoneAreaCode" size="2" placeholder="區碼" <c:if test="${not empty apply.contactWorkPhoneAreaCode}">value="${apply.contactWorkPhoneAreaCode}"</c:if><c:if test="${empty apply.contactWorkPhoneAreaCode}">value="${companyInfoData.get('contactWorkPhoneAreaCode')}"</c:if> required> -
+      <input type="tel" maxlength="8" id="contactWorkPhone" name="contactWorkPhone" size="12" placeholder="電話號碼" <c:if test="${not empty apply.contactWorkPhone}">value="${apply.contactWorkPhone}"</c:if><c:if test="${empty apply.contactWorkPhone}">value="${companyInfoData.get('contactWorkPhone')}"</c:if> required> #
+      <input type="tel" maxlength="6" id="contactWorkPhoneExtension" name="contactWorkPhoneExtension" size="3" placeholder="分機" <c:if test="${not empty apply.contactWorkPhoneExtension}">value="${apply.contactWorkPhoneExtension}"</c:if><c:if test="${empty apply.contactWorkPhoneExtension}">value="${companyInfoData.get('contactWorkPhoneExtension')}"</c:if>>
       </div>
         
       <div>
       <label for="contactPhone">行動電話</label>
-      <input type="tel" id="contactPhone" name="contactPhone" pattern="09\d{8}" value="${apply.contactPhone}" required>
+      <input type="tel" id="contactPhone" name="contactPhone" pattern="09\d{8}" <c:if test="${not empty apply.contactPhone}">value="${apply.contactPhone}"</c:if><c:if test="${empty apply.contactPhone}">value="${companyInfoData.get('contactPhone')}"</c:if> required>
       </div>
         
       <div>
       <label for="faxAreaCode">傳真號碼</label>
-      <input type="tel" maxlength="3" id="faxAreaCode" name="faxAreaCode" size="2" placeholder="區碼" value="${apply.faxAreaCode}" > -
-      <input type="tel" maxlength="8" id="fax" name="fax" size="12" placeholder="傳真號碼" value="${apply.fax}" >
+      <input type="tel" maxlength="3" id="faxAreaCode" name="faxAreaCode" size="2" placeholder="區碼" <c:if test="${not empty apply.faxAreaCode}">value="${apply.faxAreaCode}"</c:if><c:if test="${empty apply.faxAreaCode}">value="${companyInfoData.get('faxAreaCode')}"</c:if> > -
+      <input type="tel" maxlength="8" id="fax" name="fax" size="12" placeholder="傳真號碼" <c:if test="${not empty apply.fax}">value="${apply.fax}"</c:if><c:if test="${empty apply.fax}">value="${companyInfoData.get('fax')}"</c:if> >
       </div>
         
       <div>
       <label for="email">電子信箱</label>
-      <input type="email" id="email" name="email" value="${apply.email}" required>
+      <input type="email" id="email" name="email" <c:if test="${not empty apply.email}">value="${apply.email}"</c:if><c:if test="${empty apply.email}">value="${companyInfoData.get('email')}"</c:if> required>
       </div>
       
       <div class="affidavit">
         <div>資格條件及切結事項</div>
         <ol>
           <li>
-          <label class="title" for="multipleCompany0">本統一編號/非營利扣繳編號是否有總公司或其他分公司？</label>
+          <label class="title" for="multipleCompany0">本統一編號/非營利扣繳編號是否有其他子公司或母公司？（有母子公司人數請合併計算）</label>
           <label class="s"><input type="radio" name="multipleCompany" value="Y" id="multipleCompany0" <c:if test="${apply.multipleCompany=='Y'}">checked</c:if> required>有</label>
           <label class="s"><input type="radio" name="multipleCompany" value="N" id="multipleCompany1" <c:if test="${apply.multipleCompany=='N'}">checked</c:if>>無</label>
           </li>
         
           <li>
-          <label class="title" for="workersEmployment0">本單位雇用勞工總人數達3人以上？ ( 配偶或三等親之內勞工不列入人數計算 )</label>
+          <label class="title" for="workersEmployment0">本單位僱用勞工總人數達3人以上？ ( 配偶或三等親之內勞工不列入人數計算 )</label>
           <label class="s"><input type="radio" name="workersEmployment" value="Y" id="workersEmployment0" <c:if test="${apply.workersEmployment=='Y'}">checked</c:if> required>是</label>
           <label class="s"><input type="radio" name="workersEmployment" value="N" id="workersEmployment1" <c:if test="${apply.workersEmployment=='N'}">checked</c:if>>否</label>
           </li>
@@ -205,14 +266,7 @@
   <!--- main end ---> 
   
   <!--- footer --->
-  <footer class="copyright">
-    <section>
-      <div>勞動力發展署：24219新北市新莊區中平路439號南棟4樓　電話代表號：(02)8995-6000　客服專線：0800-777-888</div>
-      <div>本署服務時間：週一至週五　上午8時30分至12時30分，下午13時30分至17時30分</div>
-      <div>最佳解析度1024x768 ，建議更新瀏覽器至以下版本：最新版本Chrome、最新版本Firefox</div>
-      <div>中華民國勞動部勞動力發展署版權所有 © 2021 All rights reserved. </div>
-    </section>
-  </footer>
+  <%@ include file="footer.jsp" %>
   <!--- footer end ---> 
   
 </div>
@@ -220,8 +274,7 @@
 <script src="js/popper.min.js"></script> 
 <script src="js/bootstrap.min.js"></script>
 <script src="js/employ_02/employ_02.js"></script>
-<!-- Select2 JS --> 
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script src="js/select2.min.js"></script>
 
 <script src="js/jquery.validate.min.js"></script>
 <script src="js/additional-methods.min.js"></script>
